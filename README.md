@@ -193,3 +193,26 @@ If you rename or move a source file, the IdBuilder will reallocate an ID for the
 ## Asset pipeline
 
 `assets/` ships 470 webp icons covering every class, subclass, feature, spell, item, and companion the module declares. Feature / spell / item / sigil icons render at 512 × 512; portraits (class, subclass, companion) at 768 × 768. All saved as lossy webp (q85) to keep the install zip under ~30 MB.
+
+## Credits
+
+The bulk of the subclass and supplementary content shipped by this module is taken from the **Nim+ Volume III** community supplement — submissions June 2025, published July 2025. All rules text and design credit belong to its authors.
+
+**Curated and edited by**
+Emil Andersen (Santuric)
+
+**Proofreaders**
+AJ · Chas · DanDraco · MaleficMist · Methodia · Raford · SanityWithIn · The Pebble · Trex · TwinSteel · VedastusSoFastus
+
+**Homebrewers featured in this volume**
+AJ · Blue · Can Opener · Charles and Jeannine Archibald · DanDraco · Kazok the Goblin · Khan Wick · Nathan Warkentin (Trex) · Rockergage · SanityWithIn · Santuric · Squeekie · Victor Constantinescu (MaleficMist) · Vinícius Conrado
+
+This Foundry VTT module is a fan adaptation of that work — the rules text is reproduced under its terms, and any errors in transcription / wiring are mine, not theirs. If you enjoy this content, please support the original authors at <https://santuric.itch.io>.
+
+## Licensing
+
+The reproduced Nim+ Volume III rules content is published by Santuric and contributors under the **Creative Commons Attribution 4.0 International License** (CC-BY 4.0). See <https://creativecommons.org/licenses/by/4.0/>.
+
+> "Nim+" is an independent product published under the Nimble 3rd Party Creator License and is not affiliated with Nimble Co. Nimble © 2025 Nimble Co.
+
+The code in this repository (build scripts, runtime helpers, packaging tooling) is released under the MIT License — see [LICENSE](LICENSE).
