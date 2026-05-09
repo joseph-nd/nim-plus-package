@@ -1,0 +1,78 @@
+{
+	"name": "Summon Spirit Companion",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/shepherd/summon-spirit-companion.webp",
+	"system": {
+		"macro": "return nimPlus.summonSpiritCompanion(actor, item);",
+		"identifier": "summon-spirit-companion",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Spirit acts on your turn",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until dismissed or resummoned",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action.</strong> Click to open the <em>Spirit Companion</em> dialog. Choose your Spirit's strike die and (the first time) upload a token image. The spirit appears adjacent to you with attack and healing formulas already wired to your <strong>WIL</strong> bonus and chosen die.</p><p>The spirit is immune to damage, occupies one square, and acts on your turn. While summoned, you may use one of its actions in place of one of yours: <strong>Spirit Strike</strong> (1 Action, Reach 6, deals <code>(Spirit Die) + WIL</code> radiant damage) or <strong>Spirit Heal</strong> (1 Action, Reach 6, heals a willing ally <code>(Spirit Die) + WIL</code>).</p><p>Re-cast this spell to dismiss the current spirit and summon a new one (or change the die size). The dialog also offers an explicit <em>Dismiss Spirit</em> action.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 1
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "",
+		"tier": 0,
+		"classes": [
+			"shepherd"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "B1t25hPKZo284caP",
+	"folder": null
+}

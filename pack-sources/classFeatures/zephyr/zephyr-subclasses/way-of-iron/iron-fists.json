@@ -1,0 +1,85 @@
+{
+	"name": "Iron Fists",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-iron/iron-fists.webp",
+	"system": {
+		"macro": "",
+		"identifier": "iron-fists",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "ironFistsDamage1",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d6 + @strength",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "ironFistsHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "ironFistsDamage1"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": true
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your unarmed strikes deal <strong>1d6 + STR</strong> damage. Roll your <strong>Tempered die with advantage</strong>.</p><p><em>Foundry tip — click the action to roll an Iron-Fists unarmed strike. Roll your Tempered die separately, taking the higher of two.</em></p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-iron",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "e1ruMbLqbMfyIrZY",
+	"folder": "76ecacc9ea19d60d"
+}

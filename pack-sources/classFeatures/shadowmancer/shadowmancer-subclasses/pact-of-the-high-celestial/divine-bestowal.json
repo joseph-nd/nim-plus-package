@@ -1,0 +1,57 @@
+{
+	"name": "Divine Bestowal",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-high-celestial/divine-bestowal.webp",
+	"system": {
+		"macro": "",
+		"identifier": "divine-bestowal",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Shadow Minions become radiant spirits, and instead of being able to attack directly, they can move into the space of an ally and bless them. They move where the ally does and add their damage to each of the ally's attacks. If that ally takes damage, all minions blessing them die.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-high-celestial",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "11DxO4Nhb8sir8R9",
+	"folder": "45cb0f9c9abaa618"
+}

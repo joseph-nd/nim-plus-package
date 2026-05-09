@@ -1,0 +1,55 @@
+{
+	"name": "Redemption Arc",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/redemption-arc.webp",
+	"system": {
+		"macro": "",
+		"identifier": "redemption-arc",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Upper Hand enemy attacks an ally",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Honorable Gambit.</em> Reaction: When an enemy with The Upper Hand attacks an ally, you may first Taunt them (the attack is rolled again, take the lower result), this lasts until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-cheat-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0OJ5ZU571ERf4YKO",
+	"folder": "db26ee50517a7f26"
+}

@@ -1,0 +1,59 @@
+{
+	"name": "Toll the Hour",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-tidings/toll-the-hour.webp",
+	"system": {
+		"macro": "return nimPlus.tollTheHour(actor, item);",
+		"identifier": "toll-the-hour",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "WIL/Safe Rest — Reach 4",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(WIL/Safe Rest) Action: Proclaim tidings of either:</p><ul><li><strong>Jubilation.</strong> Heal WIL d10 HP to an ally within Reach 4 and cleanse a harmful non-Wound condition or effect.</li><li><strong>Calamity.</strong> Inflict Dazed and WIL d10 Radiant damage to a Hampered, undead or Bloodied enemy within Reach 4.</li></ul>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-tidings",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Lqw7Z2pRWCIAoWB9",
+	"folder": "7cff7cae12d57cbb"
+}

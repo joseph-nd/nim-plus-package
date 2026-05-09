@@ -1,0 +1,25 @@
+{
+	"name": "Way of Hurricanes",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/zephyr/way-of-hurricanes.webp",
+	"system": {
+		"macro": "",
+		"identifier": "way-of-hurricanes",
+		"rules": [],
+		"description": "<p><em>Your fist is as the howling wind, unceasing and everflowing. Those who face you are battered and bruised by a whirlwind of deadly strikes. Choose this subclass if you want to move with blinding speed and control the position of foes with typhoon-like strikes.</em></p><p><strong>Class Complexity:</strong> ♦♦◊◊</p><p>LEVEL 3</p><p><strong>Razor Fist.</strong> Your unarmed strikes do Slashing damage and are Vicious.</p><p><strong>Air Dash.</strong> Your Windstep gains: You can pull creatures within Reach 1 of your movement anywhere else within this Reach.</p><p>LEVEL 7</p><p><strong>Cyclonic Defense.</strong> Whirling Defense gains: you may place any other creatures within Reach 4, elsewhere within Reach 4.</p><p><strong>Cleaving Gale.</strong> Whenever you crit, deal that much damage to a 2nd target within Reach 2.</p><p>LEVEL 11</p><p><strong>Galeforce Strike.</strong> Your Swiftstrikes gain Vicious and knockback STR spaces away; you may suffer 1 Wound to double the distance.</p><p>LEVEL 15</p><p><strong>Tempest's Fury.</strong> Whenever you would roll any extra dice for a crit instead roll 1d20.</p>",
+		"parentClass": "zephyr",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "TFi1DrYoft35EDfO",
+	"folder": "60adb5334b7f06e4"
+}

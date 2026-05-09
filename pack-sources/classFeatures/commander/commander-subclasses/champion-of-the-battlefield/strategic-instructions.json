@@ -1,0 +1,57 @@
+{
+	"name": "Strategic Instructions",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-battlefield/strategic-instructions.webp",
+	"system": {
+		"macro": "",
+		"identifier": "strategic-instructions",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Relay an Instruction to an ally that can hear you, granting them certain effects. You can have 1 Instruction active (new Instructions replace active ones). Instructions last until the end of combat or they are replaced. Known Instructions:</p><ul><li><strong>Get Back In Line!</strong> +2 speed.</li><li><strong>Slow Their Advance!</strong> Attacks apply Slowed.</li><li><strong>Get Their Attention!</strong> Attacks Taunt the target until the end of their next turn.</li></ul>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-battlefield",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "zsVq1kmTdlQOcvtF",
+	"folder": "e7648d1fa91736b5"
+}

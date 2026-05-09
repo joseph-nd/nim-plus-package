@@ -1,0 +1,25 @@
+{
+	"name": "Keeper of the Pack",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hunter/keeper-of-the-pack.webp",
+	"system": {
+		"macro": "",
+		"identifier": "keeper-of-the-pack",
+		"rules": [],
+		"description": "<p><em>Even the fiercest of prey is weak in isolation, while the pack has strength in numbers. Lead from the front, finish the hunt.</em></p><p>LEVEL 3</p><p><strong>Marked for Death.</strong> (1/encounter) When you hit your Quarry in melee, the next WIL attacks against it are made with advantage 2.</p><p><strong>Lead the Hunt.</strong> Nearby allies can add your WIL to their Stealth roll.</p><p>LEVEL 7</p><p><strong>The Lion's Share.</strong> Whenever your Quarry dies, gain 3×WIL Temp HP.</p><p><strong>Fearsome Alpha.</strong> Your Quarry has disadvantage on melee attacks against you.</p><p>LEVEL 11</p><p><strong>Frenzied Pack.</strong> Allies within Reach 2 gain the benefits of your Hunter's Mark in melee.</p><p>LEVEL 15</p><p><strong>Ferocious Takedown.</strong> When you kill your Quarry with Final Takedown, regain a use of Marked for Death.</p>",
+		"parentClass": "hunter",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "560a81691ffaf5a7",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "uWSCO2Nx84o0fs90"
+}

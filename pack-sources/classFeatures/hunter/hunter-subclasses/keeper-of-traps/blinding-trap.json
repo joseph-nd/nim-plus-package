@@ -1,0 +1,59 @@
+{
+	"name": "Blinding Trap",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-traps/blinding-trap.webp",
+	"system": {
+		"macro": "",
+		"identifier": "blinding-trap",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reaction</strong> (When an enemy moves adjacent to you or an ally within Reach 6): Target is Blinded until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-traps",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "97AQ1JR5P8gUmJCM",
+	"folder": "878562b6064b4bfd"
+}

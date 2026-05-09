@@ -1,0 +1,57 @@
+{
+	"name": "Galeforce Strike",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-hurricanes/galeforce-strike.webp",
+	"system": {
+		"macro": "",
+		"identifier": "galeforce-strike",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "On Swiftstrike — STR knockback (suffer 1 Wound to double)",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Swiftstrikes gain Vicious and knockback STR spaces away; you may suffer 1 Wound to double the distance.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-hurricanes",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "flJRyYOdpN49zTHf",
+	"folder": "e9a71b1e7167c3bd"
+}

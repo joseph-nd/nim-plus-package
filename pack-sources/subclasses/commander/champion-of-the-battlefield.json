@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Battlefield",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-battlefield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-battlefield",
+		"rules": [],
+		"description": "<p><em>Analyze the battlefield. Instruct your soldiers. Tonight we march towards victory.</em></p><p>LEVEL 3</p><p><strong>Strategic Instructions.</strong> Action: Relay an Instruction to an ally that can hear you, granting them certain effects. You can have 1 Instruction active (new Instructions replace active ones). Instructions last until the end of combat or they are replaced. Known Instructions:</p><ul><li><strong>Get Back In Line!</strong> +2 speed.</li><li><strong>Slow Their Advance!</strong> Attacks apply Slowed.</li><li><strong>Get Their Attention!</strong> Attacks Taunt the target until the end of their next turn.</li></ul><p>LEVEL 7</p><p><strong>Stay in the Fight.</strong> When relaying an Instruction to an ally, they gain KEY Temp HP.</p><p><strong>New Orders.</strong> You can now have up to 2 Instructions active. Learn a new Instruction:</p><ul><li><strong>Disrupt Their Formation!</strong> Attacks Push 2 on hit.</li></ul><p>LEVEL 11</p><p><strong>New Orders (2).</strong> You can now have up to 3 Instructions active. Learn a new Instruction:</p><ul><li><strong>Breach Their Defenses!</strong> Adjacent allies gain advantage on attacks.</li></ul><p>LEVEL 15</p><p><strong>Surprise Assault.</strong> (1/encounter) Reaction: Grant all allies with Instructions an extra action.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "54c3de6e51604292",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bIO3Gu1diplpabtt"
+}

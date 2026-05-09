@@ -1,0 +1,25 @@
+{
+	"name": "Coven of The Hunt",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hexbinder/coven-of-the-hunt.webp",
+	"system": {
+		"macro": "",
+		"identifier": "coven-of-the-hunt",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Hexbinder's Familiar.</strong> You gain a familiar of your choice. It accompanies you on your travels and grants you a passive boon based on its kind.</p><p>LEVEL 7</p><p><strong>Bind Malady.</strong> Your familiar can deliver your Afflictions on touch as part of its action.</p><p>LEVEL 11</p><p><strong>Empowered Familiar.</strong> Your familiar's boons grow stronger and may now act independently in combat with your reactions.</p><p>LEVEL 15</p><p><strong>Mighty Familiar.</strong> Your familiar can become a true Mighty companion, with its own actions, and you can command it freely in combat.</p>",
+		"parentClass": "hexbinder",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "bdadf610a140a03c",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0gyWr6h8iFjvhTkr"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Thrilling Insight",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-the-balance/thrilling-insight.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thrilling-insight",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "this turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Double any <strong>Thrill of the Hunt</strong> charges you get this turn (1/encounter).</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-the-balance",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wjdrirXrLgVsoKRl",
+	"folder": "d617b01084ed8654"
+}

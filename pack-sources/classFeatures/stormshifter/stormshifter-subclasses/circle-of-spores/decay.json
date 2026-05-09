@@ -1,0 +1,57 @@
+{
+	"name": "Decay",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/decay.webp",
+	"system": {
+		"macro": "",
+		"identifier": "decay",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Expend Beastshift charges to upcast Sporesphere",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can expend Beastshift charges to upcast your spores. Each charge expended can either increase the damage die size or add the Blinded or Poisoned condition.</p><p><em>Foundry tip — while you own this feature, the Sporesphere dialog automatically offers a Decay panel: enter the number of die-size bumps and tick Blinded / Poisoned. Beastshift charges are tracked manually; the chat card flavor records the spend.</em></p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "6SPnUdX5RcWe1bRT",
+	"folder": "9ee17510990a659f"
+}

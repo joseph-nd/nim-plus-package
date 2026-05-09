@@ -1,0 +1,57 @@
+{
+	"name": "Exemplar of Courage",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-valor/exemplar-of-courage.webp",
+	"system": {
+		"macro": "",
+		"identifier": "exemplar-of-courage",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can Interpose from 3 spaces away. When you Interpose for a Dying creature, grant them 1 additional action.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-valor",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jW6jmN3tscu6aJZe",
+	"folder": "24f43bb0676e0fab"
+}

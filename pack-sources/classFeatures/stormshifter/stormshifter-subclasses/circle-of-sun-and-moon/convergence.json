@@ -1,0 +1,57 @@
+{
+	"name": "Convergence",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-sun-and-moon/convergence.webp",
+	"system": {
+		"macro": "",
+		"identifier": "convergence",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 3",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 3,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action:</strong> Pull all enemies within Reach 3 adjacent to you and inflict <strong>Slowed</strong>.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-sun-and-moon",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mzqZehC0UrNqfe9V",
+	"folder": "ba7ccb06a8fc4875"
+}

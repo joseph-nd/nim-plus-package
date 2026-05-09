@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Siege-Breaker",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-siege-breaker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-siege-breaker",
+		"rules": [],
+		"description": "<p><em>Unleash aggressive combat tactics to disrupt your enemies. Leave the shield behind, it'll only weigh you down.</em></p><p>LEVEL 3</p><p><strong>Hold the Line.</strong> +STR Armor when wielding a weapon with 2 hands.</p><p><strong>Mighty Cleave.</strong> Whenever your damage dice sum on a melee attack is 8 or greater, you may select 1 additional target within your weapon's Reach.</p><p>LEVEL 7</p><p><strong>Shatter Formation.</strong> (New Combat Tactic) Action: Roll a Combat Die and deal that much damage to up to STR targets within your weapon's Reach, knocking each one back (Tiny/Small: 3 spaces; Medium: 2 spaces; Large: 1 space). You may use this ability while moving.</p><p>LEVEL 11</p><p><strong>Relentless Assault.</strong> +2 Max Combat Dice. You roll Combat Dice with Advantage.</p><p><strong>Tear Asunder.</strong> (New Combat Tactic) When you hit (before dealing damage), reduce the target's armor by 1 step for 1 round and deal extra damage equal to a roll of your Combat Die.</p><p>LEVEL 15</p><p><strong>Even the Odds.</strong> If there are 2+ enemies within your weapon's Reach, your melee attacks have advantage and always trigger Mighty Cleave.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "54c3de6e51604292",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "KHA0oFDWe8TSLlfm"
+}

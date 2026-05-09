@@ -1,0 +1,127 @@
+{
+	"name": "Manabolt Cannon",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/artificer/inventions/manabolt-cannon.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mc-damage",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "1d12",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "mc-damage-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "mc-damage"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "mc-damage-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "mc-damage"
+							}
+						],
+						"miss": [
+							{
+								"id": "mc-damage-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "mc-damage"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Range 8 | 2 Actions | 1d12 damage</strong> <em>(Requires 1+ Mana Dice)</em></p><p>Add INT to each Mana Die rolled and deal that much extra damage to your target AND all creatures between you and it.</p><hr><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Amplified Conduit</strong></li><li><strong>Selective Arc Filter</strong></li><li><strong>Overload Dampener</strong></li></ul>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Invention",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 1,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"ranged"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "m2vk1RRfo6yYwFLN",
+	"folder": null
+}

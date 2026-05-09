@@ -1,0 +1,57 @@
+{
+	"name": "Old Habits…",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/old-habits.webp",
+	"system": {
+		"macro": "",
+		"identifier": "old-habits",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 Underhanded Ability.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-honorseeker",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nqYipMDlO2nTQgxz",
+	"folder": "7916196cc2dd524f"
+}

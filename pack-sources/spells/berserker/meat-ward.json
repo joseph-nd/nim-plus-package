@@ -1,0 +1,80 @@
+{
+	"name": "Meat Ward",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/meat-ward.webp",
+	"system": {
+		"macro": "",
+		"identifier": "meat-ward",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Requires 5 FD, when attacked",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>Reaction · When attacked.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 5 FD.</strong> Make an adjacent creature Interpose for you.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 1
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 5
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VKwQLP9B6anpHucu",
+	"folder": "1017a79ccd93f00a"
+}

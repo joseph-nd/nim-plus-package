@@ -1,0 +1,25 @@
+{
+	"name": "Invoker of Perfection",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/mage/invoker-of-perfection.webp",
+	"system": {
+		"macro": "",
+		"identifier": "invoker-of-perfection",
+		"rules": [],
+		"description": "<p><em>Some spend their entire lives in service to breadth of knowledge. Fools, the lot of them! True excellence lies in the perfection of a single thought.</em></p><p>LEVEL 3</p><p><strong>Prestidigitation.</strong> You are able to produce minor magical effects related to your Signature spell school, which can provide mundane utility and impress those impressionable.</p><p><strong>Signature Spell School.</strong> Select a Signature spell school from among the schools you know. Your Signature cantrips are cast with advantage, and your Signature spells are automatically upcast 1 tier for free (even beyond your currently unlocked spell tiers).</p><p>LEVEL 7</p><p><strong>Impossible Geometry.</strong> Choose 1 additional Spellshaper ability. You may use 2 Spellshaper abilities when casting Signature spells.</p><p>LEVEL 11</p><p><strong>Flawless Execution.</strong> The first Signature cantrip you cast each encounter automatically rolls the highest possible result.</p><p>LEVEL 15</p><p><strong>Unlimited Power.</strong> (1/Safe Rest) Cast a Signature spell without spending actions or mana, automatically upcast to the highest unlocked tier. Spellshaper abilities still cost Mana.</p>",
+		"parentClass": "mage",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "82882919bf32f6be",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kdktAOpodZRgetGy"
+}

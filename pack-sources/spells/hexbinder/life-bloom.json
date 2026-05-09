@@ -1,0 +1,87 @@
+{
+	"name": "Life Bloom",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/hexbinder/life-bloom.webp",
+	"system": {
+		"macro": "",
+		"identifier": "life-bloom",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "lifeBloomHeal1",
+					"type": "healing",
+					"healingType": "healing",
+					"formula": "0",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 2,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Single Target+, Reach 8</strong></p><p>Consume 1 of your own Hit Dice and 1 more from a willing target. Heal your target and another creature within Reach the sum of those dice.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 8
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "hexbinder",
+		"tier": 1,
+		"classes": [
+			"hexbinder"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "57SBKVr4zz9dqiuY",
+	"folder": "c367afd06b845ebf"
+}

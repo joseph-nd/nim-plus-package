@@ -1,0 +1,57 @@
+{
+	"name": "Percussive Maintenance",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/percussive-maintenance.webp",
+	"system": {
+		"macro": "",
+		"identifier": "percussive-maintenance",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(1/encounter)</strong> When you would experience a mishap, you may first increase 1 Mana Die result by 1.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			6
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "U6XEBX39Egc6D5hj",
+	"folder": "cc0bae2de7db5a7f"
+}

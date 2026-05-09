@@ -1,0 +1,57 @@
+{
+	"name": "Fatal Choreography",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-the-dancer/fatal-choreography.webp",
+	"system": {
+		"macro": "",
+		"identifier": "fatal-choreography",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Swiftstrike vs Taunted/Charmed enemy",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Taunted or Charmed"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you attack a Taunted or Charmed enemy using Swiftstrike, your attack is an <strong>automatic crit</strong>, ends the condition and causes the target to fall <strong>Prone</strong>.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-the-dancer",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7q57qcMyFTNs5M3m",
+	"folder": "6581f6da0099ac2f"
+}

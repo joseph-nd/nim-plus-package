@@ -1,0 +1,57 @@
+{
+	"name": "Twinned Threads",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-spider/twinned-threads.webp",
+	"system": {
+		"macro": "",
+		"identifier": "twinned-threads",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Range 6 — only one web at a time",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until web ends",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 2,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action:</strong> Link two creatures within Range 6 with an ethereal web. When a Linked creature is dealt damage, other Linked creatures are dealt <strong>half that amount as Psychic damage</strong> (ignoring armor). You can only maintain one web at a time.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-spider",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "U0TAYiDBa38xaywm",
+	"folder": "7e8ca6696cb73e0a"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Radiant Blast",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-high-celestial/radiant-blast.webp",
+	"system": {
+		"macro": "",
+		"identifier": "radiant-blast",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may target allies with Shadow Blast and give them Temp HP instead of damaging them.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-high-celestial",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yIl3130XbMyJoEO3",
+	"folder": "45cb0f9c9abaa618"
+}

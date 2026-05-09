@@ -1,0 +1,67 @@
+{
+	"name": "Mark of Protection",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/mark-of-protection.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mark-of-protection",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "1 minute after heal",
+				"quantity": 1,
+				"type": "minute"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Creatures you heal can ignore 1 negative condition they would receive within the next minute.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "6TUTNqaLqN7w52n9",
+	"folder": "cb7cf327da44bff5"
+}

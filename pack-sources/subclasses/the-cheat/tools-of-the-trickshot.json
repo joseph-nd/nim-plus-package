@@ -1,0 +1,25 @@
+{
+	"name": "Tools of the Trickshot",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/the-cheat/tools-of-the-trickshot.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tools-of-the-trickshot",
+		"rules": [],
+		"description": "<p><em>A fork. A deck of cards. A rotten tomato. Anything can be a lethal weapon.</em></p><p><em>Collaboration with Blue (check out the awesome Blue's Codex).</em></p><p>LEVEL 3</p><p><strong>All in the Wrist.</strong> You gain the Trickshot Underhanded Ability. Trickshot also applies to Improvised Weapons.</p><p><strong>Trick up the Sleeve.</strong> You gain proficiency with Improvised Weapons and treat them as having Thrown 4. Vicious Opportunist also applies to Thrown weapons.</p><p>LEVEL 7</p><p><strong>Intercept.</strong> (1/round) Reaction: Knock a projectile targeting an ally within range of your Thrown weapon out of the air, causing it to miss.</p><p>LEVEL 11</p><p><strong>Bullseye.</strong> Your Thrown weapons gain +2 Range. Also applies to the Trickshot ricochet.</p><p>LEVEL 15</p><p><strong>Impossible Angle.</strong> You can make Thrown attacks against enemies you are aware of, but do not have direct line of sight to (such as around corners or behind cover). The target is considered Distracted when attacked this way.</p><p><strong>Deadly Ricochet.</strong> Trickshot now ricochets 2 additional times and may ricochet off allies without dealing damage.</p>",
+		"parentClass": "the-cheat",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "1e0ad9a337fc2927",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DQKFyicK5wMcWPaA"
+}

@@ -1,0 +1,68 @@
+{
+	"name": "Ready For Danger",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-protection/ready-for-danger.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ready-for-danger",
+		"rules": [
+			{
+				"type": "initiativeBonus",
+				"value": "@abilities.will.mod",
+				"disabled": false,
+				"id": "ready-for-danger-init",
+				"identifier": "",
+				"label": "Ready For Danger — +WIL Initiative",
+				"predicate": {},
+				"priority": 1
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+WIL Initiative, you may give this bonus to 1 ally as well (after they roll).</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-protection",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8qRVwZEwh8S1G0Yq",
+	"folder": "6abdfe1dd7775185"
+}

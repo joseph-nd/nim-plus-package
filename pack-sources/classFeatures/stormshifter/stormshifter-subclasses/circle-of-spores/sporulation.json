@@ -1,0 +1,57 @@
+{
+	"name": "Sporulation",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/sporulation.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sporulation",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Sporesphere upgrade",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 6,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your spores now have Reach 6 and do 2d8 necrotic damage.</p><p><em>Foundry tip — Sporesphere automatically picks up this scaling when you own this feature.</em></p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "F0rSjMoziApvXcPM",
+	"folder": "9ee17510990a659f"
+}

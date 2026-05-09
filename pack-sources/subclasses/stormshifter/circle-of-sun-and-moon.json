@@ -1,0 +1,25 @@
+{
+	"name": "Circle of Sun and Moon",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/stormshifter/circle-of-sun-and-moon.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-sun-and-moon",
+		"rules": [],
+		"description": "<p><em>We are blessed to walk in the Cycle Eternal, upright in the sun, stalking under the moon.</em></p><p>LEVEL 3</p><p><strong>Cycle Eternal.</strong> (1/encounter) Action: Spend a Beastshift charge to enter Cycle Eternal as either Solar or Lunar Phase. You shift Phases by spending an action or killing an enemy. If you end your turn without shifting Phases, Cycle Eternal ends.</p><ul><li><strong>Solar Phase.</strong> Your spells gain advantage.</li><li><strong>Lunar Phase.</strong> Gain KEY Defense and 2 Speed.</li></ul><p>LEVEL 7</p><p><strong>Celestial Power.</strong> Whenever you shift Phases, you may deal KEY damage to all adjacent enemies, and grant KEY Temp HP to all adjacent allies.</p><p>LEVEL 11</p><p><strong>Convergence.</strong> Action: Pull all enemies within Reach 3 adjacent to you and inflict Slowed.</p><p>LEVEL 15</p><p><strong>Eclipse.</strong> Action (after shifting Phases 4+ times): Enter Eclipse Phase until the end of the encounter. While in Eclipse Phase, you gain double the benefits of both Solar and Lunar Phase, and the ability to cast spells while in beastform.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7Au5yMlkq4DkEzy4",
+	"folder": "bbdbcfedb2a0daf6"
+}

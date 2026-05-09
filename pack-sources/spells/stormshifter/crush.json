@@ -1,0 +1,100 @@
+{
+	"name": "Crush",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/stormshifter/crush.webp",
+	"system": {
+		"macro": "",
+		"identifier": "crush",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Range 6 — must be Hampered",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "crushDamage1",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "2d20 + 20",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "crushHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "crushDamage1"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Hampered",
+				"attackType": "range",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>Tier 4 · 2 Actions · Range 6.</strong></p><p>Crush a Hampered target for 2d20+20 damage.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p><strong>Upcast:</strong> +10 damage.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "earth",
+		"tier": 4,
+		"classes": [
+			"stormshifter"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ZQe0wnA1mqvxFOkF",
+	"folder": "121f29a2ee54baa0"
+}

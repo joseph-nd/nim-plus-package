@@ -1,0 +1,25 @@
+{
+	"name": "Keeper of Traps",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hunter/keeper-of-traps.webp",
+	"system": {
+		"macro": "",
+		"identifier": "keeper-of-traps",
+		"rules": [],
+		"description": "<p><em>Daring trappers like carrying bits and baubles to attract attention. They often include some sort of charm for protection like the tuft of a fox tail, an old superstition.</em></p><p>LEVEL 3</p><p><strong>Hunter's Lure.</strong> Whenever you use Hunter's Mark, you may gain KEY temp HP and Taunt your Quarry until you lose these temp HP.</p><p><strong>Blinding Trap.</strong> <strong>Reaction</strong> (When an enemy moves adjacent to you or an ally within Reach 6): Target is Blinded until the end of their next turn.</p><p><strong>Skilled Trapmaker.</strong> You have advantage on skill checks relating to traps.</p><p>LEVEL 7</p><p><strong>Prolific Trapper.</strong> Whenever you Safe Rest in a location where feral critters live nearby, you may spend a day capturing critters to make WIL Critter Traps.</p><p><strong>Critter Trap.</strong> <strong>Reaction</strong> (When an enemy moves adjacent to you or your ally within 6 spaces): loose a critter to attack the enemy for WIL d6 damage. You must release all captured critters whenever you Safe Rest.</p><p>LEVEL 11</p><p><strong>Bait and Switch.</strong> You and your allies can Interpose within Reach 4 vs Taunted attackers. (1/encounter) You can use Decoy for free while Prone.</p><p>LEVEL 15</p><p><strong>Trap Master.</strong> Whenever you use a Trap, add your weapon damage to it. One of your Traps can be used an additional time each encounter.</p>",
+		"parentClass": "hunter",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "560a81691ffaf5a7",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0MgK6oR4Y6cIPlL2"
+}

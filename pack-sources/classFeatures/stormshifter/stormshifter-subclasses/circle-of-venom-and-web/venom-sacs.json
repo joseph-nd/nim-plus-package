@@ -1,0 +1,57 @@
+{
+	"name": "Venom Sacs",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-venom-and-web/venom-sacs.webp",
+	"system": {
+		"macro": "",
+		"identifier": "venom-sacs",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Spend mana on a beastform hit",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When your attack hits in beastform, you may spend mana to increase your Primary Die by 1 for each mana spent (up to the tier of spells you have unlocked). When you crit in beastform, the target is Poisoned until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-venom-and-web",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wje3Hdkm9xdzmoal",
+	"folder": "8d98f8c1df4a5f4b"
+}

@@ -1,0 +1,93 @@
+{
+	"name": "Gadget: Scrapbot Swarm",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/scrapbot-swarm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "scrapbot-swarm",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "ss-damage",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d6",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "ss-damage-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "ss-damage"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reach 4 | 2 Actions | 2 uses/Safe Rest</strong></p><p>Let loose <strong>INT + STR</strong> tiny constructs, each dealing 1d6 damage to any target within Reach 4.</p><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Dense Swarm</strong></li><li><strong>Sharpened Scrap</strong></li><li><strong>Hearty Scrap</strong></li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cAQF9VsqCvtMMZRf",
+	"folder": "cc0bae2de7db5a7f"
+}

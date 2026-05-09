@@ -1,0 +1,104 @@
+{
+	"name": "Throwmaturgy",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/throwmaturgy.webp",
+	"system": {
+		"macro": "",
+		"identifier": "throwmaturgy",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Reach 3/FD",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "throwmaturgy-dmg",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d6+@abilities.strength.mod",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "throwmaturgy-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "throwmaturgy-dmg"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 2,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 3
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions · Reach 3/Fury Die.</strong></p><p><em>Muscle Spell.</em> Throw a Clobbered creature at an enemy; both suffer 1d6+STR+FD damage and land Prone (if Medium or smaller). <strong>OR:</strong> for 1 action throw a rock or similarly throwable object instead.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 3,
+				"max": 15
+			},
+			"reach": {
+				"min": 3,
+				"max": 15
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 0
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3TlCxIHydWRsTtG8",
+	"folder": "1017a79ccd93f00a"
+}

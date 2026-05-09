@@ -1,0 +1,57 @@
+{
+	"name": "Trick up the Sleeve",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-trickshot/trick-up-the-sleeve.webp",
+	"system": {
+		"macro": "",
+		"identifier": "trick-up-the-sleeve",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You gain proficiency with Improvised Weapons and treat them as having Thrown 4. Vicious Opportunist also applies to Thrown weapons.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-trickshot",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jyrgdWDSy0YpDR8L",
+	"folder": "0447d4c0b9c6031b"
+}

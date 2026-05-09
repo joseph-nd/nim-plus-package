@@ -1,0 +1,25 @@
+{
+	"name": "Tools of the Spider",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/the-cheat/tools-of-the-spider.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tools-of-the-spider",
+		"rules": [],
+		"description": "<p><em>There is nothing quite like the spider's deadly elegance.</em></p><p>LEVEL 3</p><p><strong>Twinned Threads.</strong> Action: Link two creatures within Range 6 with an ethereal web. When a Linked creature is dealt damage, other Linked creatures are dealt half that amount as Psychic damage (ignoring armor). You can only maintain one web at time.</p><p><strong>Ensnare.</strong> Action: Target creature within Reach 6 becomes Slowed, or Restrained on a failed DEX save (DC 10+KEY). Linked creatures have disadvantage on the save.</p><p>LEVEL 7</p><p><strong>Hidden Webs.</strong> You may Link two creatures you can see when you roll Initiative.</p><p><strong>Spider Climb.</strong> You gain the ability to climb featureless walls and ceilings. You may attack while climbing as long as you have at least one hand touching a surface.</p><p>LEVEL 11</p><p><strong>Woven Webs.</strong> Twinned Threads now Links up to three creatures. When you apply a condition to a Linked creature, you may also apply it to all other Linked creatures.</p><p>LEVEL 15</p><p><strong>Nexus of Pain.</strong> Linked creatures now share full damage with other Linked creatures, and when one dies, the others become Dazed.</p>",
+		"parentClass": "the-cheat",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0jUyJbHh2tE0xXXn",
+	"folder": "1e0ad9a337fc2927"
+}

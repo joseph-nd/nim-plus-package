@@ -1,0 +1,67 @@
+{
+	"name": "Broom Flight",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/broom-flight.webp",
+	"system": {
+		"macro": "",
+		"identifier": "broom-flight",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 mana",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "1 hour or until you fall",
+				"quantity": 1,
+				"type": "hour"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Spend 1 mana to gain flying for 1 hour (or until you fall). When crit while flying, you fall, landing Prone.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "K1LBMBPgU7H1U7yY",
+	"folder": "cb7cf327da44bff5"
+}

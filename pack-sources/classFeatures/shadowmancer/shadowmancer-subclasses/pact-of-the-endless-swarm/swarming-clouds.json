@@ -1,0 +1,57 @@
+{
+	"name": "Swarming Clouds",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-endless-swarm/swarming-clouds.webp",
+	"system": {
+		"macro": "",
+		"identifier": "swarming-clouds",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Enemies within Reach 2 of your hives attack with disadvantage. Your Hives are immune to non-critical Ranged attacks.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-endless-swarm",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yReq2Fr8ggkqaSK6",
+	"folder": "b510bf7d6be8cbd4"
+}

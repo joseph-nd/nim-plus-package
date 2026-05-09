@@ -1,0 +1,136 @@
+{
+	"name": "Hexbinder",
+	"type": "class",
+	"img": "modules/nim-plus-package/assets/classImages/hexbinder.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hexbinder",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "hexbndrGearGarb1",
+				"identifier": "",
+				"label": "Starting Gear - Adventurer's Garb",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.Bdm2ynI2J7Xt9FNf"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "hexbndrGearDagr1",
+				"identifier": "",
+				"label": "Starting Gear - Dagger",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.O1sCIVQKfAqSlDT5"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "hexbndrGearBckt1",
+				"identifier": "",
+				"label": "Starting Gear - Portable Cauldron (Bucket)",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.g3RMBTR9kDY5jLYW"
+			}
+		],
+		"armorProficiencies": [
+			"cloth"
+		],
+		"classLevel": 1,
+		"complexity": 3,
+		"description": "<p><em>Plagued by a cough, my lovely? A festering wound? A stain on your spirit? Sip this down, you'll feel right as rain by morning—don't mind the taste, it's meant to be bitter!</em></p><p>They come to her with trembling pleas: a child's fever, a lover's betrayal, a shadow too heavy to lift. She listens, sharp-eyed, and offers what fits—balm or bane, as the need demands. But cross her, and you'll learn: the tongue that soothes can whisper your doom, and the hands that mend can twist your fate to ruin.</p><p>A hexbinder's magic isn't flashy nor kind. It's practical, rooted in the muck and murmur of the old world—salves whispered over flame, curses knotted into thread, remedies older than the hills. She mends the broken and breaks the foolish, her hands stained with both mercy and malice. <strong>The Hexbinder:</strong></p><ul><li><strong>Commands the powers of affliction and remedy.</strong> Mastering both healing and hexing to mend allies or curse foes.</li><li><strong>Weaves mystical sigils.</strong> To control, transform, and bind to her will.</li><li><strong>Peers beyond the veil with ancient rites.</strong> Gain forbidden knowledge and twist fate with uncanny foresight.</li></ul>",
+		"groupIdentifiers": [
+			"hexbinder-progression",
+			"hexbinder-afflictions",
+			"hexbinder-mystic-marks"
+		],
+		"keyAbilityScores": [
+			"intelligence",
+			"will"
+		],
+		"hitDieSize": 8,
+		"hpData": [],
+		"savingThrows": {
+			"advantage": "will",
+			"disadvantage": "dexterity"
+		},
+		"abilityScoreData": {
+			"4": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"5": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"8": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"9": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"12": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"13": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"16": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"17": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"20": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "capstone"
+			}
+		},
+		"mana": {
+			"formula": "(max(@intelligence, 0) * 3) + @level",
+			"recovery": "safeRest"
+		},
+		"resources": [],
+		"weaponProficiencies": [
+			"Blades",
+			"Wands"
+		]
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fnJVI6sJT6vfXPzP"
+}

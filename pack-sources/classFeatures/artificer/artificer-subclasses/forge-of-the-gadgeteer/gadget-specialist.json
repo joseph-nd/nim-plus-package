@@ -1,0 +1,70 @@
+{
+	"name": "Gadget Specialist",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-gadgeteer/gadget-specialist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "gadget-specialist",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "gadgSpecGrant",
+				"identifier": "",
+				"label": "Gadget: Cheer Bot",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-class-features.Item.1JLi5qfwGdhMO9bC"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You gain the Cheer Bot gadget for free (doesn't count against your Eureka! choices).</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-gadgeteer",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wmVX8prG1epITg1u",
+	"folder": "47be9915aedfcfeb"
+}

@@ -1,0 +1,63 @@
+{
+	"name": "Brittle",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/brittle.webp",
+	"system": {
+		"macro": "",
+		"identifier": "brittle",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Concentration",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Target suffers 1 damage for each space it moves (or is moved). Level 10: 2 damage/space.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-afflictions",
+		"gainedAtLevels": [
+			3,
+			7,
+			12
+		],
+		"selectionCountByLevel": {
+			"3": 1,
+			"7": 1,
+			"12": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "lmvGVmSnG5ZFT8wk",
+	"folder": "cb7cf327da44bff5"
+}

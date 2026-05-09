@@ -1,0 +1,57 @@
+{
+	"name": "Unlimited Power",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-perfection/unlimited-power.webp",
+	"system": {
+		"macro": "",
+		"identifier": "unlimited-power",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Safe Rest",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Safe Rest) Cast a Signature spell without spending actions or mana, automatically upcast to the highest unlocked tier. Spellshaper abilities still cost Mana.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-perfection",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VCrwAv56B8NZWQ0a",
+	"folder": "9ca63d12f2a45d46"
+}

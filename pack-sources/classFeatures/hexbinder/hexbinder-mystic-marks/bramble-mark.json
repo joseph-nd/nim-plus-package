@@ -1,0 +1,63 @@
+{
+	"name": "Bramble Mark",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/bramble-mark.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bramble-mark",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "WIL attacks or 1 minute",
+				"quantity": 1,
+				"type": "minute"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Touch an ally and grant them an aura of mystical thorns (max 1 ally at a time). Attackers take damage equal to the ally's armor whenever they Defend. The thorns last for WIL attacks or 1 min.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sAXqZTDVNwH81gcP",
+	"folder": "cb7cf327da44bff5"
+}

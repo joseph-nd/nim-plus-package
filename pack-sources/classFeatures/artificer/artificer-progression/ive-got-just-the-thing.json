@@ -1,0 +1,57 @@
+{
+	"name": "I've Got JUST the Thing!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/ive-got-just-the-thing.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ive-got-just-the-thing",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(1/Safe Rest)</strong> You pull a simple mechanical contraption out of your pack that is JUST the thing needed for the moment (where something like that could help). Think: iron wedge, wrench, lockpick, block &amp; tackle, tripwire — NOT an anti-gravity device.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8DKERz0H5cNKW1Tx",
+	"folder": "cc0bae2de7db5a7f"
+}

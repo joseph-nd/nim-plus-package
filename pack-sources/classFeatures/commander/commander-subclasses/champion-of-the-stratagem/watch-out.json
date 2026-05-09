@@ -1,0 +1,57 @@
+{
+	"name": "Watch Out!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-stratagem/watch-out.webp",
+	"system": {
+		"macro": "",
+		"identifier": "watch-out",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter; ally within Reach 12 is attacked",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) <strong>Reaction</strong> (when an ally within Reach 12 is attacked): Cause the attack targeting your ally to miss.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-stratagem",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Ev9O8I61KcVUlexA",
+	"folder": "9e134b76d1a318f2"
+}

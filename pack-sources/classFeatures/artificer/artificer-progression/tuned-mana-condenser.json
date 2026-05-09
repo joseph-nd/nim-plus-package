@@ -1,0 +1,59 @@
+{
+	"name": "Tuned Mana Condenser",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/tuned-mana-condenser.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tuned-mana-condenser",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Mana Dice improve in size as you level up.</p><ul><li><strong>Level 5:</strong> d4 → d6</li><li><strong>Level 10:</strong> d6 → d8</li><li><strong>Level 14:</strong> d8 → d10</li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			5,
+			10,
+			14
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "OK0iRHF7pBsdiocK",
+	"folder": "cc0bae2de7db5a7f"
+}

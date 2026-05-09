@@ -1,0 +1,57 @@
+{
+	"name": "Voidstrike",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-void/voidstrike.webp",
+	"system": {
+		"macro": "",
+		"identifier": "voidstrike",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You and your allies can attack between spaces your minions occupy as if they were the same space. Gain advantage when attacking this way.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-void",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oNDUsJacgjeFUsfa",
+	"folder": "0cdd37a0287b8460"
+}

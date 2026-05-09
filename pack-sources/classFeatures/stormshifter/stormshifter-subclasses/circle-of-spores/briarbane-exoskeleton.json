@@ -1,0 +1,57 @@
+{
+	"name": "Direbeast Form: Briarbane Exoskeleton",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/briarbane-exoskeleton.webp",
+	"system": {
+		"macro": "",
+		"identifier": "briarbane-exoskeleton",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 Action — Direbeast transformation",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until Beastshift ends",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>1 Action:</strong> Transform into a Large beast. Gain (DEX+LVL) ×2 temp HP and +10 Armor (until Beastshift ends) and:</p><ul><li><strong>Clobbered.</strong> 1 Action. Reach 2. 3d20, on crit: Knockback 4.</li><li><strong>C'mere You!</strong> 1 Action. Reach 2. 1d20, on damage: Grappled.</li><li><strong>Catapult.</strong> 1 Action. Range 12. 1d20+4 (must have something large enough to throw, like something you previously grappled).</li></ul>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ghrWr3kuRkKx0ZZH",
+	"folder": "9ee17510990a659f"
+}

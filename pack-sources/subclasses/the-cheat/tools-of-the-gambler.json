@@ -1,0 +1,25 @@
+{
+	"name": "Tools of the Gambler",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/the-cheat/tools-of-the-gambler.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tools-of-the-gambler",
+		"rules": [],
+		"description": "<p><em>Trust me—this time it's a SURE THING. Choose this subclass if you want to risk it all with dangerous plays and walk the line of ruin.</em></p><p>LEVEL 3</p><p><strong>All In.</strong> When you Sneak Attack, you may go <em>All In</em>: Roll a single All In die; if it rolls higher than average, maximize ALL of your sneak attack dice; otherwise minimize them.</p><p><strong>That was Just a Practice Roll.</strong> (1/encounter) You may reroll ANY die.</p><p><strong>It's All Fun and Games.</strong> If you're caught cheating at a game, competition, or wager, you gain advantage on skill checks to get out of the consequences.</p><p>LEVEL 7</p><p><strong>Pocket Aces!</strong> (1/Safe Rest) You can set a friendly creature's Initiative roll to 20.</p><p><strong>Double Or Nothing!</strong> When you lose your \"All In\" roll, you may try once more. If you fail again, your attack misses entirely and your turn ends.</p><p>LEVEL 11</p><p><strong>Play the Odds.</strong> (1/attack) When a creature hits you, you may force them to reroll their Primary Die. If the roll is lower, the attack misses; otherwise, it crits.</p><p>LEVEL 15</p><p><strong>Odds Maker.</strong> (1/round) Action: Change a die a Distracted creature rolls to any result.</p>",
+		"parentClass": "the-cheat",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "1e0ad9a337fc2927",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "zvC9EZXHiX6yMp8n"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Calm Mind",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-the-balance/calm-mind.webp",
+	"system": {
+		"macro": "",
+		"identifier": "calm-mind",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain advantage on <strong>Influence</strong> and <strong>Naturecraft</strong> checks when Assessing your quarry, as well as on any skill check related to monstrosities and corrupted beings.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-the-balance",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "T8DbiGkWCbRhzQYy",
+	"folder": "d617b01084ed8654"
+}

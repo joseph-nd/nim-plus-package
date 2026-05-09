@@ -1,0 +1,57 @@
+{
+	"name": "Purge the Unworthy",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-purification/purge-the-unworthy.webp",
+	"system": {
+		"macro": "",
+		"identifier": "purge-the-unworthy",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 3,
+				"radius": 1,
+				"shape": "cone",
+				"width": 1
+			}
+		},
+		"description": "<p>When you crit with <em>Holy Brand</em>, other enemies in <strong>Cone 3</strong> behind it also take the same amount as <strong>Fire damage</strong>, or half on a DEX save (DC 10+KEY).</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-purification",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yByYKSTgvXO0Uc3n",
+	"folder": "85b3aca5179476ab"
+}

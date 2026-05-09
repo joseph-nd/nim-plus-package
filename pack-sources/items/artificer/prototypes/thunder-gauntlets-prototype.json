@@ -1,0 +1,126 @@
+{
+	"name": "Thunder Gauntlets Prototype",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/artificer/prototypes/thunder-gauntlets-prototype.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "tgp-damage",
+					"type": "damage",
+					"damageType": "thunder",
+					"formula": "1d4 + @intelligence",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "tgp-damage-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "tgp-damage"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "tgp-damage-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "tgp-damage"
+							}
+						],
+						"miss": [
+							{
+								"id": "tgp-damage-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "tgp-damage"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": true
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Reach 4 | 1d4 + INT thunder damage</strong></p><p>You may roll 1 additional d4 for damage; if you do, for each 1 rolled, you are pushed back 1 space and knocked Prone.</p><p><em>At Level 2, this prototype is upgraded into the full Thunder Gauntlets invention.</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Prototype",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 1,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": 4
+			},
+			"selected": [
+				"light"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QVoFRRgR5dS4pxv8",
+	"folder": null
+}

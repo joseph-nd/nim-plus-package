@@ -1,0 +1,60 @@
+{
+	"name": "Abjurer",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-wards/abjurer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "abjurer",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Level 3.</strong> Defensive spells you cast on yourself (Flame Barrier, Frost Shield, and Alacrity) are always cast as if you spent +1 mana on them (ignoring your usual upcasting limit).</p><p><strong>Level 7.</strong> Defensive spells you cast on yourself cost 1 less mana.</p><p><strong>Level 11.</strong> The 1st defensive spell you cast on yourself each encounter while Dying is free and does not require a save. The 1st ward you cast on a Dying ally each encounter also grants them +1 action.</p><p><strong>Level 15.</strong> Whenever you cast a defensive spell, you may select a 2nd creature within Reach to gain its benefits.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-wards",
+		"gainedAtLevels": [
+			3,
+			7,
+			11,
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FKQQspmPmCPbxdPp",
+	"folder": "09ffe862ff55a67c"
+}

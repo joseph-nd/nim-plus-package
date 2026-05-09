@@ -1,0 +1,100 @@
+{
+	"name": "Circle of Thorns",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/hexbinder/circle-of-thorns.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-thorns",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "1 minute or until 3 hits",
+				"quantity": 1,
+				"type": "minute"
+			},
+			"effects": [
+				{
+					"id": "circleThornsDamage1",
+					"type": "damage",
+					"damageType": "necrotic",
+					"formula": "@key * 1d6",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "circleThornsHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "circleThornsDamage1"
+							}
+						]
+					},
+					"canCrit": false,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions, Reach 8</strong></p><p>Fill every empty adjacent space around a creature with a growth of thorns. Creatures who enter the area must make a DEX save or take KEYd6 damage and become Restrained; on save, half damage only. Lasts up to 1 min or until it has dealt damage 3 times.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 8
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "hexbinder",
+		"tier": 4,
+		"classes": [
+			"hexbinder"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3M58K9x3rAZSs67O",
+	"folder": "c367afd06b845ebf"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Limitless Wrath",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-majesty/limitless-wrath.webp",
+	"system": {
+		"macro": "",
+		"identifier": "limitless-wrath",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you would break concentration, you don't (1/encounter).</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-majesty",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "eo2OEmDaHJE3keWU",
+	"folder": "4fd35ea7e7e7eee7"
+}

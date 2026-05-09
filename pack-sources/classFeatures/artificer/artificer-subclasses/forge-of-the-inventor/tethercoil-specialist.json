@@ -1,0 +1,70 @@
+{
+	"name": "Tethercoil Specialist",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-inventor/tethercoil-specialist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tethercoil-specialist",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "tcoilSpecGrant",
+				"identifier": "",
+				"label": "Invention: Tethercoil",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-class-features.Item.cJ7I09l89Gw73Bdm"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You gain the Tethercoil invention for free (doesn't count against your Eureka! choices).</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-inventor",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "J9IHwWdTuXnquQ5C",
+	"folder": "8f42ddbf5033b54d"
+}

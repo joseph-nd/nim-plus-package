@@ -1,0 +1,57 @@
+{
+	"name": "Rampant Brood",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-endless-swarm/rampant-brood.webp",
+	"system": {
+		"macro": "",
+		"identifier": "rampant-brood",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Your Hives can Interpose for you or allies. Whenever a Hive dies, it spawns a swarm twice. Whenever you command your minions, your Hives can also move.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-endless-swarm",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "6j6YoXeSNAMPyGfg",
+	"folder": "b510bf7d6be8cbd4"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Guard Breaker",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/guard-breaker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "guard-breaker",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Safe Rest — when Defending vs melee",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Safe Rest) When Defending against melee attack, double your armor. The attacker becomes Incapacitated until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-honorseeker",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gnw6RbeczOpRibPz",
+	"folder": "7916196cc2dd524f"
+}

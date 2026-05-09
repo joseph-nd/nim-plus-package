@@ -1,0 +1,57 @@
+{
+	"name": "Right Where I Want You",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/right-where-i-want-you.webp",
+	"system": {
+		"macro": "",
+		"identifier": "right-where-i-want-you",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You have advantage against enemies with The Upper Hand.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-honorseeker",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8FLpHHN3mg4ex2rh",
+	"folder": "7916196cc2dd524f"
+}

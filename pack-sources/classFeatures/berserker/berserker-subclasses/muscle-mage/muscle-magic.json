@@ -1,0 +1,198 @@
+{
+	"name": "Muscle Magic",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/muscle-mage/muscle-magic.webp",
+	"system": {
+		"macro": "",
+		"identifier": "muscle-magic",
+		"rules": [
+			{
+				"id": "muscle-magic-grant-l3",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.FDBTQ3AOLgOsv2Up",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.3TlCxIHydWRsTtG8"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 3
+					}
+				},
+				"label": "Muscle Magic — L3+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "muscle-magic-grant-l6",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.WakBEpY89qEcyXip",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.gou01OpghPp6a2v3"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				},
+				"label": "Muscle Magic — L6+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "muscle-magic-grant-l8",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.wwLXkQHmXjCkO14H"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				},
+				"label": "Muscle Magic — L8+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "muscle-magic-grant-l10",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.VKwQLP9B6anpHucu"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				},
+				"label": "Muscle Magic — L10+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "muscle-magic-grant-l12",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.ifK7NGN4ZWJTO3np"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 12
+					}
+				},
+				"label": "Muscle Magic — L12+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "muscle-magic-grant-l14",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"utilityOnly": false,
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.SBNsKeKXoAt1e2ju"
+				],
+				"mode": "auto",
+				"count": null,
+				"predicate": {
+					"level": {
+						"min": 14
+					}
+				},
+				"label": "Muscle Magic — L14+ spells",
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your muscles have \"unlocked the secrets of the arcane\" (and any fool who disputes that is about to have a bad day). You lose access to the Savage Arsenal and all weapon proficiencies but gain access to \"Muscle Spells\" which require you to have a certain number of Fury Dice to cast.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "muscle-mage",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fYTLKbVFxM7TxO1A",
+	"folder": "3fd0a009eb1db483"
+}

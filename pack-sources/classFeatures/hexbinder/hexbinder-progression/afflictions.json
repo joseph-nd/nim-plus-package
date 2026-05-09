@@ -1,0 +1,82 @@
+{
+	"name": "Afflictions",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/withered.webp",
+	"system": {
+		"macro": "",
+		"identifier": "afflictions",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "afflictionsGrantWith",
+				"identifier": "",
+				"label": "Affliction: Withered",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-class-features.Item.ZEBFlsNUJ1wb7IAZ"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "afflictionsGrantFrnz",
+				"identifier": "",
+				"label": "Affliction: Frenzied",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-class-features.Item.KVlQFLdcA7DM3kUY"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Concentration",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can Afflict a max of 1 creature at a time with a max of INT different Afflictions. Afflictions last for as long as you maintain Concentration (DC 10 STR save when crit).</p><hr><p><strong>Level 1:</strong> You know the Withered and Frenzied Afflictions.</p><p><strong>Level 3:</strong> Choose a 3rd Affliction.</p><p><strong>Level 7:</strong> Choose a 4th Affliction.</p><p><strong>Level 12:</strong> Choose a 5th Affliction.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cZ3Hw13hACK4AIfl",
+	"folder": "cb7cf327da44bff5"
+}

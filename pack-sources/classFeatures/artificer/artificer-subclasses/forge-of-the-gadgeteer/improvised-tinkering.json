@@ -1,0 +1,57 @@
+{
+	"name": "Improvised Tinkering",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-gadgeteer/improvised-tinkering.webp",
+	"system": {
+		"macro": "",
+		"identifier": "improvised-tinkering",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(INT/Safe Rest)</strong> You can use any Gadget without using a charge — even if you haven't invented it or have no charges remaining.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-gadgeteer",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "py54s7SOzzNuqro0",
+	"folder": "47be9915aedfcfeb"
+}

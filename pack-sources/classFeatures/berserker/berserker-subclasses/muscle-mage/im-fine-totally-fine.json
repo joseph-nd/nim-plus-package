@@ -1,0 +1,57 @@
+{
+	"name": "I'm Fine! Totally Fine!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/muscle-mage/im-fine-totally-fine.webp",
+	"system": {
+		"macro": "",
+		"identifier": "im-fine-totally-fine",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Safe Rest — when you drop to 0 hp",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Safe Rest) When you drop to 0 hp, give a number of actions out to your allies equal to the number of Fury Dice you had.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "muscle-mage",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "dkHU1cVuKjQry35g",
+	"folder": "3fd0a009eb1db483"
+}

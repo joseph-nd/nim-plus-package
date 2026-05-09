@@ -1,0 +1,57 @@
+{
+	"name": "Hit The Weak Spot!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-stratagem/hit-the-weak-spot.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hit-the-weak-spot",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "ally within Reach 12 attacks an enemy",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reaction</strong> (as an ally within Reach 12 attacks an enemy): Your ally's attack <strong>ignores Armor</strong>.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-stratagem",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8o2Mtb3yUEoo6HB9",
+	"folder": "9e134b76d1a318f2"
+}

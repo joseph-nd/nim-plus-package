@@ -1,0 +1,57 @@
+{
+	"name": "Woven Webs",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-spider/woven-webs.webp",
+	"system": {
+		"macro": "",
+		"identifier": "woven-webs",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Twinned Threads</em> now Links <strong>up to three creatures</strong>. When you apply a condition to a Linked creature, you may also apply it to <strong>all other Linked creatures</strong>.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-spider",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QNSKLy59TsU1nPDQ",
+	"folder": "7e8ca6696cb73e0a"
+}

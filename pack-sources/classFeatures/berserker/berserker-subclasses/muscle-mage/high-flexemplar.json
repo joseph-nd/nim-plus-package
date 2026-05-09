@@ -1,0 +1,68 @@
+{
+	"name": "High Flexemplar",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/muscle-mage/high-flexemplar.webp",
+	"system": {
+		"macro": "",
+		"identifier": "high-flexemplar",
+		"rules": [
+			{
+				"id": "high-flex-wounds",
+				"type": "maxWounds",
+				"value": "4",
+				"label": "High Flexemplar — +4 Max Wounds",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain +4 max wounds. \"I'm Fine! Totally Fine!\" is unlimited.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "muscle-mage",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FzCbek1rGgt9oyq9",
+	"folder": "3fd0a009eb1db483"
+}

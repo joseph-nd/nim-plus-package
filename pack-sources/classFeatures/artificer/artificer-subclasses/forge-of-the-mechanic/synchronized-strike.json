@@ -1,0 +1,57 @@
+{
+	"name": "Synchronized Strike",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-mechanic/synchronized-strike.webp",
+	"system": {
+		"macro": "",
+		"identifier": "synchronized-strike",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Modular Expansion (1).</strong> Your companion gains another module slot.</p><p><strong>Synchronized Strike.</strong> When you take the Attack action, your companion gains a free Mana Die to attack the same target. (Expires if not used.)</p><p><strong>Superconductor.</strong> Increment your Mana Dice one step.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-mechanic",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "L01qDhPnGwITeRf5",
+	"folder": "9e74538446160a31"
+}

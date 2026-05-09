@@ -1,0 +1,57 @@
+{
+	"name": "Umbrous Mark",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-darkness/umbrous-mark.webp",
+	"system": {
+		"macro": "",
+		"identifier": "umbrous-mark",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 Mana to apply Blinded",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until end of their next turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Lifebinding Spirit is marked by darkness and deals <strong>Necrotic damage</strong>. When you, your Lifebinding Spirit or an ally within Reach 4 deal Necrotic damage to an enemy, you may spend <strong>1 Mana</strong> to also inflict <strong>Blinded</strong> on that enemy until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-darkness",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kfp1zNBrYYebmnno",
+	"folder": "bab01ef1cd1e588d"
+}

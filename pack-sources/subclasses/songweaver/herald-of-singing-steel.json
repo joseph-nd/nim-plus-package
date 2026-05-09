@@ -1,0 +1,25 @@
+{
+	"name": "Herald of Singing Steel",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/songweaver/herald-of-singing-steel.webp",
+	"system": {
+		"macro": "",
+		"identifier": "herald-of-singing-steel",
+		"rules": [],
+		"description": "<p><em>Your blade cuts as deeply as your wit. Choose this subclass if you want to blend musical mastery with deadly bladework.</em></p><p><strong>Class Complexity:</strong> ♦♦◊◊</p><p>LEVEL 3</p><p><strong>Deft of Hand and Mind.</strong> Increase your max uses of Songweaver's Inspiration by DEX.</p><p><strong>Songwoven Blade.</strong> Whenever you make a melee attack, you can expend a use of your Songweaver's Inspiration to do one of the following:</p><ul><li>Add an additional WILL d4s to the damage, and choose ANY to be the Primary Die.</li><li>Degrade the target's Armor 1 step (Heavy » Medium » None) for 1 round.</li></ul><p>LEVEL 7</p><p><strong>The Setup.</strong> Whenever you miss an attack, regain 1 use of Songweaver's Inspiration (this expires when combat ends).</p><p><strong>Inspired Defense.</strong> Whenever you expend a Songweaver's Inspiration charge, the beneficiary gains 10 Temp HP this round.</p><p>LEVEL 11</p><p><strong>Ha-HA!</strong> Creatures you've Taunted have disadvantage when attacking you and disadvantage 2 when attacking others. Whenever you crit with a melee attack, you may Taunt them.</p><p>LEVEL 15</p><p><strong>Ballad Blade.</strong> (1/round) You can use Songwoven Blade without spending a use of Songweaver's Inspiration (this still triggers Inspired Defense).</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "n4yw1QtrfhZQAgoh",
+	"folder": "3b74d88613071789"
+}

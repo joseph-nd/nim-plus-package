@@ -1,0 +1,60 @@
+{
+	"name": "Soothsayer",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/soothsayer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "soothsayer",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "encounter",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever combat begins, roll a Futuresight Die [[/r 1d6]] and set it aside. Expend it to add or subtract its result from any die a creature within Reach 4 rolls during this encounter.</p><hr><p>Level 10: Roll 2 Futuresight Dice instead, they have Reach 8.</p><p>Level 14: Roll your Futuresight Dice with advantage.</p><p>Level 17: Increase your Futuresight Dice to d8s.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			5,
+			10,
+			14,
+			17
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "spdw4N0ckeJ4n6rw",
+	"folder": "cb7cf327da44bff5"
+}

@@ -1,0 +1,80 @@
+{
+	"name": "\"Teleport\"",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/teleport.webp",
+	"system": {
+		"macro": "",
+		"identifier": "teleport",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Requires 4 FD",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action · Self.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 4 FD.</strong> Leap up to a number of spaces equal to the sum of your Fury Dice.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 1
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 4
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wwLXkQHmXjCkO14H",
+	"folder": "1017a79ccd93f00a"
+}

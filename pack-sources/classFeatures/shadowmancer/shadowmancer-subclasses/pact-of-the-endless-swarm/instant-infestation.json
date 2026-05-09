@@ -1,0 +1,57 @@
+{
+	"name": "Instant Infestation",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-endless-swarm/instant-infestation.webp",
+	"system": {
+		"macro": "",
+		"identifier": "instant-infestation",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Use Pilfered Power",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>2 Actions: Use Pilfered Power to spawn INT Hives. You can expend swarm dice whenever an enemy comes within Reach 6 of a Hive.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-endless-swarm",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "BowuI62Jmr2BNXcZ",
+	"folder": "b510bf7d6be8cbd4"
+}

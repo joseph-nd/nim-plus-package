@@ -1,0 +1,57 @@
+{
+	"name": "Ghastly Fate",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-torment/ghastly-fate.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ghastly-fate",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Terror of Battle now also affects all enemies within Reach 3 of the death.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-torment",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "qoQHktGoLpXeMGeZ",
+	"folder": "a1d65566752c5a59"
+}

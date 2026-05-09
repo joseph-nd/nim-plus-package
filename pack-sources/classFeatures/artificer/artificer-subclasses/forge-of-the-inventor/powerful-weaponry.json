@@ -1,0 +1,57 @@
+{
+	"name": "Powerful Weaponry",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-inventor/powerful-weaponry.webp",
+	"system": {
+		"macro": "",
+		"identifier": "powerful-weaponry",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you use 2 or more Mana Dice with a weapon invention, gain one of the following bonuses:</p><ul><li><strong>Thunder Gauntlets:</strong> Push +1 space per Mana Die.</li><li><strong>Manablade:</strong> Can hit +1 adjacent target.</li><li><strong>Manabolt Cannon:</strong> Deal damage in a cone (half range) instead of a line.</li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-inventor",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gFSQIvyBtvuVVLjJ",
+	"folder": "8f42ddbf5033b54d"
+}

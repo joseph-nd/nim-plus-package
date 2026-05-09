@@ -1,0 +1,57 @@
+{
+	"name": "Double Or Nothing!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-gambler/double-or-nothing.webp",
+	"system": {
+		"macro": "",
+		"identifier": "double-or-nothing",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "on All In failure",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you lose your \"All In\" roll, you may try once more. If you fail again, your attack misses entirely and your turn ends.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-gambler",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DfAtykNJnMioZVhE",
+	"folder": "c1c7b44629992495"
+}

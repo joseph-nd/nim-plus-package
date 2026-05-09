@@ -1,0 +1,25 @@
+{
+	"name": "Herald of Torment",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/songweaver/herald-of-torment.webp",
+	"system": {
+		"macro": "",
+		"identifier": "herald-of-torment",
+		"rules": [],
+		"description": "<p><em>Songweavers are often thought of as musicians that play uplifting songs and tell hopeful stories, but a Herald of Torment uses that same ability to instill fear and dominate the mind. These Songweavers focus their attention on a single enemy, oppressing them with dread until they succumb.</em></p><p><strong>Class Complexity:</strong> ♦◊◊◊</p><p>LEVEL 3</p><p><strong>Vicious Torment.</strong> When you use Vicious Mockery, instead of Taunting, the target becomes Frightened until you Frighten another creature this way.</p><p><strong>Flee, Coward!</strong> When you use Vicious Mockery on a Frightened target, they are forced to move half their speed away from you (Legendary monsters don't have a speed).</p><p>LEVEL 7</p><p><strong>The Terror of Battle.</strong> (1/turn) When a creature Frightened by you dies, the nearest foe takes LVL psychic damage (ignoring armor) and becomes Frightened by you.</p><p>LEVEL 11</p><p><strong>Scared Stiff.</strong> When you crit a creature Frightened by you, they are knocked Prone and Dazed.</p><p>LEVEL 15</p><p><strong>Weak Mind, Easy Prey.</strong> Your spells have advantage against Frightened creatures, and they have disadvantage on saves against them.</p><p><strong>Ghastly Fate.</strong> Your Terror of Battle now also affects all enemies within Reach 3 of the death.</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cRkRgPJVfQx0QUqe",
+	"folder": "3b74d88613071789"
+}

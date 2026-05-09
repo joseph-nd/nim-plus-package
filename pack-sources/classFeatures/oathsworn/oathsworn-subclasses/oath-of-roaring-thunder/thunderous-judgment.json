@@ -1,0 +1,57 @@
+{
+	"name": "Thunderous Judgment",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-roaring-thunder/thunderous-judgment.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thunderous-judgment",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 Mana",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Mana) Exchange places with an ally outside your aura that is being attacked (this counts as Interposing) and refresh your Harbinger of the Storm or Thunderous Strike.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-roaring-thunder",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gfMcVvY4UFpl3AcY",
+	"folder": "a8e6fd43cf69d40a"
+}

@@ -1,0 +1,55 @@
+{
+	"name": "Old Oakum",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/old-oakum.webp",
+	"system": {
+		"macro": "",
+		"identifier": "old-oakum",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Legend.</em> Spaces within Reach 2 is difficult terrain for enemies. When an enemy would move adjacent to an ally, you may move it back 1 space and Restrain it. Then he goes away.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "songweaver-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kAX7XVrnZv1pEAgs",
+	"folder": "45629599e634de64"
+}

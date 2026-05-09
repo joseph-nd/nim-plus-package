@@ -1,0 +1,57 @@
+{
+	"name": "Grand Mechanist",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/grand-mechanist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "grand-mechanist",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+1 to any 2 of your stats.</p><p><strong>(1/encounter)</strong> You may reroll any Mana Dice, replacing them with d20s.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			20
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "h1GXRkSTFbwunJ8j",
+	"folder": "cc0bae2de7db5a7f"
+}

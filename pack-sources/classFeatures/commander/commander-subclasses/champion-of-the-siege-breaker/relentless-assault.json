@@ -1,0 +1,57 @@
+{
+	"name": "Relentless Assault",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-siege-breaker/relentless-assault.webp",
+	"system": {
+		"macro": "",
+		"identifier": "relentless-assault",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+2 Max Combat Dice. You roll Combat Dice with Advantage.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-siege-breaker",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "epNBCBQDbIprcmsh",
+	"folder": "60f5e2d909922804"
+}

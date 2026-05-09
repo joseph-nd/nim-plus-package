@@ -1,0 +1,57 @@
+{
+	"name": "Doombringer",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/doombringer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "doombringer",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 mana",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may spend 1 mana to ignore the Doomed Affliction's encounter limit.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			18
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wegZwak3WaC7geMu",
+	"folder": "cb7cf327da44bff5"
+}

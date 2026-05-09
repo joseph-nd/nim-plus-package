@@ -1,0 +1,57 @@
+{
+	"name": "Steel Yourself",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-iron/steel-yourself.webp",
+	"system": {
+		"macro": "",
+		"identifier": "steel-yourself",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "On Initiative — until end of encounter or you cash it in",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until end of encounter, or until you spend it on a hit",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you roll initiative gain Tempered: Roll STR saves with advantage. Reduce all Primary Dice rolled against you by 1. Ends when the encounter does, or when you hit, you may end it to add 1d20 damage.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-iron",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DhlgopAzDFDL791c",
+	"folder": "76ecacc9ea19d60d"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Legendkeeper",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/legendkeeper.webp",
+	"system": {
+		"macro": "",
+		"identifier": "legendkeeper",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Lose access to your \"People\" Person abilities, instead choose 2 Legends.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "YgTKO8orb5GzLpq6",
+	"folder": "86341ad2caf67365"
+}

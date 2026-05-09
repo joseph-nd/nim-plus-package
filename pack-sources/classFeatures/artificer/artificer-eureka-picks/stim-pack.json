@@ -1,0 +1,80 @@
+{
+	"name": "Gadget: Stim Pack",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/stim-pack.webp",
+	"system": {
+		"macro": "",
+		"identifier": "stim-pack",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "sp-heal",
+					"type": "healing",
+					"healingType": "healing",
+					"formula": "@intelligence * 1d8",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reach 4 | 2 uses/Safe Rest</strong></p><p>Send a construct to heal a target for <strong>INT d8 HP</strong>. They gain 1 action. At the end of their turn, they must make a DC 16 STR save or become Dazed.</p><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Long-Range Construct</strong></li><li><strong>Reduced Side Effects</strong></li><li><strong>Enhanced Stimulants</strong></li><li><strong>Improved Dosing</strong></li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "PoyLVoJQcF5kWjLf",
+	"folder": "cc0bae2de7db5a7f"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Cinderhide",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-cinder-and-ash/cinderhide.webp",
+	"system": {
+		"macro": "",
+		"identifier": "cinderhide",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Spend 2 mana on a tiered fire spell",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you cast a tiered fire spell, you may spend 2 additional mana to Beastshift for free. You gain resistance to fire damage while shifted.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-cinder-and-ash",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jhPHCCbuKUEcNYY9",
+	"folder": "5f779db1ef0d745d"
+}

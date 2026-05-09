@@ -1,0 +1,82 @@
+{
+	"name": "Invention: Thunder Gauntlets",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/thunder-gauntlets.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thunder-gauntlets",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "invPickThunderG",
+				"identifier": "",
+				"label": "Invention: Thunder Gauntlets",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.cCCC3iIjHPsqSFBS"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reach 4 | 1d6 + INT damage</strong></p><p>Deal extra damage equal to the sum of the Mana Dice rolled and push a Medium or smaller target 1 space for each Mana Die.</p><p><strong>Upgrades:</strong></p><ul><li><strong>Kinetic Redirect.</strong> (1/round) Move the target any direction instead of just away.</li><li><strong>Paired Resonators.</strong> Gain Dual Wielding.</li><li><strong>Extended Arc Coils.</strong> Gain Reach 6 instead.</li></ul><p><strong>Mishap — Recoil:</strong> You are also knocked back the same distance, landing Prone.</p><p><em>Selecting this invention adds the matching item to your inventory; the item itself carries the attack/defense effects and upgrades.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "djURtL2DENC2FpnS",
+	"folder": "cc0bae2de7db5a7f"
+}

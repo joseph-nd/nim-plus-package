@@ -1,0 +1,61 @@
+{
+	"name": "Flexpertise",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/muscle-mage/flexpertise.webp",
+	"system": {
+		"macro": "",
+		"identifier": "flexpertise",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reduce the Fury Die Requirement of your Muscle Spells by 2.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "muscle-mage",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"fdCostReduction": 2
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LvfFCoupzSMibKqr",
+	"folder": "3fd0a009eb1db483"
+}

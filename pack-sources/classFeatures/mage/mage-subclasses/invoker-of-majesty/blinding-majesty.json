@@ -1,0 +1,57 @@
+{
+	"name": "Blinding Majesty",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-majesty/blinding-majesty.webp",
+	"system": {
+		"macro": "",
+		"identifier": "blinding-majesty",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until end of their next turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 3,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(Draconic Power)</em> When you unleash your draconic aspect, all enemies within Reach 3 become <strong>Blinded</strong> until the end of their next turn, and gain <strong>Dragonmarked</strong>.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-majesty",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4ziZUG8O6ck900b8",
+	"folder": "4fd35ea7e7e7eee7"
+}

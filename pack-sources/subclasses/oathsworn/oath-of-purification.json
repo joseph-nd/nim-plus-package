@@ -1,0 +1,25 @@
+{
+	"name": "Oath of Purification",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/oathsworn/oath-of-purification.webp",
+	"system": {
+		"macro": "",
+		"identifier": "oath-of-purification",
+		"rules": [],
+		"description": "<p><em>The purity of flame is akin to divinity, purging sin and sinners alike.</em></p><p>LEVEL 3</p><p><strong>Aura of Purity.</strong> Gain an aura with a Reach of 4. When you Defend against a melee attack, the attacker gains Smoldering.</p><p><strong>Holy Brand.</strong> You may change your Radiant damage to Fire at will, and vice versa. Your weapon counts as your spellcasting focus, and your melee attacks against Smoldering enemies automatically crit, ending the condition.</p><p>LEVEL 7</p><p><strong>Blazing Vitality.</strong> When you heal a creature, all enemies adjacent the target take Fire damage equal to the amount healed.</p><p>LEVEL 11</p><p><strong>Purge the Unworthy.</strong> When you crit with Holy Brand, other enemies in Cone 3 behind it also take the same amount as Fire damage, or half on a DEX save (DC 10+KEY).</p><p>LEVEL 15</p><p><strong>Burning Crusade.</strong> You and your allies within your aura gain KEY Fire damage and inflict Smoldering on crit. +2 aura Reach.</p>",
+		"parentClass": "oathsworn",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kCta7aSKmgvdwSqB",
+	"folder": "e35476da3e89b77e"
+}

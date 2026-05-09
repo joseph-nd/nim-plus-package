@@ -1,0 +1,59 @@
+{
+	"name": "Elemental Aegis",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-wards/elemental-aegis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "elemental-aegis",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Safe Rest",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Safe Rest) <strong>Reaction</strong> (when a friendly creature is attacked): Up to KEY creatures within Reach 8 gain ALL the effects of your Elemental Wards until their next turn.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-wards",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xHUUKK7Vsv1XpS44",
+	"folder": "09ffe862ff55a67c"
+}

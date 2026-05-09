@@ -1,0 +1,57 @@
+{
+	"name": "Ballad Blade",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-singing-steel/ballad-blade.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ballad-blade",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/round",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/round) You can use Songwoven Blade without spending a use of Songweaver's Inspiration (this still triggers Inspired Defense).</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-singing-steel",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4WtoNg8VkXnvDD0b",
+	"folder": "2d8e800b66066db6"
+}

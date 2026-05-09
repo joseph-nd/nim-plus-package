@@ -1,0 +1,57 @@
+{
+	"name": "All In",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-gambler/all-in.webp",
+	"system": {
+		"macro": "",
+		"identifier": "all-in",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "on Sneak Attack",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you Sneak Attack, you may go <em>All In</em>: Roll a single All In die; if it rolls higher than average, maximize ALL of your sneak attack dice; otherwise minimize them.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-gambler",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LzVdnQ31fxjeyFcy",
+	"folder": "c1c7b44629992495"
+}

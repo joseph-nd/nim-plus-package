@@ -1,0 +1,93 @@
+{
+	"name": "Gadget: Homing Missile",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/homing-missile.webp",
+	"system": {
+		"macro": "",
+		"identifier": "homing-missile",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "hm-damage",
+					"type": "damage",
+					"damageType": "fire",
+					"formula": "1d20",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "hm-damage-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "hm-damage"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Range 8 | 2 uses/Safe Rest</strong></p><p>Fire off an explosive projectile that unerringly strikes a target. It deals 1d20 damage, ignoring cover. Does not miss on a 1.</p><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Long-Range Thrusters</strong></li><li><strong>Reliable Explosives</strong></li><li><strong>Reusable Parts</strong></li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "tmfu2h2vD0SPwdQ5",
+	"folder": "cc0bae2de7db5a7f"
+}

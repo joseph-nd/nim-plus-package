@@ -1,0 +1,57 @@
+{
+	"name": "Light in the Darkness",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-darkness/light-in-the-darkness.webp",
+	"system": {
+		"macro": "",
+		"identifier": "light-in-the-darkness",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You gain the <strong>Light Bearer Sacred Grace</strong>. Searing Light can now target <strong>Blinded</strong> creatures. You also gain <strong>Darkvision 6</strong>.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-darkness",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "m91zBWok69AOmvGL",
+	"folder": "bab01ef1cd1e588d"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Drunkards Luck",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-the-drunken-fist/drunkards-luck.webp",
+	"system": {
+		"macro": "",
+		"identifier": "drunkards-luck",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Your first attack crits and the first attack against you misses.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-the-drunken-fist",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "iDdgpxapM1G8SGPn",
+	"folder": "fb740c2a4e29bd5b"
+}

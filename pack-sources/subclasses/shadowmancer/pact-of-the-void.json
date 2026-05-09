@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the Void",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-void.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-void",
+		"rules": [],
+		"description": "<p><em>Looking to the stars, you connect to a creature that embodies the spaces between.</em></p><p>LEVEL 3</p><p><strong>Void Spawn.</strong> You can summon shadow minions within Reach 6.</p><p><strong>Void Step.</strong> You and your allies can move between spaces your minions occupy as if they were the same space (as long as you do not end movement in an occupied space).</p><p>LEVEL 7</p><p><strong>Voidstrike.</strong> You and your allies can attack between spaces your minions occupy as if they were the same space. Gain advantage when attacking this way.</p><p><strong>The Vast Cold.</strong> Your minions inflict the Slowed condition when attacked in melee.</p><p>LEVEL 11</p><p><strong>Void Singularity.</strong> A shadow can move into the space of another shadow to have both of them implode and die, dealing 2d12+20 damage to all creatures in Reach 3 and pulling them 3 spaces towards the middle.</p><p>LEVEL 15</p><p><strong>The Consuming Dark.</strong> (1/encounter) When your Shadow minion kills an enemy you may have it transform into a Greater Shadow.</p><p><strong>Urgent Command.</strong> Gain a wound to move your shadow minion as a Reaction.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yyD6l3zTEKVBhKyW"
+}

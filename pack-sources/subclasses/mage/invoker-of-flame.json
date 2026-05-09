@@ -1,0 +1,25 @@
+{
+	"name": "Invoker of Flame",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/mage/invoker-of-flame.webp",
+	"system": {
+		"macro": "",
+		"identifier": "invoker-of-flame",
+		"rules": [],
+		"description": "<p><em>You dedicate yourself to the art of Pyromancy; choosing to relinquish control over the other elements so that your flames may burn brighter and hotter than any who has come before you.</em></p><p>LEVEL 3</p><p><strong>Fiery Dedication.</strong> You can only cast fire spells from now on. Choose 1 Ice or Lightning spell and treat it as a fire spell.</p><p><strong>Embers.</strong> Whenever you cast a fire spell, gain a number of Embers equal to the Mana spent on it. Embers can be spent to power up your spells (and expire when an encounter ends):</p><ul><li><strong>Kindle Blaze.</strong> (2 Embers) Heart's Fire on an ally with fewer than 3 actions for free.</li><li><strong>Consuming Fire.</strong> (4 Embers) When you target a single Smoldering creature, damage creatures adjacent to them as well.</li><li><strong>Overheat.</strong> (6 Embers) Creatures damaged by this spell are considered Vulnerable to it.</li></ul><p>LEVEL 7</p><p><strong>Thy Embers' Keeper.</strong> When initiative is rolled, gain WIL Embers.</p><p><strong>Flame Weaver.</strong> You may use Embers in place of Mana for Spellshaper abilities.</p><p><strong>Fireshaper.</strong> Choose 1 additional Lightning or Ice spell and treat it as a fire spell.</p><p>LEVEL 11</p><p><strong>Flash Fire.</strong> When you roll initiative choose WIL enemies to gain Smoldering.</p><p><strong>Wildfire.</strong> Choose 1 additional Lightning or Ice spell and treat it as a fire spell.</p><p>LEVEL 15</p><p><strong>The Phoenix.</strong> (1/Safe Rest) <strong>Reaction</strong> (When you drop to 0 HP): Gain the effects of the Dragon Form spell; when it ends, gain 1 wound.</p><p><strong>Wildfire.</strong> Choose 1 additional Lightning or Ice spell and treat it as a fire spell.</p>",
+		"parentClass": "mage",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "82882919bf32f6be",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Ay3ZqUvCfSLCDfaO"
+}

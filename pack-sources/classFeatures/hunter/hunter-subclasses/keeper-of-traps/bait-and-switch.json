@@ -1,0 +1,57 @@
+{
+	"name": "Bait and Switch",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-traps/bait-and-switch.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bait-and-switch",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter Decoy while Prone",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You and your allies can Interpose within Reach 4 vs Taunted attackers.</p><p>(1/encounter) You can use Decoy for free while Prone.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-traps",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "H2z6CeR5Iqp7sxkI",
+	"folder": "878562b6064b4bfd"
+}

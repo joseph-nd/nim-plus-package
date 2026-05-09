@@ -1,0 +1,57 @@
+{
+	"name": "Living Pyre",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-cinder-and-ash/living-pyre.webp",
+	"system": {
+		"macro": "",
+		"identifier": "living-pyre",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter free while Beastshifted",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can cast Flame Barrier while Beastshifted. 1/encounter you may do so for free.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-cinder-and-ash",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "eWCFfN6Jr5F8z4JD",
+	"folder": "5f779db1ef0d745d"
+}

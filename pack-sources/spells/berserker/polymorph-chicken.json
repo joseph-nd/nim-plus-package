@@ -1,0 +1,82 @@
+{
+	"name": "Polymorph: CHICKEN!",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/polymorph-chicken.webp",
+	"system": {
+		"macro": "",
+		"identifier": "polymorph-chicken",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Requires 3 FD, Reach 3/FD",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 3
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action · Reach 3/Fury Die · Single Target.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 3 FD.</strong> Yell \"Chicken!\" at a creature, Frightening them until the end of their next turn (Large+ creatures: Taunted instead).</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 3,
+				"max": 15
+			},
+			"reach": {
+				"min": 3,
+				"max": 15
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 3
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "WakBEpY89qEcyXip",
+	"folder": "1017a79ccd93f00a"
+}

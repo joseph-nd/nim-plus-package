@@ -1,0 +1,112 @@
+{
+	"name": "Aethertuned Jerkin",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/artificer/inventions/aethertuned-jerkin.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "aetherArmor",
+				"identifier": "aethertuned-jerkin",
+				"label": "Aethertuned Jerkin",
+				"predicate": {},
+				"priority": 1,
+				"mode": "add",
+				"formula": "1 + @intelligence"
+			},
+			{
+				"type": "speedBonus",
+				"disabled": false,
+				"id": "aetherSpeed",
+				"identifier": "",
+				"label": "Aetheric Thrusters",
+				"predicate": {},
+				"priority": 1,
+				"value": "1"
+			},
+			{
+				"type": "initiativeBonus",
+				"disabled": false,
+				"id": "aetherInit",
+				"identifier": "",
+				"label": "Aetheric Thrusters",
+				"predicate": {},
+				"priority": 1,
+				"value": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Light</p><p><strong>Armor:</strong> 1 + INT + DEX</p><hr><p><strong>Aetheric Thrusters.</strong> +1 Speed and +1 Initiative while wearing.</p><p><strong>Tuned Thrusters.</strong> When you Defend, first move 1 space per Mana Die spent.</p><hr><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Autothrusters</strong></li><li><strong>Chronoshard Modulator</strong></li><li><strong>Passive Sensors</strong></li></ul>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Invention",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 1,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FGr5UI9P7HGe12vc",
+	"folder": null
+}

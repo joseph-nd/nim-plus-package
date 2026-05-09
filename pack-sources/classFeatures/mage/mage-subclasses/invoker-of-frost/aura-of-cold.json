@@ -1,0 +1,57 @@
+{
+	"name": "Aura of Cold",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-frost/aura-of-cold.webp",
+	"system": {
+		"macro": "",
+		"identifier": "aura-of-cold",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Adjacent enemies are Slowed. Your unused Frost Shield Temp HP last until the end of the encounter and can accumulate.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-frost",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "c7ldEz2dHKDzH2Kv",
+	"folder": "278a5d66a07d271a"
+}

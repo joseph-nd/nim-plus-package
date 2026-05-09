@@ -1,0 +1,57 @@
+{
+	"name": "Deep Freeze",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-frost/deep-freeze.webp",
+	"system": {
+		"macro": "",
+		"identifier": "deep-freeze",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reduce the mana cost of all spells by 2 while you have any Temp HP from Frost Shield. Choose 1 additional Lightning or Fire spell and treat it as an Ice spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-frost",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "emLx4Sg8TqYIyXHw",
+	"folder": "278a5d66a07d271a"
+}

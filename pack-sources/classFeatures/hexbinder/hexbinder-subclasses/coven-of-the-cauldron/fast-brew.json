@@ -1,0 +1,57 @@
+{
+	"name": "Fast Brew",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/coven-of-the-cauldron/fast-brew.webp",
+	"system": {
+		"macro": "",
+		"identifier": "fast-brew",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "On Initiative",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until end of encounter",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you roll Initiative, brew one Concoction. It expires at the end of the encounter.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "coven-of-the-cauldron",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "PtNfGBPP6ivTdYPP",
+	"folder": "d99cb03f3f5905c7"
+}

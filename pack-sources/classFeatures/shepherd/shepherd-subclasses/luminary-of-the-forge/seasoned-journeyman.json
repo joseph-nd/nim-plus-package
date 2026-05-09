@@ -1,0 +1,57 @@
+{
+	"name": "Seasoned Journeyman",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/seasoned-journeyman.webp",
+	"system": {
+		"macro": "return nimPlus.seasonedJourneyman(actor, item);",
+		"identifier": "seasoned-journeyman",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "on Safe Rest",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until next Safe Rest",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Safe Rest, choose one:</p><ul><li><strong>Weaponsmith.</strong> Your weapon gains +WIL damage until your next Safe Rest.</li><li><strong>Armorsmith.</strong> Your armor gains +WIL defense until your next Safe Rest.</li></ul><p><em>Foundry tip — click the action to pick Weaponsmith or Armorsmith. The chosen bonus is recorded on your sheet (<code>flags.nim-plus-package.journeymanChoice</code>) and cleared automatically on your next Safe Rest. With Master of the Hammer (L11), the bonus increases to <strong>WIL + STR</strong>.</em></p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Wzylxwzb3SMCzmgx",
+	"folder": "03aebd749374affa"
+}

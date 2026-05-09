@@ -1,0 +1,67 @@
+{
+	"name": "Word of Decay",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/word-of-decay.webp",
+	"system": {
+		"macro": "",
+		"identifier": "word-of-decay",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you use a Futuresight Die against an Afflicted target, take the max value. When your Afflicted target dies, regain 1 spent Futuresight Die (roll it).</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3Jy04637DBw0q3eu",
+	"folder": "cb7cf327da44bff5"
+}

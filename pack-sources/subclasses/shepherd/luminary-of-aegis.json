@@ -1,0 +1,25 @@
+{
+	"name": "Luminary of Aegis",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-aegis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-aegis",
+		"rules": [],
+		"description": "<p><em>Let the wicked dash themselves against my light. None shall fall while I yet stand.</em></p><p>You are a guardian of the faithful and your Spirit is a steadfast protector, standing watch over those in your care. In combat you position yourself between danger and your allies, absorbing blows meant for others and radiating sanctuary to all who stand beside you.</p><p>LEVEL 3</p><p><strong>Stalwart Guardian.</strong> Your Interpose range increases to 6 spaces. When you Interpose, you may also Defend for free and gain WIL Temp HP.</p><p><strong>Stalwart Presence.</strong> Your allies feel an unwavering sense of safety in your presence. When taking a Short Rest with your party, they recover 1 additional HP per die rolled. Your Lifebinding Spirit takes on a sturdy, protective form (a loyal hound with a thick collar, a steadfast ram, a small armored guardian, etc.).</p><p>LEVEL 7</p><p><strong>Unbreakable.</strong> (WIL times/Safe Rest) When you Interpose, it doesn't cost an action. When you do so, your Lifebinding Spirit may also attack the attacker for free.</p><p>LEVEL 11</p><p><strong>Radiant Shield.</strong> When you take damage from an attack you Interposed, the attacker becomes Blinded until the end of their next turn and takes WIL radiant damage (ignoring armor).</p><p>LEVEL 15</p><p><strong>Guardian's Vanguard.</strong> You may Interpose twice per round. When you Interpose, reduce the damage you take by WIL and the protected ally also gains WIL Temp HP.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "342ecdf0f6b5830f",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "aj1wG9dhRvoxDtOc"
+}

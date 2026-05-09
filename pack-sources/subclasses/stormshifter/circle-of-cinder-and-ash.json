@@ -1,0 +1,25 @@
+{
+	"name": "Circle of Cinder & Ash",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/stormshifter/circle-of-cinder-and-ash.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-cinder-and-ash",
+		"rules": [],
+		"description": "<p><em>The circles of Cinders have an important duty beyond being perceived as pyromaniacs. They are responsible for clearing portions of forests of impurities or old invasive species to clear it out for the new.</em></p><p><strong>Class Complexity:</strong> ♦◊◊◊</p><p>LEVEL 3</p><p><strong>Wildfire.</strong> Replace your lightning or wind spell school with the fire school.</p><p><strong>Searing Fang.</strong> Your direbeast form attacks gain the benefits of Enchant Weapon for free.</p><p><strong>Firesight.</strong> You have advantage on Skill checks related to fire.</p><p>LEVEL 7</p><p><strong>Phoenix Flame.</strong> (1/encounter) While dying you may cast Pyroclasm for free. Gain temp HP equal to the amount rolled.</p><p>LEVEL 11</p><p><strong>Cinderhide.</strong> Whenever you cast a tiered fire spell, you may spend 2 additional mana to Beastshift for free. You gain resistance to fire damage while shifted.</p><p>LEVEL 15</p><p><strong>Living Pyre.</strong> You can cast Flame Barrier while Beastshifted. 1/encounter you may do so for free.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8PhlXhTOAOH1LvxM",
+	"folder": "bbdbcfedb2a0daf6"
+}

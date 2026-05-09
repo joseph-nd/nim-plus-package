@@ -1,0 +1,59 @@
+{
+	"name": "Prove Your Worth!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/prove-your-worth.webp",
+	"system": {
+		"macro": "",
+		"identifier": "prove-your-worth",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/turn — Reach 12",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 12
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Reach 12, 1/turn) Taunt an enemy for free (lasts until they damage you). Enemies you Taunt have advantage on attacks against you.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-honorseeker",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LNf14CkymHw7pb6p",
+	"folder": "7916196cc2dd524f"
+}

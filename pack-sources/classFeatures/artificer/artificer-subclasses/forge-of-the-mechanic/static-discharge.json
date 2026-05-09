@@ -1,0 +1,88 @@
+{
+	"name": "Static Discharge",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-mechanic/static-discharge.webp",
+	"system": {
+		"macro": "",
+		"identifier": "static-discharge",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "static-discharge-dmg",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "@intelligence",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "static-discharge-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "static-discharge-dmg"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				},
+				{
+					"id": "static-discharge-dazed",
+					"type": "condition",
+					"condition": "dazed",
+					"parentContext": "hit",
+					"parentNode": "static-discharge-dmg"
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Enemies within 2",
+				"attackType": "reach",
+				"distance": 2
+			},
+			"template": {
+				"length": 1,
+				"radius": 2,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Modular Expansion (2).</strong> Your companion gains another module slot.</p><p><strong>Static Discharge.</strong> <em>(1/encounter)</em> Action: Spend at least 2 Mana Dice with advantage to let your robot erupt with sparks. Enemies within 2 spaces take the dice + INT damage. <strong>On crit:</strong> Dazed. <strong>Mishap — Feedback Loop:</strong> Everyone within range, including you and your companion, also take the damage.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-mechanic",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gPRxxXDngISAxuma",
+	"folder": "9e74538446160a31"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the ID",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-id.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-id",
+		"rules": [],
+		"description": "<p><em>Power extrinsic makes you a slave to another. Power intrinsic makes you a slave to yourself.</em></p><p>LEVEL 3</p><p><strong>Fractured Psyche.</strong> Your Patron is a power hidden in a deep recess of your mind. You gain proficiency with Leather armor and one type of weapon, and your shadow minions become fragments of your subconscious made manifest.</p><p><strong>Defense Mechanism.</strong> (1/round) Action/Reaction: Swap places with a shadow minion. Attacks targeting you will hit your shadow minion instead if used as a reaction.</p><p>LEVEL 7</p><p><strong>Hyperfixation.</strong> Your attacks gain a stack of advantage for each of your shadow minions adjacent to the target.</p><p>LEVEL 11</p><p><strong>Know Your Limits.</strong> Your limit for shadow minions increases by WIL, and you may summon a shadow minion for free at the start of your turn.</p><p>LEVEL 15</p><p><strong>Unified Psyche.</strong> (1/encounter) 2 actions: Dispel one of your shadow minions to teleport to the space it was on and make an attack for free (melee/ranged/cantrip). Ignores Rushed Attacks penalty. Repeat this for each of your shadow minions.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wlqthHw8WAiR3gPM"
+}

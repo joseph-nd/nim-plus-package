@@ -1,0 +1,57 @@
+{
+	"name": "Mycelium Growth",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/mycelium-growth.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mycelium-growth",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Sporesphere upgrade",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 4,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your spores now have Reach 4 and do 1d8 necrotic damage. Creatures within Reach 4 are subject to Thought Leech for free; you may also send brief thoughts to willing creatures within Reach 4.</p><p><em>Foundry tip — Sporesphere automatically picks up this scaling when you own this feature.</em></p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kEfe41Wb5uYExxQo",
+	"folder": "9ee17510990a659f"
+}

@@ -1,0 +1,78 @@
+{
+	"name": "Wyrding Strands",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/hexbinder/wyrding-strands.webp",
+	"system": {
+		"macro": "",
+		"identifier": "wyrding-strands",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 4,
+				"radius": 1,
+				"shape": "rect",
+				"width": 4
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions, AoE, Reach 8</strong></p><p>Move creatures in a 4×4 area a total of [[/r 2d6]] spaces, divided among them as you choose. Large or larger creatures move half as far.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 8
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "hexbinder",
+		"tier": 3,
+		"classes": [
+			"hexbinder"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "SLMZECdl6ICDPbsI",
+	"folder": "c367afd06b845ebf"
+}

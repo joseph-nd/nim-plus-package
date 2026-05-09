@@ -1,0 +1,57 @@
+{
+	"name": "Shadow's Embrace",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-shadows/shadows-embrace.webp",
+	"system": {
+		"macro": "",
+		"identifier": "shadows-embrace",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Shade must be within 2 spaces of the target",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reaction:</strong> Interpose with a Shade, dispelling it in the process (the Shade must be within 2 spaces of the target).</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-shadows",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CFBLwPCeDA3r34dH",
+	"folder": "3bdf3a39ab14cdf1"
+}

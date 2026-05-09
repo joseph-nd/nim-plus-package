@@ -1,0 +1,58 @@
+{
+	"name": "New Orders",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-battlefield/new-orders.webp",
+	"system": {
+		"macro": "",
+		"identifier": "new-orders",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Level 7.</strong> You can now have up to 2 Instructions active. Learn a new Instruction:</p><ul><li><strong>Disrupt Their Formation!</strong> Attacks Push 2 on hit.</li></ul><p><strong>Level 11.</strong> You can now have up to 3 Instructions active. Learn a new Instruction:</p><ul><li><strong>Breach Their Defenses!</strong> Adjacent allies gain advantage on attacks.</li></ul>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-battlefield",
+		"gainedAtLevels": [
+			7,
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "r2IiRNJ6qEImmfdb",
+	"folder": "e7648d1fa91736b5"
+}

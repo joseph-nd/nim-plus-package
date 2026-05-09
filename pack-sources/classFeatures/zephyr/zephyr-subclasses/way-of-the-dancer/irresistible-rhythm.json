@@ -1,0 +1,57 @@
+{
+	"name": "Irresistible Rhythm",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-the-dancer/irresistible-rhythm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "irresistible-rhythm",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "When you move",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Taunted or Charmed by you"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you move, all enemies Taunted or Charmed by you also move <strong>3 spaces in a direction of your choice</strong>. This counts as voluntary movement and may provoke attacks of opportunity.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-the-dancer",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "lSCcAa9VlzNFgIyv",
+	"folder": "6581f6da0099ac2f"
+}

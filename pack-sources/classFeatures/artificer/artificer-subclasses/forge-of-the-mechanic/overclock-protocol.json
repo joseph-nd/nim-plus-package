@@ -1,0 +1,57 @@
+{
+	"name": "Overclock Protocol",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-mechanic/overclock-protocol.webp",
+	"system": {
+		"macro": "",
+		"identifier": "overclock-protocol",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "1 turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Modular Expansion (3).</strong> Your companion gains another module slot.</p><p><strong>Overclock Protocol.</strong> <em>(1/Safe Rest)</em> Maximize all your Mana Dice for companion abilities this turn.</p><p><strong>Independent Power Supply.</strong> Increase your number of Mana Dice by 1.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-mechanic",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4EEoarOwRQUisX3L",
+	"folder": "9e74538446160a31"
+}

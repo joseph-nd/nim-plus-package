@@ -1,0 +1,25 @@
+{
+	"name": "Muscle Mage",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/berserker/muscle-mage.webp",
+	"system": {
+		"macro": "",
+		"identifier": "muscle-mage",
+		"rules": [],
+		"description": "<p><em>Story-based subclass.</em></p><p><strong>Muscle Magic.</strong> Your muscles have \"unlocked the secrets of the arcane\" (and any fool who disputes that is about to have a bad day). You lose access to the Savage Arsenal and all weapon proficiencies but gain access to \"Muscle Spells\" which require you to have a certain number of Fury Dice to cast.</p><p>LEVEL 3</p><p><strong>STRENGTH of Mind.</strong> Add your STR to INT-based skill checks.</p><p>LEVEL 7</p><p><strong>I'm Fine! Totally Fine!</strong> (1/Safe Rest) When you drop to 0 hp, give a number of actions out to your allies equal to the number of Fury Dice you had.</p><p>LEVEL 11</p><p><strong>Flexpertise.</strong> Reduce the Fury Die Requirement of your Muscle Spells by 2.</p><p>LEVEL 15</p><p><strong>High Flexemplar.</strong> Gain +4 max wounds. \"I'm Fine! Totally Fine!\" is unlimited.</p><h3>\"Muscle Spells\"</h3><p><strong>Power Word: Clobber</strong> (1 Action). 1d10+STR+Fury Dice (FD) damage. On Hit: a Medium or smaller creature is Clobbered.</p><p><em>Clobbered:</em> Any Medium or smaller creature that is Dazed, Grappled, Prone, or has been forcefully moved this round is also considered Clobbered this round.</p><p><strong>Throwmaturgy</strong> (2 Actions). Reach: 3/Fury Die. Throw a Clobbered creature at an enemy; both suffer 1d6+STR+FD damage and land Prone (if Medium or smaller). OR: for 1 action throw a rock or similarly throwable object instead.</p><p><strong>Polymorph: CHICKEN!</strong> (1 Action). Requires: 3 FD. Reach: 3/Fury Dice. Yell \"Chicken!\" at a creature, Frightening them until the end of their next turn (Large+ creatures: Taunted instead).</p><p><strong>Thunderfist</strong> (2 Actions). Requires: 3 FD. (Cone Num of FD) 1d20+STR+FD.</p><p><strong>\"Teleport\"</strong> (1 Action). Requires: 4 FD. Leap up to a number of spaces equal the sum of your Fury Dice.</p><p><strong>Meat Ward</strong> (1 Action). Requires: 5 FD. Reaction: When attacked make an adjacent creature Interpose for you.</p><p><strong>Powershout: WEAKLINGS!</strong> (2 Actions). Requires: 6 FD. Reach: 6. FD damage to enemies, Frightening them (Large+ creatures are Taunted instead) and their Armor decreased by 1 step this round.</p><p><strong>Earthquake</strong> (2 Actions). Requires: 7 FD. Reach: (1/encounter) Leap into the air land with seismic force. Creatures within Reach 4 take 3d20+FD damage and become Slowed. Clobbered creatures are knocked Prone as well.</p>",
+		"parentClass": "berserker",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "6ba952618a642848",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "RDypWhLqLoBpnbvu"
+}

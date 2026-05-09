@@ -1,0 +1,57 @@
+{
+	"name": "Reanimate",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/reanimate.webp",
+	"system": {
+		"macro": "",
+		"identifier": "reanimate",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 Action — when a creature dies within Reach 4",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until dismissed",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>If a creature dies within Reach 4, <strong>1 Action:</strong> Create a zombie minion that will rise at the beginning of your next turn. You may have a max of WIL zombie minions.</p><p><strong>1 Action (1/turn):</strong> command all zombie minions to move 4 then attack (1d4+4, on damage: grappled).</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LaTLpcol5Pp53Zyi",
+	"folder": "9ee17510990a659f"
+}

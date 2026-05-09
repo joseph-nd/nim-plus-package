@@ -1,0 +1,57 @@
+{
+	"name": "Meat Shield",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titans-grip/meat-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "meat-shield",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>While Grappling a creature, you have Cover from attacks by other creatures. Attacks that miss you strike a creature you have Grappled.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titans-grip",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mAJcTCIDw5yFZMds",
+	"folder": "94911514f45e4a31"
+}

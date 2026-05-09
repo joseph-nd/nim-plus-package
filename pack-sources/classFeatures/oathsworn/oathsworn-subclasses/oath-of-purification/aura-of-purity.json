@@ -1,0 +1,57 @@
+{
+	"name": "Aura of Purity",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-purification/aura-of-purity.webp",
+	"system": {
+		"macro": "",
+		"identifier": "aura-of-purity",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 4,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain an aura with a <strong>Reach of 4</strong>. When you Defend against a melee attack, the attacker gains <strong>Smoldering</strong>.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-purification",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FOknLXuD2FfH3xqO",
+	"folder": "85b3aca5179476ab"
+}

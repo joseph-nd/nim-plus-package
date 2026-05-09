@@ -1,0 +1,57 @@
+{
+	"name": "Legendary Initiative",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/legendary-initiative.webp",
+	"system": {
+		"macro": "",
+		"identifier": "legendary-initiative",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 more Legend. Summon one for free whenever you roll Initiative.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sOnDz4jW8w6wSjTd",
+	"folder": "86341ad2caf67365"
+}

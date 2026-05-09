@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Pit",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-pit.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-pit",
+		"rules": [],
+		"description": "<p><em>The sweat in your eyes. The blood on the sand. The subtle dance of battle.</em></p><p>LEVEL 3</p><p><strong>Ready for Action.</strong> Advantage on Initiative. You may Assess for free when rolling Initiative.</p><p><strong>Adrenaline Surge.</strong> (1/encounter) Gain an extra Action. Recharges the first time you are Bloodied each encounter.</p><p>LEVEL 7</p><p><strong>Seasoned Combatant.</strong> Choose a Combat Tactic and gain +1 max Combat Dice.</p><p>LEVEL 11</p><p><strong>Studied Strikes.</strong> When you Assess an enemy, you may expend a Combat Die. If you do, until the end of your next turn your attacks against that enemy deal additional damage equal to the value of the die.</p><p>LEVEL 15</p><p><strong>Master at Arms.</strong> You roll Combat Dice with advantage.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ar6uPyHs1UHGKCop",
+	"folder": "54c3de6e51604292"
+}

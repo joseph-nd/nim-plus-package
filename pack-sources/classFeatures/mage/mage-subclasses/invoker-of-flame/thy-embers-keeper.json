@@ -1,0 +1,57 @@
+{
+	"name": "Thy Embers' Keeper",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-flame/thy-embers-keeper.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thy-embers-keeper",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When initiative is rolled, gain WIL Embers.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-flame",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "WH6hGXpuRxcAmpmU",
+	"folder": "9ce20096d9d04850"
+}

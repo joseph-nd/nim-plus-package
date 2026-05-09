@@ -1,0 +1,57 @@
+{
+	"name": "Mana Accumulator",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/mana-accumulator.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mana-accumulator",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You create a device that absorbs ambient magic to power your inventions. You can carry a max of <strong>STR Mana Dice (d4s)</strong>; it fully recharges at the end of your turns.</p><hr><p><strong>Powering Inventions:</strong> When using an invention, you may expend any number of available Mana Dice. The more you use at once, the greater the effect — but the greater the risk. If ANY die rolls a number less than or equal to the total number of dice rolled, the invention overloads, triggering a mishap.</p><p><em>Example:</em> If you spend 2 Mana Dice at a time, any die that rolls a 2 or less causes a mishap!</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			2
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UOOXNJPUw51e1geg",
+	"folder": "cc0bae2de7db5a7f"
+}

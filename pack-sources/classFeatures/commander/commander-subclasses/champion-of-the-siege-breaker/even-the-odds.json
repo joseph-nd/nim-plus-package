@@ -1,0 +1,57 @@
+{
+	"name": "Even the Odds",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-siege-breaker/even-the-odds.webp",
+	"system": {
+		"macro": "",
+		"identifier": "even-the-odds",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>If there are 2+ enemies within your weapon's Reach, your melee attacks have advantage and always trigger Mighty Cleave.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-siege-breaker",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xJavA9wGme1alrAX",
+	"folder": "60f5e2d909922804"
+}

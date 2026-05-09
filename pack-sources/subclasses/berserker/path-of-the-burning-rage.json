@@ -1,0 +1,25 @@
+{
+	"name": "Path of the Burning Rage",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/berserker/path-of-the-burning-rage.webp",
+	"system": {
+		"macro": "",
+		"identifier": "path-of-the-burning-rage",
+		"rules": [],
+		"description": "<p><em>A rage that burns so fiercely, it calls forth flames to ravage its enemies.</em></p><p>LEVEL 3</p><p><strong>Stoke the Flames.</strong> (1/turn) While Raging, after you crit or kill an enemy, gain 1 Fury Die.</p><p><strong>Overflowing Fury.</strong> (Reach 4) When discarding Fury Dice over your max, deal fire damage to a creature equal to the value of that die; they gain Smoldering.</p><p>LEVEL 7</p><p><strong>Hot Headed.</strong> Whenever you roll initiative, gain STR Fury Dice. Your Overflowing Fury deals the max value of the die.</p><p>LEVEL 11</p><p><strong>EXPLOSION!</strong> Smoldering creatures suffer +LVL damage from Overflowing Fury, ending the condition. You may deal that much damage to ALL creatures adjacent to your target.</p><p>LEVEL 15</p><p><strong>Pyromania.</strong> Double the Reach and damage of your Overflowing Fury.</p>",
+		"parentClass": "berserker",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "6ba952618a642848",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fEtVA1lFHsRnXEkM"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Hunter's Lure",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-traps/hunters-lure.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hunters-lure",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you use Hunter's Mark, you may gain KEY temp HP and Taunt your Quarry until you lose these temp HP.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-traps",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "2Qi7NKmGF7cdryoC",
+	"folder": "878562b6064b4bfd"
+}

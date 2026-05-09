@@ -1,0 +1,57 @@
+{
+	"name": "Perfect Alloy",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-iron/perfect-alloy.webp",
+	"system": {
+		"macro": "",
+		"identifier": "perfect-alloy",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "When using Burst of Speed",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain Tempered whenever you use a Burst of Speed.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-iron",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kx7uLWOSn7s9ZwYf",
+	"folder": "76ecacc9ea19d60d"
+}

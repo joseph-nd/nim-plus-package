@@ -1,0 +1,57 @@
+{
+	"name": "Unified Psyche",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-id/unified-psyche.webp",
+	"system": {
+		"macro": "",
+		"identifier": "unified-psyche",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) <strong>2 actions</strong>: Dispel one of your shadow minions to teleport to the space it was on and make an attack for free (melee/ranged/cantrip). Ignores Rushed Attacks penalty. Repeat this for each of your shadow minions.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-id",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "izGDwscHvl3xq2O0",
+	"folder": "00097021e7009422"
+}

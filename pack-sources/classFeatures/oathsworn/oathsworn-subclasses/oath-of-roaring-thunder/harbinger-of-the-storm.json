@@ -1,0 +1,57 @@
+{
+	"name": "Harbinger of the Storm",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-roaring-thunder/harbinger-of-the-storm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "harbinger-of-the-storm",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Encounter, after Interpose",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain an aura with a Reach of 4. (1/Encounter) After you Interpose, deal lightning damage equal to your Judgment Dice to all enemies within your aura.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-roaring-thunder",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kA9maW0hFwLoz1Ms",
+	"folder": "a8e6fd43cf69d40a"
+}

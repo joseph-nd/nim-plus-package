@@ -1,0 +1,142 @@
+{
+	"name": "Mana and Tier 1 Spells (Hexbinder)",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/mana-and-tier-1-spells.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mana-and-tier-1-spells",
+		"rules": [
+			{
+				"id": "hexbinder-tier1-spells",
+				"type": "grantSpells",
+				"schools": [
+					"hexbinder"
+				],
+				"tiers": [
+					1
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 2
+					}
+				}
+			},
+			{
+				"id": "hexbinder-tier2-spells",
+				"type": "grantSpells",
+				"schools": [
+					"hexbinder"
+				],
+				"tiers": [
+					2
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 4
+					}
+				}
+			},
+			{
+				"id": "hexbinder-tier3-spells",
+				"type": "grantSpells",
+				"schools": [
+					"hexbinder"
+				],
+				"tiers": [
+					3
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				}
+			},
+			{
+				"id": "hexbinder-tier4-spells",
+				"type": "grantSpells",
+				"schools": [
+					"hexbinder"
+				],
+				"tiers": [
+					4
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				}
+			},
+			{
+				"id": "hexbinder-tier5-spells",
+				"type": "grantSpells",
+				"schools": [
+					"hexbinder"
+				],
+				"tiers": [
+					5
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You unlock tier 1 Hexbinder spells and a mana pool to cast them. Your max mana pool is always equal to WIL+LVL and recharges on a Safe Rest.</p><hr><p>Level 4: Tier 2 Spells</p><p>Level 6: Tier 3 Spells</p><p>Level 8: Tier 4 Spells</p><p>Level 10: Tier 5 Spells</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			10
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "YVwHKISdmd9HBYNu",
+	"folder": "cb7cf327da44bff5"
+}

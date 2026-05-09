@@ -1,0 +1,57 @@
+{
+	"name": "Songwoven Blade",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-singing-steel/songwoven-blade.webp",
+	"system": {
+		"macro": "",
+		"identifier": "songwoven-blade",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Expend 1 Songweaver's Inspiration on a melee attack",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you make a melee attack, you can expend a use of your Songweaver's Inspiration to do one of the following:</p><ul><li>Add an additional WILL d4s to the damage, and choose ANY to be the Primary Die.</li><li>Degrade the target's Armor 1 step (Heavy » Medium » None) for 1 round.</li></ul>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-singing-steel",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "IHr4EHo9oiURuH4q",
+	"folder": "2d8e800b66066db6"
+}

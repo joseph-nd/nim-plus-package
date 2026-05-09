@@ -1,0 +1,104 @@
+{
+	"name": "Earthquake",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/earthquake.webp",
+	"system": {
+		"macro": "",
+		"identifier": "earthquake",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Requires 7 FD, 1/encounter",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "earthquake-dmg",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "3d20",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "earthquake-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "earthquake-dmg"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 4,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions · Reach 4 · 1/encounter.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 7 FD.</strong> Leap into the air and land with seismic force. Creatures within Reach 4 take 3d20+FD damage and become Slowed. Clobbered creatures are knocked Prone as well.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 4,
+				"max": 4
+			},
+			"reach": {
+				"min": 4,
+				"max": 4
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 7
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "SBNsKeKXoAt1e2ju",
+	"folder": "1017a79ccd93f00a"
+}

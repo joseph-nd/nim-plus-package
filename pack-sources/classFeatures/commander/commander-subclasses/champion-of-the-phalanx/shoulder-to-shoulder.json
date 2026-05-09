@@ -1,0 +1,57 @@
+{
+	"name": "Shoulder to Shoulder",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-phalanx/shoulder-to-shoulder.webp",
+	"system": {
+		"macro": "",
+		"identifier": "shoulder-to-shoulder",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Allies within your weapon's Reach gain +1 Reach to their weapons and gain the benefits of your Weapon Masteries.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-phalanx",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "heZbmQCoG0Hyb0da",
+	"folder": "e172aec421cb4ccf"
+}

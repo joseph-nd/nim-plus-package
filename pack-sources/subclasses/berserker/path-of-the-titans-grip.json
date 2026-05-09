@@ -1,0 +1,25 @@
+{
+	"name": "Path of the Titan's Grip",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/berserker/path-of-the-titans-grip.webp",
+	"system": {
+		"macro": "",
+		"identifier": "path-of-the-titans-grip",
+		"rules": [],
+		"description": "<p><em>Beat goblin chieftains with their own lackeys, piledrive bandits, and hurl enemies across the battlefield.</em></p><p>LEVEL 3</p><p><strong>Titan's Grip.</strong> Your unarmed strikes gain: On hit: Grapple (vs Medium or smaller creatures).</p><p><strong>Living Weapon.</strong> While Raging, living Grappled creatures can be used as improvised weapons: <em>Tiny</em> 1d4+STR Light, Thrown 6; <em>Small</em> 1d6+STR, Thrown 4; <em>Medium</em> 1d10+STR (2-handed). Living Weapons suffer as much damage as they deal.</p><p>LEVEL 7</p><p><strong>Meat Shield.</strong> While Grappling a creature, you have Cover from attacks by other creatures. Attacks that miss you strike a creature you have Grappled.</p><p>LEVEL 11</p><p><strong>Wrathful Grip.</strong> Your unarmed strikes are now 1d6+STR. You may expend a Fury Die to force a creature to reroll a save to escape your Grapple.</p><p>LEVEL 15</p><p><strong>Sickening Blow.</strong> Whenever you crit an enemy with an Improvised Weapon, double the damage added from Fury Dice.</p><p><strong>Catch!</strong> Your improvised weapons gain +4 Thrown.</p>",
+		"parentClass": "berserker",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "6ba952618a642848",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ufx5EljHfj82u69k"
+}

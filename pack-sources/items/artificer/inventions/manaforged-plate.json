@@ -1,0 +1,92 @@
+{
+	"name": "Manaforged Plate",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/artificer/inventions/manaforged-plate.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "mfPlateArmor",
+				"identifier": "manaforged-plate",
+				"label": "Manaforged Plate",
+				"predicate": {},
+				"priority": 1,
+				"mode": "add",
+				"formula": "8 + @strength - @dexterity"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Heavy</p><p><strong>Armor:</strong> 8 + STR</p><hr><p><strong>Autoshields.</strong> (1/round) Reduce damage of an attack by INT for free.</p><p><strong>Mana Infusion.</strong> When you Defend, gain 2× STR armor per Mana Die spent.</p><hr><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Reactive Armor</strong></li><li><strong>Ablative Coating</strong></li><li><strong>Angled Deflectors</strong></li></ul>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Invention",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 1,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "K51DBPqmNJvFQc5d",
+	"folder": null
+}

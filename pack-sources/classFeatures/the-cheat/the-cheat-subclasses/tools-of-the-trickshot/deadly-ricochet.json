@@ -1,0 +1,57 @@
+{
+	"name": "Deadly Ricochet",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-trickshot/deadly-ricochet.webp",
+	"system": {
+		"macro": "",
+		"identifier": "deadly-ricochet",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Trickshot now ricochets 2 additional times and may ricochet off allies without dealing damage.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-trickshot",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0qQd0B2imRPvSHUK",
+	"folder": "0447d4c0b9c6031b"
+}

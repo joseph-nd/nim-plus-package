@@ -1,0 +1,114 @@
+{
+	"name": "Sporesphere",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-spores/sporesphere.webp",
+	"system": {
+		"macro": "return nimPlus.sporeAttack(actor, item);",
+		"identifier": "sporesphere",
+		"rules": [
+			{
+				"id": "sporesphere-dazed-on-hit",
+				"type": "applyCondition",
+				"condition": "dazed",
+				"trigger": "onHit",
+				"duration": {
+					"rounds": null,
+					"turns": null,
+					"seconds": null
+				},
+				"label": "Sporesphere — Dazed on hit",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			},
+			{
+				"id": "sporesphere-dazed-on-crit",
+				"type": "applyCondition",
+				"condition": "dazed",
+				"trigger": "onCrit",
+				"duration": {
+					"rounds": null,
+					"turns": null,
+					"seconds": null
+				},
+				"label": "Sporesphere — Dazed on crit",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until start of your next turn",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "sporeSphereDamage1",
+					"type": "damage",
+					"damageType": "necrotic",
+					"formula": "1d4",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "sporeSphereHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "sporeSphereDamage1"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": true
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 2
+			},
+			"template": {
+				"length": 1,
+				"radius": 2,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You create floating spores around you with Reach 2. <strong>1 Action:</strong> you may attack a target for 1d4 necrotic damage, and the target is Dazed until the beginning of your next turn.</p><p><em>Foundry tip — click the action to pop a Sporesphere dialog. Owned upgrades (Germination L7, Mycelium Growth L11, Sporulation L15) automatically scale damage and reach. With Decay (L7), you may spend Beastshift charges per attack to bump the die size or apply Blinded / Poisoned alongside Dazed.</em></p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-spores",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "GyYlmhJu6BTF13hb",
+	"folder": "9ee17510990a659f"
+}

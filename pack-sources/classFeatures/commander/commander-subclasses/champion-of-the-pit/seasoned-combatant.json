@@ -1,0 +1,57 @@
+{
+	"name": "Seasoned Combatant",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-pit/seasoned-combatant.webp",
+	"system": {
+		"macro": "",
+		"identifier": "seasoned-combatant",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose a Combat Tactic and gain <strong>+1 max Combat Dice</strong>.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-pit",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yp8lQuEi1GCBe6qm",
+	"folder": "6e237ab36f07763e"
+}

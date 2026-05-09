@@ -1,0 +1,57 @@
+{
+	"name": "Draw Cut",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-exile/draw-cut.webp",
+	"system": {
+		"macro": "",
+		"identifier": "draw-cut",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your first melee attack each encounter is an automatic crit. Recharges when you spend an entire round without attacking.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-exile",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ko3mbWofIHeJquGq",
+	"folder": "2864b0a199d9c389"
+}

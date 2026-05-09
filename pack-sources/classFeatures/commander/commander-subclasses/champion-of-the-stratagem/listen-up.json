@@ -1,0 +1,57 @@
+{
+	"name": "Listen Up!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-stratagem/listen-up.webp",
+	"system": {
+		"macro": "",
+		"identifier": "listen-up",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Commander's Orders that target an ally or enemy may affect <strong>one additional valid target</strong>. Choose another Commander's Order.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-stratagem",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "rXOCOru3nG8BJ6rY",
+	"folder": "9e134b76d1a318f2"
+}

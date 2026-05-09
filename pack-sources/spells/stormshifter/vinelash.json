@@ -1,0 +1,100 @@
+{
+	"name": "Vinelash",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/stormshifter/vinelash.webp",
+	"system": {
+		"macro": "",
+		"identifier": "vinelash",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "vinelashDamage1",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d4",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "vinelashHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "vinelashDamage1"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>Cantrip · 1 Action · Range 8 · Single Target.</strong></p><p><strong>Damage:</strong> 1d4. You may move the target 1 space instead of damaging them. <strong>On crit:</strong> you may Blind them instead (until the end of their next turn).</p><p><em>Forced Movement.</em> Small/Tiny targets can be moved twice as far; Large, half as far (round down); creatures bigger than that cannot typically be subject to forced movement.</p>",
+			"higherLevelEffect": "<p><strong>High Levels:</strong> +1d4 damage or +1 space every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "earth",
+		"tier": 0,
+		"classes": [
+			"stormshifter"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "pG8M30VT2ND4MkLb",
+	"folder": "121f29a2ee54baa0"
+}

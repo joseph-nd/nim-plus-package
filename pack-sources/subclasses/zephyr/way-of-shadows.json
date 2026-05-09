@@ -1,0 +1,25 @@
+{
+	"name": "Way of Shadows",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/zephyr/way-of-shadows.webp",
+	"system": {
+		"macro": "",
+		"identifier": "way-of-shadows",
+		"rules": [],
+		"description": "<p><em>The shadows are a source of strength for those willing to recognize it within themselves.</em></p><p>LEVEL 3</p><p><strong>Dark Legion.</strong> Whenever you roll Initiative, you may conjure KEY Shades within Reach 2. Shades are ethereal and untargetable, and disappear at the end of the encounter. When you move, you may move your Shades up to half your Speed at the same time.</p><p><strong>Shadestrike.</strong> Your Shades may make unarmed strikes with advantage on your behalf.</p><p><strong>Shadow's Embrace.</strong> Reaction: Interpose with a Shade, dispelling it in the process (the Shade must be within 2 spaces of the target).</p><p>LEVEL 7</p><p><strong>Shadowburst.</strong> Action: Dispel a Shade, dealing your unarmed strike damage to all enemies adjacent to it, and inflicting Blinded until the end of their next turn.</p><p>LEVEL 11</p><p><strong>Steal Essence.</strong> When YOU kill an enemy, you may conjure a Shade on an adjacent space. You can control up to 2×KEY Shades at the same time.</p><p>LEVEL 15</p><p><strong>Coalescence of Shadows.</strong> 2 actions: Dispel X Shades to deal Xd8+KEY Necrotic damage to a target within Range 6.</p>",
+		"parentClass": "zephyr",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mooiuYXA4gIZ8Ape",
+	"folder": "60adb5334b7f06e4"
+}

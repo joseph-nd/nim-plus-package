@@ -1,0 +1,57 @@
+{
+	"name": "Shield of Light",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-protection/shield-of-light.webp",
+	"system": {
+		"macro": "",
+		"identifier": "shield-of-light",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter — ignore Dying for Searing Light",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may have your healing spells grant Temp HP instead. (1/encounter) You can ignore the Dying requirement to cast Searing Light.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-protection",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "T3a8cdvfG3l3yYmI",
+	"folder": "6abdfe1dd7775185"
+}

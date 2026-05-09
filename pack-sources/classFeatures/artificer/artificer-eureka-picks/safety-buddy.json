@@ -1,0 +1,71 @@
+{
+	"name": "Gadget: Safety Buddy",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/safety-buddy.webp",
+	"system": {
+		"macro": "",
+		"identifier": "safety-buddy",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 2
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>2 uses/Safe Rest</strong></p><p>When you use Interpose: Summon a 1 HP single-use construct to Interpose for an ally within Reach 2 instead of you.</p><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Advanced Propulsion System</strong></li><li><strong>Explosive Framework</strong></li><li><strong>Reusable Parts</strong></li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "JA35BjV2q2FLVdNH",
+	"folder": "cc0bae2de7db5a7f"
+}

@@ -1,0 +1,59 @@
+{
+	"name": "Bind Malady",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/coven-of-the-hunt/bind-malady.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bind-malady",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "INT/Safe Rest",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reaction. INT/Safe Rest. Command your familiar to remove any single harmful condition from a creature within Reach 8.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "coven-of-the-hunt",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7NeKM6qc5LzrOeVg",
+	"folder": "3a14bf524bb8abc0"
+}

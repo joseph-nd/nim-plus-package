@@ -1,0 +1,57 @@
+{
+	"name": "Celestial Armor",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-high-celestial/celestial-armor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "celestial-armor",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When a blessed ally would be damaged, 1 minion blessing them sacrifices itself INSTEAD.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-high-celestial",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oxrSoc2op1XwqMUE",
+	"folder": "45cb0f9c9abaa618"
+}

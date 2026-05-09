@@ -1,0 +1,57 @@
+{
+	"name": "Raise the Alarm",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-tidings/raise-the-alarm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "raise-the-alarm",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 mana per ally — on Initiative",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you roll Initiative, you may spend 1 mana per ally to grant them advantage on Initiative and on their first attack this encounter.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-tidings",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "2Z1Hv1lJgXT6oNCt",
+	"folder": "7cff7cae12d57cbb"
+}

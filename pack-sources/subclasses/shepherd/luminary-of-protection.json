@@ -1,0 +1,25 @@
+{
+	"name": "Luminary of Protection",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-protection.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-protection",
+		"rules": [],
+		"description": "<p><em>\"An ounce of prevention is worth a pound of cure. Why wait for your friends to get hurt to heal them when you could prevent them from being hurt in the first place?\"</em></p><p>LEVEL 3</p><p><strong>Guardian Spirit.</strong> Whenever you Interpose, you may have your Lifebinding Spirit do so instead by spending one of its healing charges.</p><p>LEVEL 7</p><p><strong>Ready For Danger.</strong> +WIL Initiative, you may give this bonus to 1 ally as well (after they roll).</p><p>LEVEL 11</p><p><strong>Shield of Light.</strong> You may have your healing spells grant Temp HP instead. (1/encounter) You can ignore the Dying requirement to cast Searing Light.</p><p>LEVEL 15</p><p><strong>Ever Vigilant.</strong> Gain advantage on Initiative. You and 1 ally gain +1 action at the start of each encounter.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "342ecdf0f6b5830f",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VUYAaFnzhUkIsFgW"
+}

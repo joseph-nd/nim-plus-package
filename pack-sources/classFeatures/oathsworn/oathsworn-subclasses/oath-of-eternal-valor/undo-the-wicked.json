@@ -1,0 +1,57 @@
+{
+	"name": "Undo the Wicked",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-eternal-valor/undo-the-wicked.webp",
+	"system": {
+		"macro": "",
+		"identifier": "undo-the-wicked",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until end of their next turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you Interpose, the attacker becomes <strong>Frightened</strong> of you until the end of their next turn.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-eternal-valor",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "izjslWmrwKzsTy7d",
+	"folder": "ff35482129b180a9"
+}

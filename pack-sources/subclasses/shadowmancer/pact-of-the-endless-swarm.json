@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the Endless Swarm",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-endless-swarm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-endless-swarm",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Summon Hive.</strong> Action: Summon an immobile Hive within Reach 6 (max INT Hives at a time). At the end of your turn each Hive spawns a swarm: roll 1d6 for each Hive. Whenever you or your minions attack, expend these dice, divvying them up as damage amongst any enemies within Reach 6 of a hive.</p><p>LEVEL 7</p><p><strong>Rampant Brood.</strong> Action: Your Hives can Interpose for you or allies. Whenever a Hive dies, it spawns a swarm twice. Whenever you command your minions, your Hives can also move.</p><p>LEVEL 11</p><p><strong>Instant Infestation.</strong> 2 Actions: Use Pilfered Power to spawn INT Hives. You can expend swarm dice whenever an enemy comes within Reach 6 of a Hive.</p><p>LEVEL 15</p><p><strong>Swarming Clouds.</strong> Enemies within Reach 2 of your hives attack with disadvantage. Your Hives are immune to non-critical Ranged attacks.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fDPWXpzbdH9oMvkp"
+}

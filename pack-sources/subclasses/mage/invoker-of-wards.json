@@ -1,0 +1,25 @@
+{
+	"name": "Invoker of Wards",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/mage/invoker-of-wards.webp",
+	"system": {
+		"macro": "",
+		"identifier": "invoker-of-wards",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Abjurer.</strong> Defensive spells you cast on yourself (Flame Barrier, Frost Shield, and Alacrity) are always cast as if you spent +1 mana on them (ignoring your usual upcasting limit).</p><p><strong>Elemental Wards.</strong> <strong>Reaction</strong> (When an ally within Reach 6 Defends): you may spend 1 mana to cast an elemental ward on them:</p><ul><li><strong>Flame Ward.</strong> The attacker first suffers KEY damage (ignoring armor) and gains Smoldering.</li><li><strong>Frost Ward.</strong> Grant 2×KEY Temp HP for this round. (These melt away if unused at the beginning of their next turn.)</li><li><strong>Lightning Ward.</strong> Attacks miss them on 2 or less and they gain +KEY speed on this round.</li></ul><p>LEVEL 7</p><p><strong>Abjurer (2).</strong> Defensive spells you cast on yourself cost 1 less mana.</p><p><strong>Elemental Wards (2).</strong> Your Elemental Ward spells gain +KEY effectiveness.</p><p>LEVEL 11</p><p><strong>Abjurer (3).</strong> The 1st defensive spell you cast on yourself each encounter while Dying is free and does not require a save. The 1st ward you cast on a Dying ally each encounter also grants them +1 action.</p><p><strong>Empowered Ward (3).</strong> Your Elemental Wards gain +WIL Reach and +INT effectiveness.</p><p>LEVEL 15</p><p><strong>Abjurer (4).</strong> Whenever you cast a defensive spell, you may select a 2nd creature within Reach to gain its benefits.</p><p><strong>Elemental Aegis.</strong> (1/Safe Rest) <strong>Reaction</strong> (when a friendly creature is attacked): Up to KEY creatures within Reach 8 gain ALL the effects of your Elemental Wards until their next turn.</p>",
+		"parentClass": "mage",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "82882919bf32f6be",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hggn4sNWvgL2YuvU"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Way of Iron",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/zephyr/way-of-iron.webp",
+	"system": {
+		"macro": "",
+		"identifier": "way-of-iron",
+		"rules": [],
+		"description": "<p><em>Train your body to be hard as iron. Concentrate to strengthen your defenses, then release the energy for devastating blows.</em></p><p><strong>Class Complexity:</strong> ♦◊◊◊</p><p>LEVEL 3</p><p><strong>Steel Yourself.</strong> When you roll initiative gain Tempered: Roll STR saves with advantage. Reduce all Primary Dice rolled against you by 1. Ends when the encounter does, or when you hit, you may end it to add 1d20 damage.</p><p>LEVEL 7</p><p><strong>Iron Fists.</strong> Your unarmed strikes deal 1d6+STR damage. Roll your Tempered die with advantage.</p><p><strong>Iron Body.</strong> Gain Tempered the first time you would gain a Wound each encounter.</p><p>LEVEL 11</p><p><strong>Infuse with Iron.</strong> When you use Infuse Strength, your target gains Tempered.</p><p>LEVEL 15</p><p><strong>Perfect Alloy.</strong> Gain Tempered whenever you use a Burst of Speed.</p>",
+		"parentClass": "zephyr",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "2VMkkDDSCdLjutFp",
+	"folder": "60adb5334b7f06e4"
+}

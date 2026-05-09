@@ -1,0 +1,57 @@
+{
+	"name": "Sickening Blow",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titans-grip/sickening-blow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sickening-blow",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you crit an enemy with an Improvised Weapon, double the damage added from Fury Dice.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titans-grip",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mDtyy940v3ojlsVe",
+	"folder": "94911514f45e4a31"
+}

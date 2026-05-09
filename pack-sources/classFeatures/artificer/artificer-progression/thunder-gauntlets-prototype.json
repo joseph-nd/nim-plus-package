@@ -1,0 +1,70 @@
+{
+	"name": "Thunder Gauntlets Prototype",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/thunder-gauntlets-prototype.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thunder-gauntlets-prototype",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "thunder-gauntlets-prototypeGrant",
+				"identifier": "",
+				"label": "Thunder Gauntlets Prototype",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.QVoFRRgR5dS4pxv8"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You build a clunky pre-production prototype of the Thunder Gauntlets. The item is added to your inventory — equip it to use its Reach 4, 1d4 + INT thunder attack.</p><p><em>At Level 2 the prototype is replaced by the full Thunder Gauntlets invention.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "pImBpMKcd1zZzC6t",
+	"folder": "cc0bae2de7db5a7f"
+}

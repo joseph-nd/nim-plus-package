@@ -1,0 +1,82 @@
+{
+	"name": "Invention: Manablade",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/manablade.webp",
+	"system": {
+		"macro": "",
+		"identifier": "manablade",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "invPickManablad",
+				"identifier": "",
+				"label": "Invention: Manablade",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.aITU6bqwZksUpi7H"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reach 1</strong> <em>(Requires 1+ Mana Dice)</em></p><p>Deal damage equal to <strong>2× (sum of Mana Dice + STR)</strong>. Treat Heavy armor as Medium, and Medium as unarmored.</p><p><strong>Upgrades:</strong></p><ul><li><strong>Stabilized Mana Core.</strong> Roll Mana Dice with advantage.</li><li><strong>Arc Module.</strong> (1/round) Strike +1 target adjacent to the first.</li><li><strong>Streamlined Ignition.</strong> –3 to repair DC. If you roll 20+ on the repair check, gain 1 action back.</li></ul><p><strong>Mishap — Arcane Rebound:</strong> After the attack, suffer damage equal to the sum rolled. The blade becomes inoperable (DC 12 Arcana check to fix).</p><p><em>Selecting this invention adds the matching item to your inventory; the item itself carries the attack/defense effects and upgrades.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jlZBFnEiv5fptvP8",
+	"folder": "cc0bae2de7db5a7f"
+}

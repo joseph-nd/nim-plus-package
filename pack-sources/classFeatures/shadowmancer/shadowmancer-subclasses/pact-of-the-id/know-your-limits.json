@@ -1,0 +1,57 @@
+{
+	"name": "Know Your Limits",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-id/know-your-limits.webp",
+	"system": {
+		"macro": "",
+		"identifier": "know-your-limits",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your limit for shadow minions increases by <strong>WIL</strong>, and you may summon a shadow minion for <strong>free at the start of your turn</strong>.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-id",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DwRleADH0FBUOJOd",
+	"folder": "00097021e7009422"
+}

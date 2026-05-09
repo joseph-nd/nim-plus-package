@@ -1,0 +1,57 @@
+{
+	"name": "Fractured Psyche",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-id/fractured-psyche.webp",
+	"system": {
+		"macro": "",
+		"identifier": "fractured-psyche",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Patron is a power hidden in a deep recess of your mind. You gain proficiency with <strong>Leather armor</strong> and <strong>one type of weapon</strong>, and your shadow minions become fragments of your subconscious made manifest.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-id",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "krm5bWReeSCC04fM",
+	"folder": "00097021e7009422"
+}

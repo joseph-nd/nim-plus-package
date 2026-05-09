@@ -1,0 +1,57 @@
+{
+	"name": "Hexbinder's Familiar",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/coven-of-the-hunt/hexbinders-familiar.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hexbinders-familiar",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose any small animal to become your familiar (owl, cat, rooster, fox, etc.). Your familiar retains any abilities the animal has, can speak to you, and will generally obey your commands (though it may refuse instructions that would put it in danger). Choose 1 Familiar Boon that it grants to you:</p><ul><li><strong>Protective.</strong> Acts as a shield that grants +WIL armor.</li><li><strong>Resourceful.</strong> Gain WIL+INT max Hit Dice; these can be given to any ally.</li><li><strong>Sly.</strong> +WIL Initiative. When you roll Initiative, regain 2 mana (this expires at the end of combat if unused).</li><li><strong>Scavenger.</strong> Gain 3×WIL temp HP when you roll initiative.</li><li><strong>Mystical.</strong> You can cast spells from an ally's position INT times/encounter.</li><li><strong>Swift.</strong> You may move WIL spaces for free on each of your turns.</li></ul>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "coven-of-the-hunt",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Dz0GQvlV5sWTtB8m",
+	"folder": "3a14bf524bb8abc0"
+}

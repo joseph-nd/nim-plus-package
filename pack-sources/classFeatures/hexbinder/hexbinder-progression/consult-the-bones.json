@@ -1,0 +1,57 @@
+{
+	"name": "Consult the BONES",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/consult-the-bones.webp",
+	"system": {
+		"macro": "",
+		"identifier": "consult-the-bones",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "10 minutes",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "1/Safe Rest",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>1/Safe Rest. Spend 10 minutes performing a ceremony to obtain information not otherwise available to you on a successful Insight check; rolled with disadvantage.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xmxw24Lh6VGC3XEz",
+	"folder": "cb7cf327da44bff5"
+}

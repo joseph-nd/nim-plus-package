@@ -1,0 +1,57 @@
+{
+	"name": "Murder on the Dance Floor",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-the-dancer/murder-on-the-dance-floor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "murder-on-the-dance-floor",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "All Taunted or Charmed by you"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) <strong>Action:</strong> All enemies Taunted or Charmed by you attack their closest target, friend or foe. If there are no valid targets, they attack themselves.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-the-dancer",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3fPTuFyMEfo2nDCs",
+	"folder": "6581f6da0099ac2f"
+}

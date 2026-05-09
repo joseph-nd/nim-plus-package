@@ -1,0 +1,57 @@
+{
+	"name": "Skilled Trapmaker",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-traps/skilled-trapmaker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "skilled-trapmaker",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You have advantage on skill checks relating to traps.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-traps",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "NMDcyQcVZ3R2rnzD",
+	"folder": "878562b6064b4bfd"
+}

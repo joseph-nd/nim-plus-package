@@ -1,0 +1,57 @@
+{
+	"name": "Sudden Rush",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-exile/sudden-rush.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sudden-rush",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>If you do not move during your turn, on your next turn you have double your normal Speed, and advantage on your first attack after moving.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-exile",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Ly9B5intf13JXVLR",
+	"folder": "2864b0a199d9c389"
+}

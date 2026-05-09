@@ -1,0 +1,57 @@
+{
+	"name": "Blazing Vitality",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-purification/blazing-vitality.webp",
+	"system": {
+		"macro": "",
+		"identifier": "blazing-vitality",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you heal a creature, all enemies adjacent the target take <strong>Fire damage</strong> equal to the amount healed.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-purification",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "HFIWm74cYqYEun0V",
+	"folder": "85b3aca5179476ab"
+}

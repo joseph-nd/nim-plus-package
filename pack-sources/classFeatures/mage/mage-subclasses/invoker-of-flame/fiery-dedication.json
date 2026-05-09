@@ -1,0 +1,57 @@
+{
+	"name": "Fiery Dedication",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-flame/fiery-dedication.webp",
+	"system": {
+		"macro": "",
+		"identifier": "fiery-dedication",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can only cast fire spells from now on. Choose 1 Ice or Lightning spell and treat it as a fire spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-flame",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mLUyFY48Mj3RqnqK",
+	"folder": "9ce20096d9d04850"
+}

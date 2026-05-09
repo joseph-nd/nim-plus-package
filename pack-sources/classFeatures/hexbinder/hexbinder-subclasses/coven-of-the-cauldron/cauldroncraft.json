@@ -1,0 +1,156 @@
+{
+	"name": "Cauldroncraft",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/coven-of-the-cauldron/cauldroncraft.webp",
+	"system": {
+		"macro": "",
+		"identifier": "cauldroncraft",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantHealth",
+				"identifier": "",
+				"label": "Concoction: Minor Health",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.tHvZcZCbYEk9ospp"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantFitns",
+				"identifier": "",
+				"label": "Concoction: Fitness",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.hX40b9V4VWfSSKe1"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantSpeed",
+				"identifier": "",
+				"label": "Concoction: Speed",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.H6LwfIt91ZStrIWQ"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantMCure",
+				"identifier": "",
+				"label": "Concoction: Minor Cure",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.e1Z9V7d87XH2hGFy"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantDlAct",
+				"identifier": "",
+				"label": "Concoction: Delayed Action",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.BIp6WPaBpHZvxCSb"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantCrack",
+				"identifier": "",
+				"label": "Concoction: Crackling",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.K2ewZVELlH02m8y9"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantSmoke",
+				"identifier": "",
+				"label": "Concoction: Smoke",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.9gPNeCNJ5cgALxSn"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "cauldronGrantAffl1",
+				"identifier": "",
+				"label": "Concoction: Affliction",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.VlwzOTEPoPzjsBDH"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Until next Safe Rest",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>During a Safe Rest, brew INT+WIL Concoctions in your cauldron. Action: You may drink a Concoction or throw it as a ranged attack (Reach 6). The target gains the Concoction's effect. Unused Concoctions expire after your next Safe Rest.</p><hr><p><strong>Concoction Effects</strong></p><ul><li><strong>Minor Health.</strong> Gain 2×KEY temp HP.</li><li><strong>Fitness.</strong> Gain +1 STR &amp; +1 DEX for 1 minute.</li><li><strong>Speed.</strong> Gain +6 Speed for 1 minute.</li><li><strong>Minor Cure.</strong> End any single harmful condition.</li><li><strong>Delayed Action.</strong> Gain one extra Action at the end of your turn.</li><li><strong>Crackling.</strong> Gain the Charged condition.</li><li><strong>Smoke.</strong> Gain the Invisible condition until the start of your next turn.</li><li><strong>Affliction.</strong> Apply one Affliction you know.</li></ul>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "coven-of-the-cauldron",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "pdEM6NIZfW2wQxuJ",
+	"folder": "d99cb03f3f5905c7"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Hexcaster",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/coven-of-the-hex/hexcaster.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hexcaster",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Enfeebled Affliction also Dazes the target. You can inflict Doomed 2/encounter.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "coven-of-the-hex",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oWX7l7jzzQppMelQ",
+	"folder": "d3fef60c5a60f749"
+}

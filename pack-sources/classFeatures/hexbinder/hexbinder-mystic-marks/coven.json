@@ -1,0 +1,67 @@
+{
+	"name": "Coven",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/coven.webp",
+	"system": {
+		"macro": "",
+		"identifier": "coven",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 spell school a close ally knows; you can cast tiered spells from that school. <em>(Healer of the Old Ways: non-Hexbinder healing spells cannot be Diminished.)</em></p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "RfnVZ0qbzIoHBCmi",
+	"folder": "cb7cf327da44bff5"
+}

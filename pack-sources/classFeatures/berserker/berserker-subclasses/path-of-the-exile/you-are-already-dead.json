@@ -1,0 +1,57 @@
+{
+	"name": "You Are Already Dead",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-exile/you-are-already-dead.webp",
+	"system": {
+		"macro": "",
+		"identifier": "you-are-already-dead",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you crit an enemy, you may choose to deal no damage. If you do, that enemy takes <strong>twice that amount</strong> of damage at the end of its next turn (ignoring armor).</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-exile",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "6FLgighvzePkwSJN",
+	"folder": "2864b0a199d9c389"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Trap Master",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-traps/trap-master.webp",
+	"system": {
+		"macro": "",
+		"identifier": "trap-master",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you use a Trap, add your weapon damage to it. One of your Traps can be used an additional time each encounter.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-traps",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "P6DJ0Wm8h2elajgv",
+	"folder": "878562b6064b4bfd"
+}

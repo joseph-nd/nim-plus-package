@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the High Celestial",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-high-celestial.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-high-celestial",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Divine Bestowal.</strong> Your Shadow Minions become radiant spirits, and instead of being able to attack directly, they can move into the space of an ally and bless them. They move where the ally does and add their damage to each of the ally's attacks. If that ally takes damage, all minions blessing them die.</p><p>LEVEL 7</p><p><strong>Radiant Blast.</strong> You may target allies with Shadow Blast and give them Temp HP instead of damaging them.</p><p>LEVEL 11</p><p><strong>Celestial Armor.</strong> When a blessed ally would be damaged, 1 minion blessing them sacrifices itself INSTEAD.</p><p>LEVEL 15</p><p><strong>Celestial Apotheosis.</strong> (1/Safe Rest) For 1 round you are immune to all damage and negative effects. Anytime you would roll a d20, roll a d100 instead, and anytime you would roll less than a d20, roll a d20.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bRS10riIBo4mNhcT"
+}

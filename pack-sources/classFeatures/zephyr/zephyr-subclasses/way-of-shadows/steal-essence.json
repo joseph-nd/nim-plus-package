@@ -1,0 +1,57 @@
+{
+	"name": "Steal Essence",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/zephyr/way-of-shadows/steal-essence.webp",
+	"system": {
+		"macro": "",
+		"identifier": "steal-essence",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When YOU kill an enemy, you may conjure a <strong>Shade</strong> on an adjacent space. You can control up to <strong>2×KEY Shades</strong> at the same time.</p>",
+		"featureType": "class",
+		"class": "zephyr",
+		"group": "way-of-shadows",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0ExQaDaCUHfRyAOo",
+	"folder": "3bdf3a39ab14cdf1"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Coven of The Hex",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hexbinder/coven-of-the-hex.webp",
+	"system": {
+		"macro": "",
+		"identifier": "coven-of-the-hex",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Haunted.</strong> When an Afflicted creature dies, apply all of their Afflictions to another enemy within Reach 8 of them.</p><p>LEVEL 7</p><p><strong>Spitecurse.</strong> When you would deal damage to an Afflicted creature with a Hexbinder spell, you may instead transfer that damage to another Afflicted creature.</p><p>LEVEL 11</p><p><strong>Cursespitter.</strong> Your Hex range increases and you can apply Afflictions through it.</p><p>LEVEL 15</p><p><strong>Hexcaster.</strong> Your spells ignore Affliction immunities and resistances.</p>",
+		"parentClass": "hexbinder",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "bdadf610a140a03c",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0irTrlRx8H05eKR2"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Skewering Stab",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-phalanx/skewering-stab.webp",
+	"system": {
+		"macro": "",
+		"identifier": "skewering-stab",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can perform Opportunity Attacks against enemies that enter the Reach of your weapon. If the movement was forced, attack with Advantage instead of Disadvantage.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-phalanx",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UWo4zbbEHiM6agW5",
+	"folder": "e172aec421cb4ccf"
+}

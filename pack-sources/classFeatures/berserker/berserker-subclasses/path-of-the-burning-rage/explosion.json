@@ -1,0 +1,57 @@
+{
+	"name": "EXPLOSION!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-burning-rage/explosion.webp",
+	"system": {
+		"macro": "",
+		"identifier": "explosion",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Smoldering creatures suffer <strong>+LVL</strong> damage from <em>Overflowing Fury</em>, ending the condition. You may deal that much damage to ALL creatures adjacent to your target.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-burning-rage",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "qWPcPtnBLgLaOQxR",
+	"folder": "19a2a1f080736d2b"
+}

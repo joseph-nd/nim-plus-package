@@ -1,0 +1,70 @@
+{
+	"name": "Thunder Gauntlets",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/thunder-gauntlets-upgrade.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thunder-gauntlets-upgrade",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "artfcrTGUpgrade",
+				"identifier": "",
+				"label": "Invention: Thunder Gauntlets",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.cCCC3iIjHPsqSFBS"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Thunder Gauntlets Prototype becomes the full <strong>Thunder Gauntlets</strong> invention (see Inventions). It gains the new damage formula and can be powered with Mana Dice.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			2
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "OCZqDzfNV98OHii3",
+	"folder": "cc0bae2de7db5a7f"
+}

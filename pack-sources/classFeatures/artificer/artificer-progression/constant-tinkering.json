@@ -1,0 +1,72 @@
+{
+	"name": "Constant Tinkering",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/constant-tinkering.webp",
+	"system": {
+		"macro": "",
+		"identifier": "constant-tinkering",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You upgrade 1 of your Inventions or Gadgets at every level from 3 onwards (except level 19).</p><hr><p><strong>How it works in Foundry:</strong> on level-up you'll be prompted to pick 1 upgrade from the combined list of all Invention/Gadget upgrades. The picked upgrade is added to your character sheet as its own feature with the parent invention/gadget named in the title (e.g. <em>Manaforged Plate · Angled Deflectors</em>). Mechanical upgrades like <em>Angled Deflectors</em> (+2 Armor) and <em>Passive Sensors</em> (+INT Initiative) apply automatically; description-only upgrades are reference notes you cite at the table.</p><p><em>Each upgrade can only be picked once per item — pick only upgrades for Inventions/Gadgets you own. You may reconfigure picks during a Safe Rest by editing them on the sheet.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			3,
+			4,
+			5,
+			6,
+			7,
+			8,
+			9,
+			10,
+			11,
+			12,
+			13,
+			14,
+			15,
+			16,
+			17,
+			18
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "d5gx6VoKMVptH038",
+	"folder": "cc0bae2de7db5a7f"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Every Legend",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/every-legend.webp",
+	"system": {
+		"macro": "",
+		"identifier": "every-legend",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain access to every Legend. The first time each legend would go away in an encounter, it doesn't.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7FyjB1GIEpI7Z48B",
+	"folder": "86341ad2caf67365"
+}

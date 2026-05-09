@@ -1,0 +1,57 @@
+{
+	"name": "Crystalline Aegis",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-frost/crystalline-aegis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "crystalline-aegis",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When your Frost Shield Temp HP is lost, cast Shatter for free on an adjacent enemy. Choose 1 additional Lightning or Fire spell and treat it as an Ice spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-frost",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "lMFPzNKzqw7WR2mH",
+	"folder": "278a5d66a07d271a"
+}

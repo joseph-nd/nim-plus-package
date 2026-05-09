@@ -1,0 +1,57 @@
+{
+	"name": "Powerful Voice",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-stratagem/powerful-voice.webp",
+	"system": {
+		"macro": "",
+		"identifier": "powerful-voice",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/round",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you use a Commander's Order, all adjacent enemies become <strong>Frightened</strong> of you until the end of their next turn (1/round).</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-stratagem",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3VPxA7hgYiSxJMH9",
+	"folder": "9e134b76d1a318f2"
+}

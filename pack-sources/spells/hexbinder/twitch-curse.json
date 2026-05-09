@@ -1,0 +1,78 @@
+{
+	"name": "Twitch Curse",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/hexbinder/twitch-curse.webp",
+	"system": {
+		"macro": "",
+		"identifier": "twitch-curse",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Attacked",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Reaction, Single Target, Reach 8</strong></p><p>When attacked by a creature within Reach, Defend for free. First move the attacker 1 space (+1 space for each Affliction they have). Opportunity attacks triggered this way are made with advantage instead of disadvantage.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 8
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "hexbinder",
+		"tier": 2,
+		"classes": [
+			"hexbinder"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "SoRs7KpyDen8LQIN",
+	"folder": "c367afd06b845ebf"
+}

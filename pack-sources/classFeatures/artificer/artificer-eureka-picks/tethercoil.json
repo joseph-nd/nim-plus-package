@@ -1,0 +1,71 @@
+{
+	"name": "Invention: Tethercoil",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/tethercoil.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tethercoil",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Range 4 + (4 × Mana Dice spent)</strong>. Choose one mode when you use it:</p><p><strong>Tether Mode (Action):</strong> Pull a creature your size or smaller next to you. You may Restrain them. OR you move to a larger creature and gain Riding.</p><p><strong>Coil Mode (2 Actions):</strong> Restrain all creatures fully in an area equal to the number of Mana Dice rolled (e.g. 2 dice = 2×2 area).</p><p><strong>Upgrades</strong> (apply to both modes — toggle on the Rules tab when picked via Constant Tinkering):</p><ul><li><strong>Amplified Conduit.</strong> +2 Range.</li><li><strong>Reinforced Tethers.</strong> +1 to Tethercoil save DC.</li></ul><p><strong>Mishap — Tether Mode (Mistether!):</strong> The GM may choose a different creature in Range.</p><p><strong>Mishap — Coil Mode (Tangled!):</strong> You are Restrained as well.</p><hr><p><strong>Upgrades available</strong> <em>(pick at level-up via Constant Tinkering)</em></p><ul><li><strong>Amplified Conduit</strong></li><li><strong>Reinforced Tethers</strong></li></ul>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cJ7I09l89Gw73Bdm",
+	"folder": "cc0bae2de7db5a7f"
+}

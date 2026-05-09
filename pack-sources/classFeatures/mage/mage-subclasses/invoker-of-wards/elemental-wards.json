@@ -1,0 +1,61 @@
+{
+	"name": "Elemental Wards",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-wards/elemental-wards.webp",
+	"system": {
+		"macro": "",
+		"identifier": "elemental-wards",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 mana",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Level 3.</strong> <strong>Reaction</strong> (When an ally within Reach 6 Defends): you may spend 1 mana to cast an elemental ward on them:</p><ul><li><strong>Flame Ward.</strong> The attacker first suffers KEY damage (ignoring armor) and gains Smoldering.</li><li><strong>Frost Ward.</strong> Grant 2×KEY Temp HP for this round. (These melt away if unused at the beginning of their next turn.)</li><li><strong>Lightning Ward.</strong> Attacks miss them on 2 or less and they gain +KEY speed on this round.</li></ul><p><strong>Level 7.</strong> Your Elemental Ward spells gain +KEY effectiveness.</p><p><strong>Level 11 (Empowered Ward).</strong> Your Elemental Wards gain +WIL Reach and +INT effectiveness.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-wards",
+		"gainedAtLevels": [
+			3,
+			7,
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ar0fT7AvBMyxKWby",
+	"folder": "09ffe862ff55a67c"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "On the Precipice",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-doom/on-the-precipice.webp",
+	"system": {
+		"macro": "",
+		"identifier": "on-the-precipice",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>The first time each encounter you become <strong>Bloodied</strong>, you regain <strong>1 Hit Die</strong>. Whenever you Make Camp, you may set your HP to <strong>half of your max HP</strong>. <strong>+1 max Hit Dice</strong>.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-doom",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "OdotdTgpJCEomHxR",
+	"folder": "7aef0d2a5d98cd27"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Invoker of Majesty",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/mage/invoker-of-majesty.webp",
+	"system": {
+		"macro": "",
+		"identifier": "invoker-of-majesty",
+		"rules": [],
+		"description": "<p><em>The Majesty of Dragons is sought by many. Enticing, elusive, exquisite.</em></p><p>LEVEL 3</p><p><strong>Apodracosis.</strong> (1/encounter) <strong>Action</strong>: Unleash your draconic aspect, granting you 2×WIL+LVL temp HP and Draconic Powers. This transformation ends if you break Concentration or at the end of the encounter. Choose a damage type for your powers when you transform.</p><p><em>Purity of Form.</em> Other transformations automatically end Apodracosis, such as the Dragonform spell.</p><p><strong>Fearsome Breath.</strong> <em>(Draconic Power)</em> <strong>Action</strong>: Spend X Mana to deal Xd6 damage of your chosen type in Cone 3. Half damage on a DEX save (DC 10+KEY). Applies <strong>Dragonmarked</strong> (counts as any condition for empowering spells, like Smoldering).</p><p>LEVEL 7</p><p><strong>Peerless Intellect.</strong> <em>(Draconic Power)</em> Spells of your chosen type are automatically upcast 1 tier for free, and you may Concentrate on two activities at once.</p><p><strong>Limitless Wrath.</strong> When you would break concentration, you don't (1/encounter).</p><p>LEVEL 11</p><p><strong>Blinding Majesty.</strong> <em>(Draconic Power)</em> When you unleash your draconic aspect, all enemies within Reach 3 become Blinded until the end of their next turn, and gain Dragonmarked.</p><p><strong>Glorious Wings.</strong> <em>(Draconic Power)</em> Gain a Fly speed.</p><p>LEVEL 15</p><p><strong>Prodigious Vigor.</strong> The first time each encounter you would drop to 0 HP, set your HP to 1 instead and cast Apodracosis for free.</p>",
+		"parentClass": "mage",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "g8nNX42xA9YXGbqB",
+	"folder": "82882919bf32f6be"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Tortured Artist",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-doom/tortured-artist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tortured-artist",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "expend 1 Hit Die",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>After using <em>Songweaver's Inspiration</em>, you may expend one of your <strong>Hit Dice</strong> and add it to the chosen result. This may change the outcome.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-doom",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Q8X1oIfHPXdf3teq",
+	"folder": "7aef0d2a5d98cd27"
+}

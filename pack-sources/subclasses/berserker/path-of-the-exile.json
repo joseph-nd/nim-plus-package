@@ -1,0 +1,25 @@
+{
+	"name": "Path of the Exile",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/berserker/path-of-the-exile.webp",
+	"system": {
+		"macro": "",
+		"identifier": "path-of-the-exile",
+		"rules": [],
+		"description": "<p><em>Focus in exile. Fury honed to a keen edge. A masterless hound.</em></p><p>LEVEL 3</p><p><strong>Draw Cut.</strong> Your first melee attack each encounter is an automatic crit. Recharges when you spend an entire round without attacking.</p><p><strong>Deflect and Counter.</strong> For each Fury Dice spent to reduce incoming damage from an attack within melee reach, the attacker takes STR+DEX damage (ignoring armor). Does not count as an attack.</p><p>LEVEL 7</p><p><strong>Sudden Rush.</strong> If you do not move during your turn, on your next turn you have double your normal Speed, and advantage on your first attack after moving.</p><p>LEVEL 11</p><p><strong>Hound Without a Master.</strong> While Raging, you gain double advantage on WIL saves and cannot be Charmed.</p><p>LEVEL 15</p><p><strong>You Are Already Dead.</strong> When you crit an enemy, you may choose to deal no damage. If you do, that enemy takes twice that amount of damage at the end of its next turn (ignoring armor).</p>",
+		"parentClass": "berserker",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "6ba952618a642848",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "liE0QY1gMiEGHaZ6"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Way of the Drunken Fist",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/zephyr/way-of-the-drunken-fist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "way-of-the-drunken-fist",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Opportunist.</strong> Improvised Weapons you use are Vicious and are not subject to disadvantage imposed by Rushed Attacks. (1/round) you may suffer a wound to turn a melee attack into a crit.</p><p>LEVEL 7</p><p><strong>Drunken Stagger.</strong> Gain the Use Momentum martial arts ability. You may move the attacker up to 2 spaces after swapping places.</p><p>LEVEL 11</p><p><strong>Drunken Master.</strong> Ignore all negative effects from being Prone. Whenever you attack you may stand up or drop prone for free.</p><p>LEVEL 15</p><p><strong>Drunkards Luck.</strong> (1/encounter) Your first attack crits and the first attack against you misses.</p>",
+		"parentClass": "zephyr",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7CKdnXweX0zUpQv8",
+	"folder": "60adb5334b7f06e4"
+}

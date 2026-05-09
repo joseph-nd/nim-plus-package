@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Arena",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-arena.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-arena",
+		"rules": [],
+		"description": "<p><em>A simple, single-minded fighter who goes for the glory!</em></p><p>LEVEL 3</p><p><strong>Single-minded Fighter.</strong> You forego all Commander's Orders. Whenever you would choose one, you gain +1 max Combat Die instead.</p><p><strong>Showstopping Strike.</strong> (1/Safe Rest) You and your ally crit with Coordinated Strike.</p><p><strong>Glory Seeker.</strong> (1/round) Whenever an ally crits, your next attack is made with advantage.</p><p>LEVEL 7</p><p><strong>Pushed to the Brink.</strong> Showstopping Strike refreshes the first time each encounter you gain the Dying condition.</p><p><strong>Remarkable Strategy.</strong> (1/encounter) When Assessing with an INT skill, you may roll a Combat Die and add it to the result (without expending it).</p><p>LEVEL 11</p><p><strong>Superior Striker.</strong> Gain +STR Initiative. Showstopping Strike refreshes when you roll Initiative.</p><p>LEVEL 15</p><p><strong>Outlast and Outmatch.</strong> Your Coordinated Strike also grants you and your ally temp HP equal to the max value of your Combat Die.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "54c3de6e51604292",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DxYLjAThAyEz6zvO"
+}

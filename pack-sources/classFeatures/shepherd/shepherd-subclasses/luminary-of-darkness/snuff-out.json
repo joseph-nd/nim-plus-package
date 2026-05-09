@@ -1,0 +1,57 @@
+{
+	"name": "Snuff Out",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-darkness/snuff-out.webp",
+	"system": {
+		"macro": "",
+		"identifier": "snuff-out",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Light dims nigh imperceptibly in your presence. Nocturnal animals often seem to follow you. As an <strong>action</strong>, you may extinguish all mundane light sources that you can see.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-darkness",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gpfurJ2V1WwRfOLr",
+	"folder": "bab01ef1cd1e588d"
+}

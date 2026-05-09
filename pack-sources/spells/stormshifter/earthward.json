@@ -1,0 +1,76 @@
+{
+	"name": "Earthward",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/stormshifter/earthward.webp",
+	"system": {
+		"macro": "",
+		"identifier": "earthward",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reaction — when you would be damaged or moved against your will",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "Until end of round",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>Tier 2 · 2 Actions · Self · Reaction.</strong></p><p><strong>Reaction:</strong> When you would be damaged or moved against your will. Reduce ALL damage taken this round by 20 and you cannot be moved this round.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p><strong>Upcast:</strong> +5 damage reduction.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 1
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "earth",
+		"tier": 2,
+		"classes": [
+			"stormshifter"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fPeCw1FOuEQ5q2bJ",
+	"folder": "121f29a2ee54baa0"
+}

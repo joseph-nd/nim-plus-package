@@ -1,0 +1,63 @@
+{
+	"name": "Enfeebled",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/enfeebled.webp",
+	"system": {
+		"macro": "",
+		"identifier": "enfeebled",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Concentration",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Target falls Prone at the end of each of your turns.</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-afflictions",
+		"gainedAtLevels": [
+			3,
+			7,
+			12
+		],
+		"selectionCountByLevel": {
+			"3": 1,
+			"7": 1,
+			"12": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5QwJZRZ1XNXebyrd",
+	"folder": "cb7cf327da44bff5"
+}

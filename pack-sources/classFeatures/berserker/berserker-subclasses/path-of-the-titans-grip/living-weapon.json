@@ -1,0 +1,63 @@
+{
+	"name": "Living Weapon",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titans-grip/living-weapon.webp",
+	"system": {
+		"macro": "const opts = [\n  { id: 'tiny', label: 'Tiny — Light, Thrown 6', formula: '1d4 + @abilities.strength.mod', damageType: 'bludgeoning' },\n  { id: 'small', label: 'Small — Thrown 4', formula: '1d6 + @abilities.strength.mod', damageType: 'bludgeoning', default: true },\n  { id: 'medium', label: 'Medium — 2-handed', formula: '1d10 + @abilities.strength.mod', damageType: 'bludgeoning' }\n];\nreturn nimPlus.pickDamage(actor, item, opts);",
+		"identifier": "living-weapon",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>While Raging, living Grappled creatures can be used as improvised weapons:</p><ul><li><strong>Tiny</strong> — 1d4+STR, Light, Thrown 6</li><li><strong>Small</strong> — 1d6+STR, Thrown 4</li><li><strong>Medium</strong> — 1d10+STR (2-handed)</li></ul><p><em>Living Weapons suffer as much damage as they deal.</em></p><p><em>Foundry tip — click the action to pick Tiny / Small / Medium and roll the matching damage.</em></p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titans-grip",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xmXSMHKqH4pu1oFr",
+	"folder": "94911514f45e4a31"
+}

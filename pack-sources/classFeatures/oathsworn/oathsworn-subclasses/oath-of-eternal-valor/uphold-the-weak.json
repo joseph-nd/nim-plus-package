@@ -1,0 +1,57 @@
+{
+	"name": "Uphold the Weak",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-eternal-valor/uphold-the-weak.webp",
+	"system": {
+		"macro": "",
+		"identifier": "uphold-the-weak",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When using Lay on Hands, you may choose another creature within your aura to be healed for the same amount.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-eternal-valor",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nbBEZL6HpVahbMjW",
+	"folder": "ff35482129b180a9"
+}

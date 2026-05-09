@@ -1,0 +1,82 @@
+{
+	"name": "Invention: Manaforged Plate",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/manaforged-plate.webp",
+	"system": {
+		"macro": "",
+		"identifier": "manaforged-plate",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "invPickManaforg",
+				"identifier": "",
+				"label": "Invention: Manaforged Plate",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.K51DBPqmNJvFQc5d"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>8 + STR armor.</strong></p><p><strong>Autoshields.</strong> (1/round) Reduce damage of an attack by INT for free.</p><p><strong>Mana Infusion.</strong> When you Defend, gain 2× STR armor per Mana Die spent.</p><p><strong>Upgrades:</strong></p><ul><li><strong>Reactive Armor.</strong> You may also knock an adjacent Medium or smaller creature back 1 space for each Mana Die rolled. If you spent 2+ Mana Dice, knock them Prone also.</li><li><strong>Ablative Coating.</strong> (1/encounter) When a creature moves you against your will, move them the same distance in the opposite direction also (Large creatures are moved half as far).</li><li><strong>Angled Deflectors.</strong> (Passive) +2 Armor.</li></ul><p><strong>Mishap — Armor Lockup!</strong> Restrained (escape DC 10).</p><p><em>Selecting this invention adds the matching item to your inventory; the item itself carries the attack/defense effects and upgrades.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "GgMuC6MAQVBjcUt3",
+	"folder": "cc0bae2de7db5a7f"
+}

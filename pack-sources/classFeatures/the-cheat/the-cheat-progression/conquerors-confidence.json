@@ -1,0 +1,55 @@
+{
+	"name": "Conqueror's Confidence",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/conquerors-confidence.webp",
+	"system": {
+		"macro": "",
+		"identifier": "conquerors-confidence",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Honorable Gambit.</em> When you kill a Taunted enemy, give an Ally advantage on their next attack.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-cheat-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "dgOf8wtGA8UINjjX",
+	"folder": "db26ee50517a7f26"
+}

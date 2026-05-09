@@ -1,0 +1,57 @@
+{
+	"name": "The Setup",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-singing-steel/the-setup.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-setup",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you miss an attack, regain 1 use of Songweaver's Inspiration (this expires when combat ends).</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-singing-steel",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "D8kj4V7l7jvQ2Ji1",
+	"folder": "2d8e800b66066db6"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Luminary of Darkness",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-darkness.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-darkness",
+		"rules": [],
+		"description": "<p><em>Fear not the dark, for I am your guide.</em></p><p>LEVEL 3</p><p><strong>Umbrous Mark.</strong> Your Lifebinding Spirit is marked by darkness and deals Necrotic damage. When you, your Lifebinding Spirit or an ally within Reach 4 deal Necrotic damage to an enemy, you may spend 1 Mana to also inflict Blinded on that enemy until the end of their next turn.</p><p><strong>Light in the Darkness.</strong> You gain the Light Bearer Sacred Grace. Searing Light can now target Blinded creatures. You also gain Darkvision 6.</p><p>LEVEL 7</p><p><strong>Lost in Shadow.</strong> When you hit a Blinded enemy with Searing Light, they become Frightened of you until the end of their next turn and move 3 spaces in a random direction.</p><p><strong>Snuff Out.</strong> Light dims nigh imperceptibly in your presence. Nocturnal animals often seem to follow you. As an action, you may extinguish all mundane light sources that you can see.</p><p>LEVEL 11</p><p><strong>Light in the Darkness (2).</strong> Light Bearer now regains 2 uses of Searing Light. Searing Light now uses d12s.</p><p>LEVEL 15</p><p><strong>Cloak of Darkness.</strong> (1/encounter) Action: Don a billowing Cloak of Darkness for up to WIL turns. The Cloak has an aura that inflicts Blinded on enemies within Reach 2.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CzxljqDfjYQDfXoS",
+	"folder": "342ecdf0f6b5830f"
+}

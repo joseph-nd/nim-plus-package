@@ -1,0 +1,82 @@
+{
+	"name": "Invention: Aethertuned Jerkin",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/eureka-picks/aethertuned-jerkin.webp",
+	"system": {
+		"macro": "",
+		"identifier": "aethertuned-jerkin",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "invPickAethertu",
+				"identifier": "",
+				"label": "Invention: Aethertuned Jerkin",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.FGr5UI9P7HGe12vc"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>1 + INT + DEX armor.</strong></p><p><strong>Aetheric Thrusters.</strong> +1 Speed and +1 Initiative while wearing this armor.</p><p><strong>Tuned Thrusters.</strong> When you Defend, first move 1 space per Mana Die spent (if this puts you out of line of sight/Reach/Range, the attack misses).</p><p><strong>Upgrades:</strong></p><ul><li><strong>Autothrusters.</strong> If you spend 2+ Mana Dice when you Defend, do so for free.</li><li><strong>Chronoshard Modulator.</strong> (1/encounter) When crit, gain 1 action.</li><li><strong>Passive Sensors.</strong> +INT to your Initiative.</li></ul><p><strong>Mishap — Tumble!</strong> Land Prone within 2 spaces of your intended destination (chosen by the GM) instead.</p><p><em>Selecting this invention adds the matching item to your inventory; the item itself carries the attack/defense effects and upgrades.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-eureka-picks",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"2": 1,
+			"4": 1,
+			"6": 1,
+			"8": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "A3UUNYkUe8Ly9hfH",
+	"folder": "cc0bae2de7db5a7f"
+}

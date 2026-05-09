@@ -1,0 +1,57 @@
+{
+	"name": "Electrical Dedication",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-surges/electrical-dedication.webp",
+	"system": {
+		"macro": "",
+		"identifier": "electrical-dedication",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You give up Spellshaper abilities and you can only cast lightning spells from now on. Choose 1 Ice or Fire spell and treat it as a Lightning spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-surges",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UoQc4sdmy2okNNyd",
+	"folder": "43b6eab0c003a07b"
+}

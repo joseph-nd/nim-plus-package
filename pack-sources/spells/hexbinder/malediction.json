@@ -1,0 +1,100 @@
+{
+	"name": "Malediction",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/hexbinder/malediction.webp",
+	"system": {
+		"macro": "",
+		"identifier": "malediction",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "maledictionDamage1",
+					"type": "damage",
+					"damageType": "necrotic",
+					"formula": "1d4",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "maledictionHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "maledictionDamage1"
+							}
+						]
+					},
+					"canCrit": false,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions, Multi-target (up to KEY), Reach 4</strong></p><p>Attack up to KEY creatures for [[/r 1d4]] each. On hit, deal LVL damage instead (ignoring armor).</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 4
+			},
+			"reach": {
+				"min": 1,
+				"max": 4
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "hexbinder",
+		"tier": 4,
+		"classes": [
+			"hexbinder"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "WTciIbSlEKit3NEV",
+	"folder": "c367afd06b845ebf"
+}

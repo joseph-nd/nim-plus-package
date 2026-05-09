@@ -1,0 +1,25 @@
+{
+	"name": "Circle of Venom & Web",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/stormshifter/circle-of-venom-and-web.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-venom-and-web",
+		"rules": [],
+		"description": "<p><em>Stormshifters who align themselves with the nature of spiders and utilize their power from these tiny but deadly creatures.</em></p><p><strong>Class Complexity:</strong> ♦♦◊◊</p><p>LEVEL 3</p><p><strong>Deadly Nature.</strong> Replace your knowledge of the lightning or wind school with necrotic.</p><p><strong>Too many legs, too many eyes.</strong> Your beastforms gain Climber or Keen Senses for free.</p><p><strong>Venom Sacs.</strong> When your attack hits in beastform, you may spend mana to increase your Primary Die by 1 for each mana spent (up to the tier of spells you have unlocked). When you crit in beastform, the target is Poisoned until the end of their next turn.</p><p>LEVEL 7</p><p><strong>Ensnare.</strong> Whenever you Interpose or Defend vs a melee attack, you may spend 1 mana to Restrain the attacker until the end of their next turn if it is your size or smaller.</p><p><strong>Recurring Nightmare.</strong> (1/encounter) Shift into a Beast of Nightmares as a reaction for free (if you were being attacked, they must reroll and you choose either result).</p><p>LEVEL 11</p><p><strong>Fear Toxin.</strong> When you Poison a target, they are frightened until the end of their next turn.</p><p><strong>Skitter.</strong> Your Beast of Nightmares form gets the Fleet Footed Chimeric Boon for free.</p><p>LEVEL 15</p><p><strong>Dread Voice.</strong> You may cast necrotic spells while Beastshifted.</p><p><strong>Spiderling Swarm.</strong> Ensnare also Poisons creatures for as long as they are Restrained.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nSm1Bp1UY8VXKz31",
+	"folder": "bbdbcfedb2a0daf6"
+}

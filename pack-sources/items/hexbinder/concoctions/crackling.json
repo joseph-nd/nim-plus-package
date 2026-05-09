@@ -1,0 +1,88 @@
+{
+	"name": "Concoction: Crackling",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/hexbinder/concoctions/crackling.webp",
+	"system": {
+		"macro": "",
+		"identifier": "concoction-crackling",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "concCracklingCondition1",
+					"type": "condition",
+					"condition": "charged",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Properties:</strong> (action) Drink or throw (Reach 6). The target gains the Charged condition.</p><p><em>Brewed via Hexbinder Cauldroncraft. Expires after your next Safe Rest.</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"quantity": 1,
+		"unidentifiedName": "Unknown Concoction",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.25,
+		"stackSize": 99,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": 6
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 6
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "K2ewZVELlH02m8y9",
+	"folder": null
+}

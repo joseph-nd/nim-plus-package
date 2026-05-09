@@ -1,0 +1,25 @@
+{
+	"name": "Forge of the Mechanic",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/artificer/forge-of-the-mechanic.webp",
+	"system": {
+		"macro": "",
+		"identifier": "forge-of-the-mechanic",
+		"rules": [],
+		"description": "<p><em>After spending countless hours in your workshop, your work is finally complete. With whirring gears, your companion springs to life, ready to join you on your adventures.</em></p><p><em>Just like the other Artificer inventions, you can flavour your companion however you want — a golem, a steampunk robot, a magitech construct, or whatever else you can imagine.</em></p><p>LEVEL 3</p><p><strong>It Lives!</strong> You have created a medium-sized mechanical companion. It moves for free on your turn and has 5 HP/LVL. Your companion has 2 module slots that can hold one of your major inventions or a companion module. Powered by your Mana Dice. Includes Repair Kit (INT/Safe Rest).</p><p>LEVEL 7</p><p><strong>Modular Expansion (1).</strong> Companion gains another module slot. <strong>Synchronized Strike.</strong> When you Attack, your companion gains a free Mana Die to attack the same target. <strong>Superconductor.</strong> Increment your Mana Dice one step.</p><p>LEVEL 11</p><p><strong>Modular Expansion (2).</strong> Companion gains another module slot. <strong>Static Discharge.</strong> (1/encounter) Spend 2+ Mana Dice with advantage; enemies within 2 spaces take dice + INT damage.</p><p>LEVEL 15</p><p><strong>Modular Expansion (3).</strong> Companion gains another module slot. <strong>Overclock Protocol.</strong> (1/Safe Rest) Maximize all Mana Dice for companion abilities this turn. <strong>Independent Power Supply.</strong> +1 max Mana Die.</p><hr><p><em>Companion Modules:</em> Heavy Chassis (Stomp! AoE, Telescopic Arms / Steel Bulwark upgrades), Rocket Engines (fly via Mana Dice, Boosters upgrade), Electrified Chassis (retaliate damage, Armored Carapace / Structural Reinforcement upgrades).</p>",
+		"parentClass": "artificer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "d45504466d8d2264",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bemuMDY87lD37nb9"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Diminution",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hexbinder/diminution.webp",
+	"system": {
+		"macro": "",
+		"identifier": "diminution",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reduce the mana cost of spells by 1 for each condition chosen. You can choose each condition only once per spell, and can't choose an effect that a spell does not have (e.g., Humble on a spell with no Range/Reach).</p><ul><li><strong>Humble.</strong> The Range/Reach of the spell is halved.</li><li><strong>Weak.</strong> Roll with disadvantage (or enemies save with advantage).</li><li><strong>Slow.</strong> Spend 1 additional action (can't be used with Reaction spells).</li></ul>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-progression",
+		"gainedAtLevels": [
+			2
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UJ9T88PfIEN4iLB4",
+	"folder": "cb7cf327da44bff5"
+}

@@ -1,0 +1,82 @@
+{
+	"name": "Powershout: WEAKLINGS!",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/berserker/powershout-weaklings.webp",
+	"system": {
+		"macro": "",
+		"identifier": "powershout-weaklings",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Muscle Spell — Requires 6 FD",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 6,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions · Reach 6.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 6 FD.</strong> Deal FD damage to enemies, Frightening them (Large+ creatures are Taunted instead) and decreasing their Armor by 1 step this round.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 6,
+				"max": 6
+			},
+			"reach": {
+				"min": 6,
+				"max": 6
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "muscle-spells",
+		"tier": 0,
+		"classes": [
+			"berserker"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"furyDiceCost": 6
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ifK7NGN4ZWJTO3np",
+	"folder": "1017a79ccd93f00a"
+}

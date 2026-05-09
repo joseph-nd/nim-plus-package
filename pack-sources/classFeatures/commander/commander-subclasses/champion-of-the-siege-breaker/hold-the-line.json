@@ -1,0 +1,69 @@
+{
+	"name": "Hold the Line",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-siege-breaker/hold-the-line.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hold-the-line",
+		"rules": [
+			{
+				"type": "armorClass",
+				"formula": "@abilities.strength.mod",
+				"mode": "add",
+				"disabled": false,
+				"id": "hold-the-line-armor",
+				"identifier": "",
+				"label": "Hold the Line — +STR Armor (when wielding 2H weapon)",
+				"predicate": {},
+				"priority": 1
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+STR Armor when wielding a weapon with 2 hands.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-siege-breaker",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mh1VD1Z9FBEdh19i",
+	"folder": "60f5e2d909922804"
+}

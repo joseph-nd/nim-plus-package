@@ -1,0 +1,55 @@
+{
+	"name": "The Aegis",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/the-aegis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-aegis",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Legend.</em> Gain +2 damage reduction. When an ally would Interpose, you can allow them to do so for free and Defend. Then he goes away.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "songweaver-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5yvQ6qxkTcJroLZN",
+	"folder": "45629599e634de64"
+}

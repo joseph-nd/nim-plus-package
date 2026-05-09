@@ -1,0 +1,69 @@
+{
+	"name": "Sigil of Journey",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/sigils/sigil-of-journey.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sigil-of-journey",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: You (or another willing creature you touch) exchange places with an Afflicted creature within Reach 8 (provided the Afflicted creature is no more than 1 size larger).</p>",
+		"featureType": "class",
+		"class": "hexbinder",
+		"group": "hexbinder-mystic-marks",
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"6": 1,
+			"9": 1,
+			"12": 1,
+			"16": 1
+		},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Z0PaZIvJj79qtBNS",
+	"folder": "cb7cf327da44bff5"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Crown of Ice",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-frost/crown-of-ice.webp",
+	"system": {
+		"macro": "",
+		"identifier": "crown-of-ice",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can only cast Ice spells from now on. Choose 1 Fire or Lightning spell and treat it as an Ice spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-frost",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "giXKVEuIcL2tf9tt",
+	"folder": "278a5d66a07d271a"
+}

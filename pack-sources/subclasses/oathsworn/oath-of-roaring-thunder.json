@@ -1,0 +1,25 @@
+{
+	"name": "Oath of Roaring Thunder",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/oathsworn/oath-of-roaring-thunder.webp",
+	"system": {
+		"macro": "",
+		"identifier": "oath-of-roaring-thunder",
+		"rules": [],
+		"description": "<p><em>With the power of thunder smash your foes across the battlefield, and with the swiftness of lightning you dash after them to strike them dead.</em></p><p>LEVEL 3</p><p><strong>Harbinger of the Storm.</strong> Gain an aura with a Reach of 4. (1/Encounter) After you Interpose, deal lightning damage equal to your Judgment Dice to all enemies within your aura.</p><p>LEVEL 7</p><p><strong>Thunderous Strike.</strong> (1/Encounter) When you use Condemning Strike, knock your target Prone and push them (Large: STR spaces, Med or smaller: 2x STR spaces). Other creatures hit this way are knocked Prone and pushed as well.</p><p>LEVEL 11</p><p><strong>Thunderous Judgment.</strong> (1/Mana) Exchange places with an ally outside your aura that is being attacked (this counts as Interposing) and refresh your Harbinger of the Storm or Thunderous Strike.</p><p>LEVEL 15</p><p><strong>Stormstrike.</strong> (1/Safe Rest) Reaction: When an ally you can see would gain a Wound. Exchange place with them, maximize your Judgment Dice and deal that much lightning damage to all enemies within your aura.</p>",
+		"parentClass": "oathsworn",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "e35476da3e89b77e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "tjJ51hAtjfcyMh9R"
+}

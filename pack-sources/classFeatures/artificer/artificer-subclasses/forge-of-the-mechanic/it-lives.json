@@ -1,0 +1,66 @@
+{
+	"name": "It Lives!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/forge-of-the-mechanic/it-lives.webp",
+	"system": {
+		"macro": "",
+		"identifier": "it-lives",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mech-repair-kit",
+					"type": "healing",
+					"healingType": "healing",
+					"formula": "@intelligence",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Companion"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You have created a medium-sized mechanical companion. It moves for free on your turn and has <strong>5 HP/LVL</strong>.</p><hr><p><strong>Powered Actions.</strong> Your robot can only attack or use special abilities by spending your Mana Dice.</p><p><strong>Modularity.</strong> Your companion has <strong>2 module slots</strong> that can hold one of your major inventions or a companion module. Immediately choose 1 invention to insert into your companion.</p><p><em>You can reconfigure your companion with different available modules during a Safe Rest.</em></p><p><strong>Mishap — Misfire.</strong> Your companion makes a free attack against a random creature within range (friend or foe).</p><hr><p><strong>Repair Kit.</strong> (INT/Safe Rest) Action: Roll all your Mana Dice without expending them and heal your companion for the sum rolled + INT.</p><hr><p><strong>Companion Modules</strong></p><ul><li><strong>Heavy Chassis.</strong> Your companion's size becomes Large. Spend Mana Dice to <em>Stomp!</em> the ground — creatures within 1 space take damage equal to the sum. On crit: Prone. <em>Mishap — Loose Bolt:</em> Cannot move for 1 turn. <em>Upgrades:</em> Telescopic Arms (+1 Reach), Steel Bulwark (provide cover for smaller allies).</li><li><strong>Rocket Engines.</strong> Spend a Mana Die to fly up to your speed until the start of your next turn. <em>Mishap — Crash Landing:</em> Roll as many Mana Dice as you spent and take that much damage. <em>Upgrade:</em> Boosters (carry a passenger while flying).</li><li><strong>Electrified Chassis.</strong> When you get hit, spend Mana Dice to deal that much damage to the attacker. <em>Mishap — Short Circuit:</em> Take the same damage. <em>Upgrades:</em> Armored Carapace (gain Medium armor), Structural Reinforcement (+2 HP/LVL).</li></ul><hr><p><strong>Hero Companion Basics.</strong> Companions move for free on your turn and have a Companion Die (dC). They can <strong>Attack</strong> (1dC melee, +LVL on crit) or <strong>Defend</strong> (reduce incoming damage by 1dC). The dC is used up when rolled and recovered at end of turn. At 0 HP they gain a Wound and flee until calmed; 4 Wounds = death; recovers a Wound on Safe Rest. During a Field Rest, the companion may recover HP equal to the PC's KEY score.</p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "forge-of-the-mechanic",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "U70BEucmpRhhq6Sh",
+	"folder": "9e74538446160a31"
+}

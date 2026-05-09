@@ -1,0 +1,57 @@
+{
+	"name": "Worthy Underdog",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/worthy-underdog.webp",
+	"system": {
+		"macro": "",
+		"identifier": "worthy-underdog",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/turn — melee hit vs Upper Hand",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You give up Sneak Attack and Vicious Opportunist, in exchange gain:</p><ul><li>(1/turn) When you HIT an enemy in melee that has The Upper Hand you may change the Primary Die roll to whatver you like and deal an additional +1d6 damage (this increases as your Sneak Attack dice would).</li><li>Enemies that have The Upper Hand, miss you on 2 or less.</li></ul><p><strong>The Upper Hand.</strong> Enemies have The Upper Hand whenever there is more than 1 of them adjacent to a friendly creature, or whenever they could attack you with advantage.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-honorseeker",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FfR8n8osGGwXItGU",
+	"folder": "7916196cc2dd524f"
+}

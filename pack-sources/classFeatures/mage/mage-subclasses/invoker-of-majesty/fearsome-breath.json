@@ -1,0 +1,57 @@
+{
+	"name": "Fearsome Breath",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-majesty/fearsome-breath.webp",
+	"system": {
+		"macro": "",
+		"identifier": "fearsome-breath",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Draconic Power; X Mana",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 3,
+				"radius": 1,
+				"shape": "cone",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(Draconic Power)</em> <strong>Action</strong>: Spend X Mana to deal <strong>Xd6 damage</strong> of your chosen type in <strong>Cone 3</strong>. Half damage on a DEX save (DC 10+KEY). Applies <strong>Dragonmarked</strong> (counts as any condition for empowering spells, like Smoldering).</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-majesty",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wDkSieKoqUvV8E5i",
+	"folder": "4fd35ea7e7e7eee7"
+}

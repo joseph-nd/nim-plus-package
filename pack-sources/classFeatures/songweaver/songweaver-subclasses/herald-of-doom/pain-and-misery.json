@@ -1,0 +1,57 @@
+{
+	"name": "Pain and Misery",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-doom/pain-and-misery.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pain-and-misery",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "expend 1 Hit Die",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you attack an enemy, you may expend one of your <strong>Hit Dice</strong> and add it to the result.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-doom",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "qJSSUuZFGoi0bHVK",
+	"folder": "7aef0d2a5d98cd27"
+}

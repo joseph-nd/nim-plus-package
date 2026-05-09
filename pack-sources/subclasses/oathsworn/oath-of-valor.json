@@ -1,0 +1,25 @@
+{
+	"name": "Oath of Valor",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/oathsworn/oath-of-valor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "oath-of-valor",
+		"rules": [],
+		"description": "<p><em>The Valorsworn is a knight with a selfless heart, a courageous hand, and an unyielding will in the face of danger.</em></p><p>LEVEL 3</p><p><strong>Inspirational Valor.</strong> You are immune to Fear; gain an aura with a reach of 4, allies in this area are as well. When you Interpose, the protected creature gains advantage on their next roll this encounter.</p><p>LEVEL 7</p><p><strong>Exemplar of Courage.</strong> You can Interpose from 3 spaces away. When you Interpose for a Dying creature, grant them 1 additional action.</p><p>LEVEL 11</p><p><strong>Balm for the Downcast.</strong> When using Lay on Hands, you may choose another creature within your aura to be healed the same amount.</p><p>LEVEL 15</p><p><strong>No Greater Love.</strong> When you Interpose while Dying, you suffer 1 fewer Wounds and all allies in your Aura gain 1 Action.</p>",
+		"parentClass": "oathsworn",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "e35476da3e89b77e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "L1qJv6kCr0DfH8SU"
+}

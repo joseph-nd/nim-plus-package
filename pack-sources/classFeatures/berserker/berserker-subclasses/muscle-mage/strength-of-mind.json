@@ -1,0 +1,73 @@
+{
+	"name": "STRENGTH of Mind",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/muscle-mage/strength-of-mind.webp",
+	"system": {
+		"macro": "",
+		"identifier": "strength-of-mind",
+		"rules": [
+			{
+				"id": "som-int-skills",
+				"type": "skillBonus",
+				"value": "@abilities.strength.mod",
+				"skills": [
+					"arcana",
+					"examination",
+					"lore"
+				],
+				"label": "STRENGTH of Mind — +STR to INT skills",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"identifier": ""
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Add your STR to INT-based skill checks.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "muscle-mage",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "OF3ze2BrcIy6yBET",
+	"folder": "3fd0a009eb1db483"
+}

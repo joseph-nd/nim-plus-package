@@ -1,0 +1,57 @@
+{
+	"name": "Say that to my face!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/say-that-to-my-face.webp",
+	"system": {
+		"macro": "",
+		"identifier": "say-that-to-my-face",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 12 — adjacent to a Taunted enemy",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 12
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Honorable Gambit.</em> Action: (Reach 12) \"Teleport\" adjacent to a Taunted enemy.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-cheat-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "juD7t2L2yrAFPZ0J",
+	"folder": "db26ee50517a7f26"
+}

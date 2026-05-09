@@ -1,0 +1,57 @@
+{
+	"name": "Supercharged Abilities",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-surges/supercharged-abilities.webp",
+	"system": {
+		"macro": "",
+		"identifier": "supercharged-abilities",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "end Supercharged",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When Supercharged you may end the condition to use one of these abilities for free at any time.</p><ul><li><strong>Blur.</strong> Reduce ALL non-lightning damage you take by KEY this round.</li><li><strong>Overload.</strong> When an enemy is damaged, add 1 maximized Power Surge Die.</li><li><strong>Warp.</strong> Teleport up to 8 spaces away; you may swap places with a willing ally.</li></ul>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-surges",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "SnXXK37G3nfcDkdY",
+	"folder": "43b6eab0c003a07b"
+}

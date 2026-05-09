@@ -1,0 +1,57 @@
+{
+	"name": "Inspirational Valor",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-valor/inspirational-valor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "inspirational-valor",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You are immune to Fear; gain an aura with a reach of 4, allies in this area are as well. When you Interpose, the protected creature gains advantage on their next roll this encounter.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-valor",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "9vB0SLjGxP7NUVwq",
+	"folder": "24f43bb0676e0fab"
+}

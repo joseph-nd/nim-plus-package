@@ -1,0 +1,59 @@
+{
+	"name": "Power Surge",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-surges/power-surge.webp",
+	"system": {
+		"macro": "",
+		"identifier": "power-surge",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "4 lightning damage",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Level 3.</strong> After you cast a damaging spell, you may take 4 lightning damage to add 1d8 to the damage. While Charged, if you would become Charged again, gain Supercharged.</p><p><strong>Level 7 (Power Surge 2).</strong> Your Power Surge die becomes a d12.</p><p><strong>Level 15 (Power Surge 3).</strong> Your Power Surge die becomes a d20.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-surges",
+		"gainedAtLevels": [
+			3,
+			7,
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VFE1TgZzsqgoC6XY",
+	"folder": "43b6eab0c003a07b"
+}

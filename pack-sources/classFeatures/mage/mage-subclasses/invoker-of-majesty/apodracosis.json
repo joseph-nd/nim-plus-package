@@ -1,0 +1,66 @@
+{
+	"name": "Apodracosis",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-majesty/apodracosis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "apodracosis",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until concentration breaks or encounter ends",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [
+				{
+					"id": "apodracosisTempHp1",
+					"type": "healing",
+					"healingType": "tempHp",
+					"formula": "2 * @will + @level",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) <strong>Action</strong>: Unleash your draconic aspect, granting you <strong>2×WIL+LVL temp HP</strong> and Draconic Powers. This transformation ends if you break Concentration or at the end of the encounter. Choose a damage type for your powers when you transform.</p><p><em>Purity of Form.</em> Other transformations automatically end Apodracosis, such as the Dragonform spell.</p><p><em>Concentration is applied automatically when you activate this feature.</em></p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-majesty",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "RavDYkxHEU6xD16q",
+	"folder": "4fd35ea7e7e7eee7"
+}

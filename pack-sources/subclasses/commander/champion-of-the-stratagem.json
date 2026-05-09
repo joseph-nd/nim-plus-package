@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Stratagem",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-stratagem.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-stratagem",
+		"rules": [],
+		"description": "<p><em>Follow my orders, and together we shall march towards victory.</em></p><p>LEVEL 3</p><p><strong>Rallying Cry.</strong> Whenever you use a Commander's Order, all allies within Reach 12 that can hear you gain advantage on their next attack (1/round).</p><p><strong>New Orders.</strong> Add <em>Watch Out!</em>, <em>Hit The Weak Spot!</em>, and <em>Shake It Off!</em> to the list of available Commander's Orders. Choose another Commander's Order.</p><p>LEVEL 7</p><p><strong>Listen Up!</strong> Your Commander's Orders that target an ally or enemy may affect one additional valid target. Choose another Commander's Order.</p><p>LEVEL 11</p><p><strong>Powerful Voice.</strong> Whenever you use a Commander's Order, all adjacent enemies become Frightened of you until the end of their next turn (1/round).</p><p>LEVEL 15</p><p><strong>Master and Commander.</strong> All Commander's Orders with a usage limit may be used an additional time each encounter. You know all Commander's Orders.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "aeWn0XAGFyVpkWKh",
+	"folder": "54c3de6e51604292"
+}

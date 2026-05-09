@@ -1,0 +1,57 @@
+{
+	"name": "Too many legs, too many eyes",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-venom-and-web/too-many-legs-too-many-eyes.webp",
+	"system": {
+		"macro": "",
+		"identifier": "too-many-legs-too-many-eyes",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your beastforms gain Climber or Keen Senses for free.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-venom-and-web",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "62l0ZQzjCXEVKWKo",
+	"folder": "8d98f8c1df4a5f4b"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Coven of the Cauldron",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hexbinder/coven-of-the-cauldron.webp",
+	"system": {
+		"macro": "",
+		"identifier": "coven-of-the-cauldron",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Cauldroncraft.</strong> During a Safe Rest, brew INT+WIL Concoctions in your cauldron. Action: drink a Concoction or throw it as a ranged attack (Reach 6); the target gains the Concoction's effect. Unused Concoctions expire after your next Safe Rest.</p><p><strong>Herbal Wisdom.</strong> You always know the basic medicinal uses of plants and herbs. During a Field Rest, one ally heals +KEY HP.</p><p>LEVEL 7</p><p><strong>Mixology.</strong> Your Concoctions may have two different effects at the same time.</p><p>LEVEL 11</p><p><strong>Fast Brew.</strong> When you roll Initiative, brew one Concoction. It expires at the end of the encounter.</p><p>LEVEL 15</p><p><strong>Bottled Echo.</strong> When you Fast Brew, you may copy one potion you possess as the Concoction you brew.</p>",
+		"parentClass": "hexbinder",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "bdadf610a140a03c",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "AtmuiItwx2Ehw5E7"
+}

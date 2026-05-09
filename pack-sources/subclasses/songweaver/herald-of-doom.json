@@ -1,0 +1,25 @@
+{
+	"name": "Herald of Doom",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/songweaver/herald-of-doom.webp",
+	"system": {
+		"macro": "",
+		"identifier": "herald-of-doom",
+		"rules": [],
+		"description": "<p><em>True art is found only through pain.</em></p><p>LEVEL 3</p><p><strong>Tortured Artist.</strong> After using Songweaver's Inspiration, you may expend one of your Hit Dice and add it to the chosen result. This may change the outcome.</p><p><strong>Pain and Misery.</strong> When you attack an enemy, you may expend one of your Hit Dice and add it to the result.</p><p>LEVEL 7</p><p><strong>On the Precipice.</strong> The first time each encounter you become Bloodied, you regain 1 Hit Die. Whenever you Make Camp, you may set your HP to half of your max HP. +1 max Hit Dice.</p><p>LEVEL 11</p><p><strong>Sell the World.</strong> Action: Expend and roll any number of Hit Dice. Heal or damage any number of other creatures within Reach 12 equal to the result (split evenly).</p><p>LEVEL 15</p><p><strong>Live On Through Your Art.</strong> The first time each encounter you would drop to 0 HP, set your HP to 1 instead and transform into a ghostly apparition. While in this state, you cannot be healed, ignore all damage less than LVL, and Frighten all enemies within Reach 6. Ends after WIL turns, or you drop to 0 HP.</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4ppO7MqfF4wTgVNO",
+	"folder": "3b74d88613071789"
+}

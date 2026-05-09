@@ -1,0 +1,25 @@
+{
+	"name": "Luminary of the Forge",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-the-forge.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-the-forge",
+		"rules": [],
+		"description": "<p><em>\"Your Lifebinding Spirit is the furnace's flame incarnate.\"</em></p><p>LEVEL 3</p><p><strong>Flameworker.</strong> Exchange knowledge of the Necrotic spell school for Fire.</p><p><strong>Seasoned Journeyman.</strong> Whenever you Safe Rest, choose one:</p><ul><li><strong>Weaponsmith.</strong> Your weapon gains +WIL damage until your next Safe Rest.</li><li><strong>Armorsmith.</strong> Your armor gains +WIL defense until your next Safe Rest.</li></ul><p>LEVEL 7</p><p><strong>Lightforged.</strong> Searing Light and Lifebinding Spirit healing grants WIL+STR Temp HP.</p><p><strong>Living Ember.</strong> Crits from your Searing Light or Lifebinding Spirit also inflict Smoldering. Searing Light can be used against Smoldering targets.</p><p>LEVEL 11</p><p><strong>Master of the Hammer.</strong> +STR to Weaponsmith and Armorsmith. Your bludgeoning attacks against Smoldering targets ignore armor.</p><p>LEVEL 15</p><p><strong>Quench the Blaze.</strong> (Reach 6, 1/encounter) Smoldering creatures take WIL d6 fire damage (ending the condition) and are Restrained until the end of their next turn.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "342ecdf0f6b5830f",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hLu25XJYbnyC4RS8"
+}

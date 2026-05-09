@@ -1,0 +1,25 @@
+{
+	"name": "Luminary of Tidings",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-tidings.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-tidings",
+		"rules": [],
+		"description": "<p>LEVEL 3</p><p><strong>Hear Ye! Hear Ye!</strong> Your Lifebinding Spirit chimes like a bell, and your words carry an aura of importance when speaking in public. Searing Light becomes Toll the Hour.</p><p><strong>Toll the Hour.</strong> (WIL/Safe Rest) Action: Proclaim tidings of either:</p><ul><li><strong>Jubilation.</strong> Heal WIL d10 HP to an ally within Reach 4 and cleanse a harmful non-Wound condition or effect.</li><li><strong>Calamity.</strong> Inflict Dazed and WIL d10 Radiant damage to a Hampered, undead or Bloodied enemy within Reach 4.</li></ul><p>LEVEL 7</p><p><strong>Raise the Alarm.</strong> When you roll Initiative, you may spend 1 mana per ally to grant them advantage on Initiative and on their first attack this encounter.</p><p>LEVEL 11</p><p><strong>Spread the News.</strong> Toll the Hour now affects all enemies or allies within Reach 4.</p><p>LEVEL 15</p><p><strong>The End is Nigh.</strong> (1/Safe Rest) Action: Choose a doom to befall an enemy within Reach 4.</p><ul><li><strong>Annihilation.</strong> All attack rolls against the target automatically roll the highest possible result until the start of your next turn.</li><li><strong>Isolation.</strong> The target becomes unable to deal and receive damage until the start of your next turn.</li></ul>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "342ecdf0f6b5830f",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ZOv9pUQEhUANPEva"
+}

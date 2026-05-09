@@ -1,0 +1,25 @@
+{
+	"name": "The Honorseeker",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/the-cheat/the-honorseeker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-honorseeker",
+		"rules": [],
+		"description": "<p><em>\"NO MORE TRICKS. HONEST.\"</em></p><p><strong>Worthy Underdog.</strong> You give up Sneak Attack and Vicious Opportunist, in exchange gain:</p><ul><li>(1/turn) When you HIT an enemy in melee that has The Upper Hand you may change the Primary Die roll to whatver you like and deal an additional +1d6 damage (this increases as your Sneak Attack dice would).</li><li>Enemies that have The Upper Hand, miss you on 2 or less.</li></ul><p><strong>The Upper Hand.</strong> Enemies have The Upper Hand whenever there is more than 1 of them adjacent to a friendly creature, or whenever they could attack you with advantage.</p><p>LEVEL 3</p><p><strong>Prove Your Worth!</strong> (Reach 12, 1/turn) Taunt an enemy for free (lasts until they damage you). Enemies you Taunt have advantage on attacks against you.</p><p>LEVEL 7</p><p><strong>Old Habits…</strong> Choose 1 Underhanded Ability.</p><p>LEVEL 11</p><p><strong>Right Where I Want You.</strong> You have advantage against enemies with The Upper Hand.</p><p>LEVEL 15</p><p><strong>Guard Breaker.</strong> (1/Safe Rest) When Defending against melee attack, double your armor. The attacker becomes Incapacitated until the end of their next turn.</p><p><strong>Honorable Gambits.</strong> For every Underhanded Ability you would have (except for your Old Habits…), choose an Honorable Gambit instead: Conqueror's Confidence, Deft Parry, Down not out!, Frightful Confidence, Mark of Deflection, Nowhere to Flee!, Redemption Arc, Riposte, Say that to my face!</p>",
+		"parentClass": "the-cheat",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "1e0ad9a337fc2927",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0lIzkFevpil62SAg"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Circle of Spores",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/stormshifter/circle-of-spores.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-spores",
+		"rules": [],
+		"description": "<p><em>Death is. . .not so bad.</em></p><p>The Circle of Spores Stormshifter (or Sporeshifter, if you like) shares as much reverence for death as for life. Unlike the sometimes perverse nature of necromancy, the Sporeshifter merely reconciles the circle of life. Life ends, and through decay, new life begins.</p><p>LEVEL 3</p><p><strong>Root-Touched.</strong> Replace your lightning and wind spell schools with earth and necrotic spell schools. Your Beastshift forms have an appearance of plant, fungal, earth and/or stone.</p><p><strong>Sporesphere.</strong> You create floating spores around you with Reach 2. 1 Action: you may attack a target for 1d4 necrotic damage, and the target is Dazed until the beginning of your next turn.</p><p>LEVEL 7</p><p><strong>Decay.</strong> You can expend Beastshift charges to upcast your spores. Each charge expended can either increase the damage die size or add the Blinded or Poisoned condition.</p><p><strong>Germination.</strong> Your spores now have Reach 3 and do 1d6 necrotic damage.</p><p>LEVEL 11</p><p><strong>Mycelium Growth.</strong> Your spores now have Reach 4 and do 1d8 necrotic damage. Creatures within Reach 4 are subject to Thought Leech for free; you may also send brief thoughts to willing creatures within Reach 4.</p><p><strong>Reanimate.</strong> If a creature dies within Reach 4, 1 Action: Create a zombie minion that will rise at the beginning of your next turn. You may have a max of WIL zombie minions. 1 Action (1/turn): command all zombie minions to move 4 then attack (1d4+4, on damage: grappled).</p><p>LEVEL 15</p><p><strong>Direbeast Form: Briarbane Exoskeleton.</strong> 1 Action: Transform into a Large beast. Gain (DEX+LVL) ×2 temp HP and +10 Armor (until Beastshift ends) and: Clobbered. 1 Action: Reach 2. 3d20, on crit: Knockback 4; or C'mere You! 1 Action. Reach 2. 1d20, on damage: Grappled; or Catapult. 1 Action. Range 12. 1d20+4 (must have something large enough to throw, like something you previously grappled).</p><p><strong>Sporulation.</strong> Your spores now have Reach 6 and do 2d8 necrotic damage.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "1sPatUV2AHp6FPkn",
+	"folder": "bbdbcfedb2a0daf6"
+}

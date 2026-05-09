@@ -1,0 +1,57 @@
+{
+	"name": "Stormstrike",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-roaring-thunder/stormstrike.webp",
+	"system": {
+		"macro": "",
+		"identifier": "stormstrike",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Safe Rest — when an ally would gain a Wound",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Safe Rest) Reaction: When an ally you can see would gain a Wound. Exchange place with them, maximize your Judgment Dice and deal that much lightning damage to all enemies within your aura.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-roaring-thunder",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "iZDmtbaTPRtlRVCG",
+	"folder": "a8e6fd43cf69d40a"
+}

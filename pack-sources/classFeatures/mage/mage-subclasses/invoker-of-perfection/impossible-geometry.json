@@ -1,0 +1,57 @@
+{
+	"name": "Impossible Geometry",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-perfection/impossible-geometry.webp",
+	"system": {
+		"macro": "",
+		"identifier": "impossible-geometry",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 additional Spellshaper ability. You may use 2 Spellshaper abilities when casting Signature spells.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-perfection",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0lrW4huc7cuGOocK",
+	"folder": "9ca63d12f2a45d46"
+}

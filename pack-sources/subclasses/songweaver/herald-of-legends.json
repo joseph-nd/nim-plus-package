@@ -1,0 +1,25 @@
+{
+	"name": "Herald of Legends",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/songweaver/herald-of-legends.webp",
+	"system": {
+		"macro": "",
+		"identifier": "herald-of-legends",
+		"rules": [],
+		"description": "<p><em>Gained the ability to channel a legendary creature's power to supplement your own. Maybe you died and were resurrected, but not before you befriended the spirits of legendary creatures from the afterlife, or maybe you just did a favor for a ghostly apparition. Either way, you've gained the ability to channel a legendary creature's power to supplement your own.</em></p><p><strong>Story-based Subclass · Class Complexity:</strong> ♦♦♦◊</p><p>LEVEL 3</p><p><strong>Legendkeeper.</strong> Lose access to your \"People\" Person abilities, instead choose 2 Legends.</p><p><strong>Summon Legend.</strong> Action: (1/round) Spend a Songweaver's Inspiration charge to summon a LEGEND (max 2 at a time).</p><ul><li><strong>The Aegis.</strong> Gain +2 damage reduction. When an ally would Interpose, you can allow them to do so for free and Defend. Then he goes away.</li><li><strong>The Stiletto.</strong> Gain +2 speed. Whenever an ally would miss an attack, they crit it instead. Then she goes away.</li><li><strong>The Mender.</strong> +2 to Saves. When an ally reaches 0 HP, revive them to LVL HP, they regain 1 action. Then she goes away.</li><li><strong>The Tactician.</strong> +2 to Assess rolls. When an ally Assesses, they succeed and can choose twice, then he goes away.</li><li><strong>Old Oakum.</strong> Spaces within Reach 2 is difficult terrain for enemies. When an enemy would move adjacent to an ally, you may move it back 1 space and Restrain it. Then he goes away.</li></ul><p>LEVEL 7</p><p><strong>Choose 1 more legend.</strong> (1/Safe Rest) whenever you would summon a legend, summon 2.</p><p>LEVEL 11</p><p><strong>Choose 1 more.</strong> Summon one for free whenever you roll Initiative.</p><p>LEVEL 15</p><p><strong>Gain access to every legend.</strong> The first time each legend would go away in an encounter, it doesn't.</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "uLVNvOH5swf2eiXh",
+	"folder": "3b74d88613071789"
+}

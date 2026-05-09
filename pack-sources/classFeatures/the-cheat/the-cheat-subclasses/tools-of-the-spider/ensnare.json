@@ -1,0 +1,59 @@
+{
+	"name": "Ensnare",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-spider/ensnare.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ensnare-spider",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 6",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action:</strong> Target creature within Reach 6 becomes <strong>Slowed</strong>, or <strong>Restrained</strong> on a failed DEX save (DC 10+KEY). Linked creatures have <strong>disadvantage</strong> on the save.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-spider",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "zVtkDA7R0hHPLqpd",
+	"folder": "7e8ca6696cb73e0a"
+}

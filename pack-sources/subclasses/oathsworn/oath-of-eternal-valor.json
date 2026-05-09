@@ -1,0 +1,25 @@
+{
+	"name": "Oath of Eternal Valor",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/oathsworn/oath-of-eternal-valor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "oath-of-eternal-valor",
+		"rules": [],
+		"description": "<p><em>A knight's oath is a sacred bond, uplifting all who would rally to their banner, and rely on their shield.</em></p><p>LEVEL 3</p><p><strong>Aura of Virtue.</strong> Gain an aura with a Reach of 4. Allies within your aura may use Condemning Strike and Blessed Aim on melee attacks if you spend Mana on their behalf.</p><p><strong>Sworn to Courage.</strong> You and allies within your aura gain advantage on saves against Fear, Charm and Petrification.</p><p>LEVEL 7</p><p><strong>Defend the Helpless.</strong> You can now Interpose from 3 spaces away. You may make a melee attack for free immediately after Interposing.</p><p><strong>Speak only Truth.</strong> Gain WIL temporary Mana when you roll Initiative (expires at the end of the encounter if unused).</p><p>LEVEL 11</p><p><strong>Uphold the Weak.</strong> When using Lay on Hands, you may choose another creature within your aura to be healed for the same amount.</p><p>LEVEL 15</p><p><strong>Undo the Wicked.</strong> When you Interpose, the attacker becomes Frightened of you until the end of their next turn.</p>",
+		"parentClass": "oathsworn",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ZyRwKieScdxkAnP1",
+	"folder": "e35476da3e89b77e"
+}

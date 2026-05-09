@@ -1,0 +1,25 @@
+{
+	"name": "Tools of the Serpent",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/the-cheat/tools-of-the-serpent.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tools-of-the-serpent",
+		"rules": [],
+		"description": "<p><em>You have harnessed the terrible fangs of nature to her deadly array of poisons. Choose this subclass if you want to debilitate your foes with venom and viciousness.</em></p><p>LEVEL 3</p><p><strong>Viper's Kiss.</strong> Creatures you damage become Poisoned until the end of their next turn. Creatures Poisoned this way are also Distracted.</p><p><strong>I've Tried This One Before.</strong> You have advantage on saves against poison. Additionally, you can identify any poison you inspect.</p><p>LEVEL 7</p><p><strong>Noxious Cloud.</strong> (1/encounter) Action: Enemies within Reach 3 take INT d6 poison damage. Surviving creatures must make a STR save or become Poisoned and Dazed until the end of their next turn. Creatures already Poisoned fail the save.</p><p>LEVEL 11</p><p><strong>Cruel Dose.</strong> Whenever you Sneak Attack a Poisoned creature, roll the dice with advantage.</p><p>LEVEL 15</p><p><strong>Volatile Toxins.</strong> Noxious Cloud can be used twice each encounter. Whenever a creature Poisoned by you dies, their body erupts into a Noxious Cloud.</p>",
+		"parentClass": "the-cheat",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "1e0ad9a337fc2927",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "9DMZ1k6Rve7nESsB"
+}

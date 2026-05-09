@@ -1,0 +1,57 @@
+{
+	"name": "Summon Hive",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-endless-swarm/summon-hive.webp",
+	"system": {
+		"macro": "",
+		"identifier": "summon-hive",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Summon within Reach 6",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Summon an immobile Hive within Reach 6 (max INT Hives at a time). At the end of your turn each Hive spawns a swarm: roll 1d6 for each Hive. Whenever you or your minions attack, expend these dice, divvying them up as damage amongst any enemies within Reach 6 of a hive.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-endless-swarm",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "rWBflb0qRobciAjo",
+	"folder": "b510bf7d6be8cbd4"
+}

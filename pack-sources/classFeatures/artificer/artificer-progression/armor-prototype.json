@@ -1,0 +1,70 @@
+{
+	"name": "Armor Prototype",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/artificer/armor-prototype.webp",
+	"system": {
+		"macro": "",
+		"identifier": "armor-prototype",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "armor-prototypeGrant",
+				"identifier": "",
+				"label": "Armor Prototype",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": false,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.DEacbQLPaFzGlk0a"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You stitch together a patchwork Armor Prototype. The item is added to your inventory and applies <strong>INT + DEX</strong> armor while equipped.</p><p><em>At Level 2 you may choose a true Armor Invention (Manaforged Plate or Aethertuned Jerkin) via Eureka! and unequip the prototype.</em></p>",
+		"featureType": "class",
+		"class": "artificer",
+		"group": "artificer-progression",
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nmYy6vlGSWOHkLYS",
+	"folder": "cc0bae2de7db5a7f"
+}

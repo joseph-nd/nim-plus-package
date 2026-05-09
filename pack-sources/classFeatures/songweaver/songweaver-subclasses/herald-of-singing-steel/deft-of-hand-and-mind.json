@@ -1,0 +1,57 @@
+{
+	"name": "Deft of Hand and Mind",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-singing-steel/deft-of-hand-and-mind.webp",
+	"system": {
+		"macro": "",
+		"identifier": "deft-of-hand-and-mind",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Increase your max uses of Songweaver's Inspiration by DEX.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-singing-steel",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "XLzDaBQnNedligfy",
+	"folder": "2d8e800b66066db6"
+}

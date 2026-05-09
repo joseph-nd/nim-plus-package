@@ -1,0 +1,57 @@
+{
+	"name": "Defense Mechanism",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-id/defense-mechanism.webp",
+	"system": {
+		"macro": "",
+		"identifier": "defense-mechanism",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/round",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/round) <strong>Action/Reaction</strong>: Swap places with a shadow minion. Attacks targeting you will hit your shadow minion instead if used as a reaction.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-id",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "EnTyotwc28tLfwIE",
+	"folder": "00097021e7009422"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Radiant Shield",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-aegis/radiant-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "radiant-shield",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you take damage from an attack you Interposed, the attacker becomes Blinded until the end of their next turn and takes WIL radiant damage (ignoring armor).</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-aegis",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "JUAsFFYD8Dcog2fh",
+	"folder": "c5cae5a480bdec8f"
+}

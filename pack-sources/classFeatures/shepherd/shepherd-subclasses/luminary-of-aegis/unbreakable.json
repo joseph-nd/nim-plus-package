@@ -1,0 +1,57 @@
+{
+	"name": "Unbreakable",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-aegis/unbreakable.webp",
+	"system": {
+		"macro": "",
+		"identifier": "unbreakable",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "WIL times/Safe Rest — on Interpose",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(WIL times/Safe Rest) When you Interpose, it doesn't cost an action. When you do so, your Lifebinding Spirit may also attack the attacker for free.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-aegis",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "1JHngqzh804mwBN8",
+	"folder": "c5cae5a480bdec8f"
+}

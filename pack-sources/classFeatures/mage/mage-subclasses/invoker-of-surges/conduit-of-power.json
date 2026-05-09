@@ -1,0 +1,57 @@
+{
+	"name": "Conduit of Power",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-surges/conduit-of-power.webp",
+	"system": {
+		"macro": "",
+		"identifier": "conduit-of-power",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you would move while Charged, you may teleport instead.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-surges",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "zQBON2f4zEzgcvBA",
+	"folder": "43b6eab0c003a07b"
+}

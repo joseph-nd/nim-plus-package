@@ -1,0 +1,61 @@
+{
+	"name": "Shatter Formation",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-siege-breaker/shatter-formation.webp",
+	"system": {
+		"macro": "",
+		"identifier": "shatter-formation",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "New Combat Tactic",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(New Combat Tactic)</em> Action: Roll a Combat Die and deal that much damage to up to STR targets within your weapon's Reach, knocking each one back (Tiny/Small: 3 spaces; Medium: 2 spaces; Large: 1 space). You may use this ability while moving.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-siege-breaker",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "MBtyDg3ZUZJan54Q",
+	"folder": "60f5e2d909922804"
+}

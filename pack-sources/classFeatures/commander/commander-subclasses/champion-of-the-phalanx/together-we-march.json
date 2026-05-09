@@ -1,0 +1,57 @@
+{
+	"name": "Together We March",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-phalanx/together-we-march.webp",
+	"system": {
+		"macro": "",
+		"identifier": "together-we-march",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You and any ally within Reach of your weapon gain the following Reaction:</p><p><em>(Whenever you or an ally within your weapon's Reach moves)</em> Move alongside this ally up to their speed.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-phalanx",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "M9goAT6Xp0VyXcQX",
+	"folder": "e172aec421cb4ccf"
+}

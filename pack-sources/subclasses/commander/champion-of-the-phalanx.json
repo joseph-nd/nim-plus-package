@@ -1,0 +1,25 @@
+{
+	"name": "Champion of the Phalanx",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/commander/champion-of-the-phalanx.webp",
+	"system": {
+		"macro": "",
+		"identifier": "champion-of-the-phalanx",
+		"rules": [],
+		"description": "<p><em>Hold the line. Move as one. The wall of spears that does not break.</em></p><p>LEVEL 3</p><p><strong>Polearm Mastery.</strong> +1 Reach with Polearms (Spears, Glaives, Pole Hammers, etc.). You may wield a Shield and a Polearm and still attack with it. If you do, reduce its damage die and Reach by 1 step.</p><p><strong>Skewering Stab.</strong> You can perform Opportunity Attacks against enemies that enter the Reach of your weapon. If the movement was forced, attack with Advantage instead of Disadvantage.</p><p>LEVEL 7</p><p><strong>Together We March.</strong> You and any ally within Reach of your weapon gain the following Reaction: (Whenever you or an ally within your weapon's Reach moves) Move alongside this ally up to their speed.</p><p>LEVEL 11</p><p><strong>Together We Stand.</strong> Add 1 to your Combat Die rolls for each ally within your weapon's Reach.</p><p>LEVEL 15</p><p><strong>Shoulder to Shoulder.</strong> Allies within your weapon's Reach gain +1 Reach to their weapons and gain the benefits of your Weapon Masteries.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "54c3de6e51604292",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LA6BinSa0cRkjMfh"
+}

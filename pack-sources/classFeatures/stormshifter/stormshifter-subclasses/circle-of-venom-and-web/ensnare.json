@@ -1,0 +1,57 @@
+{
+	"name": "Ensnare",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-venom-and-web/ensnare.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ensnare",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Spend 1 mana when Interposing or Defending vs melee",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Interpose or Defend vs a melee attack, you may spend 1 mana to Restrain the attacker until the end of their next turn if it is your size or smaller.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-venom-and-web",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "eyGoZJQtKF5pbOab",
+	"folder": "8d98f8c1df4a5f4b"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Vicious Torment",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-torment/vicious-torment.webp",
+	"system": {
+		"macro": "",
+		"identifier": "vicious-torment",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you use Vicious Mockery, instead of Taunting, the target becomes Frightened until you Frighten another creature this way.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-torment",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LypTwLxP4DMD3lgu",
+	"folder": "a1d65566752c5a59"
+}

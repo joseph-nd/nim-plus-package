@@ -1,0 +1,25 @@
+{
+	"name": "Way of the Dancer",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/zephyr/way-of-the-dancer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "way-of-the-dancer",
+		"rules": [],
+		"description": "<p><em>A flash of skin. A sway of the hips. A punch to the face.</em></p><p>LEVEL 3</p><p><strong>Center of Attention.</strong> When an attacker misses you, they become Charmed until the end of their next turn. Your unarmed strikes Taunt the target on hit until the end of their next turn.</p><p><strong>Enchanting Display.</strong> (1/round) On your turn, you may suffer a Wound. Whenever you gain a Wound, you may Charm all enemies within Reach 2 until the end of their next turn.</p><p>LEVEL 7</p><p><strong>Fatal Choreography.</strong> When you attack a Taunted or Charmed enemy using Swiftstrike, you may deal +KEY damage and cause them to fall Prone.</p><p>LEVEL 11</p><p><strong>Irresistible Rhythm.</strong> Action: Move 3 spaces. All enemies Taunted or Charmed by you also move 3 spaces in a direction of your choice at the same time as you. This counts as voluntary movement and may provoke attacks of opportunity.</p><p>LEVEL 15</p><p><strong>Murder on the Dance Floor.</strong> (1/encounter) Action: All enemies Taunted or Charmed by you attack their closest target, friend or foe.</p>",
+		"parentClass": "zephyr",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yZdqyJxyfcYzA7V5",
+	"folder": "60adb5334b7f06e4"
+}

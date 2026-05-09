@@ -1,0 +1,100 @@
+{
+	"name": "Bramblemaw",
+	"type": "spell",
+	"img": "modules/nim-plus-package/assets/spells/stormshifter/bramblemaw.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bramblemaw",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 6 — KEY targets — DEX save",
+				"quantity": 3,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "While Restrained",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "bramblemawDamage1",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "20",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "bramblemawHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "bramblemawDamage1"
+							}
+						]
+					},
+					"canCrit": false,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Up to KEY enemies",
+				"attackType": "reach",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>Tier 7 · 3 Actions · Reach 6 · AoE.</strong></p><p>Up to KEY enemies must make a DEX save or be Restrained. Each suffers 20 damage – their save. Repeat this damage each time they attempt to escape.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p><strong>Upcast:</strong> +10 damage.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 1
+			},
+			"reach": {
+				"min": 1,
+				"max": 6
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "earth",
+		"tier": 7,
+		"classes": [
+			"stormshifter"
+		],
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bJYQ9ea7GTZYdeVQ",
+	"folder": "121f29a2ee54baa0"
+}

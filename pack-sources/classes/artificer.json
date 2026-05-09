@@ -1,0 +1,126 @@
+{
+	"name": "Artificer",
+	"type": "class",
+	"img": "modules/nim-plus-package/assets/classImages/artificer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "artificer",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "artfcrGearWrnch",
+				"identifier": "",
+				"label": "Starting Gear - Wrench (Improvised Weapon)",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.O1sCIVQKfAqSlDT5"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "artfcrGearGarb1",
+				"identifier": "",
+				"label": "Starting Gear - Adventurer's Garb",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.Bdm2ynI2J7Xt9FNf"
+			}
+		],
+		"armorProficiencies": [
+			"cloth"
+		],
+		"classLevel": 1,
+		"complexity": 4,
+		"description": "<p><em>They call me when the airship stalls mid-descent, when the arcane relay spirals out of phase, or when the golem starts speaking in languages it wasn't programmed to know. Don't mind the dents — took a few kicks to get her started, is all. Still works lovely. Just… don't stand too close when she hums like that, and if she starts whistling in B flat — RUN!</em></p><p>Your workshop might be a cluttered shrine to chaos or an immaculate studio thrumming with pristine energy — whatever the setting, the Artificer gets to work. Some call you a mad tinkerer — a hazard to public safety. Others speak in hushed awe of your sleek designs, machines tuned with impossible precision.</p><p><strong>The Artificer:</strong></p><ul><li><strong>Engineers the Impossible.</strong> Wields creations that defy reality — mana-forged blades, gravity-snaring tethercoils, boots that laugh at gravity.</li><li><strong>Power at a Price.</strong> Mana Dice fuel your inventions. The more you roll, the more they deliver — but push too far and your gear might rebel.</li><li><strong>Tinker's Instinct.</strong> Retool gadgets mid-battle or improvise fixes under fire — always one step ahead of disaster.</li></ul><p><em>Note:</em> This class is included as Homebrew (Optional) content — playtest with your GM.</p>",
+		"groupIdentifiers": [
+			"artificer-progression",
+			"artificer-eureka-picks",
+			"artificer-upgrade-picks",
+			"artificer-subclasses/forge-of-the-gadgeteer",
+			"artificer-subclasses/forge-of-the-inventor",
+			"artificer-subclasses/forge-of-the-mechanic"
+		],
+		"keyAbilityScores": [
+			"intelligence",
+			"strength"
+		],
+		"hitDieSize": 8,
+		"hpData": [],
+		"savingThrows": {
+			"advantage": "intelligence",
+			"disadvantage": "will"
+		},
+		"abilityScoreData": {
+			"4": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"5": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"8": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"9": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"12": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"13": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"16": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"17": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"20": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "capstone"
+			}
+		},
+		"mana": {
+			"formula": "max(@strength, 0)",
+			"recovery": "encounter"
+		},
+		"resources": [],
+		"weaponProficiencies": [
+			"Inventions"
+		]
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "RymicrHN7J0xLXdl"
+}

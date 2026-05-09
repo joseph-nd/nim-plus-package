@@ -1,0 +1,57 @@
+{
+	"name": "Phoenix Flame",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-cinder-and-ash/phoenix-flame.webp",
+	"system": {
+		"macro": "",
+		"identifier": "phoenix-flame",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter — while Dying",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) While dying you may cast Pyroclasm for free. Gain temp HP equal to the amount rolled.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-cinder-and-ash",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "DImqRsfnHmEe6UfN",
+	"folder": "5f779db1ef0d745d"
+}

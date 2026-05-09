@@ -1,0 +1,57 @@
+{
+	"name": "Tear Asunder",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-siege-breaker/tear-asunder.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tear-asunder",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "New Combat Tactic",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(New Combat Tactic)</em> When you hit (before dealing damage), reduce the target's armor by 1 step for 1 round and deal extra damage equal to a roll of your Combat Die.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-siege-breaker",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "AMkgmUoitZebsX7a",
+	"folder": "60f5e2d909922804"
+}

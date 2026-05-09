@@ -1,0 +1,81 @@
+{
+	"name": "Overflowing Fury",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-burning-rage/overflowing-fury.webp",
+	"system": {
+		"macro": "",
+		"identifier": "overflowing-fury",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 4",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "overflowing-fury-dmg",
+					"type": "damage",
+					"damageType": "fire",
+					"formula": "1d6",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "overflowing-fury-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "overflowing-fury-dmg"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": false
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Reach 4) When discarding Fury Dice over your max, deal fire damage to a creature equal to the value of that die; they gain <strong>Smoldering</strong>.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-burning-rage",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "NriYAQQC6eehnEKx",
+	"folder": "19a2a1f080736d2b"
+}

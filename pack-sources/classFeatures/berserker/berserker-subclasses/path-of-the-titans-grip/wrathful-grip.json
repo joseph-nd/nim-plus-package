@@ -1,0 +1,68 @@
+{
+	"name": "Wrathful Grip",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titans-grip/wrathful-grip.webp",
+	"system": {
+		"macro": "",
+		"identifier": "wrathful-grip",
+		"rules": [
+			{
+				"type": "unarmedDamage",
+				"value": "1d6 + @abilities.strength.mod",
+				"disabled": false,
+				"id": "wrathful-grip-unarmed",
+				"identifier": "",
+				"label": "Wrathful Grip — 1d6 + STR Unarmed",
+				"predicate": {},
+				"priority": 1
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your unarmed strikes are now <strong>1d6+STR</strong>. You may expend a Fury Die to force a creature to reroll a save to escape your Grapple.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titans-grip",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "WW1xTtuy1FUjIe2r",
+	"folder": "94911514f45e4a31"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Forge of the Gadgeteer",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/artificer/forge-of-the-gadgeteer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "forge-of-the-gadgeteer",
+		"rules": [],
+		"description": "<p><em>Why rely on volatile mana when you can prepare for every eventuality? Your gadgets are reliable, versatile, and always ready when you need them. While others gamble with mishaps, you pull exactly the right tool from your pack — every single time.</em></p><p>LEVEL 3</p><p><strong>Gadget Specialist.</strong> You gain the Cheer Bot gadget for free (doesn't count against your Eureka! choices).</p><p>LEVEL 7</p><p><strong>Improvised Tinkering.</strong> (INT/Safe Rest) You can use any Gadget without using a charge — even if you haven't invented it or have no charges remaining.</p><p>LEVEL 11</p><p><strong>Always Be Prepared!</strong> (1/encounter) You can use Improvised Tinkering without spending an action.</p><p>LEVEL 15</p><p><strong>Tinkermaster.</strong> +1 use/Safe Rest to all gadgets you have invented.</p>",
+		"parentClass": "artificer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "d45504466d8d2264",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QbO2jQZceDOD865l"
+}

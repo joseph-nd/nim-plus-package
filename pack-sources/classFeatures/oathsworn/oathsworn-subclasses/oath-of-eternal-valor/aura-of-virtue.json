@@ -1,0 +1,57 @@
+{
+	"name": "Aura of Virtue",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-eternal-valor/aura-of-virtue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "aura-of-virtue",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 4,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain an aura with a <strong>Reach of 4</strong>. Allies within your aura may use Condemning Strike and Blessed Aim on melee attacks if you spend Mana on their behalf.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-eternal-valor",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xAEk6OirqjxIyHvr",
+	"folder": "ff35482129b180a9"
+}

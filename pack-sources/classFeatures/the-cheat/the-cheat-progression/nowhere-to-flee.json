@@ -1,0 +1,55 @@
+{
+	"name": "Nowhere to Flee!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/the-honorseeker/nowhere-to-flee.webp",
+	"system": {
+		"macro": "",
+		"identifier": "nowhere-to-flee",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Honorable Gambit.</em> Gain +INT speed when moving toward enemies Taunted by you. Your Opportunity Attacks also Slow Medium or smaller targets on hit.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "the-cheat-progression",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5atBrczZiqqilvvN",
+	"folder": "db26ee50517a7f26"
+}

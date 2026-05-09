@@ -1,0 +1,25 @@
+{
+	"name": "Forge of the Inventor",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/artificer/forge-of-the-inventor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "forge-of-the-inventor",
+		"rules": [],
+		"description": "<p><em>You are the quintessential tinkerer — always pushing your inventions to their absolute limits. Where others see danger, you see opportunity. More power, more range, more destruction.</em></p><p>LEVEL 3</p><p><strong>Tethercoil Specialist.</strong> You gain the Tethercoil invention for free (doesn't count against your Eureka! choices).</p><p>LEVEL 7</p><p><strong>Precision Tuned Smack.</strong> You can use Percussive Maintenance 3/encounter instead of 1/encounter.</p><p>LEVEL 11</p><p><strong>Powerful Weaponry.</strong> Whenever you use 2 or more Mana Dice with a weapon invention, gain one of the following bonuses — <strong>Thunder Gauntlets:</strong> Push +1 space per Mana Die. <strong>Manablade:</strong> Can hit +1 adjacent target. <strong>Manabolt Cannon:</strong> Deal damage in a cone (half range) instead of a line.</p><p>LEVEL 15</p><p><strong>Big Brained Inventor.</strong> +1 max Mana Die. Your Mana Dice become d12s.</p>",
+		"parentClass": "artificer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "d45504466d8d2264",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "609K6WN4ZaqO2iZF"
+}

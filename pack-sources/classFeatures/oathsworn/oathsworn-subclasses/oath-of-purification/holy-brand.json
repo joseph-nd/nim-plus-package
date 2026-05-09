@@ -1,0 +1,57 @@
+{
+	"name": "Holy Brand",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/oathsworn/oath-of-purification/holy-brand.webp",
+	"system": {
+		"macro": "",
+		"identifier": "holy-brand",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may change your Radiant damage to Fire at will, and vice versa. Your weapon counts as your spellcasting focus, and your melee attacks against <strong>Smoldering</strong> enemies <strong>automatically crit</strong>, ending the condition.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oath-of-purification",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "E1YlW1R8YB1qV6Lp",
+	"folder": "85b3aca5179476ab"
+}

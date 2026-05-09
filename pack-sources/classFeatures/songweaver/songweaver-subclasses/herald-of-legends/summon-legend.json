@@ -1,0 +1,57 @@
+{
+	"name": "Summon Legend",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/summon-legend.webp",
+	"system": {
+		"macro": "",
+		"identifier": "summon-legend",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/round — expend 1 Songweaver's Inspiration",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action:</strong> (1/round) Spend a Songweaver's Inspiration charge to summon a LEGEND (max 2 at a time). Legends you have selected appear as separate features — drag-drop them onto your sheet alongside this one.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mddlPUAMs06oHgiW",
+	"folder": "86341ad2caf67365"
+}

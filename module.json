@@ -1,0 +1,85 @@
+{
+	"id": "nim-plus-package",
+	"title": "Nim+ Package",
+	"description": "Adds Nim+ content (Hexbinder, Artificer, additional subclasses for core classes, ancestries, backgrounds, magic items, and monsters) to the Nimble system.",
+	"version": "0.1.0",
+	"authors": [
+		{
+			"name": "Joseph Nunez",
+			"email": "joseph.nunez912@gmail.com"
+		}
+	],
+	"license": "LICENSE",
+	"readme": "README.md",
+	"changelog": "CHANGELOG.md",
+	"compatibility": {
+		"minimum": "13",
+		"verified": "13",
+		"maximum": "13"
+	},
+	"relationships": {
+		"systems": [
+			{
+				"id": "nimble",
+				"type": "system",
+				"compatibility": {
+					"minimum": "0.8.4"
+				}
+			}
+		]
+	},
+	"esmodules": ["scripts/main.mjs"],
+	"packs": [
+		{
+			"name": "nim-plus-classes",
+			"label": "Nim+ Classes",
+			"path": "packs/nim-plus-classes",
+			"type": "Item",
+			"system": "nimble",
+			"flags": { "sourceDir": "classes" }
+		},
+		{
+			"name": "nim-plus-subclasses",
+			"label": "Nim+ Subclasses",
+			"path": "packs/nim-plus-subclasses",
+			"type": "Item",
+			"system": "nimble",
+			"flags": { "sourceDir": "subclasses" }
+		},
+		{
+			"name": "nim-plus-class-features",
+			"label": "Nim+ Class Features",
+			"path": "packs/nim-plus-class-features",
+			"type": "Item",
+			"system": "nimble",
+			"flags": { "sourceDir": "classFeatures" }
+		},
+		{
+			"name": "nim-plus-spells",
+			"label": "Nim+ Spells",
+			"path": "packs/nim-plus-spells",
+			"type": "Item",
+			"system": "nimble",
+			"flags": { "sourceDir": "spells" }
+		},
+		{
+			"name": "nim-plus-items",
+			"label": "Nim+ Items",
+			"path": "packs/nim-plus-items",
+			"type": "Item",
+			"system": "nimble",
+			"flags": { "sourceDir": "items" }
+		},
+		{
+			"name": "nim-plus-companions",
+			"label": "Nim+ Companions",
+			"path": "packs/nim-plus-companions",
+			"type": "Actor",
+			"system": "nimble",
+			"flags": { "sourceDir": "companions" }
+		}
+	],
+	"url": "https://github.com/joseph-nd/nim-plus-package",
+	"manifest": "https://github.com/joseph-nd/nim-plus-package/releases/latest/download/module.json",
+	"download": "https://github.com/joseph-nd/nim-plus-package/releases/download/v0.1.0/module.zip"
+}
