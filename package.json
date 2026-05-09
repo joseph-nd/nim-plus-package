@@ -1,6 +1,6 @@
 {
 	"name": "nim-plus-package",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Foundry VTT module that adds Nim+ content to the Nimble system.",
 	"type": "module",
 	"private": true,

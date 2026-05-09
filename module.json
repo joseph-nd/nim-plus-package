@@ -2,7 +2,7 @@
 	"id": "nim-plus-package",
 	"title": "Nim+ Package",
 	"description": "Adds Nim+ content (Hexbinder, Artificer, additional subclasses for core classes, ancestries, backgrounds, magic items, and monsters) to the Nimble system.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"authors": [
 		{
 			"name": "Joseph Nunez",
@@ -81,5 +81,5 @@
 	],
 	"url": "https://github.com/joseph-nd/nim-plus-package",
 	"manifest": "https://github.com/joseph-nd/nim-plus-package/releases/latest/download/module.json",
-	"download": "https://github.com/joseph-nd/nim-plus-package/releases/download/v0.1.0/module.zip"
+	"download": "https://github.com/joseph-nd/nim-plus-package/releases/download/v0.1.1/module.zip"
 }

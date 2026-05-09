@@ -4,6 +4,12 @@ All notable changes to this module will be documented in this file. Format follo
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-05-10
+
+### Fixed
+- Release zip now includes `scripts/` so Foundry can resolve `module.json`'s `esmodules: ["scripts/main.mjs"]` entry on install. (v0.1.0 published a bundle without it, which made install fail with "The file scripts/main.mjs included by module nim-plus-package does not exist".)
+- CI: dropped the explicit `version: 10` input on `pnpm/action-setup@v4` to avoid `ERR_PNPM_BAD_PM_VERSION` against `package.json`'s `packageManager` field.
+
 ### Added
 - **Artificer class** (Homebrew/Optional) complete with the **two official subclasses only** (Forge of the Gadgeteer, Forge of the Inventor) and **34 features** across three feature groups:
   - **Progression (13):** Thunder Gauntlets Prototype (with `damage` activation effect, 1d4+INT thunder), Armor Prototype (with `armorClass` rule overriding to INT+DEX), Thunder Gauntlets (L2 upgrade, auto-grants the full Thunder Gauntlets invention), Eureka! (picker host at L2/4/6/8/12/16), Mana Accumulator, Constant Tinkering (description-only at every level 3–18), I've Got JUST the Thing!, Tuned Mana Condenser (L5/10/14), Percussive Maintenance, Mana Recovery Valve, Optimized Mana Compression, Prime Configuration, Grand Mechanist.

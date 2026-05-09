@@ -51,10 +51,12 @@ for (const file of ['README.md', 'LICENSE', 'CHANGELOG.md']) {
 	if (fs.existsSync(src)) fs.copyFileSync(src, path.join(STAGING_DIR, file));
 }
 
-// Stage assets/ if it exists (icons, banners).
-const assetsSrc = path.join(ROOT, 'assets');
-if (fs.existsSync(assetsSrc)) {
-	fs.cpSync(assetsSrc, path.join(STAGING_DIR, 'assets'), { recursive: true });
+// Stage scripts/ (esmodules referenced by module.json) and assets/ (icons).
+for (const dir of ['scripts', 'assets']) {
+	const src = path.join(ROOT, dir);
+	if (fs.existsSync(src)) {
+		fs.cpSync(src, path.join(STAGING_DIR, dir), { recursive: true });
+	}
 }
 
 // Also publish the manifest at the dist root so GitHub Actions can upload it as a separate
