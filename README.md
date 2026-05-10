@@ -38,8 +38,17 @@ The module currently ships **503 documents** across **6 compendium packs**:
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
 
 ### New classes
-- **Hexbinder** — full progression, afflictions, mystic marks. Subclasses: *Coven of the Hex*, *Coven of the Hunt*, *Coven of the Cauldron*.
-- **Artificer** — full progression, Eureka picks, Inventions, Gadgets. Subclasses: *Forge of the Gadgeteer*, *Forge of the Inventor*, *Forge of the Mechanic*.
+
+Both classes are **official Nimble content**. Each ships with two official subclasses plus one homebrew submission, called out below.
+
+- **Hexbinder** — full progression, afflictions, mystic marks.
+  - *Coven of the Hex* (official)
+  - *Coven of the Hunt* (official)
+  - *Coven of the Cauldron* — **homebrew by DamianRM**
+- **Artificer** — full progression, Eureka picks, Inventions, Gadgets.
+  - *Forge of the Gadgeteer* (official)
+  - *Forge of the Inventor* (official)
+  - *Forge of the Mechanic* — **homebrew by Apex**
 
 ### Additional subclasses for core classes
 
@@ -198,9 +207,11 @@ If you rename or move a source file, the IdBuilder will reallocate an ID for the
 
 This module stands on the shoulders of two upstream projects.
 
-**The Nimble system** — the underlying game engine and rule core, by **Nimble Co**. This module would not exist without it. © 2025 Nimble Co. See <https://nimblerpg.com>.
+**The Nimble system** — the underlying game engine, the Hexbinder and Artificer classes, and most of their subclasses, by **Nimble Co**. This module would not exist without it. © 2025 Nimble Co. See <https://nimblerpg.com>.
 
-**Nim+ Volume III** — the community content supplement this module adapts (submissions June 2025, published July 2025). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
+**Homebrew subclasses for the new classes** — *Coven of the Cauldron* by **DamianRM**, *Forge of the Mechanic* by **Apex**. Reproduced with thanks.
+
+**Nim+ Volume III** — the community content supplement this module adapts for the additional core-class subclasses (submissions June 2025, published July 2025). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
 
 AJ · Blue · Can Opener · Charles and Jeannine Archibald · DanDraco · Kazok the Goblin · Khan Wick · Nathan Warkentin (Trex) · Rockergage · SanityWithIn · Santuric · Squeekie · Victor Constantinescu (MaleficMist) · Vinícius Conrado
 
