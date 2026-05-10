@@ -2,5 +2,6 @@ node_modules/
 packs/nim-plus-*/
 dist/
 docs/
+.idea/
 *.log
 .DS_Store
