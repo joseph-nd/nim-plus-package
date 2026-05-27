@@ -1,0 +1,57 @@
+{
+	"name": "Steady Breathing (2)",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/steady-breathing.webp",
+	"system": {
+		"macro": "return nimPlus.strain.lose(actor, 2);",
+		"identifier": "steady-breathing-2",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action.</strong> Lose 2 Strain Dice.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			10
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "M8MPR7FOWuhj9Ycj",
+	"folder": "1d47bd11dec020b0"
+}

@@ -1,0 +1,57 @@
+{
+	"name": "Petrify!",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-illusions/petrify.webp",
+	"system": {
+		"macro": "",
+		"identifier": "petrify",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Trick a lower-level enemy into thinking they are Petrified. A creature your level or higher must make a WIL save.</p><p><em>Snap out of it!</em> Illusions imposed upon an enemy end when the creature takes any damage.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-illusions",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CeiTDbQ8HRiPL0I7",
+	"folder": "951c2a6751920c35"
+}

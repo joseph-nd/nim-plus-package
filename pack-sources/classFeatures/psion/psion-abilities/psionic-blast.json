@@ -1,0 +1,70 @@
+{
+	"name": "Psionic Blast",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/psionic-blast.webp",
+	"system": {
+		"macro": "",
+		"identifier": "psionic-blast",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/Round.",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 0+ (2 optional)</p><p>(Reach 8, 1/Round) Suffer KEY d6 psychic damage, deal twice as much to an enemy (ignoring armor). Gain 2 Strain to take no damage instead.</p><p><em>Requires your Psionic Field to be active. Uses either KEY attribute. No attack roll — does not miss or crit. Great as a 2nd or 3rd attack, vs. minions, when Blinded, or otherwise Hampered.</em></p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-abilities",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			9,
+			12,
+			14,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true,
+			"strainCost": 0
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sHdAePsl66cSzPNj",
+	"folder": "1d47bd11dec020b0"
+}

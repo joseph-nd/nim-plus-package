@@ -13,12 +13,19 @@ The module's esmodule registers a small API on `globalThis.nimPlus` (and `game.m
 - `tollTheHour(actor, item)` — Toll the Hour (Shepherd / Luminary of Tidings): pick Jubilation (heal) or Calamity (radiant damage).
 - `seasonedJourneyman(actor, item)` — Seasoned Journeyman (Shepherd / Luminary of the Forge): pick Weaponsmith / Armorsmith at Safe Rest. Auto-detects Master of the Hammer (L11) and bumps the bonus from WIL to WIL + STR.
 - `sporeAttack(actor, item)` — Sporesphere (Stormshifter / Circle of Spores): scales damage and Reach with owned upgrades (Germination, Mycelium Growth, Sporulation) and offers Decay's Beastshift-charge upgrades (die-size bumps, Blinded, Poisoned).
+- `mirageDispatch(actor, item)` — Psion (Adept of Illusions, L11 Mirage 2): dialog picker for Disguise (Blinded/Taunted/Prone on enemy targets) vs. Distortion (Full Cover / Invisible / Source of Fear on ally targets); auto-applies the chosen status to currently-targeted tokens where Foundry/Nimble has a matching status ID.
+- `psionicFieldAttack(actor, item)` — Psion (Psionic Field Attack, L1): dialog lists owned weapon-objects (or accepts a manual formula), rolls weapon damage + WIL, and posts the chat card. If the actor owns Psionic Strike, additionally adds +1 damage per current Strain Die. Warns (non-blocking) if Concentration isn't active.
+- `strain.{ gain, lose, roll, clear, getDieSize }(actor, n?)` — Psion Strain Dice tracker. State stored as integer flag `flags['nim-plus-package'].psion.strainDice`. `getDieSize` reads the Psion class item's `system.classLevel` to return d6 / d8 / d10 / d12 (thresholds L5, L10, L17). `roll` evaluates the pool, posts a chat card, and breaks Concentration on a 1 (with `new-core-ability` letting the Psion ignore exactly one 1).
 
 Several `Hooks.on(...)` listeners auto-apply conditions and clean up state:
 - Class-features and Spells compendium views get level / tier badges and level-sorted entries to mirror the system's core class-features pack.
-- Activating Apodracosis (Mage / Invoker of Majesty) auto-applies Concentration via `nimble.useItem`.
+- Activating Apodracosis (Mage / Invoker of Majesty) **or Psionic Field (Psion, L1)** auto-applies Concentration via `nimble.useItem`.
 - Sporesphere applies Blinded / Poisoned to hit targets after the activation lands.
 - Safe Rest clears the Seasoned Journeyman selection flag via `nimble.rest`.
+- **`nimbleCombatTurnEnd`** auto-rolls the Psion's Strain Dice at end of turn (only when the actor has an active Psionic Field). If the Psion owns `i-can-hold`, sheds 1 die first.
+- **Psion ability picker is system-native**, not a custom hook — Powerful Mind is wired the same way as Berserker's Savage Arsenal: 12 ability features share `system.group: "psion-abilities"` and `system.gainedAtLevels: [2, 4, 6, 9, 12, 14, 16]`, and the Nimble level-up dialog shows them as a "Psion Abilities (Choose one)" section at each of those levels. There is no `pickPsionicAbility` macro — the system handles selection, ownership tracking, and exclusion of already-owned options. Psionic Strike sits in `psion-progression` with `gainedAtLevels: [2]` so it's auto-granted at L2 alongside the player's pick.
+- **`deleteActiveEffect`** filtered by the `concentration` status handles concentration-break: rolls remaining Strain Dice, posts a psychic-damage chat card, applies Incapacitated, fires `nim-plus-package.concentration-broken` for subclass reactors (Mind Collapse / Mind Shield / Big Mind), then clears the strain flag.
+- **`deleteCombat`** wipes lingering Strain Dice flags from any combatants at end of encounter.
 
 ## Layout
 
@@ -106,17 +113,18 @@ Top-level: `name`, `type: "class"`, `img`, `effects: []`, `flags: {}`, `_stats`.
 Starting gear is granted via `system.rules[]` of type `grantItem`, referencing UUIDs in `Compendium.nimble.nimble-items.Item.<id>` or `Compendium.nim-plus-package.nim-plus-items.Item.<id>`.
 
 ### Subclass JSON
-- `system.parentClass` MUST equal the parent class's `system.identifier` exactly. Existing slugs: `berserker`, `commander`, `hunter`, `mage`, `oathsworn`, `shadowmancer`, `shepherd`, `songweaver`, `stormshifter`, `the-cheat`, `zephyr`. New: `hexbinder`, `artificer`.
+- `system.parentClass` MUST equal the parent class's `system.identifier` exactly. Existing slugs: `berserker`, `commander`, `hunter`, `mage`, `oathsworn`, `shadowmancer`, `shepherd`, `songweaver`, `stormshifter`, `the-cheat`, `zephyr`. New: `hexbinder`, `artificer`, `psion`.
 - `system.description` — HTML containing all level-feature flavor text. Individual feature JSONs drive the actual level-up grants.
 
 ### Feature JSON
 - `system.class` — parent class slug (must match the class's `identifier`).
-- `system.group` — feature group id; for progression features use the `<class>-progression` slug, for subclass features use the subclass slug bare (e.g. `coven-of-the-hex`).
+- `system.group` — feature group id; for progression features use the `<class>-progression` slug, for subclass features use the subclass slug bare (e.g. `coven-of-the-hex`). Pickable pool pattern (Berserker's `savage-arsenal`, Psion's `psion-abilities`): every option shares the same `group` slug AND the same `gainedAtLevels` array — the Nimble level-up dialog auto-renders these as a "(Choose one)" section at each shared `gainedAtLevel`, filtering out options the actor already owns. The class JSON must register the group in `groupIdentifiers`.
 - `system.gainedAtLevels` — array of integer levels the feature is granted at.
 - `system.subclass` — `true` for subclass features, `false` for class-progression features.
 - `system.activation` — `cost.type` is one of `action`, `bonus action`, `reaction`, `none`, etc.
 - `system.macro` (optional) — a JS expression run with `(actor, item) => …`. Common pattern: `return nimPlus.<helper>(actor, item);`. The system runs the macro *instead of* the regular activation flow when the actor's `automaticallyExecuteAvailableMacros` flag is true (default).
 - `flags.nim-plus-package.showAsAttack: true` (optional) — opts the feature into the sheet's Heroic Actions → Attack panel. The module's `setup` hook injects `system.actionType = 'attack'` at runtime to satisfy the panel's filter.
+- `flags.nim-plus-package.strainCost: <number>` (optional, Psion only) — baseline minimum Strain Dice the Psionic Ability costs to use. Used as a tooltip subtitle by the `pickPsionicAbility` picker. The description holds the variable-spend details.
 
 File-path convention drives folder organization in the compendium UI:
 - `pack-sources/classFeatures/<class>/<class>-progression/<feature>.json` — progression-style features (rendered in the `<Class> Progression` folder)

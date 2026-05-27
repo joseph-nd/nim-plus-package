@@ -336,6 +336,68 @@
 				}
 			}
 		},
+		"psion": {
+			"psion-abilities": {
+				"atomize-weapon": "EFhZUArMtTV4OMdd",
+				"control-projectiles": "10c34TsTU0VlTYAt",
+				"dampening-field": "ii9O3JLeF73zfbNR",
+				"dominate-mind": "FZ7CIHwRp9WU6Vll",
+				"kinetic-launch": "BRaQOQOdxkVafv5p",
+				"levitate": "f2NY2R8vRh3HzLix",
+				"mindrend": "CLFRlmbRYHw7CF86",
+				"psionic-blast": "sHdAePsl66cSzPNj",
+				"psionic-lockdown": "5butJYGsX4v9jrL5",
+				"psionic-strike": "ASvyVHTt86FfEtSC",
+				"reactive-mind": "yUvnvXsgqIORjD5E",
+				"sudden-shift": "IZVh7y9SM6ojmC5G",
+				"telekinetic-bastion": "S8Te6A7AHUiGxJBe"
+			},
+			"psion-progression": {
+				"epic-boon": "rix20zJnwuNGXpyX",
+				"expansive-mind-1": "1rxIxhBU3AyeQedr",
+				"expansive-mind-2": "s9BftMfOdZKDqHzb",
+				"expansive-mind-3": "GCXBp3JlKt6yKLpX",
+				"i-can-hold": "sm9HGXPSRLzyD7UF",
+				"mind-over-matter": "NOB2GlNRDAQUMPFE",
+				"mind-over-matter-2": "9t6V0KYvH52QTwM9",
+				"mindmaster": "e33QKggzTdktLfIv",
+				"mindsense": "HjRRjezqEiU73x5h",
+				"new-core-ability": "d9fFHq02d5SfongY",
+				"powerful-mind-1": "3BTCT1EglwkvbKDk",
+				"powerful-mind-2": "ypovft1wSDGBjMN3",
+				"powerful-mind-3": "Bert6scEyWUSAdeU",
+				"powerful-mind-4": "HWgKcgPpR7TJZyF7",
+				"powerful-mind-5": "hGKkilxZbqitaMMw",
+				"powerful-mind-6": "C85D5Gl0Ht05MVBB",
+				"powerful-mind-7": "al5l4wwp9GsDWkCX",
+				"psionic-field": "p9bnJaRpkyAQFBya",
+				"psionic-field-attack": "f01oMYOsILRM4MXp",
+				"psionic-field-strike": "GJdrSQmMQOhYhYrZ",
+				"psionic-strike": "LAQLRlpTYohSDUCA",
+				"steady-breathing-1": "xZx4Ks4ALkfLoLFM",
+				"steady-breathing-2": "M8MPR7FOWuhj9Ycj"
+			},
+			"psion-subclasses": {
+				"adept-of-bladestorm": {
+					"bladebearer": "yst7fkKFTImq2R0y",
+					"bladestorm": "0NujmudFh0wLdXoy",
+					"bladestorm-2": "tbIPKm0zTLcVg8VT",
+					"shieldstorm": "vvji9lUPQWoZwiVI"
+				},
+				"adept-of-collapse": {
+					"big-mind": "zhFLxrqeq5aQoaez",
+					"mind-collapse": "saEWoutBeR8tjPMN",
+					"mind-shield": "a6ZwNSEL30xRZDAr",
+					"reverberating-mind": "TALrGbpIoZdn160H"
+				},
+				"adept-of-illusions": {
+					"figment": "LCjbSQsrmUHRrWZP",
+					"mirage": "1lCpemW4CUOLdZDz",
+					"mirage-2": "4Lu1p3q02qWnRxZO",
+					"petrify": "CeiTDbQ8HRiPL0I7"
+				}
+			}
+		},
 		"shadowmancer": {
 			"shadowmancer-subclasses": {
 				"pact-of-the-endless-swarm": {
@@ -586,7 +648,8 @@
 	},
 	"classes": {
 		"artificer": "RymicrHN7J0xLXdl",
-		"hexbinder": "fnJVI6sJT6vfXPzP"
+		"hexbinder": "fnJVI6sJT6vfXPzP",
+		"psion": "gMx8iJm6Fmn8D2Sb"
 	},
 	"companions": {
 		"spirit-companion": "PIWqyK4bfbEQehAw"
@@ -698,6 +761,11 @@
 			"oath-of-purification": "kCta7aSKmgvdwSqB",
 			"oath-of-roaring-thunder": "tjJ51hAtjfcyMh9R",
 			"oath-of-valor": "L1qJv6kCr0DfH8SU"
+		},
+		"psion": {
+			"adept-of-bladestorm": "MyMxFtes4xEcTFQB",
+			"adept-of-collapse": "ijvTquBmqrIekknm",
+			"adept-of-illusions": "nOuK52yQf9ipYwh7"
 		},
 		"shadowmancer": {
 			"pact-of-the-endless-swarm": "fDPWXpzbdH9oMvkp",

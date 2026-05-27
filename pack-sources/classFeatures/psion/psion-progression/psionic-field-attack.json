@@ -1,0 +1,85 @@
+{
+	"name": "Psionic Field Attack",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/psionic-field.webp",
+	"system": {
+		"macro": "return nimPlus.psionicFieldAttack(actor, item);",
+		"identifier": "psionic-field-attack",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Requires Psionic Field active.",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "psionFieldAtkDmg1",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d4 + @abilities.will.mod",
+					"parentContext": null,
+					"parentNode": null,
+					"on": {
+						"hit": [
+							{
+								"id": "psionFieldAtkHit1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "psionFieldAtkDmg1"
+							}
+						]
+					},
+					"canCrit": true,
+					"canMiss": true
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Within your Psionic Field (Reach 3)",
+				"attackType": "reach",
+				"distance": 3
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Telekinetically attack with an unheld light weapon or object anywhere within your Psionic Field. You are proficient with these attacks; they deal the weapon's normal damage <strong>+ WIL</strong> additional damage.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "f01oMYOsILRM4MXp",
+	"folder": "1d47bd11dec020b0"
+}

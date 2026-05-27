@@ -1,0 +1,61 @@
+{
+	"name": "Figment",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-illusions/figment.webp",
+	"system": {
+		"macro": "",
+		"identifier": "figment",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reaction: when you Defend.",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Enemy or willing ally within Psionic Field"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 2</p><p>Reaction: when you Defend, you may gain 2 Strain to swap places with an enemy or willing ally within your Psionic Field, making them the new target.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-illusions",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 2
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LCjbSQsrmUHRrWZP",
+	"folder": "951c2a6751920c35"
+}

@@ -1,0 +1,62 @@
+{
+	"name": "Bladestorm",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-bladestorm/bladestorm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bladestorm",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter.",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "round"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 3,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 2</p><p>(1/encounter) Others within your Psionic Field take KEY damage for each space they move (or are moved) this round. +2 Strain.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-bladestorm",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true,
+			"strainCost": 2
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0NujmudFh0wLdXoy",
+	"folder": "e416d01c9f5e8bb3"
+}

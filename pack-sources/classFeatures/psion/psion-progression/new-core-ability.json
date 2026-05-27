@@ -1,0 +1,57 @@
+{
+	"name": "New Core Ability",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/new-core-ability.webp",
+	"system": {
+		"macro": "",
+		"identifier": "new-core-ability",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When your concentration is broken, you may ignore <strong>1 Strain Die</strong>.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			8
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "d9fFHq02d5SfongY",
+	"folder": "1d47bd11dec020b0"
+}

@@ -1,0 +1,64 @@
+{
+	"name": "Psionic Strike",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/psionic-strike.webp",
+	"system": {
+		"macro": "",
+		"identifier": "psionic-strike",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 3
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+1 damage for each Strain Die you have. When you attack you may gain 1 Strain to ignore all disadvantage and attack with advantage instead.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			2
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"showAsAttack": true,
+			"strainCost": 0
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LAQLRlpTYohSDUCA",
+	"folder": "1d47bd11dec020b0"
+}

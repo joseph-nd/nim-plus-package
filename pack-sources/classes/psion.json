@@ -1,0 +1,132 @@
+{
+	"name": "Psion",
+	"type": "class",
+	"img": "modules/nim-plus-package/assets/classImages/psion.webp",
+	"system": {
+		"macro": "",
+		"identifier": "psion",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "psionGearGarb1",
+				"identifier": "",
+				"label": "Starting Gear - Adventurer's Garb",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.Bdm2ynI2J7Xt9FNf"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "psionGearDagr1",
+				"identifier": "",
+				"label": "Starting Gear - Dagger",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.O1sCIVQKfAqSlDT5"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "psionGearPitch",
+				"identifier": "",
+				"label": "Starting Gear - Vial of Pitch",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.3DATN9QiaWXXcU75"
+			}
+		],
+		"armorProficiencies": [
+			"cloth"
+		],
+		"classLevel": 1,
+		"complexity": 2,
+		"description": "<p><em>Each creature that lives and breathes is united by one shared experience: THOUGHT. Psions take this fundamental reality and harness it as a tool in the physical world. Bend the flow of gravity, twist the reality of minds, or throw things really, really hard. All of this barely scratches the surface of what a Psion can accomplish: altering the physical world through sheer thought alone.</em></p><p>Psionic power, rare and mighty as it is, takes a toll on those who dare to wield it. To exert one's own mind so as to affect the world and other minds around you is to take on all the latent negative thoughts that can be found there. However, those with the will to withstand the strain can achieve heights that few could ever dream of. <strong>The Psion:</strong></p><ul><li><strong>Controls a psionic field</strong> — commanding errant objects, allies, and foes in their surroundings.</li><li><strong>Withstands the Strain</strong> — pushing themselves to greater heights with their Psionic abilities at the cost of their fortitude.</li><li><strong>Dominates minds</strong> — taking control over the thoughts and perceptions of their enemies through illusions and misdirections.</li></ul><p><em>Note: This class is included as Homebrew/Alpha (Optional) content — abilities will almost certainly change as the design evolves. Playtest with your GM.</em></p>",
+		"groupIdentifiers": [
+			"psion-progression",
+			"psion-abilities"
+		],
+		"keyAbilityScores": [
+			"will",
+			"intelligence"
+		],
+		"hitDieSize": 8,
+		"hpData": [],
+		"savingThrows": {
+			"advantage": "will",
+			"disadvantage": "dexterity"
+		},
+		"abilityScoreData": {
+			"4": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"5": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"8": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"9": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"12": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"13": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"16": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "primary"
+			},
+			"17": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "secondary"
+			},
+			"20": {
+				"value": "",
+				"type": "statIncrease",
+				"statIncreaseType": "capstone"
+			}
+		},
+		"mana": {
+			"formula": "",
+			"recovery": "safeRest"
+		},
+		"resources": [],
+		"weaponProficiencies": []
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "gMx8iJm6Fmn8D2Sb"
+}

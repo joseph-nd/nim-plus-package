@@ -1,6 +1,6 @@
 # Nim+ Package
 
-A Foundry VTT module that ships extra content for the [Nimble system](https://github.com/Nimble-Co/FoundryVTT-Nimble): the Hexbinder and Artificer classes, additional subclasses for every core class, the spells / items / companions those features rely on, and a small runtime helper layer (`nimPlus.*`) that wires up the macros some features use.
+A Foundry VTT module that ships extra content for the [Nimble system](https://github.com/Nimble-Co/FoundryVTT-Nimble): the Hexbinder, Artificer, and Psion classes, additional subclasses for every core class, the spells / items / companions those features rely on, and a small runtime helper layer (`nimPlus.*`) that wires up the macros some features use.
 
 Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
@@ -26,20 +26,20 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **503 documents** across **6 compendium packs**:
+The module currently ships **546 documents** across **6 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
-| **Nim+ Classes** | 2 | Hexbinder, Artificer |
-| **Nim+ Subclasses** | 56 | new subclasses for every core class plus the new classes (see breakdown below) |
-| **Nim+ Class Features** | 402 | progression + subclass features for every class above |
+| **Nim+ Classes** | 3 | Hexbinder, Artificer, Psion |
+| **Nim+ Subclasses** | 59 | new subclasses for every core class plus the new classes (see breakdown below) |
+| **Nim+ Class Features** | 441 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
 | **Nim+ Items** | 15 | Hexbinder concoctions (8) + Artificer inventions and prototypes (7) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
 
 ### New classes
 
-Both classes are **official Nimble content**. Each ships with two official subclasses plus one homebrew submission, called out below.
+**Hexbinder** and **Artificer** are official Nimble content; each ships with two official subclasses plus one homebrew submission. **Psion** is an early homebrew playtest class (alpha v0.1.1) and its abilities will likely change as the design evolves.
 
 - **Hexbinder** — full progression, afflictions, mystic marks.
   - *Coven of the Hex* (official)
@@ -49,6 +49,10 @@ Both classes are **official Nimble content**. Each ships with two official subcl
   - *Forge of the Gadgeteer* (official)
   - *Forge of the Inventor* (official)
   - *Forge of the Mechanic* — **homebrew by Apex**
+- **Psion (alpha)** — Psionic Field aura, Strain Dice mechanic, 13 player-pickable Psionic Abilities.
+  - *Adept of Bladestorm*
+  - *Adept of Illusions*
+  - *Adept of Collapse*
 
 ### Additional subclasses for core classes
 
@@ -76,7 +80,9 @@ This module stands on the shoulders of two upstream projects.
 
 **The Nimble system** — the underlying game engine, the Hexbinder and Artificer classes, and most of their subclasses, by **Nimble Co**. This module would not exist without it. © 2025 Nimble Co. See <https://nimblerpg.com>.
 
-**Homebrew subclasses for the new classes** — *Coven of the Cauldron* by **DamianRM**, *Forge of the Mechanic* by **Apex**. Reproduced with thanks.
+**Homebrew subclasses for the official new classes** — *Coven of the Cauldron* by **DamianRM**, *Forge of the Mechanic* by **Apex**. Reproduced with thanks.
+
+**Psion class (alpha homebrew)** — sourced from the *Psion v0.1.1* PDF playtest. Author credit pending confirmation; see the PDF cover at `Psion-0.1.1.pdf`.
 
 **Nim+ Volume III** — the community content supplement this module adapts for the additional core-class subclasses (submissions June 2025, published July 2025). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
 

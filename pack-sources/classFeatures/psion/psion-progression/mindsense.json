@@ -1,0 +1,57 @@
+{
+	"name": "Mindsense",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/mindsense.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mindsense",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>While conscious, you can sense and communicate with other minds within your Psionic Field, ignoring barriers, invisibility, or other effects that would conceal them.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			2
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "HjRRjezqEiU73x5h",
+	"folder": "1d47bd11dec020b0"
+}

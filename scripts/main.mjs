@@ -19,12 +19,26 @@ const api = {
 	tollTheHour,
 	seasonedJourneyman,
 	sporeAttack,
+	mirageDispatch,
+	psionicFieldAttack,
+	strain: {
+		gain: strainGain,
+		lose: strainLose,
+		clear: strainClear,
+		roll: strainRoll,
+		getDieSize: strainGetDieSize,
+		show: strainShow,
+	},
 };
 
 Hooks.once('init', () => {
 	const mod = game.modules.get(MODULE_ID);
 	if (mod) mod.api = api;
 	globalThis.nimPlus = api;
+});
+
+Hooks.once('ready', () => {
+	ensureStrainStyles();
 });
 
 /**
@@ -212,19 +226,179 @@ function applyClassFeatureLevelsToEntries(entries) {
 }
 
 /**
- * Apodracosis (Mage / Invoker of Majesty, L3) — auto-apply Concentration when
- * the player activates the feature. The activation flow itself rolls the
- * temp-HP healing effect; this hook just toggles the status effect on the
- * acting actor so they don't have to remember to set it manually.
+ * Auto-manage Concentration when the player activates a feature whose rules
+ * text demands it.
+ *
+ * - **Apodracosis** (Mage / Invoker of Majesty, L3) — apply once, no toggle.
+ *   Re-activating the feature does not turn off Concentration.
+ * - **Psionic Field** (Psion, L1) — toggle. The PDF reads "Concentration, up
+ *   to 1 min. Action: Create a field…". Re-activating ends the field, which
+ *   is the standard Nimble idiom for self-canceling aura concentrations.
+ *
+ * The visual aura (token light) is wired separately to the createActiveEffect
+ * / deleteActiveEffect hooks below so it works regardless of how
+ * Concentration was applied or removed (status button, Strain break, GM).
  */
 Hooks.on('nimble.useItem', (item) => {
 	if (!item || item.type !== 'feature') return;
-	if (item.system?.identifier !== 'apodracosis') return;
+	const identifier = item.system?.identifier;
 	const actor = item.actor;
 	if (!actor) return;
-	if (actor.statuses?.has('concentration')) return;
-	Promise.resolve(actor.toggleStatusEffect('concentration', { active: true })).catch((error) => {
-		console.error(`[${MODULE_ID}] Failed to apply Concentration for Apodracosis`, error);
+
+	if (identifier === 'psionic-field') {
+		const isOn = actor.statuses?.has?.('concentration');
+		Promise.resolve(actor.toggleStatusEffect('concentration', { active: !isOn })).catch(
+			(error) => {
+				console.error(`[${MODULE_ID}] Failed to toggle Concentration for Psionic Field`, error);
+			},
+		);
+		return;
+	}
+
+	if (identifier === 'apodracosis') {
+		if (actor.statuses?.has?.('concentration')) return;
+		Promise.resolve(actor.toggleStatusEffect('concentration', { active: true })).catch((error) => {
+			console.error(`[${MODULE_ID}] Failed to apply Concentration for Apodracosis`, error);
+		});
+		return;
+	}
+});
+
+/**
+ * Psionic Field aura visualization — when Concentration becomes active on a
+ * Psion who owns `psionic-field`, set the actor's tokens to emit a low-alpha
+ * teal-cyan dim light at radius 3 (matching the field's Reach). On
+ * Concentration removal (re-activation, Strain break, manual toggle, GM),
+ * restore the token's prior light config.
+ *
+ * Light state is stashed on a per-token flag so any prior light source the
+ * player had configured (torch, ring of light, etc.) is preserved across the
+ * toggle. Falls back to "no light" if nothing was stashed.
+ */
+const PSION_AURA_FLAG = 'psionicFieldPrevLight';
+const PSION_FIELD_TEMPLATE_FLAG = 'psionicFieldTemplateId';
+const PSION_FIELD_REACH = 3;
+const PSION_AURA_LIGHT = {
+	dim: 3,
+	bright: 0,
+	color: '#39d6c8',
+	alpha: 0.35,
+	luminosity: 0.5,
+	angle: 360,
+	// No animation — animated lights run shader passes per frame on the
+	// canvas, which hits Firefox especially hard. The dim radius + color +
+	// MeasuredTemplate boundary already convey the aura.
+	animation: { type: 'none', speed: 1, intensity: 1, reverse: false },
+};
+
+function getTokenCenter(doc) {
+	const scene = doc.parent;
+	const gridSize = scene?.grid?.size ?? 100;
+	return {
+		x: doc.x + (doc.width * gridSize) / 2,
+		y: doc.y + (doc.height * gridSize) / 2,
+	};
+}
+
+async function createPsionicFieldTemplate(doc) {
+	const scene = doc.parent;
+	if (!scene) return;
+	const existing = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
+	if (existing && scene.templates?.get?.(existing)) return; // already there
+	const gridDistance = scene.grid?.distance ?? 5;
+	const { x, y } = getTokenCenter(doc);
+	const [template] = await scene.createEmbeddedDocuments('MeasuredTemplate', [
+		{
+			t: 'circle',
+			user: game.user.id,
+			distance: PSION_FIELD_REACH * gridDistance,
+			direction: 0,
+			angle: 0,
+			width: 0,
+			x,
+			y,
+			fillColor: '#39d6c8',
+			borderColor: '#0aa697',
+			flags: {
+				[MODULE_ID]: {
+					psionicField: true,
+					ownerTokenId: doc.id,
+				},
+			},
+		},
+	]);
+	if (template) await doc.setFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG, template.id);
+}
+
+async function removePsionicFieldTemplate(doc) {
+	const templateId = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
+	if (templateId) {
+		const scene = doc.parent;
+		const template = scene?.templates?.get?.(templateId);
+		if (template) await template.delete();
+		await doc.unsetFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
+	}
+}
+
+async function setPsionicFieldAura(actor, on) {
+	const tokens = actor.getActiveTokens?.(true) ?? [];
+	for (const token of tokens) {
+		const doc = token.document ?? token;
+		try {
+			if (on) {
+				if (doc.getFlag(MODULE_ID, PSION_AURA_FLAG) === undefined) {
+					const prev = doc.light?.toObject?.() ?? foundry.utils.deepClone(doc.light ?? {});
+					await doc.setFlag(MODULE_ID, PSION_AURA_FLAG, prev);
+				}
+				await doc.update({ light: PSION_AURA_LIGHT });
+				await createPsionicFieldTemplate(doc);
+			} else {
+				const prev = doc.getFlag(MODULE_ID, PSION_AURA_FLAG);
+				await doc.update({ light: prev ?? { dim: 0, bright: 0, alpha: 0.5, color: null } });
+				if (prev !== undefined) await doc.unsetFlag(MODULE_ID, PSION_AURA_FLAG);
+				await removePsionicFieldTemplate(doc);
+			}
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to ${on ? 'apply' : 'remove'} Psionic Field aura`, error);
+		}
+	}
+}
+
+// Gate by userId: createActiveEffect / deleteActiveEffect fire on every
+// client, but only the triggering user should mutate the scene (templates,
+// tokens) to avoid duplicate creates and race-y deletes.
+Hooks.on('createActiveEffect', (effect, _options, userId) => {
+	if (userId !== game.user.id) return;
+	if (!effect?.statuses?.has?.('concentration')) return;
+	const actor = effect.parent;
+	if (!(actor instanceof Actor)) return;
+	if (!actor.items?.some?.((i) => i.system?.identifier === 'psionic-field')) return;
+	setPsionicFieldAura(actor, true).catch(() => {});
+});
+
+Hooks.on('deleteActiveEffect', (effect, _options, userId) => {
+	if (userId !== game.user.id) return;
+	if (!effect?.statuses?.has?.('concentration')) return;
+	const actor = effect.parent;
+	if (!(actor instanceof Actor)) return;
+	if (!actor.items?.some?.((i) => i.system?.identifier === 'psionic-field')) return;
+	setPsionicFieldAura(actor, false).catch(() => {});
+});
+
+// Follow-the-token: when a token with an active Psionic Field template moves,
+// re-center the template on the new token position. Gated by userId so only
+// the user who moved the token issues the template update.
+Hooks.on('updateToken', (doc, changes, _options, userId) => {
+	if (userId !== game.user.id) return;
+	if (!('x' in changes || 'y' in changes)) return;
+	const templateId = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
+	if (!templateId) return;
+	const scene = doc.parent;
+	const template = scene?.templates?.get?.(templateId);
+	if (!template) return;
+	const { x, y } = getTokenCenter(doc);
+	template.update({ x, y }).catch((error) => {
+		console.error(`[${MODULE_ID}] Failed to move Psionic Field template`, error);
 	});
 });
 
@@ -923,6 +1097,862 @@ Hooks.on('nimble.rest', (payload) => {
 		console.error(`[${MODULE_ID}] Failed to clear Seasoned Journeyman flags on Safe Rest`, error);
 	});
 });
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Psion — Strain Dice runtime
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * The Psion's Strain Dice is a pool of dice (d6 → d8@L5 → d10@L10 → d12@L17)
+ * accumulated by using Psionic Abilities. At end of turn the pool is rolled;
+ * any die showing a 1 breaks Concentration, deals the sum of all dice as
+ * psychic damage to the Psion, and Incapacitates them until next turn.
+ *
+ * State is stored as an integer flag — `flags['nim-plus-package'].psion.strainDice`.
+ */
+
+const STRAIN_FLAG = 'psion.strainDice';
+
+function strainGetDieSize(actor) {
+	if (!actor) return 6;
+	const psion = actor.items?.find?.((i) => i.type === 'class' && i.system?.identifier === 'psion');
+	const level = Number(psion?.system?.classLevel ?? 0);
+	if (level >= 17) return 12;
+	if (level >= 10) return 10;
+	if (level >= 5) return 8;
+	return 6;
+}
+
+async function strainGain(actor, n = 1) {
+	if (!actor) return 0;
+	const count = Math.max(0, Math.floor(Number(n) || 0));
+	if (count === 0) return Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const current = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const next = current + count;
+	const size = strainGetDieSize(actor);
+	await actor.setFlag(MODULE_ID, STRAIN_FLAG, next);
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Strain +${count}</strong>`,
+		content: `<p>${escape(actor.name)}: <strong>${next}</strong> Strain Die${next === 1 ? '' : 's'} (d${size}).</p>`,
+	});
+	return next;
+}
+
+async function strainLose(actor, n = 1) {
+	if (!actor) return 0;
+	const count = Math.max(0, Math.floor(Number(n) || 0));
+	const current = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	if (current === 0 || count === 0) return current;
+	const next = Math.max(0, current - count);
+	const size = strainGetDieSize(actor);
+	await actor.setFlag(MODULE_ID, STRAIN_FLAG, next);
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Strain −${current - next}</strong>`,
+		content: `<p>${escape(actor.name)}: <strong>${next}</strong> Strain Die${next === 1 ? '' : 's'} (d${size}).</p>`,
+	});
+	return next;
+}
+
+async function strainClear(actor) {
+	if (!actor) return;
+	if (actor.getFlag(MODULE_ID, STRAIN_FLAG) === undefined) return;
+	await actor.unsetFlag(MODULE_ID, STRAIN_FLAG);
+}
+
+/**
+ * Inject a persistent Strain Dice widget into the Psion's character sheet.
+ * Renders only when the actor has the Psion class. Sits inside the defense
+ * section (where Mana would go if the class had mana), with +/− buttons and
+ * a "Roll" button wired to the strain helpers.
+ *
+ * Re-renders on `updateActor` when the strainDice flag changes — patches the
+ * existing widget in-place rather than calling sheet.render(), to avoid
+ * blowing away other in-flight sheet state.
+ */
+const STRAIN_WIDGET_CLASS = 'nim-plus-strain';
+const STRAIN_STYLE_ID = 'nim-plus-strain-styles';
+
+const STRAIN_WIDGET_CSS = `
+	.nim-plus-strain {
+		--strain-accent: #39d6c8;
+		--strain-accent-warm: #9b6dff;
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		/* Span all columns/rows whether the parent is CSS grid or flex */
+		grid-column: 1 / -1;
+		flex: 1 1 100%;
+		margin: 0.5rem 0;
+		padding: 0.55rem 0.7rem 0.6rem;
+		background:
+			linear-gradient(135deg, rgba(57, 214, 200, 0.08), rgba(155, 109, 255, 0.08)),
+			var(--color-bg, transparent);
+		border: 1px solid rgba(57, 214, 200, 0.35);
+		border-radius: 6px;
+		box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 3px rgba(0,0,0,0.15);
+	}
+	.nim-plus-strain__header {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0 0 0.45rem;
+		font-size: 1em;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-text-primary, inherit);
+	}
+	.nim-plus-strain__icon {
+		color: var(--strain-accent-warm);
+		opacity: 0.9;
+	}
+	.nim-plus-strain__die {
+		margin-left: auto;
+		font-size: 0.7em;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: rgba(57, 214, 200, 0.18);
+		color: var(--color-text-primary, inherit);
+		border: 1px solid rgba(57, 214, 200, 0.3);
+	}
+	.nim-plus-strain__row {
+		display: flex;
+		align-items: stretch;
+		gap: 0.45rem;
+	}
+	.nim-plus-strain__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 38px;
+		padding: 0;
+		border: 1px solid var(--color-border-light-2, rgba(0,0,0,0.2));
+		background: var(--color-bg-button, rgba(255,255,255,0.06));
+		color: var(--color-text-primary, inherit);
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 1em;
+		font-weight: 600;
+		line-height: 1;
+		transition: background 0.15s, border-color 0.15s, transform 0.08s;
+	}
+	.nim-plus-strain__btn:hover {
+		background: rgba(57, 214, 200, 0.22);
+		border-color: var(--strain-accent);
+	}
+	.nim-plus-strain__btn:active {
+		transform: translateY(1px);
+	}
+	.nim-plus-strain__btn--roll {
+		flex: 1 1 auto;
+		gap: 0.4rem;
+		width: auto;
+		padding: 0 0.8rem;
+		background: linear-gradient(180deg, rgba(57, 214, 200, 0.2), rgba(155, 109, 255, 0.18));
+		border-color: rgba(57, 214, 200, 0.5);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+	.nim-plus-strain__btn--roll:hover {
+		background: linear-gradient(180deg, rgba(57, 214, 200, 0.35), rgba(155, 109, 255, 0.3));
+	}
+	.nim-plus-strain__count {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 3rem;
+		padding: 0 0.6rem;
+		font-size: 1.8em;
+		font-weight: 900;
+		line-height: 1;
+		color: var(--color-text-primary, inherit);
+		background: rgba(0,0,0,0.18);
+		border: 1px solid rgba(57, 214, 200, 0.4);
+		border-radius: 6px;
+		text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+		font-variant-numeric: tabular-nums;
+		transition: color 0.2s, border-color 0.2s, background 0.2s;
+	}
+	.nim-plus-strain[data-state="empty"] .nim-plus-strain__count {
+		opacity: 0.45;
+	}
+	.nim-plus-strain[data-state="risky"] .nim-plus-strain__count {
+		color: #f9d27a;
+		border-color: rgba(249, 210, 122, 0.55);
+		background: rgba(249, 210, 122, 0.08);
+	}
+	.nim-plus-strain[data-state="danger"] .nim-plus-strain__count {
+		color: #ff8c6e;
+		border-color: rgba(255, 140, 110, 0.7);
+		background: rgba(255, 140, 110, 0.1);
+		/* No keyframe animation — animating box-shadow forces full repaints
+		   every frame in Firefox. Color shift alone is sufficient warning. */
+	}
+`;
+
+function ensureStrainStyles() {
+	if (document.getElementById(STRAIN_STYLE_ID)) return;
+	const style = document.createElement('style');
+	style.id = STRAIN_STYLE_ID;
+	style.textContent = STRAIN_WIDGET_CSS;
+	document.head.append(style);
+}
+
+function strainState(count) {
+	if (count <= 0) return 'empty';
+	if (count <= 2) return 'active';
+	if (count <= 4) return 'risky';
+	return 'danger';
+}
+
+function actorIsPsion(actor) {
+	return !!actor?.items?.some?.((i) => i.type === 'class' && i.system?.identifier === 'psion');
+}
+
+function renderStrainWidget(actor) {
+	const count = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const size = strainGetDieSize(actor);
+	const state = strainState(count);
+	return `
+		<section class="${STRAIN_WIDGET_CLASS}" data-actor-id="${escape(actor.id)}" data-state="${state}">
+			<h3 class="${STRAIN_WIDGET_CLASS}__header">
+				<i class="fa-solid fa-brain ${STRAIN_WIDGET_CLASS}__icon"></i>
+				<span>Strain</span>
+				<span class="${STRAIN_WIDGET_CLASS}__die">d${size}</span>
+			</h3>
+			<div class="${STRAIN_WIDGET_CLASS}__row">
+				<button type="button" class="${STRAIN_WIDGET_CLASS}__btn" data-nim-plus-strain="lose" aria-label="Lose 1 Strain Die" data-tooltip="Lose 1 Strain Die">
+					<i class="fa-solid fa-minus"></i>
+				</button>
+				<div class="${STRAIN_WIDGET_CLASS}__count" data-count="${count}">${count}</div>
+				<button type="button" class="${STRAIN_WIDGET_CLASS}__btn" data-nim-plus-strain="gain" aria-label="Gain 1 Strain Die" data-tooltip="Gain 1 Strain Die">
+					<i class="fa-solid fa-plus"></i>
+				</button>
+				<button type="button" class="${STRAIN_WIDGET_CLASS}__btn ${STRAIN_WIDGET_CLASS}__btn--roll" data-nim-plus-strain="roll" aria-label="Roll all Strain Dice" data-tooltip="Roll all Strain Dice (any 1 breaks Concentration)">
+					<i class="fa-solid fa-dice"></i> Roll
+				</button>
+			</div>
+		</section>
+	`;
+}
+
+function wireStrainWidget(widgetEl, actor) {
+	widgetEl.querySelectorAll('[data-nim-plus-strain]').forEach((btn) => {
+		btn.addEventListener('click', async (event) => {
+			event.preventDefault();
+			const action = btn.dataset.nimPlusStrain;
+			if (action === 'gain') await strainGain(actor, 1);
+			else if (action === 'lose') await strainLose(actor, 1);
+			else if (action === 'roll') await strainRoll(actor);
+		});
+	});
+}
+
+function injectStrainWidget(app, html) {
+	const actor = app?.document ?? app?.actor;
+	if (!(actor instanceof Actor)) return;
+	if (!actorIsPsion(actor)) return;
+
+	const root = html instanceof HTMLElement ? html : html?.[0];
+	if (!root) return;
+
+	// Remove any prior widget (re-render case) before re-injecting.
+	root.querySelectorAll(`.${STRAIN_WIDGET_CLASS}`).forEach((el) => el.remove());
+
+	const anchor =
+		root.querySelector('.nimble-character-sheet-section--defense') ??
+		root.querySelector('.nimble-sheet__header') ??
+		root.querySelector('section');
+	if (!anchor) return;
+
+	const wrapper = document.createElement('div');
+	wrapper.innerHTML = renderStrainWidget(actor).trim();
+	const widget = wrapper.firstElementChild;
+	if (!widget) return;
+	anchor.append(widget);
+	wireStrainWidget(widget, actor);
+}
+
+Hooks.on('renderPlayerCharacterSheet', (app, html) => {
+	injectStrainWidget(app, html);
+});
+
+// Live-update the widget when the strain flag changes (gain/lose/roll/clear).
+// Catches both set-and-unset paths: setFlag writes `flags.<id>.psion.strainDice`,
+// while unsetFlag writes `flags.<id>.psion.-=strainDice` (Foundry's deletion
+// marker). Either pattern (or any change under `flags.<id>.psion`) triggers
+// the patch — the widget always re-reads the current value, so no-op updates
+// are cheap.
+Hooks.on('updateActor', (actor, changes) => {
+	if (!actorIsPsion(actor)) return;
+	const ourFlagChange = foundry.utils.getProperty(changes, `flags.${MODULE_ID}.psion`);
+	const ourFlagDeletion = foundry.utils.getProperty(changes, `flags.${MODULE_ID}.-=psion`);
+	if (ourFlagChange === undefined && ourFlagDeletion === undefined) return;
+	for (const app of Object.values(actor.apps ?? {})) {
+		if (!app?.element) continue;
+		const root = app.element instanceof HTMLElement ? app.element : app.element?.[0];
+		const widget = root?.querySelector?.(`.${STRAIN_WIDGET_CLASS}[data-actor-id="${actor.id}"]`);
+		if (!widget) {
+			// Widget hasn't been rendered yet for this app — inject fresh.
+			injectStrainWidget(app, root);
+			continue;
+		}
+		const count = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+		const size = strainGetDieSize(actor);
+		const countEl = widget.querySelector(`.${STRAIN_WIDGET_CLASS}__count`);
+		const dieEl = widget.querySelector(`.${STRAIN_WIDGET_CLASS}__die`);
+		if (countEl) {
+			countEl.textContent = String(count);
+			countEl.dataset.count = String(count);
+		}
+		if (dieEl) dieEl.textContent = `d${size}`;
+		widget.dataset.state = strainState(count);
+	}
+});
+
+/**
+ * Post the actor's current Strain Dice pool to chat. Useful as a console
+ * helper for players to check their count at any time:
+ *     nimPlus.strain.show(actor)
+ */
+function strainShow(actor) {
+	if (!actor) return null;
+	const count = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const size = strainGetDieSize(actor);
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Strain</strong>`,
+		content: `<p>${escape(actor.name)}: <strong>${count}</strong> Strain Die${count === 1 ? '' : 's'} (d${size}).</p>`,
+	});
+	return { count, size };
+}
+
+/**
+ * Roll all active Strain Dice. Returns `{ rolled, broken }` where `rolled` is
+ * an array of integers and `broken` is true iff any die rolled a 1.
+ *
+ * Side effects: posts a chat card with the roll, and if any die rolls a 1
+ * AND the Psion does NOT own `new-core-ability` (or rolled more than one 1),
+ * toggles off the Concentration status — which fires the deleteActiveEffect
+ * handler below to apply the break consequences.
+ */
+async function strainRoll(actor) {
+	if (!actor) return { rolled: [], broken: false };
+	const count = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	if (count === 0) return { rolled: [], broken: false };
+
+	const size = strainGetDieSize(actor);
+	const formula = `${count}d${size}`;
+	const roll = await new Roll(formula).evaluate();
+	const rolled = roll.dice[0]?.results?.map((r) => r.result) ?? [];
+	const onesCount = rolled.filter((v) => v === 1).length;
+
+	const hasNewCore = actor.items?.some?.((i) => i.system?.identifier === 'new-core-ability');
+	// New Core Ability ignores exactly 1 die rolled a 1. With one 1 it absorbs
+	// the break; with two or more, one is ignored and the rest still break.
+	const broken = hasNewCore ? onesCount > 1 : onesCount >= 1;
+
+	const display = rolled
+		.map((v) => (v === 1 ? `<strong style="color:#a32;">${v}</strong>` : String(v)))
+		.join(', ');
+
+	await roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Strain Roll</strong> — ${count}d${size}${hasNewCore && onesCount === 1 ? ' · <em>New Core Ability absorbs the 1</em>' : ''}`,
+		content: `<p>Results: ${display}. Sum: <strong>${roll.total}</strong>.</p>`,
+	});
+
+	if (broken && actor.statuses?.has('concentration')) {
+		// Stash the already-rolled dice so the deleteActiveEffect handler can
+		// re-use them as the psychic-damage roll — per PDF, the break and the
+		// damage come from the *same* roll, not two separate rolls.
+		await actor.setFlag(MODULE_ID, 'psion.strainBreakInflight', {
+			rolled,
+			sum: roll.total,
+		});
+		await actor.toggleStatusEffect('concentration', { active: false });
+	}
+
+	return { rolled, broken };
+}
+
+/**
+ * End-of-turn auto-roll for the Psion. Fires on the system-emitted
+ * `nimbleCombatTurnEnd` (combat.svelte.ts:692). Only acts when the actor has
+ * an active Psionic Field. If they also own `i-can-hold`, sheds 1 Strain Die
+ * BEFORE the roll (player-friendly ordering — losing first reduces both the
+ * sum and the chance of a 1).
+ */
+Hooks.on('nimbleCombatTurnEnd', async (combatant) => {
+	const actor = combatant?.actor;
+	if (!actor) return;
+	const has = (id) => actor.items?.some?.((i) => i.system?.identifier === id);
+	if (!has('psionic-field')) return;
+	if (has('i-can-hold')) await strainLose(actor, 1);
+	await strainRoll(actor);
+});
+
+/**
+ * Concentration-break handler — the system has no `nimble.conditionRemoved`
+ * hook, so we listen to Foundry core's `deleteActiveEffect` and filter for
+ * concentration on a combatant actor. When concentration ends mid-combat
+ * with any Strain Dice on the pool, roll them as psychic damage, Incapacitate
+ * the Psion, and fire a downstream hook for subclass reactors.
+ *
+ * The roll here is separate from `strainRoll` — that one fires every turn
+ * and only breaks on a 1; this one fires the consequence regardless of how
+ * the break happened (an enemy disrupted the field, the player ended it, the
+ * turn-end roller rolled a 1).
+ */
+Hooks.on('deleteActiveEffect', (effect, _options, userId) => {
+	if (userId !== game.user.id) return; // run once per concentration end
+	if (!effect?.statuses?.has?.('concentration')) return;
+	const actor = effect.parent;
+	if (!(actor instanceof Actor)) return;
+	if (actor.items?.some?.((i) => i.system?.identifier === 'psionic-field') !== true) return;
+	if (!game.combat?.combatants?.some?.((c) => c.actorId === actor.id)) return;
+
+	const strainCount = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const inflight = actor.getFlag(MODULE_ID, 'psion.strainBreakInflight');
+	const isInvoluntaryBreak = !!inflight;
+
+	// Always clear strain when Concentration ends — per the PDF, "all Psionic
+	// effects cease" when the field drops, so the Strain Dice pool resets
+	// regardless of whether the break was voluntary (player toggle) or
+	// involuntary (a 1 rolled). Break consequences (psychic damage,
+	// Incapacitated, subclass reactor hook) only fire on involuntary breaks.
+	(async () => {
+		try {
+			if (!isInvoluntaryBreak) {
+				// Voluntary end of the field — just clear strain silently.
+				if (strainCount > 0) await strainClear(actor);
+				return;
+			}
+
+			const size = strainGetDieSize(actor);
+			const rolled =
+				inflight && Array.isArray(inflight.rolled) && inflight.rolled.length > 0
+					? inflight.rolled
+					: null;
+			await actor.unsetFlag(MODULE_ID, 'psion.strainBreakInflight');
+
+			let resolvedRolled = rolled;
+			let chatRoll = null;
+			if (!resolvedRolled) {
+				const freshRoll = await new Roll(`${strainCount}d${size}`).evaluate();
+				resolvedRolled = freshRoll.dice[0]?.results?.map((r) => r.result) ?? [];
+				chatRoll = freshRoll;
+			}
+
+			let sum = resolvedRolled.reduce((acc, v) => acc + v, 0);
+			const hasMOM2 = actor.items?.some?.((i) => i.system?.identifier === 'mind-over-matter-2');
+			let droppedNote = '';
+			if (hasMOM2 && resolvedRolled.length > 0) {
+				const sorted = [...resolvedRolled].sort((a, b) => b - a);
+				const dropped = sorted[0];
+				sum = sum - dropped;
+				droppedNote = ` · <em>Mind Over Matter (2) ignores highest die (${dropped})</em>`;
+			}
+
+			const messagePayload = {
+				speaker: ChatMessage.getSpeaker({ actor }),
+				flavor: `<strong>Concentration Breaks</strong> — ${strainCount}d${size}${droppedNote}`,
+				content: `<p>Results: ${resolvedRolled.join(', ')}. Psychic damage to ${escape(actor.name)}: <strong>${sum}</strong>.</p><p><em>Apply damage and Incapacitate until the start of ${escape(actor.name)}'s next turn.</em></p>`,
+			};
+			if (chatRoll) {
+				await chatRoll.toMessage(messagePayload);
+			} else {
+				await ChatMessage.create(messagePayload);
+			}
+
+			await actor.toggleStatusEffect('incapacitated', { active: true });
+			Hooks.callAll('nim-plus-package.concentration-broken', {
+				actor,
+				strainSum: sum,
+				strainCount,
+				rolled: resolvedRolled,
+			});
+			await strainClear(actor);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to resolve concentration break`, error);
+		}
+	})();
+});
+
+/**
+ * Subclass reactors — Mind Collapse / Reverberating Mind / Mind Shield / Big
+ * Mind. Single listener inspects what the broken Psion owns and posts the
+ * appropriate prompts/auto-applications.
+ */
+Hooks.on('nim-plus-package.concentration-broken', ({ actor, strainSum }) => {
+	const has = (id) => actor.items?.some?.((i) => i.system?.identifier === id);
+
+	if (has('mind-collapse')) {
+		const hasBig = has('big-mind');
+		const hasReverb = has('reverberating-mind');
+		const reach = hasBig ? 12 : hasReverb ? 6 : 3;
+		const diceToRedirect = hasBig ? 3 : 2;
+		const extraTargets = hasBig ? 1 : 0;
+		ChatMessage.create({
+			speaker: ChatMessage.getSpeaker({ actor }),
+			flavor: `<strong>Mind Collapse</strong>`,
+			content: `<p>Choose up to <strong>${diceToRedirect}</strong> Strain Dice from the break roll. Redirect that damage to an enemy within Reach <strong>${reach}</strong>${extraTargets > 0 ? ` (plus 1 additional enemy)` : ''}. If no enemy is in range, ${escape(actor.name)} takes the full damage as normal.</p>`,
+		});
+	}
+
+	if (has('mind-shield')) {
+		const hasBig = has('big-mind');
+		const reach = hasBig ? 12 : 6;
+		const wil = Math.max(1, Number(actor.system?.abilities?.will?.mod ?? 1));
+		const targets = Array.from(game.user?.targets ?? []);
+		const taunted = [];
+		for (const t of targets.slice(0, wil)) {
+			const target = t?.actor;
+			if (!target) continue;
+			if (target.statuses?.has?.('taunted')) continue;
+			Promise.resolve(target.toggleStatusEffect('taunted', { active: true })).catch((error) => {
+				console.error(`[${MODULE_ID}] Failed to apply Taunted via Mind Shield`, error);
+			});
+			taunted.push(target.name);
+		}
+		ChatMessage.create({
+			speaker: ChatMessage.getSpeaker({ actor }),
+			flavor: `<strong>Mind Shield</strong>`,
+			content: `<p>Taunt up to <strong>${wil}</strong> creatures within Reach <strong>${reach}</strong> for 1 round. ${taunted.length > 0 ? `Auto-applied to: <em>${taunted.map(escape).join(', ')}</em>.` : '<em>Select targets first to auto-apply Taunted; otherwise apply manually.</em>'} You may Defend for free while Incapacitated; the first attacker takes <strong>${strainSum}</strong> psychic damage.</p>`,
+		});
+	}
+});
+
+/**
+ * End-of-encounter cleanup — wipe any lingering Strain Dice flag when combat
+ * ends so the next encounter starts fresh.
+ */
+Hooks.on('deleteCombat', (combat) => {
+	for (const c of combat.combatants ?? []) {
+		const actor = c.actor;
+		if (actor?.getFlag?.(MODULE_ID, STRAIN_FLAG) !== undefined) {
+			strainClear(actor).catch(() => {});
+		}
+	}
+});
+
+/**
+ * Mirage (2) dispatcher — Adept of Illusions L11. Pop a dialog letting the
+ * player pick Disguise (enemy gets Blinded/Taunted/Prone) or Distortion
+ * (ally gets Full Cover / Invisible / Fear-source), then apply the chosen
+ * status to currently-targeted tokens.
+ *
+ * Foundry/Nimble status IDs used: blinded, taunted, prone, invisible.
+ * "Full Cover" and "Fear-source" don't have native status IDs — they're
+ * applied narratively and noted in the chat card.
+ */
+async function mirageDispatch(actor, item) {
+	if (!actor || !item) {
+		ui.notifications?.error(`[${MODULE_ID}] mirageDispatch: missing actor or item.`);
+		return null;
+	}
+
+	const choice = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name} — Choose an Effect` },
+		content: `
+			<form class="nim-plus-mirage-dialog">
+				<p>Mirage (2): choose one effect to apply to your selected targets.</p>
+				<fieldset>
+					<legend><strong>Disguise</strong> (lower-level enemy; same/higher level WIL save)</legend>
+					<label><input type="radio" name="effect" value="blinded" checked> Blinded</label>
+					<label><input type="radio" name="effect" value="taunted"> Taunted</label>
+					<label><input type="radio" name="effect" value="prone"> Prone</label>
+				</fieldset>
+				<fieldset>
+					<legend><strong>Distortion</strong> (willing ally)</legend>
+					<label><input type="radio" name="effect" value="cover"> Full Cover</label>
+					<label><input type="radio" name="effect" value="invisible"> Invisible</label>
+					<label><input type="radio" name="effect" value="fear"> Source of Fear</label>
+				</fieldset>
+			</form>
+		`,
+		buttons: [
+			{
+				action: 'apply',
+				label: 'Apply',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-mirage-dialog');
+					if (!form) return null;
+					const checked = form.querySelector('input[name="effect"]:checked');
+					return checked?.value ?? null;
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+
+	if (!choice) return null;
+
+	const targets = Array.from(game.user?.targets ?? []);
+	const statusForEffect = { blinded: 'blinded', taunted: 'taunted', prone: 'prone', invisible: 'invisible' };
+	const statusId = statusForEffect[choice];
+	const applied = [];
+
+	if (statusId) {
+		for (const t of targets) {
+			const target = t?.actor;
+			if (!target) continue;
+			if (target.statuses?.has?.(statusId)) continue;
+			Promise.resolve(target.toggleStatusEffect(statusId, { active: true })).catch((error) => {
+				console.error(`[${MODULE_ID}] Failed to apply ${statusId} via Mirage (2)`, error);
+			});
+			applied.push(target.name);
+		}
+	}
+
+	const effectLabels = {
+		blinded: 'Disguise — Blinded',
+		taunted: 'Disguise — Taunted',
+		prone: 'Disguise — Prone',
+		cover: 'Distortion — Full Cover',
+		invisible: 'Distortion — Invisible',
+		fear: 'Distortion — Source of Fear',
+	};
+	const label = effectLabels[choice] ?? choice;
+
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — ${escape(label)}`,
+		content: `<p>${applied.length > 0 ? `Auto-applied to: <em>${applied.map(escape).join(', ')}</em>.` : '<em>No status applied automatically — target the affected tokens before activating, or apply manually for Full Cover / Source of Fear.</em>'}</p>`,
+	});
+}
+
+/**
+ * Psionic Field Attack (Psion, L1) — telekinetic attack with an unheld light
+ * weapon or object within the Psion's Psionic Field. Per the PDF, the Psion
+ * is proficient with these attacks and they deal +WIL damage on top of the
+ * weapon's normal damage. If the Psion has also learned **Psionic Strike**,
+ * +1 damage per current Strain Die is added automatically (the per-die rider
+ * from Psionic Strike's text).
+ *
+ * Pops a dialog listing the actor's weapon-objects (any owned Item of type
+ * `object`/`weapon` with an activation effect that has a `formula`) plus a
+ * free-text "improvised" row for objects you haven't cataloged.
+ *
+ * Warns (but does not block) if Concentration isn't active — sometimes the
+ * GM will run a scene where the field is active but the status hasn't been
+ * applied yet.
+ *
+ * Form-parse uses `button.form.elements` (Foundry's documented DialogV2
+ * pattern) rather than nested-form querySelector — DialogV2 wraps `content`
+ * in its own form alongside the buttons, so the buttons share that form.
+ */
+async function psionicFieldAttack(actor, item) {
+	if (!actor || !item) {
+		ui.notifications?.error(`[${MODULE_ID}] psionicFieldAttack: missing actor or item.`);
+		return null;
+	}
+
+	if (!actor.statuses?.has?.('concentration')) {
+		ui.notifications?.warn(
+			`[${MODULE_ID}] Psionic Field isn't active — the +WIL damage assumes Concentration is up.`,
+		);
+	}
+
+	const wil = Number(actor.system?.abilities?.will?.mod ?? 0);
+	const wilLabel = wil >= 0 ? `+${wil}` : String(wil);
+
+	// Psionic Strike rider — +1 dmg per Strain Die when the ability is owned.
+	const hasStrike = actor.items?.some?.((i) => i.system?.identifier === 'psionic-strike');
+	const strainCount = Number(actor.getFlag(MODULE_ID, STRAIN_FLAG) ?? 0);
+	const strikeBonus = hasStrike ? strainCount : 0;
+
+	// Collect owned items with a damage-formula effect (objects or weapons).
+	const items = actor.items?.contents ?? Array.from(actor.items ?? []);
+	const weaponData = [];
+	for (const i of items) {
+		if (i.type !== 'object' && i.type !== 'weapon') continue;
+		const effects = i.system?.activation?.effects;
+		if (!Array.isArray(effects)) continue;
+		const eff = effects.find((e) => e && e.formula);
+		if (!eff) continue;
+		weaponData.push({
+			name: i.name,
+			formula: eff.formula,
+			damageType: eff.damageType ?? '',
+		});
+	}
+
+	const rows = weaponData
+		.map((w, idx) => {
+			const dmgType = w.damageType ? ` <em style="opacity:0.7;">${escape(w.damageType)}</em>` : '';
+			return `<label style="display:block;padding:4px 0;"><input type="radio" name="weapon" value="${idx}"${idx === 0 ? ' checked' : ''}> <strong>${escape(w.name)}</strong> — <code>${escape(w.formula)}</code>${dmgType}</label>`;
+		})
+		.join('');
+
+	const manualRowChecked = weaponData.length === 0 ? ' checked' : '';
+
+	const strikeNote = hasStrike
+		? `<p style="opacity:0.75;font-size:0.9em;"><em>Psionic Strike</em> active — adds <strong>+${strikeBonus}</strong> damage (1 per Strain Die; current pool: ${strainCount}).</p>`
+		: '';
+
+	const strikeAdvantageRow = hasStrike
+		? `<label style="display:block;padding:4px 0;border-top:1px solid #aaa;margin-top:6px;padding-top:8px;"><input type="checkbox" name="strikeAdvantage"> <strong>Spend 1 Strain → roll with Advantage</strong> <em style="opacity:0.7;font-size:0.85em;">(Psionic Strike — also +1 damage from the new die)</em></label>`
+		: '';
+
+	// Note: NO outer <form> — Foundry's DialogV2 wraps the content + buttons
+	// in its own form, so `button.form` resolves to that wrapper, and any
+	// inner <form> would be flattened by the browser anyway.
+	const choice = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name} — Field Attack` },
+		content: `
+			<div class="nim-plus-psion-field-attack">
+				<p>Pick an unheld light weapon or object in your field. The roll adds <strong>${wilLabel} WIL</strong> damage.</p>
+				${rows}
+				<label style="display:block;padding:4px 0;border-top:1px solid #aaa;margin-top:6px;padding-top:8px;"><input type="radio" name="weapon" value="__manual"${manualRowChecked}> <strong>Other / improvised</strong> — formula: <input type="text" name="manualFormula" value="1d4" style="width:120px;"> damage type: <input type="text" name="manualType" value="bludgeoning" style="width:100px;"></label>
+				${strikeNote}
+				${strikeAdvantageRow}
+			</div>
+		`,
+		buttons: [
+			{
+				action: 'roll',
+				label: 'Roll',
+				default: true,
+				callback: (_event, button) => {
+					const form = button?.form;
+					if (!form) return { error: 'no-form' };
+					const value = form.elements.weapon?.value;
+					if (!value) return { error: 'no-weapon-selected' };
+					const strikeAdvantage = !!form.elements.strikeAdvantage?.checked;
+					if (value === '__manual') {
+						return {
+							manual: true,
+							formula: form.elements.manualFormula?.value?.trim() || '1d4',
+							damageType: form.elements.manualType?.value?.trim() || '',
+							strikeAdvantage,
+						};
+					}
+					return { manual: false, idx: Number(value), strikeAdvantage };
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => ({ cancelled: true }) },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+
+	if (!choice || choice.cancelled) return null;
+	if (choice.error) {
+		ui.notifications?.error(`[${MODULE_ID}] Field Attack dialog: ${choice.error}.`);
+		return null;
+	}
+
+	let formula;
+	let damageType = '';
+	let weaponLabel;
+	if (choice.manual) {
+		formula = choice.formula;
+		damageType = choice.damageType;
+		weaponLabel = 'Improvised';
+	} else {
+		const w = weaponData[choice.idx];
+		if (!w) {
+			ui.notifications?.error(`[${MODULE_ID}] No weapon at index ${choice.idx}.`);
+			return null;
+		}
+		formula = w.formula;
+		damageType = w.damageType;
+		weaponLabel = w.name;
+	}
+
+	// Psionic Strike's "spend 1 Strain → advantage" rider. Gaining the strain
+	// FIRST means the new die is included in the +1/die damage bonus for
+	// this attack (player-friendly reading of the PDF's ordering).
+	let effectiveStrikeBonus = strikeBonus;
+	let rollMode = 0;
+	if (choice.strikeAdvantage && hasStrike) {
+		await strainGain(actor, 1);
+		effectiveStrikeBonus = strikeBonus + 1;
+		rollMode = 1;
+	}
+
+	const combinedFormula =
+		effectiveStrikeBonus > 0
+			? `${formula} + @abilities.will.mod + ${effectiveStrikeBonus}`
+			: `${formula} + @abilities.will.mod`;
+
+	// Inject a damage effect with the correct damageType into the item's
+	// prepared activation data — IN-MEMORY ONLY, not via item.update(). The
+	// activation manager (Nimble: ItemActivationManager constructor) does a
+	// deepClone of `item.system.activation` at construction time, so this
+	// mutation is captured per-cast. Using item.update() here would race
+	// with Foundry's data-preparation pipeline and cause the first cast for
+	// each new weapon to land with empty / stale effects (no dice rolled).
+	// Non-persistent: next sheet render restores the placeholder from
+	// _source, but every cast re-injects this anyway.
+	const targetDamageType = damageType || 'bludgeoning';
+	if (item.system?.activation) {
+		item.system.activation.effects = [
+			{
+				id: 'psionFieldAtkDmg1',
+				type: 'damage',
+				damageType: targetDamageType,
+				formula: '1d4 + @abilities.will.mod',
+				parentContext: null,
+				parentNode: null,
+				on: {
+					hit: [
+						{
+							id: 'psionFieldAtkHit1',
+							type: 'damageOutcome',
+							outcome: 'fullDamage',
+							parentContext: 'hit',
+							parentNode: 'psionFieldAtkDmg1',
+						},
+					],
+				},
+				canCrit: true,
+				canMiss: true,
+			},
+		];
+	}
+
+	// Announce the weapon used in chat before the activation card lands, so
+	// every Psionic Field Attack roll is clearly labeled with WHICH weapon
+	// (and any modifiers) — the activation card on its own just says the
+	// feature name, which doesn't surface the per-cast choice.
+	const announcementBits = [`<em>${escape(weaponLabel)}</em>${damageType ? ` (${escape(damageType)})` : ''}`];
+	announcementBits.push(`<span style="opacity:0.8;">+ ${wilLabel} WIL</span>`);
+	if (effectiveStrikeBonus > 0) {
+		announcementBits.push(`<span style="opacity:0.8;">+ ${effectiveStrikeBonus} Psionic Strike</span>`);
+	}
+	if (rollMode === 1) {
+		announcementBits.push(`<span style="opacity:0.8;color:#39d6c8;">Advantage (Strain spent)</span>`);
+	}
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>${escape(actor.name)} hurls ${announcementBits.join(' · ')}.</p>`,
+	});
+
+	// Hand off to Nimble's activation flow so the player can target a token,
+	// the damage roll lands in the standard chat card, and the GM/player can
+	// click "Apply Damage" on the card. `executeMacro: false` prevents
+	// re-entering this macro; `rollFormula` overrides the feature's
+	// placeholder damage with our weapon+WIL+Strike formula; `rollMode: 1`
+	// pipes advantage into both the attack roll and the damage roll.
+	return item.activate({
+		executeMacro: false,
+		fastForward: true,
+		rollFormula: combinedFormula,
+		rollMode,
+	});
+}
 
 function escape(str) {
 	return String(str ?? '').replace(/[&<>"']/g, (ch) => {
