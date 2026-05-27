@@ -1,0 +1,57 @@
+{
+	"name": "Psionic Field",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/psionic-field.webp",
+	"system": {
+		"macro": "",
+		"identifier": "psionic-field",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Concentration, up to 1 minute.",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "Concentration, up to 1 minute.",
+				"quantity": 1,
+				"type": "minute"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 0,
+				"restrictions": "Self — activates the Psionic Field aura (Reach 3) around you. Re-activate to drop the field."
+			},
+			"template": {
+				"length": 1,
+				"radius": 3,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Concentration, up to 1 min.) Action: Create a field of psionic energy around you with a Reach of 3. You can proficiently attack with unheld light weapons or objects anywhere within your Psionic Field. Attacks made this way deal an additional +WIL damage.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-progression",
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "p9bnJaRpkyAQFBya",
+	"folder": "1d47bd11dec020b0"
+}

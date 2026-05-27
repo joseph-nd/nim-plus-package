@@ -1,0 +1,25 @@
+{
+	"name": "Adept of Bladestorm",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/psion/adept-of-bladestorm.webp",
+	"system": {
+		"macro": "",
+		"identifier": "adept-of-bladestorm",
+		"rules": [],
+		"description": "<p><em>\"Dual wielding, huh? Watch this!\"</em></p><p><strong>Class Complexity:</strong> ♦♦◇◇</p><p>LEVEL 3</p><p><strong>Bladebearer.</strong> Your weapons wielded with your Psionic Field are considered dual wielded. When you gain Strain while using Psionic Strike, add the Strain Die as damage.</p><p>LEVEL 7</p><p><strong>Bladestorm.</strong> (1/encounter) Others within your Psionic Field take KEY damage for each space they move (or are moved) this round. +2 Strain.</p><p>LEVEL 11</p><p><strong>Shieldstorm.</strong> You may wield 2 additional shields with your Psionic Field. Gain 1 Strain to allow an ally to use one for a round.</p><p>LEVEL 15</p><p><strong>Bladestorm (2).</strong> You may wield 2-handed weapons with your Psionic Field; they are considered tri-wielded (1/round you may roll with advantage 2 with them).</p>",
+		"parentClass": "psion",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "079a5ce08f2afd8e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "MyMxFtes4xEcTFQB"
+}

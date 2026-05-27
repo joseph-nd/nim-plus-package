@@ -1,0 +1,69 @@
+{
+	"name": "Dominate Mind",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/dominate-mind.webp",
+	"system": {
+		"macro": "",
+		"identifier": "dominate-mind",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 1+ recurring</p><p>(Reach 8, 2 Actions) +1 Strain: Incapacitate a creature. +1 Strain each time they take damage and for each of their turns they are Incapacitated.</p><p><em>Requires your Psionic Field to be active.</em></p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-abilities",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			9,
+			12,
+			14,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 1
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FZ7CIHwRp9WU6Vll",
+	"folder": "1d47bd11dec020b0"
+}

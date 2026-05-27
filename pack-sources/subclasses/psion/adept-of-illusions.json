@@ -1,0 +1,25 @@
+{
+	"name": "Adept of Illusions",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/psion/adept-of-illusions.webp",
+	"system": {
+		"macro": "",
+		"identifier": "adept-of-illusions",
+		"rules": [],
+		"description": "<p><em>\"Was that really there? Or just in your head?\"</em></p><p><strong>Class Complexity:</strong> ♦♦♦◇</p><p>LEVEL 3</p><p><strong>Figment.</strong> Reaction: when you Defend, you may gain 2 Strain to swap places with an enemy or willing ally within your Psionic Field, making them the new target.</p><p>LEVEL 7</p><p><strong>Mirage.</strong> 1 action. +1 Strain/effect each round.</p><ul><li><strong>Danger.</strong> Create an illusory danger in WIL contiguous spaces. Enemies who enter these spaces take [[/r 1d20]] + LVL psychic damage and must move out of the space before they can take any other action.</li></ul><p>LEVEL 11</p><p><strong>Mirage (2).</strong> Whenever you use Mirage, you may instead choose one of the following:</p><ul><li><strong>Disguise.</strong> Project an illusory image into an enemy's mind (e.g., a wall, pit, or other obstacle or distraction). A lower-level enemy gains your choice of Blinded, Taunted, or Prone. A creature your level or higher can make a WIL save to resist.</li><li><strong>Distortion.</strong> An ally gains your choice of Full Cover, Invisible, or becomes the source of Fear for their enemies.</li></ul><p>LEVEL 15</p><p><strong>Petrify!</strong> Trick a lower-level enemy into thinking they are Petrified. A creature your level or higher must make a WIL save.</p><p><em>Snap out of it!</em> Illusions imposed upon an enemy end when the creature takes any damage.</p>",
+		"parentClass": "psion",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "079a5ce08f2afd8e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nOuK52yQf9ipYwh7"
+}

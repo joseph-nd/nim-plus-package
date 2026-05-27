@@ -1,0 +1,67 @@
+{
+	"name": "Psionic Lockdown",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/psionic-lockdown.webp",
+	"system": {
+		"macro": "",
+		"identifier": "psionic-lockdown",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "round"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 1/round to maintain</p><p>Enemies entering your Psionic Field suffer LVL damage; enemies within your Psionic Field cannot leave. Projectiles have their damage reduced by LVL. 1 Strain/round to maintain.</p><p><em>Requires your Psionic Field to be active.</em></p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-abilities",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			9,
+			12,
+			14,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 1
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5butJYGsX4v9jrL5",
+	"folder": "1d47bd11dec020b0"
+}

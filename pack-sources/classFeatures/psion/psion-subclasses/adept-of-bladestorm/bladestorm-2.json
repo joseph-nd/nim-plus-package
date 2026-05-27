@@ -1,0 +1,57 @@
+{
+	"name": "Bladestorm (2)",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-bladestorm/bladestorm-2.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bladestorm-2",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may wield 2-handed weapons with your Psionic Field; they are considered tri-wielded (1/round you may roll with advantage 2 with them).</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-bladestorm",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "tbIPKm0zTLcVg8VT",
+	"folder": "e416d01c9f5e8bb3"
+}

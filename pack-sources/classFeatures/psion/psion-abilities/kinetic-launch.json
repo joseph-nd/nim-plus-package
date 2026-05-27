@@ -1,0 +1,69 @@
+{
+	"name": "Kinetic Launch",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/kinetic-launch.webp",
+	"system": {
+		"macro": "",
+		"identifier": "kinetic-launch",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Willing ally within Psionic Field",
+				"attackType": "reach",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 0+ (1 optional)</p><p>Launch a willing ally within your Psionic Field up to 8 spaces. They can use a reaction to make an Opportunity Attack against a creature within their Reach as they move. Gain 1 Strain to grant them advantage on the attack instead of disadvantage.</p><p><em>Requires your Psionic Field to be active.</em></p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-abilities",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			9,
+			12,
+			14,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 0
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "BRaQOQOdxkVafv5p",
+	"folder": "1d47bd11dec020b0"
+}

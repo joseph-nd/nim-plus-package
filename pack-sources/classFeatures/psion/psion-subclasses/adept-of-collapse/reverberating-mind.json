@@ -1,0 +1,57 @@
+{
+	"name": "Reverberating Mind",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-collapse/reverberating-mind.webp",
+	"system": {
+		"macro": "",
+		"identifier": "reverberating-mind",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Double the Reach of Mind Collapse. Whenever any creature takes 10 or more damage from your concentration breaking, the next time you create your Psionic Field this encounter, do so for free.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-collapse",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "TALrGbpIoZdn160H",
+	"folder": "79a3e579f8986b9a"
+}

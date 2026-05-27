@@ -1,0 +1,57 @@
+{
+	"name": "Mind Collapse",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-collapse/mind-collapse.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mind-collapse",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Triggered when your concentration ends.",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Enemy within Reach 3 (6 with Reverberating Mind, 12 with Big Mind)"
+			},
+			"template": {
+				"length": 1,
+				"radius": 3,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever your concentration ends, choose 2 Strain Dice; an enemy within Reach 3 suffers that damage instead of you (if no enemy is available, you take all of the damage as normal).</p><p><em>Remember!</em> You can end concentration at any time on your turn for free.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-collapse",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "saEWoutBeR8tjPMN",
+	"folder": "79a3e579f8986b9a"
+}

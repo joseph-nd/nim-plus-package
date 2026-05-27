@@ -4,6 +4,39 @@ All notable changes to this module will be documented in this file. Format follo
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-05-27
+
+### Added
+- **Psion class** (Alpha v0.1.1 from the *Psion* homebrew playtest PDF) — full progression L1–20 with all three subclasses (**Adept of Bladestorm**, **Adept of Illusions**, **Adept of Collapse**), 13 Psionic Abilities, and a supporting Strain Dice runtime layer.
+  - **Class chassis:** WIL/INT, d8 HP, ♦♦ complexity, Cloth only, no mana — uses Strain Dice as its resource pool instead. Starting gear: Adventurer's Garb, Dagger, Vial of Pitch.
+  - **Progression features (16):** Psionic Field, Psionic Field Attack (L1 telekinetic-throw helper), Mindsense, Psionic Strike (auto-granted at L2), Mind Over Matter ×2, Expansive Mind ×3 (Strain Dice scale d6 → d8 @ L5 → d10 @ L10 → d12 @ L17), Steady Breathing ×2 (Action: shed 1 / 2 Strain Dice), New Core Ability (break absorbs one 1), I Can Hold! (shed 1 Strain Die at end of turn before rolling), Epic Boon, Mindmaster.
+  - **Psionic Abilities (12 pickable + 1 auto-granted):** Psionic Strike (auto at L2), plus the player picks 1 of 12 (Kinetic Launch, Telekinetic Bastion, Psionic Blast, Dominate Mind, Atomize Weapon, Psionic Lockdown, Levitate, Dampening Field, Reactive Mind, Mindrend, Control Projectiles, Sudden Shift) at each Powerful Mind level (L2/4/6/9/12/14/16) via the system's native level-up dialog "Psion Abilities (Choose one)" section — same pattern as Berserker's Savage Arsenal (shared `system.group` + shared `gainedAtLevels` array, no custom picker required).
+  - **Subclass features (12):** 4 per subclass at L3/7/11/15.
+- **Strain Dice runtime** (`nimPlus.strain.*`) — `gain` / `lose` / `roll` / `clear` / `show` / `getDieSize` helpers. Auto-rolled at end of each Psion turn via the system's `nimbleCombatTurnEnd` hook; auto die-size scaling from class level. State stored as `flags['nim-plus-package'].psion.strainDice`.
+- **Strain Dice sheet widget** — persistent full-width panel on the Psion's character sheet (`renderPlayerCharacterSheet` hook injection) showing current count, die size, and +/− / Roll buttons. Live-updates on flag changes (set or unset). Color-tiered states (`empty` / `active` / `risky` / `danger`) for visual at-a-glance reading.
+- **Psionic Field aura visualization** — when Concentration is active on a Psion with `psionic-field`, the actor's token emits a low-alpha teal-cyan dim light AND a MeasuredTemplate circle is placed on the canvas showing the precise Reach 3 boundary. The template follows the token automatically when it moves (gated `updateToken` hook). Both light and template are restored / removed when Concentration ends, regardless of cause (manual toggle, Strain break, GM).
+- **Psionic Field → Concentration toggle** via `nimble.useItem` — activating Psionic Field flips Concentration on/off. Activate to raise the field, activate again to drop it. Apodracosis keeps its apply-once-no-toggle behavior.
+- **Concentration-break handler** (`deleteActiveEffect` filtered to Psions with active Psionic Field): differentiates involuntary breaks (Strain Roll landed a 1) from voluntary ends (player toggled the field off). Involuntary breaks roll the inflight Strain Dice as psychic damage (honoring `mind-over-matter-2`'s drop-highest rider), apply Incapacitated, and fire the new `nim-plus-package.concentration-broken` hook for subclass reactors (Mind Collapse / Mind Shield / Big Mind auto-Taunt). Both paths clear the Strain Dice pool — all psionic effects cease when the field drops.
+- **`nimPlus.psionicFieldAttack` macro** — Psionic Field Attack helper. Pops a dialog listing the actor's owned weapon-objects with a manual-formula fallback for improvised throws. Rolls (weapon damage) + WIL via Nimble's standard activation flow (so target selection, crit/miss, and the Apply Damage chat-card button all work). Picks up the weapon's damage type per-cast (in-memory mutation of `system.activation.effects`, avoiding the `item.update` timing race that caused first-cast misfires). If the actor owns Psionic Strike, +1 damage per Strain Die is added automatically, and a "Spend 1 Strain → roll with Advantage" checkbox is offered (gains 1 Strain, sets `rollMode: 1` on the activation).
+- **`nimPlus.pickPsionicAbility`** — Powerful Mind picker dialog (kept available as a console helper / fallback path, though level-up grants now go through the system's native picker).
+- **`nimPlus.mirageDispatch` macro** — Adept of Illusions L11 Mirage 2: dialog picker for Disguise (Blinded / Taunted / Prone) vs. Distortion (Full Cover / Invisible / Fear) effects, auto-applies the chosen status to currently-targeted tokens where Foundry/Nimble has a matching status ID.
+- **End-of-encounter strain cleanup** via `deleteCombat` — wipes lingering Strain Dice flags from all combatants.
+- **39 Psion icons** under `assets/classImages/`, `assets/subclassImages/psion/`, `assets/features/psion/...` — 1 class portrait, 3 subclass portraits, 11 progression-feature icons, 13 ability icons, 12 subclass-feature icons. All sized to package convention (768 px portraits, 512 px feature icons), webp q75.
+- **~46 new icon prompts** under `docs/icon-prompts/classes/psion.md`, `docs/icon-prompts/subclasses/psion/{_badge-template,adept-of-bladestorm,adept-of-illusions,adept-of-collapse}.md`, and the new `docs/icon-prompts/abilities/psion.md`. New "Mindglyph" preamble added to `docs/icon-prompts/style.md` (obsidian-violet stone plates with teal-cyan thought-aura accents).
+
+### Changed
+- **Pack counts:** 6 packs, **546 documents** (was 503 in 0.1.1). Class Features +39 (402 → 441), Subclasses +3 (56 → 59), Classes +1 (2 → 3).
+- **Psion ability + feature descriptions** trimmed of implementation tips and developer instructions — descriptions in chat cards now show only the book's rules text, matching the *Psion* PDF as closely as the Foundry data model allows.
+
+### Performance
+- **Removed two continuous animations** that hit Firefox CPU/GPU hard:
+  - The token light "pulse" animation on the Psionic Field aura — set to `type: 'none'`. Foundry's animated lights run shader passes per frame; pulse is one of the heavier patterns.
+  - The CSS `box-shadow` keyframe on the Strain widget's "danger" state — `box-shadow` is not GPU-accelerated and forces full repaints every frame in Firefox/Gecko. Color shift alone now indicates the danger state.
+
+### Fixed
+- **Gated `deleteActiveEffect` concentration-break handler by `userId`** so the break consequences (psychic damage roll, Incapacitated, subclass-reactor hook) fire on one client only — previously every connected client ran the handler in parallel, producing duplicate chat cards and racing on flag mutations.
+- **Single-roll-on-break invariant** — when a Strain Roll lands a 1, the rolled dice are stashed on a `strainBreakInflight` flag before toggling Concentration off. The `deleteActiveEffect` handler reads that flag instead of rolling fresh dice, so the break and the psychic-damage roll are now the same roll (matching the PDF's "psychic damage equal to the sum rolled").
+
 ## [0.1.1] - 2026-05-10
 
 ### Fixed

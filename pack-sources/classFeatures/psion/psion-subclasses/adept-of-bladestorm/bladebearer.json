@@ -1,0 +1,57 @@
+{
+	"name": "Bladebearer",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-bladestorm/bladebearer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "bladebearer",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your weapons wielded with your Psionic Field are considered dual wielded. When you gain Strain while using Psionic Strike, add the Strain Die as damage.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-bladestorm",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yst7fkKFTImq2R0y",
+	"folder": "e416d01c9f5e8bb3"
+}

@@ -1,0 +1,25 @@
+{
+	"name": "Adept of Collapse",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/psion/adept-of-collapse.webp",
+	"system": {
+		"macro": "",
+		"identifier": "adept-of-collapse",
+		"rules": [],
+		"description": "<p><em>\"My mind breaks — but it takes you with it.\"</em></p><p><strong>Class Complexity:</strong> ♦♦♦◇</p><p>LEVEL 3</p><p><strong>Mind Collapse.</strong> Whenever your concentration ends, choose 2 Strain Dice; an enemy within Reach 3 suffers that damage instead of you (if no enemy is available, you take all of the damage as normal).</p><p><em>Remember!</em> You can end concentration at any time on your turn for free.</p><p>LEVEL 7</p><p><strong>Reverberating Mind.</strong> Double the Reach of Mind Collapse. Whenever any creature takes 10 or more damage from your concentration breaking, the next time you create your Psionic Field this encounter, do so for free.</p><p>LEVEL 11</p><p><strong>Mind Shield.</strong> When your concentration breaks, Taunt up to WIL creatures within Reach 6 for 1 round. You may Defend for free while Incapacitated. The first creature to attack you while Incapacitated also takes as much psychic damage.</p><p>LEVEL 15</p><p><strong>Big Mind.</strong> Your Mind Collapse and Mind Shield have a Reach of 12. Choose up to 3 Strain Dice for Mind Collapse and 1 additional enemy to also suffer that damage.</p>",
+		"parentClass": "psion",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "079a5ce08f2afd8e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ijvTquBmqrIekknm"
+}

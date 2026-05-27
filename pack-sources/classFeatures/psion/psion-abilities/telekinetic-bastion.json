@@ -1,0 +1,67 @@
+{
+	"name": "Telekinetic Bastion",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/abilities/telekinetic-bastion.webp",
+	"system": {
+		"macro": "",
+		"identifier": "telekinetic-bastion",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Passive.</strong> Strain Cost: 0+ (1 optional)</p><p>You may wield a Shield proficiently within your Psionic Field. Gain 1 Strain to lend it to an ally being attacked within your Psionic Field (a shield protecting one person can't protect another this round).</p><p><em>Requires your Psionic Field to be active.</em></p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "psion-abilities",
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			9,
+			12,
+			14,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 0
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "S8Te6A7AHUiGxJBe",
+	"folder": "1d47bd11dec020b0"
+}

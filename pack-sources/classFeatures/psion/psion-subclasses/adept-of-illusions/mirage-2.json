@@ -1,0 +1,61 @@
+{
+	"name": "Mirage (2)",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/psion/adept-of-illusions/mirage-2.webp",
+	"system": {
+		"macro": "return nimPlus.mirageDispatch(actor, item);",
+		"identifier": "mirage-2",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "round"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Strain Cost.</strong> 1/effect/round</p><p>Whenever you use Mirage, you may instead choose one of the following:</p><ul><li><strong>Disguise.</strong> Project an illusory image into an enemy's mind (e.g. a wall, pit, or other obstacle or distraction). A lower-level enemy gains your choice of Blinded, Taunted, or Prone. A creature your level or higher can make a WIL save to resist.</li><li><strong>Distortion.</strong> An ally gains your choice of Full Cover, Invisible, or becomes the source of Fear for their enemies.</li></ul><p><em>Snap out of it!</em> Illusions imposed upon an enemy end when the creature takes any damage.</p>",
+		"featureType": "class",
+		"class": "psion",
+		"group": "adept-of-illusions",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"strainCost": 1
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4Lu1p3q02qWnRxZO",
+	"folder": "951c2a6751920c35"
+}
