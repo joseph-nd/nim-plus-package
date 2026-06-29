@@ -1,0 +1,69 @@
+{
+	"name": "Full Guard",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/full-guard.webp",
+	"system": {
+		"macro": "",
+		"identifier": "full-guard",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>While wielding a Shield, Defend against DEX or STR Saves. When you Defend, you can move half your Speed, 1/encounter.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "none"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FcwS2GEKDiRBoBm6",
+	"folder": null
+}

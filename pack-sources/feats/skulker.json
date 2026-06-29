@@ -1,0 +1,83 @@
+{
+	"name": "Skulker",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/skulker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "skulker",
+		"rules": [
+			{
+				"id": "feat-skulker-stealth",
+				"identifier": "",
+				"label": "Skulker — +2 Stealth",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "skillBonus",
+				"value": "2",
+				"skills": [
+					"stealth"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>If you are spotted while Hidden, you can move half your Speed AND Hide as a free action. +2 Stealth.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "none"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "86StM2TVGGBqgTOD",
+	"folder": null
+}

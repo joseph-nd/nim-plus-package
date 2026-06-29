@@ -1,0 +1,69 @@
+{
+	"name": "Heavy Armor Master",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/heavy-armor-master.webp",
+	"system": {
+		"macro": "",
+		"identifier": "heavy-armor-master",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p class=\"nim-plus-feat-req\"><strong>Prerequisite:</strong> Plate Armor Prof..</p><p>When you Defend, take no damage, 1/encounter.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "Plate Armor Prof.",
+			"featAction": "none"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "23KnHXIIv6p7XRNV",
+	"folder": null
+}

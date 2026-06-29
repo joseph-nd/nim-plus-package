@@ -1,0 +1,69 @@
+{
+	"name": "Vindictive",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/vindictive.webp",
+	"system": {
+		"macro": "",
+		"identifier": "vindictive",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reaction: When you succeed on a save imposed by an enemy, Move 3 AND make an Opportunity Attack against that creature.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "reaction"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8qVPEh5Vr32IUSx8",
+	"folder": null
+}

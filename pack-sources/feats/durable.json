@@ -1,0 +1,80 @@
+{
+	"name": "Durable",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/durable.webp",
+	"system": {
+		"macro": "",
+		"identifier": "durable",
+		"rules": [
+			{
+				"id": "feat-durable-wounds",
+				"identifier": "",
+				"label": "Durable — +2 max Wounds",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "maxWounds",
+				"value": "2"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Gain 2×KEY Temp HP, 1/day. +2 max Wounds.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "action"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QAWDKOZ2znFjxsQk",
+	"folder": null
+}

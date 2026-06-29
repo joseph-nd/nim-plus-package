@@ -4,6 +4,28 @@ All notable changes to this module will be documented in this file. Format follo
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-06-29
+
+### Added
+- **Feats (optional)** — a class-agnostic Feats system, off by default and enabled via the **Enable Feats** world setting (`Game Settings → Configure Settings → Nim+ Package`). Characters may choose a feat at levels **1, 4, 8, 12, and 16**.
+  - **52 feats** in a new **Nim+ Feats** compendium pack (Academic … Wrangler), each carrying its rules text, an action-cost matching the feat (action / 2 actions / bonus / reaction / passive), and its ability-score prerequisite where applicable.
+  - **Feat selection at levels 4/8/12/16 happens inside the native level-up window:** a runtime injection (`renderGenericDialog`) adds a **"Feats (Choose one)"** section to the level-up dialog's DOM and grants the chosen feat (required to confirm) when the level-up is submitted. Nimble's dialog can't surface class-agnostic feats on its own — its feature lookup is keyed by class identifier and never receives our `feats` group — so we add the selection UI to the dialog and hook its confirm button; a scoped `MutationObserver` keeps the section attached across the dialog's reactive re-renders. **Level 1** (no level-up window at character creation) is handled by an auto-opening picker on first sheet render. A native-styled **Feats** section in the **Features tab** lists chosen feats (click to open) and offers a **Choose Feat** button for back-fill (e.g. enabling the setting mid-campaign). The picker filters out owned feats and greys out any whose ability-score prerequisite isn't met (STR / DEX / INT / WIL checks; other prerequisites shown as text).
+  - **Progression-tab preview:** a `prepareDerivedData` patch still advertises the `feats` group on class items, which surfaces the feat levels (1/4/8/12/16) in the class **Progression** tab (that view *does* pass `groupIdentifiers`).
+  - **`nimPlus.feats.*`** API — `choose(actor)`, `pending(actor)`, `owned(actor)`, `characterLevel(actor)`, plus the advanced-feat hooks `healerHeal(actor, item)`, `secondWind(actor, item)`, `allocateAcademic(actor, item?)`, and `chooseElementalSpecialist(actor, item?)`.
+- **52 feat icon prompts** under `docs/icon-prompts/feats.md` (generic Icon preamble; destinations `assets/feats/<slug>.webp`); all 52 icons shipped under `assets/feats/`.
+- **Mechanical automation for 16 feats** via the system's `system.rules[]` engine — always-on bonuses apply the moment the feat is taken: `skillBonus` (Actor, Alert, Athlete, Dungeon Dweller, Keen Mind, Pick Pocket, Sixth Sense, Skulker, Socialite), `armorClass` (Armored), `speedBonus` (Swift), `maxWounds` (Durable), `maxHitDice` (Deep Breather), `maxHpBonus` per-level (Tough), and `grantProficiency` all-weapons (Martial Adept, Weapon Master).
+- **Advanced automation for 8 more feats** beyond what static rules can express:
+  - **Vigilant** — `initiativeBonus` rule with `value: "@key"`, so the character's KEY ability modifier is added to initiative automatically.
+  - **Academic** — on grant, a dialog distributes its **3 skill points** straight into `system.skills.<key>.points` (the same field the level-up flow writes), re-openable from the sheet's Feats panel.
+  - **Defensive Duelist** (+2 Armor with a DEX melee weapon, none while shielded), **Dual Wielder** (+1 Armor while 2+ weapons equipped), and **Bulwark** (+2 Armor to adjacent allies) are computed in a patched character `prepareDerivedData` off live equipped-item / token-adjacency state — the predicate domain has no tag for these, so they can't be static `armorClass` rules. Bulwark's aura recomputes on token movement.
+  - **Elemental Specialist** — a school + key-stat picker stores the choice; a wrapper on the spell document's `activate` appends `+KEY` to the cast spell's primary damage formula when it's a *tiered* spell of the chosen school (scoping by school, which the `damageBonus` rule can't do).
+  - **Healer** — activatable (`system.macro`): heals a targeted creature for KEY HP, once per Safe Rest (usage flag reset on the `nimble.rest` safe hook).
+  - **Second Wind** — activatable: spends one Hit Die (blocked at 0), heals its roll + KEY, decrements the pool, once per day (reset on Safe Rest).
+- The remaining 28 feats are triggered/active/reaction abilities, allies-only auras, or other conditional effects with no reliable hook — they stay descriptive, matching the rest of the module's feature content.
+
+### Changed
+- **Pack counts:** **7 packs, 598 documents** (was 6 packs / 546). New **Nim+ Feats** pack: 52 documents.
+
 ## [0.2.0] - 2026-05-27
 
 ### Added

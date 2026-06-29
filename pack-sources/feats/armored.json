@@ -1,0 +1,81 @@
+{
+	"name": "Armored",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/armored.webp",
+	"system": {
+		"macro": "",
+		"identifier": "armored",
+		"rules": [
+			{
+				"id": "feat-armored-ac",
+				"identifier": "",
+				"label": "Armored — +1 Armor",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "armorClass",
+				"mode": "add",
+				"formula": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Increase armor proficiency by 1 step OR gain shield proficiency. +1 Armor. -2 STR requirement on armor.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "passive"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "OkNTWKGEk0BxCVM9",
+	"folder": null
+}
