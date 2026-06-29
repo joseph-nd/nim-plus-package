@@ -13,6 +13,26 @@
 
 const MODULE_ID = 'nim-plus-package';
 
+// ── Feats (optional) ────────────────────────────────────────────────────────
+// The Feats system is class-agnostic: a character may gain a feat at levels 1,
+// 4, 8, 12, and 16. It is opt-in via the `enableFeats` world setting.
+//
+// Levels 4/8/12/16 are surfaced inside the system's native level-up dialog by
+// injecting the `feats` group into the leveling class item's `groupIdentifiers`
+// (see the `setup` prepareDerivedData patch). The dialog indexes any feature
+// whose `system.group` matches an entry of the class's `groupIdentifiers`
+// (keyed by `class || group`), so our class-less, `group: "feats"` features
+// appear as a "Feats (Choose one)" section with native selection, ownership
+// exclusion, granting, and level-down reversal — no custom code on that path.
+//
+// Level 1 is NOT covered by that dialog (the initial class drop doesn't run a
+// level-up flow), and a setting toggled mid-campaign needs back-fill, so a
+// lightweight sheet picker handles those cases.
+const FEATS_SETTING = 'enableFeats';
+const FEATS_GROUP = 'feats';
+const FEATS_PACK = `${MODULE_ID}.nim-plus-feats`;
+const FEAT_MILESTONE_LEVELS = [1, 4, 8, 12, 16];
+
 const api = {
 	pickDamage,
 	summonSpiritCompanion,
@@ -29,12 +49,45 @@ const api = {
 		getDieSize: strainGetDieSize,
 		show: strainShow,
 	},
+	feats: {
+		choose: chooseFeat,
+		pending: pendingFeatCount,
+		owned: ownedFeats,
+		characterLevel: getCharacterLevel,
+		// Activatable feat macros (wired via each feat's `system.macro`).
+		healerHeal,
+		secondWind,
+		// Grant-time configurators (also re-openable from the sheet Feats panel).
+		allocateAcademic,
+		chooseElementalSpecialist,
+	},
 };
 
 Hooks.once('init', () => {
 	const mod = game.modules.get(MODULE_ID);
 	if (mod) mod.api = api;
 	globalThis.nimPlus = api;
+
+	game.settings.register(MODULE_ID, FEATS_SETTING, {
+		name: 'Enable Feats',
+		hint: 'Adds the optional class-agnostic Feats system. Characters may choose a feat at levels 1, 4, 8, 12, and 16 — offered in the level-up window (levels 4/8/12/16) and via a "Choose Feat" button on the character sheet.',
+		scope: 'world',
+		config: true,
+		type: Boolean,
+		default: false,
+		onChange: () => {
+			// Re-prepare so the class-item groupIdentifiers patch (de)activates,
+			// then re-render any open sheets so the Feats section appears/clears.
+			for (const actor of game.actors ?? []) {
+				try {
+					actor.prepareData?.();
+				} catch (error) {
+					console.error(`[${MODULE_ID}] Failed to re-prepare actor on Feats toggle`, error);
+				}
+				for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+			}
+		},
+	});
 });
 
 Hooks.once('ready', () => {
@@ -420,11 +473,88 @@ Hooks.once('setup', () => {
 	const original = ItemClass.prototype.prepareDerivedData;
 	ItemClass.prototype.prepareDerivedData = function patchedPrepareDerivedData() {
 		original.call(this);
+
+		// When Feats are enabled, advertise the `feats` group on every class item
+		// so the native level-up dialog renders our class-less feat pool at the
+		// feat levels (4/8/12/16). Mutates derived data only — never `_source` —
+		// so it self-clears when the setting is turned off and the item is
+		// re-prepared. Guarded because data prep can run before settings register.
+		if (this.type === 'class') {
+			try {
+				if (game.settings?.get?.(MODULE_ID, FEATS_SETTING)) {
+					const groups = this.system?.groupIdentifiers;
+					if (Array.isArray(groups) && !groups.includes(FEATS_GROUP)) groups.push(FEATS_GROUP);
+				}
+			} catch (_error) {
+				/* settings not ready yet — nothing to inject */
+			}
+			return;
+		}
+
 		if (this.type !== 'feature') return;
 		if (this.getFlag(MODULE_ID, 'showAsAttack')) {
 			this.system.actionType = 'attack';
 		}
 	};
+
+	// Patch the character document's prepareDerivedData to apply conditional feat
+	// armor bonuses (Defensive Duelist, Dual Wielder) and the Bulwark aura. These
+	// can't be expressed as static `armorClass` rules because the system's
+	// predicate domain has no tag for "wielding a DEX weapon", "dual wielding", or
+	// "an ally with Bulwark is adjacent". We compute them off live item/canvas
+	// state AFTER the system finishes its own AC math, adding to the final
+	// `system.attributes.armor.value`. This mutates derived data only — it is
+	// recomputed every prepare, so the bonus is inherently applied exactly once and
+	// self-clears when the feat/condition goes away or the setting is disabled.
+	//
+	// The real character class lives behind Nimble's ActorProxy at
+	// CONFIG.NIMBLE.Actor.documentClasses.character and overrides prepareDerivedData,
+	// so that is the prototype we must wrap (patching CONFIG.Actor.documentClass —
+	// the proxy — would never intercept the subclass override).
+	const CharacterClass = CONFIG?.NIMBLE?.Actor?.documentClasses?.character;
+	if (CharacterClass?.prototype?.prepareDerivedData && !CharacterClass.prototype.__nimPlusFeatACPatched) {
+		const originalActorPrep = CharacterClass.prototype.prepareDerivedData;
+		CharacterClass.prototype.prepareDerivedData = function patchedActorPrepareDerivedData() {
+			originalActorPrep.call(this);
+			try {
+				applyFeatArmorAdjustments(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply feat armor adjustments`, error);
+			}
+		};
+		CharacterClass.prototype.__nimPlusFeatACPatched = true;
+	}
+
+	// Patch the spell document's `activate` to implement Elemental Specialist.
+	// The feat grants "+KEY damage to Tiered Spells of one chosen school". The
+	// rules engine cannot scope a damageBonus by spell *school* (only by damage
+	// type / source / delivery), and many spell damage effects carry no explicit
+	// damage type, so we instead append `+ KEY` to the cast spell's primary damage
+	// formula in-memory right before the activation manager clones it — the same
+	// proven technique used by Psionic Field Attack. The original formula is
+	// restored immediately after so repeated casts never accumulate the bonus.
+	const SpellClass = CONFIG?.NIMBLE?.Item?.documentClasses?.spell;
+	if (SpellClass?.prototype?.activate && !SpellClass.prototype.__nimPlusElementalPatched) {
+		const originalSpellActivate = SpellClass.prototype.activate;
+		SpellClass.prototype.activate = async function patchedSpellActivate(options = {}) {
+			let restore = null;
+			try {
+				if (!options?.executeMacro) restore = applyElementalSpecialistBonus(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply Elemental Specialist bonus`, error);
+			}
+			try {
+				return await originalSpellActivate.call(this, options);
+			} finally {
+				try {
+					restore?.();
+				} catch (error) {
+					console.error(`[${MODULE_ID}] Failed to restore spell formula after Elemental Specialist`, error);
+				}
+			}
+		};
+		SpellClass.prototype.__nimPlusElementalPatched = true;
+	}
 });
 
 /**
@@ -1952,6 +2082,1329 @@ async function psionicFieldAttack(actor, item) {
 		rollFormula: combinedFormula,
 		rollMode,
 	});
+}
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Feats (optional) — sheet picker + back-fill
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * The native level-up dialog covers feat selection at levels 4/8/12/16 (via the
+ * groupIdentifiers injection in the `setup` hook). This section provides the
+ * complementary character-sheet UI: a "Feats" panel that lists the feats a
+ * character has taken and offers a "Choose Feat" button whenever they're owed
+ * one — covering level 1 (which the level-up dialog never prompts for) and any
+ * back-fill when the setting is enabled mid-campaign. The button is manual, so
+ * it never races or double-grants against the native dialog: it counts owned
+ * feats against milestones reached and only offers the shortfall.
+ */
+
+function featsEnabled() {
+	try {
+		return !!game.settings?.get?.(MODULE_ID, FEATS_SETTING);
+	} catch {
+		return false;
+	}
+}
+
+function getCharacterLevel(actor) {
+	if (!actor) return 0;
+	const fromGetter = Number(actor.levels?.character);
+	if (Number.isFinite(fromGetter) && fromGetter > 0) return fromGetter;
+	let total = 0;
+	for (const item of actor.items ?? []) {
+		if (item.type === 'class') total += Number(item.system?.classLevel ?? 0) || 0;
+	}
+	return total;
+}
+
+function milestonesReached(level) {
+	return FEAT_MILESTONE_LEVELS.filter((m) => m <= level).length;
+}
+
+function ownedFeats(actor) {
+	if (!actor) return [];
+	const items = actor.items?.contents ?? Array.from(actor.items ?? []);
+	return items.filter(
+		(i) =>
+			i.type === 'feature' &&
+			(i.getFlag?.(MODULE_ID, 'feat') === true || i.system?.group === FEATS_GROUP),
+	);
+}
+
+function pendingFeatCount(actor) {
+	if (!actor) return 0;
+	const reached = milestonesReached(getCharacterLevel(actor));
+	const owned = ownedFeats(actor).length;
+	return Math.max(0, reached - owned);
+}
+
+// Map prerequisite ability codes to Nimble ability keys.
+const FEAT_ABILITY_KEYS = { STR: 'strength', DEX: 'dexterity', INT: 'intelligence', WIL: 'will' };
+
+/**
+ * Evaluate a feat's prerequisite string against an actor. Only ability-score
+ * requirements ("3 STR") are machine-checkable; everything else ("Plate Armor
+ * Prof.", "Can cast spells") is surfaced as text but never blocks selection.
+ *
+ * @returns {{ met: boolean, checkable: boolean, reason: string }}
+ */
+function evaluateFeatPrereq(actor, req) {
+	if (!req) return { met: true, checkable: true, reason: '' };
+	const match = /^\s*(\d+)\s+(STR|DEX|INT|WIL)\b/i.exec(req);
+	if (!match) return { met: true, checkable: false, reason: req };
+	const needed = Number(match[1]);
+	const code = match[2].toUpperCase();
+	const have = Number(actor?.system?.abilities?.[FEAT_ABILITY_KEYS[code]]?.mod ?? 0);
+	return { met: have >= needed, checkable: true, reason: `Requires ${needed} ${code} (you have ${have})` };
+}
+
+let featPackDocsCache = null;
+async function loadFeatDocs() {
+	if (featPackDocsCache) return featPackDocsCache;
+	const pack = game.packs.get(FEATS_PACK);
+	if (!pack) return [];
+	const docs = await pack.getDocuments();
+	featPackDocsCache = docs
+		.filter((d) => d.type === 'feature')
+		.sort((a, b) => a.name.localeCompare(b.name));
+	return featPackDocsCache;
+}
+
+/**
+ * Open the feat picker for an actor and grant the chosen feat. Excludes feats
+ * already owned and disables (with a reason) any whose ability-score
+ * prerequisite isn't met.
+ */
+async function chooseFeat(actor) {
+	if (!actor) {
+		ui.notifications?.error(`[${MODULE_ID}] chooseFeat: missing actor.`);
+		return null;
+	}
+	const docs = await loadFeatDocs();
+	if (docs.length === 0) {
+		ui.notifications?.error(`[${MODULE_ID}] No feats found in the ${FEATS_PACK} compendium.`);
+		return null;
+	}
+
+	const ownedIds = new Set(ownedFeats(actor).map((i) => i.system?.identifier));
+	const available = docs.filter((d) => !ownedIds.has(d.system?.identifier));
+	if (available.length === 0) {
+		ui.notifications?.info('All feats have already been taken.');
+		return null;
+	}
+
+	const level = getCharacterLevel(actor);
+	const pending = pendingFeatCount(actor);
+
+	const rows = available
+		.map((doc) => {
+			const req = doc.getFlag(MODULE_ID, 'featReq') || '';
+			const verdict = evaluateFeatPrereq(actor, req);
+			const blocked = verdict.checkable && !verdict.met;
+			const reqTag = req
+				? `<span class="nim-plus-feat-pick__req${blocked ? ' is-unmet' : ''}">${escape(verdict.checkable ? verdict.reason : `Prereq: ${req}`)}</span>`
+				: '';
+			const body = String(doc.system?.description ?? '')
+				.replace(/<p class="nim-plus-feat-req">[\s\S]*?<\/p>/i, '')
+				.replace(/<[^>]+>/g, ' ')
+				.replace(/\s+/g, ' ')
+				.trim();
+			return `
+				<label class="nim-plus-feat-pick__row${blocked ? ' is-disabled' : ''}">
+					<input type="radio" name="feat" value="${escape(doc.system?.identifier)}"${blocked ? ' disabled' : ''}>
+					<span class="nim-plus-feat-pick__main">
+						<span class="nim-plus-feat-pick__name">${escape(doc.name)} ${reqTag}</span>
+						<span class="nim-plus-feat-pick__desc">${escape(body)}</span>
+					</span>
+				</label>`;
+		})
+		.join('');
+
+	const choiceId = await foundry.applications.api.DialogV2.wait({
+		window: { title: `Choose a Feat — ${actor.name}` },
+		content: `
+			<div class="nim-plus-feat-pick">
+				<p class="nim-plus-feat-pick__intro">Level ${level}. ${pending > 1 ? `You have <strong>${pending}</strong> feats to choose.` : 'Choose a feat.'} Greyed-out feats don't meet an ability-score prerequisite.</p>
+				<div class="nim-plus-feat-pick__list">${rows}</div>
+			</div>
+		`,
+		buttons: [
+			{
+				action: 'grant',
+				label: 'Gain Feat',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('.nim-plus-feat-pick');
+					const checked = form?.querySelector?.('input[name="feat"]:checked');
+					return checked?.value ?? null;
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+
+	if (!choiceId) return null;
+	return grantFeatByIdentifier(actor, choiceId);
+}
+
+/**
+ * Grant a feat to an actor by its identifier (headless — no dialog). Used by the
+ * sheet picker and by the level-up window injection. Stamps `compendiumSource`
+ * so the system treats it as an owned compendium feature (ownership exclusion,
+ * level-down reversal, etc.).
+ */
+async function grantFeatByIdentifier(actor, identifier) {
+	const docs = await loadFeatDocs();
+	const chosen = docs.find((d) => d.system?.identifier === identifier);
+	if (!chosen) return null;
+	const obj = chosen.toObject();
+	delete obj._id;
+	obj._stats = obj._stats ?? {};
+	obj._stats.compendiumSource = chosen.uuid;
+	const [created] = await actor.createEmbeddedDocuments('Item', [obj]);
+	ui.notifications?.info(`${actor.name} gained the ${chosen.name} feat.`);
+	return created ?? null;
+}
+
+const FEATS_WIDGET_CLASS = 'nim-plus-feats';
+const FEATS_STYLE_ID = 'nim-plus-feats-styles';
+
+const FEATS_WIDGET_CSS = `
+	.nim-plus-feats {
+		--feat-accent: #d9b15a;
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		grid-column: 1 / -1;
+		flex: 1 1 100%;
+		margin: 0.5rem 0;
+		padding: 0.55rem 0.7rem 0.6rem;
+		background:
+			linear-gradient(135deg, rgba(217, 177, 90, 0.10), rgba(217, 177, 90, 0.03)),
+			var(--color-bg, transparent);
+		border: 1px solid rgba(217, 177, 90, 0.4);
+		border-radius: 6px;
+		box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 1px 3px rgba(0,0,0,0.15);
+	}
+	.nim-plus-feats__header {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0 0 0.45rem;
+		font-size: 1em;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-text-primary, inherit);
+	}
+	.nim-plus-feats__icon { color: var(--feat-accent); opacity: 0.95; }
+	.nim-plus-feats__badge {
+		margin-left: auto;
+		font-size: 0.7em;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: rgba(217, 177, 90, 0.2);
+		border: 1px solid rgba(217, 177, 90, 0.45);
+		color: var(--color-text-primary, inherit);
+	}
+	.nim-plus-feats__list {
+		list-style: none;
+		margin: 0 0 0.5rem;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+	.nim-plus-feats__item {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.95em;
+	}
+	.nim-plus-feats__item img {
+		width: 22px;
+		height: 22px;
+		border-radius: 4px;
+		border: 1px solid rgba(0,0,0,0.25);
+		object-fit: cover;
+		flex: 0 0 auto;
+	}
+	.nim-plus-feats__empty { opacity: 0.6; font-style: italic; font-size: 0.9em; }
+	.nim-plus-feats__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		width: 100%;
+		padding: 0.4rem 0.8rem;
+		border: 1px solid rgba(217, 177, 90, 0.5);
+		background: linear-gradient(180deg, rgba(217, 177, 90, 0.22), rgba(217, 177, 90, 0.12));
+		color: var(--color-text-primary, inherit);
+		border-radius: 6px;
+		cursor: pointer;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		transition: background 0.15s, border-color 0.15s;
+	}
+	.nim-plus-feats__btn:hover {
+		background: linear-gradient(180deg, rgba(217, 177, 90, 0.34), rgba(217, 177, 90, 0.2));
+		border-color: var(--feat-accent);
+	}
+	.nim-plus-feat-pick__intro { margin: 0 0 0.5rem; opacity: 0.85; }
+	.nim-plus-feat-pick__list {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		max-height: 50vh;
+		overflow-y: auto;
+		padding-right: 4px;
+	}
+	.nim-plus-feat-pick__row {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+		padding: 0.4rem 0.5rem;
+		border: 1px solid transparent;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.nim-plus-feat-pick__row:hover { background: rgba(217, 177, 90, 0.08); }
+	.nim-plus-feat-pick__row.is-disabled { opacity: 0.45; cursor: not-allowed; }
+	.nim-plus-feat-pick__row input { margin-top: 0.25rem; }
+	.nim-plus-feat-pick__main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+	.nim-plus-feat-pick__name { font-weight: 700; }
+	.nim-plus-feat-pick__req {
+		font-weight: 600;
+		font-size: 0.78em;
+		opacity: 0.8;
+		margin-left: 0.35rem;
+	}
+	.nim-plus-feat-pick__req.is-unmet { color: #d2603f; opacity: 1; }
+	.nim-plus-feat-pick__desc { font-size: 0.85em; opacity: 0.8; }
+
+	/* Feats section injected into the Features tab — styled to sit alongside the
+	   system's own feature category sections. */
+	.nim-plus-feats-section { margin-top: 0.75rem; }
+	.nim-plus-feats-section__header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+	.nim-plus-feats-section__header .nimble-heading { margin: 0; }
+	.nim-plus-feats-section__badge {
+		font-size: 0.7em;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: rgba(217, 177, 90, 0.2);
+		border: 1px solid rgba(217, 177, 90, 0.45);
+		color: var(--color-text-primary, inherit);
+	}
+	.nim-plus-feats-section__actions { margin-left: auto; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+	.nim-plus-feats-section__btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.3rem 0.7rem;
+		border: 1px solid rgba(217, 177, 90, 0.5);
+		background: linear-gradient(180deg, rgba(217, 177, 90, 0.22), rgba(217, 177, 90, 0.12));
+		color: var(--color-text-primary, inherit);
+		border-radius: 6px;
+		cursor: pointer;
+		font-weight: 600;
+		font-size: 0.85em;
+		white-space: nowrap;
+	}
+	.nim-plus-feats-section__btn:hover { background: linear-gradient(180deg, rgba(217, 177, 90, 0.34), rgba(217, 177, 90, 0.2)); }
+	.nim-plus-feats-section .nimble-feature-card__header { cursor: pointer; }
+	.nim-plus-feats-section__empty { opacity: 0.6; font-style: italic; font-size: 0.9em; padding: 0.4rem 0; }
+
+	/* Feats (Choose one) section injected into the native level-up window. */
+	.nim-plus-levelup-feats { margin-top: 0.75rem; }
+	.nim-plus-levelup-feats__header { margin-bottom: 0.35rem; }
+	.nim-plus-levelup-feats__header .nimble-heading { margin: 0; }
+`;
+
+function ensureFeatStyles() {
+	if (document.getElementById(FEATS_STYLE_ID)) return;
+	const style = document.createElement('style');
+	style.id = FEATS_STYLE_ID;
+	style.textContent = FEATS_WIDGET_CSS;
+	document.head.append(style);
+}
+
+// Signature of the feats UI state — used to skip re-rendering the section when
+// nothing relevant changed (so the MutationObserver below never loops).
+function featsSignature(actor) {
+	const ids = ownedFeats(actor)
+		.map((f) => f.id)
+		.sort()
+		.join(',');
+	const cfg = featsNeedingConfig(actor)
+		.map((c) => c.kind)
+		.join(',');
+	return `${ids}|${pendingFeatCount(actor)}|${cfg}`;
+}
+
+function featCardHTML(feat) {
+	const img = escape(feat.img || 'icons/svg/upgrade.svg');
+	const req = feat.getFlag?.(MODULE_ID, 'featReq');
+	const reqTag = req ? `<span class="nimble-feature-card__level">${escape(req)}</span>` : '';
+	return `<li>
+		<div class="nimble-feature-card" data-feat-id="${escape(feat.id)}">
+			<div class="nimble-feature-card__header" role="button" tabindex="0" data-nim-plus-open-feat="${escape(feat.id)}">
+				<div class="nimble-feature-card__img-wrapper"><img class="nimble-feature-card__img" src="${img}" alt=""></div>
+				<h4 class="nimble-feature-card__name nimble-heading" data-heading-variant="item">${escape(feat.name)}</h4>
+				${reqTag}
+			</div>
+		</div>
+	</li>`;
+}
+
+function renderFeatsSection(actor) {
+	const chosen = ownedFeats(actor)
+		.slice()
+		.sort((a, b) => a.name.localeCompare(b.name));
+	const pending = pendingFeatCount(actor);
+	const cards =
+		chosen.map(featCardHTML).join('') ||
+		`<li class="nim-plus-feats-section__empty">No feats chosen yet.</li>`;
+	const chooseBtn =
+		pending > 0
+			? `<button type="button" class="nim-plus-feats-section__btn" data-nim-plus-feat="choose"><i class="fa-solid fa-star"></i> Choose Feat${pending > 1 ? ` (${pending})` : ''}</button>`
+			: '';
+	const configBtns = featsNeedingConfig(actor)
+		.map(
+			(c) =>
+				`<button type="button" class="nim-plus-feats-section__btn" data-nim-plus-feat-config="${escape(c.kind)}"><i class="fa-solid fa-sliders"></i> ${escape(c.label)}</button>`,
+		)
+		.join('');
+	const badge = pending > 0 ? `<span class="nim-plus-feats-section__badge">${pending} available</span>` : '';
+	return `
+		<div class="nim-plus-feats-section" data-actor-id="${escape(actor.id)}" data-sig="${escape(featsSignature(actor))}">
+			<header class="nim-plus-feats-section__header">
+				<h3 class="nimble-heading" data-heading-variant="section">Feats</h3>
+				${badge}
+				<div class="nim-plus-feats-section__actions">${chooseBtn}${configBtns}</div>
+			</header>
+			<ul class="nimble-item-list">${cards}</ul>
+		</div>`;
+}
+
+function wireFeatsSection(section, actor) {
+	section.querySelectorAll('[data-nim-plus-open-feat]').forEach((el) => {
+		el.addEventListener('click', (event) => {
+			event.preventDefault();
+			const feat = actor.items?.get?.(el.dataset.nimPlusOpenFeat);
+			feat?.sheet?.render(true);
+		});
+	});
+	section.querySelector('[data-nim-plus-feat="choose"]')?.addEventListener('click', async (event) => {
+		event.preventDefault();
+		await chooseFeat(actor);
+		resyncFeatsForActor(actor);
+	});
+	section.querySelectorAll('[data-nim-plus-feat-config]').forEach((btn) => {
+		btn.addEventListener('click', async (event) => {
+			event.preventDefault();
+			const kind = btn.dataset.nimPlusFeatConfig;
+			if (kind === 'academic') await allocateAcademic(actor);
+			else if (kind === 'elemental') await chooseElementalSpecialist(actor);
+			resyncFeatsForActor(actor);
+		});
+	});
+}
+
+/**
+ * Inject (or refresh) the Feats section into the Features tab body. Identifies
+ * the Features tab via the active nav button's `fa-table-list` icon (only the
+ * active tab's body is mounted at a time, and the Spells tab shares the body
+ * class, so the icon is the reliable discriminator). Idempotent: re-renders only
+ * when the feats signature changes, so the MutationObserver can call it freely.
+ */
+function syncFeatsTabSection(app) {
+	const actor = app?.document ?? app?.actor;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+
+	const featuresActive = !!root.querySelector('[data-button-state="active"] i.fa-table-list');
+	const body = root.querySelector('.nimble-sheet__body--player-character');
+	const eligible = featsEnabled() && actor.items?.some?.((i) => i.type === 'class');
+
+	if (!featuresActive || !body || !eligible) {
+		root.querySelectorAll('.nim-plus-feats-section').forEach((el) => el.remove());
+		return;
+	}
+
+	const current = body.querySelector(':scope > .nim-plus-feats-section');
+	const sig = featsSignature(actor);
+	if (current && current.dataset.sig === sig) return; // already up to date
+	current?.remove();
+
+	ensureFeatStyles();
+	const wrapper = document.createElement('div');
+	wrapper.innerHTML = renderFeatsSection(actor).trim();
+	const section = wrapper.firstElementChild;
+	if (!section) return;
+	body.appendChild(section);
+	wireFeatsSection(section, actor);
+}
+
+function resyncFeatsForActor(actor) {
+	for (const app of Object.values(actor.apps ?? {})) {
+		try {
+			syncFeatsTabSection(app);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to sync Feats section`, error);
+		}
+	}
+}
+
+// Watch the sheet for tab switches / reactive updates (which don't fire a
+// Foundry render hook) and keep the Feats section in the Features tab in sync.
+function setupFeatsTabObserver(app) {
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+	try {
+		app.__nimPlusFeatsObserver?.disconnect();
+	} catch (_error) {
+		/* previous observer already gone */
+	}
+	const observer = new MutationObserver(() => syncFeatsTabSection(app));
+	observer.observe(root, { childList: true, subtree: true });
+	app.__nimPlusFeatsObserver = observer;
+	syncFeatsTabSection(app);
+}
+
+Hooks.on('renderPlayerCharacterSheet', (app, _html) => {
+	setupFeatsTabObserver(app);
+	maybeAutoPromptFeats(app);
+});
+
+Hooks.on('closePlayerCharacterSheet', (app) => {
+	try {
+		app.__nimPlusFeatsObserver?.disconnect();
+	} catch (_error) {
+		/* nothing to disconnect */
+	}
+});
+
+/**
+ * Auto-prompt the feat picker when a character is owed a feat.
+ *
+ * Nimble's native level-up dialog and character-creator only surface features
+ * keyed by the *class identifier* — they call `getClassFeaturesFromIndex` without
+ * the `groupIdentifiers` argument, so our class-less `group: "feats"` pool can
+ * never appear there (an architectural limit of the system, not a setting).
+ * Instead we drive selection ourselves: whenever an owed character's sheet
+ * renders, open the picker. The prompt is "armed" once per character and re-armed
+ * on every class-level change, so it fires at levels 1/4/8/12/16 (and as back-fill
+ * when the setting is switched on mid-campaign). The manual "Choose Feat" button
+ * in the Feats panel remains as a fallback.
+ */
+const autoFeatPromptArmed = new Set(); // actor ids already prompted this cycle
+const featPromptBusy = new Set(); // actor ids with an open prompt loop
+
+async function promptFeatsLoop(actor) {
+	if (featPromptBusy.has(actor.id)) return;
+	featPromptBusy.add(actor.id);
+	try {
+		while (featsEnabled() && pendingFeatCount(actor) > 0) {
+			const granted = await chooseFeat(actor);
+			resyncFeatsForActor(actor);
+			if (!granted) break; // dismissed — stop nagging; the panel button remains
+		}
+	} finally {
+		featPromptBusy.delete(actor.id);
+	}
+}
+
+function maybeAutoPromptFeats(app) {
+	const actor = app?.document ?? app?.actor;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	if (!featsEnabled() || !actor.isOwner) return;
+	// Levels 4/8/12/16 are chosen inside the level-up window (see the
+	// renderGenericDialog injection below); the only milestone with no level-up
+	// flow is level 1 (character creation), so the auto-prompt is scoped to it.
+	// Higher-level back-fill (enabling the setting mid-campaign) uses the Feats
+	// section's "Choose Feat" button on the Features tab.
+	if (getCharacterLevel(actor) !== 1) return;
+	// A GM is auto-prompted only for their own assigned character, not when
+	// peeking at a player's sheet.
+	if (game.user?.isGM && game.user?.character?.id !== actor.id) return;
+	if (autoFeatPromptArmed.has(actor.id)) return; // already prompted this cycle
+	if (pendingFeatCount(actor) <= 0) return;
+	autoFeatPromptArmed.add(actor.id);
+	promptFeatsLoop(actor).catch((error) =>
+		console.error(`[${MODULE_ID}] Feat auto-prompt failed`, error),
+	);
+}
+
+// ── Level-up window integration ─────────────────────────────────────────────
+// Inject a "Feats (Choose one)" section into Nimble's native level-up dialog
+// at feat milestone levels (4/8/12/16) and grant the chosen feat when the user
+// confirms the level-up. The dialog can't surface class-agnostic feats on its
+// own (its feature lookup is keyed by class identifier and never receives our
+// `feats` group), so we add the selection UI to its DOM and hook its confirm
+// button. Level 1 has no level-up dialog and is handled by the auto-prompt above.
+const FEAT_MILESTONE_SET = new Set(FEAT_MILESTONE_LEVELS);
+
+Hooks.on('renderGenericDialog', (app) => {
+	injectLevelUpFeatSection(app).catch((error) =>
+		console.error(`[${MODULE_ID}] Failed to inject feats into level-up window`, error),
+	);
+});
+
+// Poll (via animation frames) for the level-up dialog's body/footer to mount.
+function waitForLevelUpAnchors(root, tries = 30) {
+	return new Promise((resolve) => {
+		const check = (n) => {
+			if (!root.isConnected) return resolve({});
+			const body = root.querySelector('.nimble-sheet__body');
+			const footer = root.querySelector('.nimble-sheet__footer');
+			if ((body && footer) || n <= 0) return resolve({ body, footer });
+			requestAnimationFrame(() => check(n - 1));
+		};
+		check(tries);
+	});
+}
+
+async function injectLevelUpFeatSection(app) {
+	if (!featsEnabled()) return;
+	// The level-up dialog is a GenericDialog created with `{ document, classIdentifier }`.
+	const actor = app?.data?.document;
+	const classIdentifier = app?.data?.classIdentifier;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	if (typeof classIdentifier !== 'string' || classIdentifier.length === 0) return;
+	if (!actor.isOwner) return;
+
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+	// The Svelte body/footer may mount a frame or two after the render hook fires.
+	const { body, footer } = await waitForLevelUpAnchors(root);
+	if (!body || !footer) return;
+	if (root.querySelector('.nim-plus-levelup-feats')) return; // already injected
+
+	// Offer a feat only when the level being gained is a milestone the character
+	// is actually owed a feat for.
+	const newLevel = (Number(getCharacterLevel(actor)) || 0) + 1;
+	if (!FEAT_MILESTONE_SET.has(newLevel)) return;
+	if (milestonesReached(newLevel) - ownedFeats(actor).length <= 0) return;
+
+	const docs = await loadFeatDocs();
+	const ownedIds = new Set(ownedFeats(actor).map((i) => i.system?.identifier));
+	const available = docs.filter((d) => !ownedIds.has(d.system?.identifier));
+	if (available.length === 0) return;
+
+	// Re-check after the await — the dialog may have closed or another render
+	// could have injected in the meantime.
+	if (!root.isConnected || root.querySelector('.nim-plus-levelup-feats')) return;
+
+	const rows = available
+		.map((doc) => {
+			const req = doc.getFlag(MODULE_ID, 'featReq') || '';
+			const verdict = evaluateFeatPrereq(actor, req);
+			const blocked = verdict.checkable && !verdict.met;
+			const reqTag = req
+				? `<span class="nim-plus-feat-pick__req${blocked ? ' is-unmet' : ''}">${escape(verdict.checkable ? verdict.reason : `Prereq: ${req}`)}</span>`
+				: '';
+			const desc = String(doc.system?.description ?? '')
+				.replace(/<p class="nim-plus-feat-req">[\s\S]*?<\/p>/i, '')
+				.replace(/<[^>]+>/g, ' ')
+				.replace(/\s+/g, ' ')
+				.trim();
+			return `
+				<label class="nim-plus-feat-pick__row${blocked ? ' is-disabled' : ''}">
+					<input type="radio" name="nim-plus-levelup-feat" value="${escape(doc.system?.identifier)}"${blocked ? ' disabled' : ''}>
+					<span class="nim-plus-feat-pick__main">
+						<span class="nim-plus-feat-pick__name">${escape(doc.name)} ${reqTag}</span>
+						<span class="nim-plus-feat-pick__desc">${escape(desc)}</span>
+					</span>
+				</label>`;
+		})
+		.join('');
+
+	ensureFeatStyles();
+	const section = document.createElement('section');
+	section.className = 'nim-plus-levelup-feats';
+	section.innerHTML = `
+		<header class="nim-plus-levelup-feats__header">
+			<h3 class="nimble-heading" data-heading-variant="section">Feats (Choose one)</h3>
+		</header>
+		<div class="nim-plus-feat-pick__list">${rows}</div>`;
+
+	// Grant the selected feat when the user confirms the level-up. Registered in
+	// the capture phase so it runs before the dialog's own submit: with no feat
+	// chosen it blocks submission (the feat is required at this level); otherwise
+	// it grants the feat and lets the level-up proceed.
+	const confirmHandler = (event) => {
+		const selected = section.querySelector('input[name="nim-plus-levelup-feat"]:checked');
+		if (!selected) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			ui.notifications?.warn('Choose a feat to finish your level-up.');
+			return;
+		}
+		if (section.dataset.granted) return;
+		section.dataset.granted = 'true';
+		grantFeatByIdentifier(actor, selected.value).catch((error) =>
+			console.error(`[${MODULE_ID}] Failed to grant feat from level-up window`, error),
+		);
+	};
+
+	// Keep the section attached and the confirm button hooked across the dialog's
+	// reactive re-renders. Re-appending the same detached node preserves the radio
+	// choice, so the observer is a safe self-heal.
+	const ensure = () => {
+		const r = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+		if (!r || !r.isConnected) return;
+		const liveBody = r.querySelector('.nimble-sheet__body');
+		if (liveBody && !section.isConnected) liveBody.appendChild(section);
+		const confirmBtn = r.querySelector('.nimble-sheet__footer .nimble-button');
+		if (confirmBtn && !confirmBtn.dataset.nimPlusFeatHooked) {
+			confirmBtn.dataset.nimPlusFeatHooked = 'true';
+			confirmBtn.addEventListener('click', confirmHandler, true);
+		}
+	};
+
+	ensure();
+	try {
+		app.__nimPlusFeatObserver?.disconnect();
+	} catch (_error) {
+		/* no previous observer */
+	}
+	const observer = new MutationObserver(() => ensure());
+	observer.observe(root, { childList: true, subtree: true });
+	app.__nimPlusFeatObserver = observer;
+}
+
+Hooks.on('closeGenericDialog', (app) => {
+	try {
+		app.__nimPlusFeatObserver?.disconnect();
+	} catch (_error) {
+		/* nothing to disconnect */
+	}
+});
+
+// Re-arm the auto-prompt whenever a class level changes (level-up / level-down),
+// so the next sheet render offers any newly-owed feat.
+Hooks.on('updateItem', (item, changes) => {
+	if (item?.type !== 'class') return;
+	if (foundry.utils.getProperty(changes, 'system.classLevel') === undefined) return;
+	const actor = item.actor;
+	if (actor) autoFeatPromptArmed.delete(actor.id);
+});
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Feats — mechanical automation (the eight feats with non-trivial effects)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Vigilant (+KEY initiative) ships as a declarative `initiativeBonus` rule in
+ * its JSON, so it needs no code here. The rest are implemented below:
+ *
+ *   • Academic            — grant-time dialog distributing 3 skill points.
+ *   • Bulwark             — token-aura: +2 Armor to adjacent allies.
+ *   • Defensive Duelist   — +2 Armor while wielding a DEX melee weapon, no shield.
+ *   • Dual Wielder        — +1 Armor while two weapons are equipped.
+ *   • Elemental Specialist— +KEY damage to tiered spells of a chosen school.
+ *   • Healer              — targetable KEY-HP heal, once per Safe Rest.
+ *   • Second Wind         — spend a Hit Die to heal its result +KEY, once per day.
+ *
+ * The three Armor feats can't be static `armorClass` rules (the predicate domain
+ * has no tag for weapon-wielding state or aura adjacency), so they're computed in
+ * the patched character `prepareDerivedData` (see the `setup` hook). Healer /
+ * Second Wind are activatable via each feat's `system.macro`. Academic / Elemental
+ * Specialist are configured at grant time (and re-configurable from the sheet).
+ */
+
+const NIM_SKILLS = [
+	['arcana', 'Arcana'],
+	['examination', 'Examination'],
+	['finesse', 'Finesse'],
+	['influence', 'Influence'],
+	['insight', 'Insight'],
+	['lore', 'Lore'],
+	['might', 'Might'],
+	['naturecraft', 'Naturecraft'],
+	['perception', 'Perception'],
+	['stealth', 'Stealth'],
+];
+
+const ELEM_SCHOOLS = [
+	['fire', 'Fire'],
+	['ice', 'Ice'],
+	['lightning', 'Lightning'],
+	['necrotic', 'Necrotic'],
+	['radiant', 'Radiant'],
+	['wind', 'Wind'],
+];
+
+const ELEM_KEY_ABILITIES = [
+	['key', 'Key (highest)'],
+	['strength', 'Strength'],
+	['dexterity', 'Dexterity'],
+	['intelligence', 'Intelligence'],
+	['will', 'Will'],
+];
+
+// ── Shared helpers ──────────────────────────────────────────────────────────
+
+function actorOwnsFeat(actor, identifier) {
+	return !!actor?.items?.some?.((i) => i.type === 'feature' && i.system?.identifier === identifier);
+}
+
+/** The actor's KEY ability modifier (highest of its class key abilities). */
+function actorKeyMod(actor) {
+	try {
+		return Math.floor(Number(actor?.getRollData?.()?.key ?? 0)) || 0;
+	} catch {
+		return 0;
+	}
+}
+
+function equippedWeapons(actor) {
+	const items = actor?.items?.contents ?? Array.from(actor?.items ?? []);
+	return items.filter(
+		(i) => i.type === 'object' && i.system?.objectType === 'weapon' && i.system?.equipped === true,
+	);
+}
+
+function hasEquippedShield(actor) {
+	const items = actor?.items?.contents ?? Array.from(actor?.items ?? []);
+	return items.some(
+		(i) => i.type === 'object' && i.system?.objectType === 'shield' && i.system?.equipped === true,
+	);
+}
+
+function weaponIsRanged(weapon) {
+	if (weapon.system?.activation?.targets?.attackType === 'range') return true;
+	const selected = weapon.system?.properties?.selected;
+	return Array.isArray(selected) && selected.includes('range');
+}
+
+// A weapon "uses DEX" when any of its damage formulas reference `@dexterity`
+// (the token Nimble weapons use, e.g. dagger "1d4 + @dexterity").
+function weaponUsesDex(weapon) {
+	const effects = weapon.system?.activation?.effects;
+	if (!Array.isArray(effects)) return false;
+	try {
+		return JSON.stringify(effects).includes('@dexterity');
+	} catch {
+		return false;
+	}
+}
+
+function hasDexMeleeWeapon(actor) {
+	if (hasEquippedShield(actor)) return false; // feat: no benefit while wielding a shield
+	return equippedWeapons(actor).some((w) => !weaponIsRanged(w) && weaponUsesDex(w));
+}
+
+function isDualWielding(actor) {
+	return equippedWeapons(actor).length >= 2;
+}
+
+// ── Armor feats: Defensive Duelist, Dual Wielder, Bulwark aura ───────────────
+
+function sceneGridSize(scene) {
+	return scene?.grid?.size ?? scene?.dimensions?.size ?? 100;
+}
+
+/**
+ * True when token docs `a` and `b` occupy directly-adjacent (incl. diagonal)
+ * cells. Each token's cell box is derived from its top-left position and width/
+ * height; `a`'s box is expanded by one cell and tested for overlap with `b`'s.
+ * Handles multi-cell tokens and treats overlapping tokens as adjacent.
+ */
+function tokenDocsAdjacent(a, b, size) {
+	const ax = Math.floor(a.x / size);
+	const ay = Math.floor(a.y / size);
+	const bx = Math.floor(b.x / size);
+	const by = Math.floor(b.y / size);
+	const aw = Math.max(1, Math.round(a.width ?? 1));
+	const ah = Math.max(1, Math.round(a.height ?? 1));
+	const bw = Math.max(1, Math.round(b.width ?? 1));
+	const bh = Math.max(1, Math.round(b.height ?? 1));
+	const aMinX = ax - 1;
+	const aMaxX = ax + aw;
+	const aMinY = ay - 1;
+	const aMaxY = ay + ah;
+	const bMinX = bx;
+	const bMaxX = bx + bw - 1;
+	const bMinY = by;
+	const bMaxY = by + bh - 1;
+	return aMinX <= bMaxX && bMinX <= aMaxX && aMinY <= bMaxY && bMinY <= aMaxY;
+}
+
+/**
+ * +2 Armor for each allied Bulwark owner whose token is adjacent to one of this
+ * actor's tokens on the active scene. Allies are tokens sharing this actor's
+ * disposition. Requires a ready canvas; returns 0 during load (the aura is
+ * recomputed on canvasReady and on any token move — see the hooks below).
+ */
+function bulwarkAuraBonus(actor) {
+	if (!canvas?.ready) return 0;
+	const scene = canvas.scene;
+	if (!scene) return 0;
+	const all = scene.tokens?.contents ?? Array.from(scene.tokens ?? []);
+	const mine = all.filter((t) => t.actorId === actor.id);
+	if (!mine.length) return 0;
+	const size = sceneGridSize(scene);
+	let total = 0;
+	for (const other of all) {
+		const oa = other.actor;
+		if (!oa || oa.id === actor.id) continue;
+		if (oa.type !== 'character') continue; // PC-owned Bulwark only — never NPCs/monsters/minions
+		if (!actorOwnsFeat(oa, 'bulwark')) continue;
+		if (other.disposition !== mine[0].disposition) continue; // allies share disposition
+		if (mine.some((m) => tokenDocsAdjacent(other, m, size))) total += 2;
+	}
+	return total;
+}
+
+/**
+ * Apply conditional feat Armor bonuses to the already-computed AC. Called from
+ * the patched character `prepareDerivedData` (see the `setup` hook), so it runs
+ * after the system has finished its own AC math. Derived-only: re-evaluated each
+ * prepare, so a bonus is applied exactly once and self-clears with its condition.
+ */
+function applyFeatArmorAdjustments(actor) {
+	if (actor?.type !== 'character') return;
+	if (!featsEnabled()) return;
+	const armor = actor.system?.attributes?.armor;
+	if (!armor || typeof armor.value !== 'number') return;
+
+	let bonus = 0;
+	const parts = [];
+	if (actorOwnsFeat(actor, 'defensive-duelist') && hasDexMeleeWeapon(actor)) {
+		bonus += 2;
+		parts.push('Defensive Duelist');
+	}
+	if (actorOwnsFeat(actor, 'dual-wielder') && isDualWielding(actor)) {
+		bonus += 1;
+		parts.push('Dual Wielder');
+	}
+	const aura = bulwarkAuraBonus(actor);
+	if (aura > 0) {
+		bonus += aura;
+		parts.push(aura > 2 ? `Bulwark ×${aura / 2}` : 'Bulwark');
+	}
+
+	if (bonus !== 0) {
+		armor.value += bonus;
+		armor.hint = `${armor.hint ?? ''} + ${parts.join(' + ')}`.trim();
+	}
+}
+
+/**
+ * Re-prepare every character with a token on `scene` so Bulwark auras refresh
+ * after movement / token changes. No-op unless the Feats setting is on and at
+ * least one token on the scene owns Bulwark, keeping the common case cheap.
+ */
+function refreshBulwarkAuras(scene) {
+	if (!featsEnabled() || !canvas?.ready) return;
+	const sc = scene ?? canvas.scene;
+	if (!sc) return;
+	const tokens = sc.tokens?.contents ?? Array.from(sc.tokens ?? []);
+	if (!tokens.some((t) => t.actor && actorOwnsFeat(t.actor, 'bulwark'))) return;
+	const seen = new Set();
+	for (const t of tokens) {
+		const a = t.actor;
+		if (!a || a.type !== 'character' || seen.has(a.id)) continue;
+		seen.add(a.id);
+		try {
+			a.prepareData();
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to re-prepare actor for Bulwark aura`, error);
+		}
+		for (const app of Object.values(a.apps ?? {})) app?.render?.(false);
+	}
+}
+
+// Only player-character token changes can alter a Bulwark aura (both the owner
+// and the beneficiary are always PCs), so NPC/monster/minion movement is ignored.
+const isPlayerCharacterToken = (doc) => doc?.actor?.type === 'character';
+Hooks.on('updateToken', (doc, changes) => {
+	if (!('x' in changes || 'y' in changes)) return;
+	if (!isPlayerCharacterToken(doc)) return;
+	refreshBulwarkAuras(doc.parent);
+});
+Hooks.on('createToken', (doc) => {
+	if (isPlayerCharacterToken(doc)) refreshBulwarkAuras(doc.parent);
+});
+Hooks.on('deleteToken', (doc) => {
+	if (isPlayerCharacterToken(doc)) refreshBulwarkAuras(doc.parent);
+});
+Hooks.on('canvasReady', () => refreshBulwarkAuras(canvas?.scene));
+
+// ── Elemental Specialist: +KEY damage to a chosen school's tiered spells ─────
+
+function elementalKeyValue(actor, ability) {
+	if (!ability || ability === 'key') return actorKeyMod(actor);
+	return Math.floor(Number(actor?.system?.abilities?.[ability]?.mod ?? 0)) || 0;
+}
+
+/** Depth-first search for the first `type:'damage'` node carrying a formula. */
+function findFirstDamageNode(effects) {
+	if (!Array.isArray(effects)) return null;
+	for (const node of effects) {
+		if (!node || typeof node !== 'object') continue;
+		if (node.type === 'damage' && typeof node.formula === 'string' && node.formula.trim()) return node;
+		for (const value of Object.values(node)) {
+			if (Array.isArray(value)) {
+				const found = findFirstDamageNode(value);
+				if (found) return found;
+			} else if (value && typeof value === 'object') {
+				const found = findFirstDamageNode([value]);
+				if (found) return found;
+			}
+		}
+	}
+	return null;
+}
+
+/**
+ * If `spell` is a tiered spell of the Elemental Specialist's chosen school,
+ * append `+ KEY` to its primary damage formula in-memory and return a restore
+ * thunk. Returns null when it doesn't apply.
+ */
+function applyElementalSpecialistBonus(spell) {
+	if (spell?.type !== 'spell') return null;
+	const actor = spell.actor;
+	if (!actor || !featsEnabled()) return null;
+	const feat = actor.items?.find?.((i) => i.system?.identifier === 'elemental-specialist');
+	const chosen = feat?.getFlag?.(MODULE_ID, 'elementalChosen');
+	if (!chosen?.school) return null;
+	if (spell.system?.school !== chosen.school) return null;
+	if (Number(spell.system?.tier ?? 0) < 1) return null; // tiered spells only (no cantrips)
+
+	const key = elementalKeyValue(actor, chosen.ability);
+	if (!Number.isFinite(key) || key <= 0) return null;
+
+	const node = findFirstDamageNode(spell.system?.activation?.effects);
+	if (!node) return null;
+	const original = node.formula;
+	node.formula = `${original} + ${key}`;
+	return () => {
+		node.formula = original;
+	};
+}
+
+/** Open the school + key picker for Elemental Specialist and store the choice. */
+async function chooseElementalSpecialist(actor, item) {
+	const feat = item ?? actor?.items?.find?.((i) => i.system?.identifier === 'elemental-specialist');
+	if (!actor || !feat) {
+		ui.notifications?.warn(`[${MODULE_ID}] No Elemental Specialist feat on this character.`);
+		return null;
+	}
+	const schoolOpts = ELEM_SCHOOLS.map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+	const keyOpts = ELEM_KEY_ABILITIES.map(
+		([k, l]) => `<option value="${k}"${k === 'key' ? ' selected' : ''}>${l}</option>`,
+	).join('');
+
+	const choice = await foundry.applications.api.DialogV2.wait({
+		window: { title: `Elemental Specialist — ${actor.name}` },
+		content: `
+			<form class="nim-plus-elemental">
+				<p>Choose <strong>one spell school you know</strong>. Its <em>tiered</em> spells gain bonus damage equal to the selected key stat.</p>
+				<div class="form-group"><label>Spell School</label><select name="school">${schoolOpts}</select></div>
+				<div class="form-group"><label>Damage Key Stat</label><select name="ability">${keyOpts}</select></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Confirm',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-elemental');
+					if (!form) return null;
+					return { school: form.elements.school?.value, ability: form.elements.ability?.value };
+				},
+			},
+			{ action: 'cancel', label: 'Later', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+
+	if (!choice?.school) {
+		ui.notifications?.info('Elemental Specialist can be configured later from the Feats panel.');
+		return null;
+	}
+
+	await feat.setFlag(MODULE_ID, 'elementalChosen', { school: choice.school, ability: choice.ability });
+	for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+	resyncFeatsForActor(actor);
+
+	const schoolLabel = ELEM_SCHOOLS.find((s) => s[0] === choice.school)?.[1] ?? choice.school;
+	const keyLabel = ELEM_KEY_ABILITIES.find((a) => a[0] === choice.ability)?.[1] ?? choice.ability;
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Elemental Specialist</strong>`,
+		content: `<p>${escape(actor.name)} specializes in the <strong>${escape(schoolLabel)}</strong> school — its tiered spells now deal <strong>+${escape(keyLabel)}</strong> damage.</p>`,
+	});
+}
+
+// ── Academic: distribute 3 skill points ─────────────────────────────────────
+
+/**
+ * Distribute Academic's 3 skill points. The system's level-up dialog hardcodes
+ * "1 point per level" in compiled Svelte that an external module can't safely
+ * patch, so we grant the 3 extra points the same way the level-up flow does —
+ * by writing `system.skills.<key>.points` directly — through a dedicated dialog
+ * shown when the feat is gained (and re-openable from the Feats panel).
+ */
+async function allocateAcademic(actor, item) {
+	const feat = item ?? actor?.items?.find?.((i) => i.system?.identifier === 'academic');
+	if (!actor || !feat) {
+		ui.notifications?.warn(`[${MODULE_ID}] No Academic feat on this character.`);
+		return null;
+	}
+	if (feat.getFlag(MODULE_ID, 'academicAllocated') === true) {
+		ui.notifications?.info('Academic skill points have already been allocated.');
+		return null;
+	}
+
+	const options = NIM_SKILLS.map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+	const selectRow = (n) =>
+		`<div class="form-group"><label>Point ${n}</label><select name="s${n}">${options}</select></div>`;
+
+	const picks = await foundry.applications.api.DialogV2.wait({
+		window: { title: `Academic — Allocate 3 Skill Points — ${actor.name}` },
+		content: `
+			<form class="nim-plus-academic">
+				<p>Academic grants <strong>3 skill points</strong> to distribute (stack them on one skill or spread them out) plus <strong>3 extra languages</strong> (track those on your sheet notes).</p>
+				${selectRow(1)}${selectRow(2)}${selectRow(3)}
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Allocate',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-academic');
+					if (!form) return null;
+					return [form.elements.s1?.value, form.elements.s2?.value, form.elements.s3?.value];
+				},
+			},
+			{ action: 'cancel', label: 'Later', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+
+	if (!Array.isArray(picks) || picks.some((p) => !p)) {
+		ui.notifications?.info('Academic points can be allocated later from the Feats panel.');
+		return null;
+	}
+
+	const tally = {};
+	for (const key of picks) tally[key] = (tally[key] ?? 0) + 1;
+
+	const updates = {};
+	for (const [key, n] of Object.entries(tally)) {
+		const current = Number(actor.system?.skills?.[key]?.points ?? 0);
+		updates[`system.skills.${key}.points`] = current + n;
+	}
+	await actor.update(updates);
+	await feat.setFlag(MODULE_ID, 'academicAllocated', true);
+	await feat.setFlag(MODULE_ID, 'academicAllocation', tally);
+	for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+	resyncFeatsForActor(actor);
+
+	const summary = Object.entries(tally)
+		.map(([k, n]) => `+${n} ${NIM_SKILLS.find((s) => s[0] === k)?.[1] ?? k}`)
+		.join(', ');
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Academic</strong>`,
+		content: `<p>${escape(actor.name)} allocates 3 skill points: <strong>${escape(summary)}</strong>. <em>(Also learns 3 extra languages.)</em></p>`,
+	});
+}
+
+// ── Healer: targetable KEY-HP heal, once per Safe Rest ───────────────────────
+
+async function healerHeal(actor, item) {
+	if (!actor || !item) {
+		ui.notifications?.error(`[${MODULE_ID}] healerHeal: missing actor or item.`);
+		return null;
+	}
+	if (item.getFlag(MODULE_ID, 'healerUsed') === true) {
+		ui.notifications?.warn(`${item.name} has already been used — available again after a Safe Rest.`);
+		return null;
+	}
+
+	const key = Math.max(1, actorKeyMod(actor) || 1);
+	const targets = Array.from(game.user?.targets ?? []);
+	const targetActor = targets[0]?.actor;
+	if (!targetActor) {
+		ui.notifications?.warn('Target a creature first (set it as your token target), then use Healer.');
+		return null;
+	}
+	if (typeof targetActor.applyHealing !== 'function') {
+		ui.notifications?.error(`[${MODULE_ID}] Target cannot receive healing.`);
+		return null;
+	}
+
+	await targetActor.applyHealing(key);
+	await item.setFlag(MODULE_ID, 'healerUsed', true);
+	for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>${escape(actor.name)} touches <strong>${escape(targetActor.name)}</strong>, healing <strong>${key}</strong> HP (KEY). <em>Usable again after a Safe Rest.</em></p>`,
+	});
+}
+
+// ── Second Wind: spend a Hit Die to heal its result +KEY, once per day ───────
+
+async function secondWind(actor, item) {
+	if (!actor || !item) {
+		ui.notifications?.error(`[${MODULE_ID}] secondWind: missing actor or item.`);
+		return null;
+	}
+	if (item.getFlag(MODULE_ID, 'secondWindUsed') === true) {
+		ui.notifications?.warn(`${item.name} has already been used — available again after a Safe Rest.`);
+		return null;
+	}
+
+	const pool = actor.system?.attributes?.hitDice ?? {};
+	const available = Object.keys(pool)
+		.filter((s) => Number(pool[s]?.current ?? 0) > 0)
+		.map((s) => Number(s))
+		.filter((s) => Number.isFinite(s) && s > 0)
+		.sort((a, b) => b - a);
+
+	if (available.length === 0) {
+		ui.notifications?.warn('No Hit Dice available to spend on Second Wind.');
+		return null;
+	}
+
+	let size = available[0];
+	if (available.length > 1) {
+		const opts = available
+			.map((s) => `<option value="${s}">d${s} (${pool[String(s)].current} available)</option>`)
+			.join('');
+		const picked = await foundry.applications.api.DialogV2.wait({
+			window: { title: `${item.name} — Spend a Hit Die` },
+			content: `<form class="nim-plus-second-wind"><div class="form-group"><label>Hit Die to spend</label><select name="size">${opts}</select></div></form>`,
+			buttons: [
+				{
+					action: 'ok',
+					label: 'Spend',
+					default: true,
+					callback: (_event, button, dialog) => {
+						const root = dialog?.element ?? button;
+						const form = root?.querySelector?.('form.nim-plus-second-wind');
+						return form?.elements?.size?.value ?? null;
+					},
+				},
+				{ action: 'cancel', label: 'Cancel', callback: () => null },
+			],
+			rejectClose: false,
+			modal: false,
+		}).catch(() => null);
+		if (picked === null) return null;
+		size = Number(picked) || size;
+	}
+
+	const current = Number(pool[String(size)]?.current ?? 0);
+	if (current <= 0) {
+		ui.notifications?.warn(`No d${size} Hit Dice remain.`);
+		return null;
+	}
+
+	await actor.update({ [`system.attributes.hitDice.${size}.current`]: current - 1 });
+
+	const key = actorKeyMod(actor);
+	const formula = key !== 0 ? `1d${size} + ${key}` : `1d${size}`;
+	const roll = await new Roll(formula, actor.getRollData()).evaluate();
+	const healAmount = Math.max(0, roll.total);
+	if (typeof actor.applyHealing === 'function') await actor.applyHealing(healAmount);
+	await item.setFlag(MODULE_ID, 'secondWindUsed', true);
+	for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+
+	await roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — spent a d${size} Hit Die${key !== 0 ? ` + ${key} KEY` : ''}`,
+		content: `<p>${escape(actor.name)} heals <strong>${healAmount}</strong> HP. Remaining d${size} Hit Dice: <strong>${current - 1}</strong>. <em>Available again after a Safe Rest.</em></p>`,
+	});
+	return roll;
+}
+
+// ── Grant-time configuration + per-rest usage reset ─────────────────────────
+
+// When a feat that needs configuration is gained (via the native level-up
+// dialog or our sheet picker), prompt for it. Gated by userId so only the
+// granting client opens the dialog; guarded by the stored flag so it never
+// re-prompts once configured.
+Hooks.on('createItem', (item, _options, userId) => {
+	if (userId !== game.user?.id) return;
+	if (!featsEnabled()) return;
+	const actor = item?.actor;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	if (item.type !== 'feature') return;
+	const identifier = item.system?.identifier;
+	if (identifier === 'academic') {
+		if (item.getFlag(MODULE_ID, 'academicAllocated') !== true) {
+			allocateAcademic(actor, item).catch((error) =>
+				console.error(`[${MODULE_ID}] Academic allocation failed`, error),
+			);
+		}
+	} else if (identifier === 'elemental-specialist') {
+		if (!item.getFlag(MODULE_ID, 'elementalChosen')) {
+			chooseElementalSpecialist(actor, item).catch((error) =>
+				console.error(`[${MODULE_ID}] Elemental Specialist setup failed`, error),
+			);
+		}
+	}
+});
+
+// Reset once-per-Safe-Rest feat usages (Healer, Second Wind) when the actor
+// completes a Safe Rest. Uses the system's `nimble.rest` hook (payload
+// `{ actor, restType }`), the same one the Seasoned Journeyman handler listens to.
+Hooks.on('nimble.rest', (payload) => {
+	if (payload?.restType !== 'safe') return;
+	const actor = payload.actor;
+	if (!actor) return;
+	const resets = [];
+	for (const it of actor.items ?? []) {
+		if (it.type !== 'feature') continue;
+		const id = it.system?.identifier;
+		if (id === 'healer' && it.getFlag(MODULE_ID, 'healerUsed')) {
+			resets.push(it.setFlag(MODULE_ID, 'healerUsed', false));
+		}
+		if (id === 'second-wind' && it.getFlag(MODULE_ID, 'secondWindUsed')) {
+			resets.push(it.setFlag(MODULE_ID, 'secondWindUsed', false));
+		}
+	}
+	if (resets.length === 0) return;
+	Promise.all(resets)
+		.then(() => {
+			for (const app of Object.values(actor.apps ?? {})) app?.render?.(false);
+		})
+		.catch((error) => console.error(`[${MODULE_ID}] Failed to reset feat usages on Safe Rest`, error));
+});
+
+// Feats owned but not yet configured — surfaced as buttons in the sheet panel.
+function featsNeedingConfig(actor) {
+	const out = [];
+	const academic = actor?.items?.find?.((i) => i.system?.identifier === 'academic');
+	if (academic && academic.getFlag(MODULE_ID, 'academicAllocated') !== true) {
+		out.push({ kind: 'academic', label: 'Allocate Academic points' });
+	}
+	const elemental = actor?.items?.find?.((i) => i.system?.identifier === 'elemental-specialist');
+	if (elemental && !elemental.getFlag(MODULE_ID, 'elementalChosen')) {
+		out.push({ kind: 'elemental', label: 'Choose Elemental school' });
+	}
+	return out;
 }
 
 function escape(str) {

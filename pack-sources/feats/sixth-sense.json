@@ -1,0 +1,83 @@
+{
+	"name": "Sixth Sense",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/sixth-sense.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sixth-sense",
+		"rules": [
+			{
+				"id": "feat-sixth-sense-perception",
+				"identifier": "",
+				"label": "Sixth Sense — +1 Perception",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"perception"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Assess for free, 1/encounter. Gain Blindsight 3. +1 Perception.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "passive"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "D6O5d1RCeDeFWHOh",
+	"folder": null
+}

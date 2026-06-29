@@ -1,0 +1,83 @@
+{
+	"name": "Actor",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/actor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "actor",
+		"rules": [
+			{
+				"id": "feat-actor-influence",
+				"identifier": "",
+				"label": "Actor — +2 Influence",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "skillBonus",
+				"value": "2",
+				"skills": [
+					"influence"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can mimic the speech or the sounds made by other creatures. +2 Influence.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "passive"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xWAP4lJRqparUXh0",
+	"folder": null
+}

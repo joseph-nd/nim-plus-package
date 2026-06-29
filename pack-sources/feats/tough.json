@@ -1,0 +1,81 @@
+{
+	"name": "Tough",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/tough.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tough",
+		"rules": [
+			{
+				"id": "feat-tough-hp",
+				"identifier": "",
+				"label": "Tough — +2 Max HP per level",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "maxHpBonus",
+				"value": 2,
+				"perLevel": true
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain 2x LVL in Max HP. On LVL up, gain 2x Max HP.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "passive"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "98hPawcCPZwVQmAS",
+	"folder": null
+}

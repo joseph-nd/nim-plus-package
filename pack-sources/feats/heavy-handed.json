@@ -1,0 +1,69 @@
+{
+	"name": "Heavy Handed",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/heavy-handed.webp",
+	"system": {
+		"macro": "",
+		"identifier": "heavy-handed",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p class=\"nim-plus-feat-req\"><strong>Prerequisite:</strong> 3 STR.</p><p>When you attack with a 2-Handed Melee weapon, ignore Armor, 1/encounter.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "3 STR",
+			"featAction": "none"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "HZd8mrUYkeaTBLVA",
+	"folder": null
+}

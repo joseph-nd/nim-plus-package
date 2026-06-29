@@ -1,0 +1,83 @@
+{
+	"name": "Martial Adept",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/martial-adept.webp",
+	"system": {
+		"macro": "",
+		"identifier": "martial-adept",
+		"rules": [
+			{
+				"id": "feat-martial-adept-weapons",
+				"identifier": "",
+				"label": "Martial Adept — Proficiency with all weapons",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "grantProficiency",
+				"proficiencyType": "weapons",
+				"values": [
+					"all"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Proficiency with ALL Weapons. Action: Attack with a Weapon AND reduce target's Armor by 1 Step until their next turn, 1/day.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "action"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oHUX8z32mzJsMzFv",
+	"folder": null
+}

@@ -1,0 +1,83 @@
+{
+	"name": "Athlete",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/athlete.webp",
+	"system": {
+		"macro": "",
+		"identifier": "athlete",
+		"rules": [
+			{
+				"id": "feat-athlete-might",
+				"identifier": "",
+				"label": "Athlete — +1 Might",
+				"predicate": {},
+				"priority": 1,
+				"disabled": false,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"might"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Standing up costs 1 Speed. Ignore difficult terrain when climbing. You can long jump up to half your speed. +1 Might.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "",
+			"featAction": "passive"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "we07CnQ02Ewy01XW",
+	"folder": null
+}

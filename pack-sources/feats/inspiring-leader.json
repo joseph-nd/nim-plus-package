@@ -1,0 +1,69 @@
+{
+	"name": "Inspiring Leader",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/feats/inspiring-leader.webp",
+	"system": {
+		"macro": "",
+		"identifier": "inspiring-leader",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p class=\"nim-plus-feat-req\"><strong>Prerequisite:</strong> 2 WIL.</p><p>When you Catch Breath, give your allies Temp HP equal to your LVL, 1/day. Allies within Range 6 have advantage against Frightened.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "feats",
+		"gainedAtLevels": [
+			1,
+			4,
+			8,
+			12,
+			16
+		],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"feat": true,
+			"featReq": "2 WIL",
+			"featAction": "none"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "SNwCHwEdcKgiqJbl",
+	"folder": null
+}

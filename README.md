@@ -18,7 +18,7 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 4. Click **Install**. Foundry downloads the latest tagged release.
 5. Launch your Nimble world → **Game Settings → Manage Modules** → tick **Nim+ Package** → **Save Module Settings**.
-6. The compendium sidebar will now show six new **Nim+ …** packs (Classes, Subclasses, Class Features, Spells, Items, Companions). Drag content onto your sheet or world like any other compendium.
+6. The compendium sidebar will now show seven new **Nim+ …** packs (Classes, Subclasses, Class Features, Spells, Items, Companions, Feats). Drag content onto your sheet or world like any other compendium.
 
 **Updating.** Foundry auto-checks the manifest URL on launch — when a new tag is published, you'll see an update prompt in **Manage Modules**.
 
@@ -26,7 +26,7 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **546 documents** across **6 compendium packs**:
+The module currently ships **598 documents** across **7 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
@@ -36,6 +36,20 @@ The module currently ships **546 documents** across **6 compendium packs**:
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
 | **Nim+ Items** | 15 | Hexbinder concoctions (8) + Artificer inventions and prototypes (7) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
+| **Nim+ Feats** | 52 | optional class-agnostic feats (off by default — see **Optional: Feats** below) |
+
+### Optional: Feats
+
+A class-agnostic Feats system — **off by default**. Enable it in **Game Settings → Configure Settings → Nim+ Package → Enable Feats**. Once on, any character may choose a feat at levels **1, 4, 8, 12, and 16**:
+
+- At levels **4 / 8 / 12 / 16**, a **"Feats (Choose one)" section appears inside the level-up window**. Pick your feat there and it's granted when you confirm the level-up.
+- At **level 1** (character creation has no level-up window), the feat picker opens automatically when you first open the character's sheet.
+- The character sheet's **Features** tab also has a dedicated **Feats** section listing your chosen feats (click one to open it), with a **Choose Feat** button for back-fill — e.g. when you enable the setting mid-campaign.
+- Feats are previewed at levels 1 / 4 / 8 / 12 / 16 in the class **Progression** tab.
+
+The picker hides feats you already have and greys out any whose ability-score prerequisite (e.g. *Req. 3 STR*) you don't meet; other prerequisites are shown as text for you to honor. Feats are ordinary feature items once granted, so they show in your features list and can be dragged from the **Nim+ Feats** compendium like any other content.
+
+Many feats are **mechanically automated** rather than text-only. Always-on bonuses (skills, Armor, Speed, Wounds, Hit Dice, max HP, weapon proficiency, initiative) apply the instant the feat is taken. Beyond those, eight feats carry deeper automation: **Academic** opens a 3-skill-point allocator; **Bulwark** grants +2 Armor to adjacent allies on the canvas; **Defensive Duelist** / **Dual Wielder** adjust Armor from your equipped weapons; **Elemental Specialist** lets you pick a spell school + key stat and then adds that bonus to your tiered spells of that school automatically; and **Healer** / **Second Wind** become click-to-use actions (target-heal and spend-a-Hit-Die-to-heal, respectively), each refreshing on a Safe Rest. The rest remain descriptive prompts for effects that depend on table adjudication.
 
 ### New classes
 
