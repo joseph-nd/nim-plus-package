@@ -1,0 +1,40 @@
+{
+	"name": "Otterfolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/otterfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1otterfolkr0",
+				"identifier": "",
+				"label": "At Home in Water",
+				"predicate": {},
+				"priority": 1,
+				"type": "grantMovement",
+				"mode": "swim",
+				"speed": "@attributes.movement.walk"
+			}
+		],
+		"description": "<p>Playful, friendly, and always up for some well-intended mischief, Otterfolk are at home both in water and on land. Although they can be fierce warriors, they typically prefer using their environment to their advantage.</p><hr><p><strong>At Home in Water</strong></p><p>You have a swim Speed as long as you are wearing armor no heavier than leather. [A — disable the rule manually while wearing heavier armor]</p><p>When Field Resting in water, you regain additional HP equal to your level. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "9cSCJpK3jZ4uzlP1"
+}

@@ -1,0 +1,46 @@
+{
+	"name": "Mousefolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/mousefolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1mousefolkr0",
+				"identifier": "",
+				"label": "Dauntless",
+				"predicate": {
+					"$and": [
+						"self:dying"
+					]
+				},
+				"priority": 1,
+				"type": "damageBonus",
+				"value": "@will",
+				"damageType": null,
+				"delivery": null,
+				"source": null,
+				"targetCondition": null
+			}
+		],
+		"description": "<p>Mousefolk pride themselves on being brave and steadfast against insurmountable odds. Although their fearlessness does get them into trouble more often than not, they will never flee from a fight.</p><hr><p><strong>Dauntless</strong></p><p>Frightened does not affect your Speed. [M]</p><p>While Dying, your attacks gain +WIL damage. [A]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>",
+		"exotic": true,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bJq21GdyNJplMTUB"
+}

@@ -1,0 +1,39 @@
+{
+	"name": "Crustodian",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/crustodian.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1crustodianr0",
+				"identifier": "",
+				"label": "Vice Grip",
+				"predicate": {},
+				"priority": 1,
+				"type": "armorClass",
+				"formula": "1",
+				"mode": "add"
+			}
+		],
+		"description": "<p>Sturdy folk of shell and claw with a strong sense of duty. Rarely seen away from their lagoon homes, but always considered valuable allies.</p><hr><p><strong>Vice Grip</strong></p><p>(1/encounter) When you hit a creature in melee, you may grapple it for free. Requires a free claw. [M]</p><p>+1 Defense. [A]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Rx7w4mzPUglxqkYY"
+}

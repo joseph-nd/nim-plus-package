@@ -1,0 +1,44 @@
+{
+	"name": "Haunted by Nightmares",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/haunted-by-nightmares.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1hauntedbynr0",
+				"identifier": "",
+				"label": "Haunted by Nightmares",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1hauntedbynr1",
+				"identifier": "",
+				"label": "Haunted by Nightmares",
+				"predicate": {},
+				"priority": 1,
+				"type": "initiativeBonus",
+				"value": "1"
+			}
+		],
+		"description": "<p>+1 Speed and Initiative. [A] You always fail saves against Frightened. [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "KkZCzet4V6EKfsgk"
+}

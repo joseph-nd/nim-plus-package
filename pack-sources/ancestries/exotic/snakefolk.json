@@ -1,0 +1,28 @@
+{
+	"name": "Snakefolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/snakefolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Cold-Hearted? Poisonous? Hissing through a forked tongue? Show your detractors exactly what you think of their ugly comments.</p><hr><p><strong>Toxic Spit</strong></p><p>(1/encounter) Action: Spit an adjacent foe in the face. 1d4 Poison. On hit: Blinded until the end of their next turn. [M]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Zf5HJ8nMvylgz6Ft"
+}

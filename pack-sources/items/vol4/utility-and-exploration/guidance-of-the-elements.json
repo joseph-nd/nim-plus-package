@@ -1,0 +1,117 @@
+{
+	"name": "Guidance of the Elements",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/utility-and-exploration/guidance-of-the-elements.webp",
+	"system": {
+		"macro": "return nimPlus.vol4.elementalGuidance(actor, item);",
+		"identifier": "guidance-of-the-elements",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4guidanceor0",
+				"identifier": "elemental-guidance",
+				"label": "Guidance of the Elements",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4guidanceor1",
+				"identifier": "",
+				"label": "Guidance of the Elements",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "elemental-guidance",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Compass</strong> &middot; <strong>Price:</strong> 1,234 g</p><p><em>Inscribed with runes for each of the four elements.</em></p><hr><p>Grants guidance when faced with a choice of direction or action (1/Safe Rest). Roll 1d4:</p><ul><li><strong>1 - Fire.</strong> Points towards riskiest path</li><li><strong>2 - Air.</strong> Points towards the most direct path</li><li><strong>3 - Water.</strong> Points towards the safest path</li><li><strong>4 - Earth.</strong> Points towards the most consistent path</li></ul><p><em>Activate to roll the 1d4 and post the guidance.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Khan Wick, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 1234,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Aihci3tEK9xKNJIL",
+	"folder": "0682063bd6361d1a"
+}

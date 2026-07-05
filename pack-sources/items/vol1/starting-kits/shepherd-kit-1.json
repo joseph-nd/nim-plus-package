@@ -1,0 +1,97 @@
+{
+	"name": "Shepherd — Variant Kit 1",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/shepherd-kit-1.webp",
+	"system": {
+		"macro": "",
+		"identifier": "shepherd-kit-1",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1shepherdkir0",
+				"identifier": "",
+				"label": "Starting Gear - Staff",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.eqFoSxHnz5UxtHKd"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1shepherdkir1",
+				"identifier": "",
+				"label": "Starting Gear - 3 Throwing Hammers",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.aWD1c0GgL1ay49RQ"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1shepherdkir2",
+				"identifier": "",
+				"label": "Starting Gear - Strange Plant",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.kc9nmzlNv6yecQoJ"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Shepherd.</em></p><p>Take this set <strong>instead of</strong> the Shepherd’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>Staff</li><li>3 Throwing Hammers</li><li>Strange Plant</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"folder": "44ce9b9fd6cbd7f2",
+	"flags": {
+		"nim-plus-package": {
+			"vol1Kit": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "E7y66IALq9dr1Ixm"
+}

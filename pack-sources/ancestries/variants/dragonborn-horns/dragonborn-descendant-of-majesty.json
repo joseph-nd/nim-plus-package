@@ -1,0 +1,56 @@
+{
+	"name": "Dragonborn (Descendant of Majesty)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/dragonborn-horns/dragonborn-descendant-of-majesty.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1dragonbornr0",
+				"identifier": "",
+				"label": "Draconic heritage",
+				"predicate": {},
+				"priority": 1,
+				"type": "armorClass",
+				"formula": "1",
+				"mode": "add"
+			},
+			{
+				"disabled": false,
+				"id": "v1dragonbornr1",
+				"identifier": "",
+				"label": "Draconic Heritage",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"draconic"
+				]
+			}
+		],
+		"description": "<p>The soul of a dragon burns within you, the scales of your body are like forged steel. You are a kiln and your heritage the coals that stoke your flames. Call upon your wrath, to speak in the tongue of your ancestors and imbue unbridled fury into your attacks.</p><hr><p><strong>Draconic Heritage</strong></p><p>+1 Armor. [A]</p><p>When you attack: deal an additional LVL+KEY damage (ignoring armor) divided as you choose among any of your targets; recharges whenever you Safe Rest or gain a Wound.</p><p>You know Draconic if your INT is not negative. [M]</p><hr><p><strong>Dragonborn Horns: Descendant of Majesty</strong> — <em>Proudly curved horns mark your gallant ancestry.</em></p><p><strong>Challenge Honor</strong></p><p>(1/Safe Rest) Action: Taunt a creature you can see until the start of your next turn. You are also Taunted by that creature. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "8aab80ebcaa801cb",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "aKwVUyf7QKF7Vofw"
+}

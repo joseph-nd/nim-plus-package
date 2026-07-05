@@ -1,0 +1,111 @@
+{
+	"name": "Traveling Tom's Magic Jellybeans",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/traveling-toms-magic-jellybeans.webp",
+	"system": {
+		"macro": "return nimPlus.vol4.jellybean(actor, item);",
+		"identifier": "traveling-toms-magic-jellybeans",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4travelingr0",
+				"identifier": "jellybeans",
+				"label": "Magic Jellybeans",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "5",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": []
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4travelingr1",
+				"identifier": "",
+				"label": "Magic Jellybeans",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "jellybeans",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Candy</strong> &middot; <strong>Price:</strong> 150 g</p><p><em>Pouch of 5 magic jellybeans. You never know what you're going to get until you bite it!</em></p><hr><p>Roll 1d8:</p><ol><li><strong>Green Bean.</strong> Spit onto any surface. Grows into a stable, 1-space large platform. Dissolves into green goo after 10 minutes.</li><li><strong>Yellow Bean.</strong> Chew to gain the effects of Feather Fall for 1 minute. Afterwards you spit up yellow goo.</li><li><strong>Blue Bean.</strong> Spit out to cover a 2&times;2 area with blue goo for 10 minutes. Doubles jumping range and height when bounced on.</li><li><strong>Orange Bean.</strong> Spit out to cover 6 spaces in a line with orange goo for 10 minutes. Doubles movement speed.</li><li><strong>Purple Bean.</strong> Chew to grow a size category for 1 minute, up to Large. Afterwards you spit up purple goo.</li><li><strong>Pink Bean.</strong> Chew to shrink a size category for 1 minute, down to Tiny. Afterwards you spit up pink goo.</li><li><strong>Black Bean.</strong> Spit onto any surface. Grows into a climbable pillar up to 5 meters tall. Dissolves into black goo after 10 minutes.</li><li><strong>White Bean.</strong> Chew to become adhesive for 1 minute, gaining the ability to climb most surfaces. Afterwards you spit up white goo.</li></ol><p><em>Activate to bite a bean — the module rolls the 1d8 and posts which bean you got.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Maliloki, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 150,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cfRPkRqYhN8cJbRV",
+	"folder": "7582b6818536d792"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "Arena Fighter",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/arena-fighter.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You have fought your fair share of duels, and you might even have some fans. You have advantage on skill checks related to riling the audience up or intimidating your opponent. [M]</p><hr><p><em>Nim+ Volume I — submitted by Santuric.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7HSHF3R4YNh9mp4z"
+}

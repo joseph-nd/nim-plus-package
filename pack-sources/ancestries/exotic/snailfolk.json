@@ -1,0 +1,49 @@
+{
+	"name": "Snailfolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/snailfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1snailfolkr0",
+				"identifier": "",
+				"label": "Snail’s Pace",
+				"predicate": {},
+				"priority": 1,
+				"type": "armorClass",
+				"formula": "3",
+				"mode": "add"
+			},
+			{
+				"disabled": false,
+				"id": "v1snailfolkr1",
+				"identifier": "",
+				"label": "Snail’s Pace",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "-5"
+			}
+		],
+		"description": "<p>Slow and deliberate, but usually one ‘step’ ahead. Sluglings are never in a hurry to be anywhere, but can be valuable allies on any journey – if you have the patience.</p><hr><p><strong>Snail’s Pace</strong></p><p>Your base Speed is 1 and you can walk on most surfaces. [A/M]</p><p>Your first Move Action each turn is free. [M]</p><p>Your level is always 1 higher than the rest of the party (up to 20). [M]</p><p>Vulnerable to salt. [M]</p><p>+3 Defense. [A]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>",
+		"exotic": true,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "i76k9j71d6cbuCVH"
+}

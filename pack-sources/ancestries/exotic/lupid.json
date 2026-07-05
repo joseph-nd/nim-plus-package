@@ -1,0 +1,41 @@
+{
+	"name": "Lupid",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/lupid.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1lupidr0",
+				"identifier": "",
+				"label": "Tracker",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"examination"
+				]
+			}
+		],
+		"description": "<p>Canine people, often living in isolated packs. The Lupid are known to be excellent trackers and hunters, often relying on their superior sense of smell.</p><hr><p><strong>Tracker</strong></p><p>+1 Examination. [A]</p><p>Advantage on any skill check related to using your sense of smell. [M]</p><p>Strong urge to howl at the moon. [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QEq6Y011fiAYgnTI"
+}

@@ -1,0 +1,93 @@
+{
+	"name": "Sanctifying Salt",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/sanctifying-salt.webp",
+	"system": {
+		"macro": "",
+		"identifier": "sanctifying-salt",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4salt",
+					"type": "note",
+					"noteType": "info",
+					"text": "2×2 area within Reach 4: undead have disadvantage on all rolls for 3 turns.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Remedy</strong> &middot; <strong>Price:</strong> 800 g</p><p><em>Vial of gold-flecked salt.</em></p><hr><p>Spray salt in a 2&times;2 area within Reach 4. All undead creatures in the area gain disadvantage on all rolls for 3 turns.</p><p class=\"nim-plus-credit\"><em>&mdash; Tauntje, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 800,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VA0sH01tCuVjK8TO",
+	"folder": "7582b6818536d792"
+}

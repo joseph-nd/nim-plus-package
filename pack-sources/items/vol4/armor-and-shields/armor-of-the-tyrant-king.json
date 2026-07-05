@@ -1,0 +1,106 @@
+{
+	"name": "Armor of the Tyrant King",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/armor-of-the-tyrant-king.webp",
+	"system": {
+		"macro": "",
+		"identifier": "armor-of-the-tyrant-king",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4armoroftr0",
+				"identifier": "",
+				"label": "Armor of the Tyrant King",
+				"predicate": {},
+				"priority": 1,
+				"formula": "20-@dexterity",
+				"mode": "add"
+			},
+			{
+				"type": "initiativeMessage",
+				"disabled": false,
+				"id": "v4armoroftr1",
+				"identifier": "",
+				"label": "Armor of the Tyrant King",
+				"predicate": {},
+				"priority": 1,
+				"message": "Dread aura: all enemies within Reach 4 must make a WIL save (DC 10+KEY) or become Frightened for 1 minute (Incapacitated 1 turn on a fail by 5+)."
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Plate Armor</strong> &middot; <strong>Price:</strong> 2,000,000 g</p><p><em>The intoxicating power of dread still churns within the blackened armor of a long-deposed king.</em></p><hr><p><strong>20 Armor</strong> (Req. 4 STR).</p><p>When rolling Initiative, all enemies within Reach 4 must make a WIL save (DC 10+KEY). On fail, they become Frightened for 1 minute or until damaged. If they fail by 5 or more, they also become Incapacitated for 1 turn.</p><p class=\"nim-plus-credit\"><em>&mdash; Can Opener, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 4,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 2000000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jx2vcsHzH2hw9qop",
+	"folder": "e824f6b808017148"
+}

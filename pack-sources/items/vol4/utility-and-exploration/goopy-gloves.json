@@ -1,0 +1,96 @@
+{
+	"name": "Goopy Gloves",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/utility-and-exploration/goopy-gloves.webp",
+	"system": {
+		"macro": "",
+		"identifier": "goopy-gloves",
+		"rules": [
+			{
+				"type": "grantMovement",
+				"disabled": false,
+				"id": "v4goopyglovr0",
+				"identifier": "",
+				"label": "Goopy Gloves",
+				"predicate": {},
+				"priority": 1,
+				"mode": "climb",
+				"speed": "floor(@attributes.movement.walk/2)"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Gloves</strong> &middot; <strong>Price:</strong> Get 'em outta the bin, and they're yours</p><p><em>Covered with mimic-based adhesive.</em></p><hr><p>Grants a climb Speed of half your regular Speed, and the ability to stick to most surfaces.</p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "dBw0o0wR4RvJ04UB",
+	"folder": "0682063bd6361d1a"
+}

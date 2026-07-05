@@ -1,0 +1,93 @@
+{
+	"name": "Pyromaniac's Peppers",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-079-pyromaniacs-peppers.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-079-pyromaniacs-peppers",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm079pepper",
+					"type": "note",
+					"noteType": "info",
+					"text": "Your breath is now flammable. Plan accordingly.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Common Pepper</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Doesn't look that spicy.</em></p><hr><p>Makes your breath flammable.</p><p><em>Capsule prize #79 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kETaaNksmzl5YDsF",
+	"folder": "c0a09015d158170a"
+}

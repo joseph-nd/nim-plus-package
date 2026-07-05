@@ -1,0 +1,126 @@
+{
+	"name": "Dverung Charm of the Mountain",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/dverung-charm-of-the-mountain.webp",
+	"system": {
+		"macro": "",
+		"identifier": "dverung-charm-of-the-mountain",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4dverungchr0",
+				"identifier": "charm-mountain",
+				"label": "Charm of the Mountain",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4dverungchr1",
+				"identifier": "",
+				"label": "Charm of the Mountain",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "charm-mountain",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4cmount",
+					"type": "note",
+					"noteType": "info",
+					"text": "Ignore forced movement or being knocked Prone.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Charm</strong> &middot; <strong>Price:</strong> 200 g</p><p><em>Inscribed with the constellation of the Mountain.</em></p><hr><p>Ignore forced movement or being knocked Prone (1/encounter).</p><p class=\"nim-plus-credit\"><em>&mdash; Uruzrune, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 200,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wU7XfR7Xv4vbtZve",
+	"folder": "7582b6818536d792"
+}

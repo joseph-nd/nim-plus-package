@@ -1,0 +1,58 @@
+{
+	"name": "Fiendkin (Curse of the Wastes)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/fiendkin-curses/fiendkin-curse-of-the-wastes.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1fiendkincur0",
+				"identifier": "",
+				"label": "Flameborn",
+				"predicate": {},
+				"priority": 1,
+				"type": "savingThrowRollMode",
+				"value": 1,
+				"target": "neutral",
+				"mode": "set",
+				"requiresChoice": true
+			},
+			{
+				"disabled": false,
+				"id": "v1fiendkincur1",
+				"identifier": "",
+				"label": "Flameborn",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"infernal"
+				]
+			}
+		],
+		"description": "<p>Said to have been born from the union of man and fiend, or from a cursed bloodline, Fiendkin often find themselves outcasts in society. Yet, they embody determination in the face of adversity. Their ancestors didn't emerge from the depths of the Everflame to succumb to minor setbacks!</p><hr><p><strong>Flameborn</strong> </p><p>1 of your neutral saves is advantaged instead. [M]</p><p>You know Infernal if your INT is not negative. [M]</p><hr><p><strong>Fiendkin Curses: Curse of the Wastes</strong> — <em>Thy body be battered, eternally strained.</em></p><p><strong>Weathered</strong></p><p>(1/Safe Rest) Action: Gain immunity to fire and ice until the start of your next turn. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "08dab6510b3637f7",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "YrBMARZv5QmoUdcE"
+}

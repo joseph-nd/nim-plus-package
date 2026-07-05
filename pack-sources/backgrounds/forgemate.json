@@ -1,0 +1,38 @@
+{
+	"name": "Forgemate",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/forgemate.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1forgemater0",
+				"identifier": "",
+				"label": "Forgemate",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"might",
+					"examination"
+				]
+			}
+		],
+		"description": "<p>Your calloused, scorched hands mark you as a friend in smithing circles. Smiths are easier to haggle with, and may even let you use their forge. +1 Might and Examination. [A]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UWHd70UStOLrznta"
+}

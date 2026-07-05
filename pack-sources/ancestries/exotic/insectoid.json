@@ -1,0 +1,28 @@
+{
+	"name": "Insectoid",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/insectoid.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Chittering and chitinous humanoids, as varied as the insects of the wild. Repulsive to some, welcomed by others.</p><hr><p><strong>Extra Appendages</strong></p><p>You have an extra set of arms able to wield Light weapons and adventuring gear, but not shields. [M]</p><hr><p><em>Nim+ Volume I — submitted by Trex.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "vAGg9QztVBSB91Zj"
+}

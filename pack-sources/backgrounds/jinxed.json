@@ -1,0 +1,23 @@
+{
+	"name": "Jinxed",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/jinxed.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>When you roll a 1 on a skill check, the results are always the worst possible outcome. If you survive, you gain Inspiration. (1/Safe Rest) [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "6TEDAh34rLleff6Q"
+}

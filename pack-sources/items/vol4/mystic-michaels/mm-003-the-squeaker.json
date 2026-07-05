@@ -1,0 +1,126 @@
+{
+	"name": "The Squeaker",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-003-the-squeaker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-003-the-squeaker",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm003sq",
+					"type": "damage",
+					"damageType": "psychic",
+					"formula": "1",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "mm003sq-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "mm003sq"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "mm003sq-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "mm003sq"
+							}
+						],
+						"miss": [
+							{
+								"id": "mm003sq-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "mm003sq"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Common Toy Bat</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Multicolored and squeaky.</em></p><hr><p>Harmless, but deals 1 Psychic damage from the humiliation.</p><p><em>Capsule prize #3 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "fKuE5wfTzWrkB7bW",
+	"folder": "c0a09015d158170a"
+}

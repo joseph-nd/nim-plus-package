@@ -1,0 +1,27 @@
+{
+	"name": "Elemental Scion",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/elemental-scion.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>An embodiment of one of the primordial energies. Through summoning or interplanar travel, you now find yourself in the mortal world, deprived of the currents in which you once swam.</p><hr><p><strong>Elemental Embodiment</strong></p><p>Choose an element to embody. You know cantrips from the associated spell school. [M]</p><p>(1/Safe Rest) Reaction: Gain immunity to your chosen element until the start of your next turn. [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin, SanityWithIn, Santuric.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sbnBBaAKkvuI47y6"
+}

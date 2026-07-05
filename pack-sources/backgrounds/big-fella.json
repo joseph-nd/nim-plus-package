@@ -1,0 +1,23 @@
+{
+	"name": "Big Fella",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/big-fella.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Increase your size category by one step (up to Large). [M] +3 inventory slots. [M] Why do you always have to carry everything?</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Yr7287MWlOVARkuY"
+}

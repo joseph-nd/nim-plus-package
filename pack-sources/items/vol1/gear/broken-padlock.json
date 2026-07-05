@@ -1,0 +1,34 @@
+{
+	"name": "Broken Padlock",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol1/gear/broken-padlock.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": {
+			"public": "<p>A padlock that no longer locks. A reminder, a keepsake, or perhaps a warning.</p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 1
+	},
+	"effects": [],
+	"folder": "a7a394adddcc868a",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5JimU1xgsdOMazcD"
+}

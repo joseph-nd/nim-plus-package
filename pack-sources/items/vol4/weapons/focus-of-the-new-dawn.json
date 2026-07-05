@@ -1,0 +1,88 @@
+{
+	"name": "Focus of the New Dawn",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/focus-of-the-new-dawn.webp",
+	"system": {
+		"macro": "",
+		"identifier": "focus-of-the-new-dawn",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Focus</strong> &middot; <strong>Price:</strong> 50,000 g</p><p><em>Engraved symbol of divine favor, heat radiating from within.</em></p><hr><p>Tiered Radiant spells apply <strong>Dawnmark</strong> to your target or a creature adjacent to your target.</p><p><strong>Dawnmark</strong> (stackable): on attack, consume all stacks to deal additional Radiant damage based on the stacks consumed (1d4 &gt; 1d6 &gt; &hellip; &gt; 1d20). The module tracks stacks on targets automatically while this focus is equipped &mdash; use the <em>Consume Dawnmark</em> action from any Blazing Dawn item.</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 50000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Dawnmark": "radiantSpells"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sTKvloYxLmJFkf6P",
+	"folder": "a437aed213945d33"
+}

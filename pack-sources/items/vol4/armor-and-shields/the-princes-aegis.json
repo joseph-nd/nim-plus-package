@@ -1,0 +1,96 @@
+{
+	"name": "The Prince's Aegis",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/the-princes-aegis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-princes-aegis",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4theprincer0",
+				"identifier": "",
+				"label": "The Prince's Aegis",
+				"predicate": {},
+				"priority": 1,
+				"formula": "10",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Mail Armor</strong> &middot; <strong>Price:</strong> 3,000 g</p><p><em>Impervious mithril mail, once a gift for a prince whose name is lost to time.</em></p><hr><p><strong>10+DEX Armor.</strong></p><p>Wearable without proficiency if gifted to you by someone of royal blood.</p><p class=\"nim-plus-credit\"><em>&mdash; The Adonis, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 3000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "BuD5jFFbUV9knUjw",
+	"folder": "e824f6b808017148"
+}

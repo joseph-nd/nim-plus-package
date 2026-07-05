@@ -1,0 +1,93 @@
+{
+	"name": "Scroll of Cure Blindness",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-032-scroll-of-cure-blindness.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-032-scroll-of-cure-blindness",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm032scroll",
+					"type": "note",
+					"noteType": "info",
+					"text": "Cures blindness when read. (Yes, read.)",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Common Scroll</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Written on genuine AuthentoParchment™.</em></p><hr><p>Cures blindness when read.</p><p><em>Capsule prize #32 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "t8jD5kuSSH9WgaL8",
+	"folder": "c0a09015d158170a"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "Bounty Hunter",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/bounty-hunter.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You’re polite, efficient, and you have a plan to kill everyone you meet. Getting your hands dirty is just part of the job. You know where to get bounties in cities. When you roll Initiative, Assess an enemy for free. [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mnaz3tRTsO1mTryl"
+}

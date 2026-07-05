@@ -1,0 +1,132 @@
+{
+	"name": "The Dwarf's Delight",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/the-dwarfs-delight.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-dwarfs-delight",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4dwarfdel",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d12+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4dwarfdel-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4dwarfdel"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4dwarfdel-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "Cheers! Allies within Reach 4 gain LVL temp HP + advantage on their next attack.",
+								"parentContext": "criticalHit",
+								"parentNode": "v4dwarfdel"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4dwarfdel-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4dwarfdel"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Warhammer</strong> &middot; <strong>Price:</strong> 85,000 g</p><p><em>Keg-shaped mithril warhammer, overflowing with ale.</em></p><hr><p><strong>1d12+STR Bludgeoning.</strong> 2-handed (Req. 2 STR).</p><p><strong>Cheers!</strong> On crit: All allies within Reach 4 gain LVL temp HP and advantage on their next attack.</p><p class=\"nim-plus-credit\"><em>&mdash; Can Opener, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 2,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 85000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4DwarfsDelight": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ToXPtxsTq272jSwh",
+	"folder": "a437aed213945d33"
+}

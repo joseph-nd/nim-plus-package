@@ -1,0 +1,129 @@
+{
+	"name": "Granite Greatsword",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/granite-greatsword.webp",
+	"system": {
+		"macro": "",
+		"identifier": "granite-greatsword",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4granite",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "1d4 + @strength * 3",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4granite-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4granite"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4granite-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4granite"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4granite-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4granite"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 2
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Greatsword</strong> &middot; <strong>Price:</strong> 550 g</p><p><em>Oversized and monstrously heavy.</em></p><hr><p><strong>1d4+STR&times;3 Slashing.</strong> Reach 2 (Req. 4 STR).</p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": 2
+			},
+			"selected": [
+				"reach",
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 4,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 550,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "jgFfBpi8vyAEkld2",
+	"folder": "a437aed213945d33"
+}

@@ -1,0 +1,97 @@
+{
+	"name": "Commander — Variant Kit 1",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/commander-kit-1.webp",
+	"system": {
+		"macro": "",
+		"identifier": "commander-kit-1",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr0",
+				"identifier": "",
+				"label": "Starting Gear - Longsword",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.DPfIK6l48uJ2ik2s"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr1",
+				"identifier": "",
+				"label": "Starting Gear - Wooden Buckler",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.H6jL4fp2gvK7E2E9"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr2",
+				"identifier": "",
+				"label": "Starting Gear - Chain (10 ft.)",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.ppj5od92yR7MXnaW"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Commander.</em></p><p>Take this set <strong>instead of</strong> the Commander’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>Longsword</li><li>Wooden Buckler</li><li>Chain (10 ft.)</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"folder": "44ce9b9fd6cbd7f2",
+	"flags": {
+		"nim-plus-package": {
+			"vol1Kit": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nXlL8Zg5943HpON7"
+}

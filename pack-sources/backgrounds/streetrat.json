@@ -1,0 +1,23 @@
+{
+	"name": "Streetrat",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/streetrat.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You might not have a lot of book smarts, but you still know how to get stuff done. You cannot read or write. You know how to navigate the slums, and may know important underworld figures by name. [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "V2resDmnGoYrSiV5"
+}

@@ -1,0 +1,120 @@
+{
+	"name": "The Sunstone",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/utility-and-exploration/the-sunstone.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-sunstone",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4thesunstor0",
+				"identifier": "sunstone",
+				"label": "The Sunstone",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": []
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4thesunstor1",
+				"identifier": "",
+				"label": "The Sunstone",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "sunstone",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4sunstone",
+					"type": "note",
+					"noteType": "info",
+					"text": "Shines bright for 2 hours. Recharge: soak in sunlight from dawn till dusk.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Gem</strong> &middot; <strong>Price:</strong> 200 g</p><p><em>Praise the sun!</em></p><hr><p>Shines bright for 2 hours when activated (1 use).</p><p><strong>Recharge:</strong> Soak in sunlight from dawn till dusk.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 200,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "C8maYxJGKHDfGwkW",
+	"folder": "0682063bd6361d1a"
+}

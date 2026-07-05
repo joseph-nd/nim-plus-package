@@ -1,0 +1,136 @@
+{
+	"name": "Executioner's Blade",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/executioners-blade.webp",
+	"system": {
+		"macro": "",
+		"identifier": "executioners-blade",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4execblade",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "3d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4execblade-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4execblade"
+							},
+							{
+								"id": "v4execblade-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Condemn (2 actions): this strike hits all enemies in Line 3.",
+								"parentContext": "hit",
+								"parentNode": "v4execblade"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4execblade-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4execblade"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4execblade-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4execblade"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Greatsword</strong> &middot; <strong>Price:</strong> 300,000 g</p><p><em>Ravenous sword used to put commoner and king alike to justice, their spirits still trapped within.</em></p><hr><p><strong>3d6+STR Slashing.</strong> 2-handed (Req. 3 STR).</p><p><strong>Condemn.</strong> 2 actions: Strike all enemies in Line 3.</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 3,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 300000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "imxEho6C8v9F41jV",
+	"folder": "a437aed213945d33"
+}

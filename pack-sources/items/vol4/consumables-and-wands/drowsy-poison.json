@@ -1,0 +1,93 @@
+{
+	"name": "Drowsy Poison",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/drowsy-poison.webp",
+	"system": {
+		"macro": "",
+		"identifier": "drowsy-poison",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4drowsy",
+					"type": "note",
+					"noteType": "info",
+					"text": "Coat a weapon (one attack): crit = Incapacitated 1 turn; hit = Dazed; miss = YOU are Dazed.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Poison</strong> &middot; <strong>Price:</strong> 999 g</p><p><em>Signature tool of the Dreamstalkers, coating their blades.</em></p><hr><p>Effective for one attack.</p><p>On crit: Incapacitated for 1 turn.<br>On hit: Dazed.<br>On miss: You become Dazed.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 999,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UGU4dDVLyHMDVJGV",
+	"folder": "7582b6818536d792"
+}

@@ -1,0 +1,93 @@
+{
+	"name": "Stabs' Guide to Stabbin'",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/accessories/stabs-guide-to-stabbin.webp",
+	"system": {
+		"macro": "",
+		"identifier": "stabs-guide-to-stabbin",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4stabs",
+					"type": "note",
+					"noteType": "info",
+					"text": "Shadowstab! Teleport behind an enemy within Reach 6, attack with advantage for free. On hit: DC 10+KEY WIL save or Frightened 1 turn.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Manual</strong> &middot; <strong>Price:</strong> 574,650 g</p><p><em>“Nuffin' personel, gob…”</em></p><hr><p>Grants the <strong>Shadowstab!</strong> ability.</p><p><strong>Shadowstab!</strong> (1/turn) Action: “Teleport” behind an enemy within Reach 6, then attack with advantage for free. On hit: DC 10+KEY WIL save or Frightened for 1 turn.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 574650,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "qcBX39GNIE1IPA5j",
+	"folder": "2b19caa6cb03e2e4"
+}

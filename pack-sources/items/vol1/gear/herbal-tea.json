@@ -1,0 +1,34 @@
+{
+	"name": "Herbal Tea",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol1/gear/herbal-tea.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": {
+			"public": "<p>A pouch of calming herbal blend. Steep, sip, and pretend last night didn’t happen.</p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 1
+	},
+	"effects": [],
+	"folder": "a7a394adddcc868a",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "q6IvmNmj0gGsLHmt"
+}

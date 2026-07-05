@@ -1,0 +1,27 @@
+{
+	"name": "Badgerfolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/badgerfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Their gentle demeanor and fondness for a good cup of tea at lunchtime betrays their innate strength. Badgerfolk know full well how to use their size to their opponent’s dismay.</p><hr><p><strong>Rotund</strong></p><p>Push all medium or smaller creatures adjacent to you 1 Space (1/encounter). [M]</p><p>+3 inventory slots. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "c7F3IYy6fEyb2FQS"
+}

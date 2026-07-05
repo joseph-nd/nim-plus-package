@@ -18,7 +18,7 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 4. Click **Install**. Foundry downloads the latest tagged release.
 5. Launch your Nimble world → **Game Settings → Manage Modules** → tick **Nim+ Package** → **Save Module Settings**.
-6. The compendium sidebar will now show seven new **Nim+ …** packs (Classes, Subclasses, Class Features, Spells, Items, Companions, Feats). Drag content onto your sheet or world like any other compendium.
+6. The compendium sidebar will now show nine new **Nim+ …** packs (Classes, Subclasses, Class Features, Spells, Items, Companions, Feats, Ancestries, Backgrounds). Drag content onto your sheet or world like any other compendium.
 
 **Updating.** Foundry auto-checks the manifest URL on launch — when a new tag is published, you'll see an update prompt in **Manage Modules**.
 
@@ -26,7 +26,7 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **598 documents** across **7 compendium packs**:
+The module currently ships **945 documents** across **9 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
@@ -34,9 +34,28 @@ The module currently ships **598 documents** across **7 compendium packs**:
 | **Nim+ Subclasses** | 59 | new subclasses for every core class plus the new classes (see breakdown below) |
 | **Nim+ Class Features** | 441 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
-| **Nim+ Items** | 15 | Hexbinder concoctions (8) + Artificer inventions and prototypes (7) |
+| **Nim+ Items** | 282 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), and the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
 | **Nim+ Feats** | 52 | optional class-agnostic feats (off by default — see **Optional: Feats** below) |
+| **Nim+ Ancestries** | 50 | the **Nim+ Volume I** exotic ancestries (19) and ancestry variants (31 — see **Character Creation** below) |
+| **Nim+ Backgrounds** | 30 | the **Nim+ Volume I** backgrounds |
+
+### Magic Items (Nim+ Volume IV)
+
+The **Nim+ Items** pack ships the complete *Nim+ Volume IV* magic-item zine, organized into seven compendium folders matching the zine's structure: **Weapons**, **Armor & Shields**, **Accessories**, **Utility & Exploration**, **Consumables & Wands** (the 100-item Jasper's Warehouse catalogue), **Dverung Runes** (the optional 20-rune upgrade system), and **Mystic Michael's Machinations** (100 whimsical capsule items).
+
+Items are mechanically wired wherever the printed effect can be expressed, not just transcribed: armor and shields apply their Armor formulas when equipped (including conditional ones like Trollhide Wrap's *+2 while Bloodied*); weapons roll their full damage trees with crit/miss riders (Entangling Bow auto-Restrains on crit, Runic Maul knocks you Prone on miss); fly/swim/climb granters set real movement speeds; and limited-use items track charges with the correct 1/encounter, 1/Safe Rest, or narrative-recharge behavior. On top of that, a runtime layer (`nimPlus.vol4.*`) automates the **Dawnmark** stack engine of the Blazing Dawn set, **Dverung Rune melding** (pick an item, capacity enforced, effect permanently added, rune consumed), **Elemental Weapon** enchanting, Bloodseeker's HP-for-damage strikes, Battlemage Glove infusions, the Ladle of the Kobold Champion's death-defiance, and more. Purely narrative or GM-adjudicated effects stay as descriptive notes on the item's chat card.
+
+### Character Creation (Nim+ Volume I)
+
+The **Nim+ Ancestries** and **Nim+ Backgrounds** packs ship the *Nim+ Volume I* character-creation zine. Because Nimble's character-creation dialog gathers ancestry and background documents from **every** available compendium, this content appears there automatically alongside the system's own options — no configuration needed.
+
+- **19 exotic ancestries** (Mousefolk, Otterfolk, Snailfolk, Jotunn, Pixie, Elemental Scion, Changething, …) listed under the dialog's Exotic section, with sizes from Tiny (Pixie) to Large (Jotunn).
+- **31 ancestry variants** (the zine's *Ancestry Variants* rule): sub-ancestry versions of every core ancestry — *Dwarf (Mountainborn)*, *Elf (Deep Elf)*, *Orc (Stormkin)*, and so on. Each variant document bundles the base ancestry's full trait with the variant bonus, so you simply **pick the variant instead of the base ancestry** during character creation (they sort right next to it). The zine notes these make heroes stronger than normal — ask your GM. The compendium organizes them into one folder per zine heading (Dwarven Hearths, Elven Clades, Halfling Traditions, …).
+- **30 backgrounds**, from *Commoner* to *Stitched back to Life*.
+- **Variant starting equipment** (the zine's *Starting Equipment* rule): two alternative kits per core class in the **Nim+ Items** pack (*Vol I — Variant Starting Equipment* folder). Drop a kit on your character and its `grantItem` rules hand out the whole set — including new Vol I gear like the Deck of Cards (a real 1d4+DEX, Light, Thrown 6 weapon), the Fur Cloak, and the Mean Hangover (*Vol I — Adventuring Gear* folder). Choose "gold" (or skip equipment) during character creation, then drop your kit.
+
+As with the rest of the module, everything expressible is mechanically wired (skill/speed/initiative/Armor bonuses, per-level max HP, swim/fly speeds, languages, unarmed damage, Mousefolk's *+WIL while Dying*), and effects needing table adjudication are kept as clearly marked description lines, using the system's own `[A]` (automated) / `[M]` (manual) markers.
 
 ### Optional: Feats
 
@@ -49,7 +68,7 @@ A class-agnostic Feats system — **off by default**. Enable it in **Game Settin
 
 The picker hides feats you already have and greys out any whose ability-score prerequisite (e.g. *Req. 3 STR*) you don't meet; other prerequisites are shown as text for you to honor. Feats are ordinary feature items once granted, so they show in your features list and can be dragged from the **Nim+ Feats** compendium like any other content.
 
-Many feats are **mechanically automated** rather than text-only. Always-on bonuses (skills, Armor, Speed, Wounds, Hit Dice, max HP, weapon proficiency, initiative) apply the instant the feat is taken. Beyond those, eight feats carry deeper automation: **Academic** opens a 3-skill-point allocator; **Bulwark** grants +2 Armor to adjacent allies on the canvas; **Defensive Duelist** / **Dual Wielder** adjust Armor from your equipped weapons; **Elemental Specialist** lets you pick a spell school + key stat and then adds that bonus to your tiered spells of that school automatically; and **Healer** / **Second Wind** become click-to-use actions (target-heal and spend-a-Hit-Die-to-heal, respectively), each refreshing on a Safe Rest. The rest remain descriptive prompts for effects that depend on table adjudication.
+Many feats are **mechanically automated** rather than text-only. Always-on bonuses (skills, Armor, Speed, Wounds, Hit Dice, max HP, weapon proficiency, initiative) apply the instant the feat is taken. Beyond those, eight feats carry deeper automation: **Academic** opens a 3-skill-point allocator; **Bulwark** grants +2 Armor to adjacent allies on the canvas; **Defensive Duelist** / **Dual Wielder** adjust Armor from your equipped weapons (use the hand-icon **equip toggle** the module adds to weapon rows on the **Inventory** tab — solid hand means equipped); **Elemental Specialist** lets you pick a spell school + key stat and then adds that bonus to your tiered spells of that school automatically; and **Healer** / **Second Wind** become click-to-use actions (target-heal and spend-a-Hit-Die-to-heal, respectively), each refreshing on a Safe Rest. The rest remain descriptive prompts for effects that depend on table adjudication.
 
 ### New classes
 
@@ -98,11 +117,25 @@ This module stands on the shoulders of two upstream projects.
 
 **Psion class (alpha homebrew)** — sourced from the *Psion v0.1.1* PDF playtest. Author credit pending confirmation; see the PDF cover at `Psion-0.1.1.pdf`.
 
+**Optional Feats** — the 52 class-agnostic feats shipped in the **Nim+ Feats** pack are homebrew by **maxnomillion** and **funkyrythm**. Reproduced with thanks.
+
+**Nim+ Volume I** — the community character-creation zine this module adapts for the Nim+ Ancestries and Nim+ Backgrounds packs and the variant starting equipment (submissions February 2025, published March 2025). Curated and edited by **Emil Andersen (Santuric)**, with content by:
+
+Chris Lewis (HappyBunny) · Chthonic Duck · DamianRM · EmmaBelotti · Gerke Bouma (TDA) · Kazok the Goblin · LewisH · Plot-Relevant Commoner · Raford · SanityWithIn · Santuric · The Rotten Pixie · Theleftmouseknop · Trex · TwinSteel
+
+Proofreaders: Gary Verhaegen · Gerke Bouma (TDA) · LewisH · SanityWithIn · TwinSteel. Art and assets by MentalMicrowave, Chthonic Duck, Alderdoodle, and Sandra Donoso (the zine's art is not reproduced by this module; all 127 documents ship with original AI-generated icons in the module's house style).
+
 **Nim+ Volume III** — the community content supplement this module adapts for the additional core-class subclasses (submissions June 2025, published July 2025). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
 
 AJ · Blue · Can Opener · Charles and Jeannine Archibald · DanDraco · Kazok the Goblin · Khan Wick · Nathan Warkentin (Trex) · Rockergage · SanityWithIn · Santuric · Squeekie · Victor Constantinescu (MaleficMist) · Vinícius Conrado
 
 Proofreaders: AJ · Chas · DanDraco · MaleficMist · Methodia · Raford · SanityWithIn · The Pebble · Trex · TwinSteel · VedastusSoFastus.
+
+**Nim+ Volume IV** — the community magic-item zine this module adapts for the Nim+ Items pack (submissions September 2025, published November 2025). Curated and edited by **Emil Andersen (Santuric)**, with item content by:
+
+ApexDM · Can Opener · CheschireCat · DanDraco · Floppy · GrippaNL · Khan Wick · Malikua · Maliloki · Rune Champzzz · SanityWithIn · Santuric · Squeekie · Tauntje · The Adonis · The Pebble · TheMechMuffin · Uruzrune
+
+Proofreaders: DanDraco · Floppy · Raford · Rasczak76 · Rockergage · SanityWithIn · The Pebble · TheMechMuffin. Art and assets by Alderdoodle, RossyDoesDrawings, DanDraco, Lewis Houlston, and Chthonic Duck (the zine's art is not reproduced by this module; all 220 items ship with original AI-generated icons in the module's house style).
 
 This Foundry VTT module is a fan adaptation. Any errors in transcription or wiring are mine, not theirs. If you enjoy this content, please support the original authors at <https://santuric.itch.io>.
 
@@ -110,7 +143,7 @@ This Foundry VTT module is a fan adaptation. Any errors in transcription or wiri
 
 > Nim+ Package is an independent product published under the Nimble 3rd Party Creator License and is not affiliated with Nimble Co. Nimble © 2025 Nimble Co.
 
-The reproduced Nim+ Volume III rules content is licensed by Santuric and contributors under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) (CC-BY 4.0).
+The reproduced Nim+ Volume I, Volume III, and Volume IV rules content is licensed by Santuric and contributors under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) (CC-BY 4.0).
 
 The code in this repository (build scripts, runtime helpers, packaging tooling) is released under the MIT License — see [LICENSE](LICENSE).
 

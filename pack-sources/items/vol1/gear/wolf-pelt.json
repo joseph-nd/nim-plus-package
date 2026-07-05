@@ -1,0 +1,34 @@
+{
+	"name": "Wolf Pelt",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol1/gear/wolf-pelt.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": {
+			"public": "<p>The pelt of a wolf, taken as a trophy or traded for. Warm, a little mangy, unmistakably yours.</p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 1
+	},
+	"effects": [],
+	"folder": "a7a394adddcc868a",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VTWO8ngH0KKwnKZB"
+}

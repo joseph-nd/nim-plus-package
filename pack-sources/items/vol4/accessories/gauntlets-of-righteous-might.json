@@ -1,0 +1,102 @@
+{
+	"name": "Gauntlets of Righteous Might",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/accessories/gauntlets-of-righteous-might.webp",
+	"system": {
+		"macro": "return nimPlus.vol4.dawnmarkApply(actor, item);",
+		"identifier": "gauntlets-of-righteous-might",
+		"rules": [
+			{
+				"type": "skillBonus",
+				"disabled": false,
+				"id": "v4gauntletsr0",
+				"identifier": "",
+				"label": "Gauntlets of Righteous Might",
+				"predicate": {},
+				"priority": 1,
+				"value": "1",
+				"skills": [
+					"might"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Gauntlets</strong> &middot; <strong>Price:</strong> 150,000 g</p><p><em>Covered in gilded scales, amplifying natural strength.</em></p><hr><p>Grants +1 to STR-based skill checks.</p><p>Apply <strong>Dawnmark</strong> when you Grapple or punch an enemy (1/turn).</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 150000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Dawnmark": "onGrapple"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "KsetOOXYQPGMl97s",
+	"folder": "2b19caa6cb03e2e4"
+}

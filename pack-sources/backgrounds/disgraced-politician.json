@@ -1,0 +1,38 @@
+{
+	"name": "Disgraced Politician",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/disgraced-politician.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1disgracedpr0",
+				"identifier": "",
+				"label": "Disgraced Politician",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"influence",
+					"lore"
+				]
+			}
+		],
+		"description": "<p>Maybe you were corrupt, or looking to fix a broken system. Either way you lost the last election by a WIDE margin. You still have both friends and foes in most cities, depending on your former affiliation. [M] +1 Influence and Lore. [A]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "iHzh7eFItvf4As3x"
+}

@@ -1,0 +1,28 @@
+{
+	"name": "Changething",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/changething.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Unassuming humanoids with the uncanny ability to disguise themselves as inanimate objects, perhaps due to a curse or a mimic ancestor.</p><hr><p><strong>Mimicry</strong></p><p>(KEY/Safe Rest) Action: Disguise yourself as a harmless inanimate object of the same size as you or smaller. You move at half Speed while disguised. Ends if you take damage, attack or cast a spell. [M]</p><hr><p><em>Nim+ Volume I — submitted by DamianRM.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CnkQUbO7vmkfxqPK"
+}

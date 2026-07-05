@@ -1,0 +1,136 @@
+{
+	"name": "The Disgraced Healer's Remedy",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-033-the-disgraced-healers-remedy.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-033-the-disgraced-healers-remedy",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm033heal",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "2",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "mm033heal-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "mm033heal"
+							},
+							{
+								"id": "mm033heal-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Then heal the target for 1d4 HP. You monster.",
+								"parentContext": "hit",
+								"parentNode": "mm033heal"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "mm033heal-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "mm033heal"
+							}
+						],
+						"miss": [
+							{
+								"id": "mm033heal-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "mm033heal"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Projectile</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Dented rock with an engraved rune.</em></p><hr><p>On damage: Heal target for 1d4 HP.</p><p><em>Capsule prize #33 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"thrown"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "l0bQqZDyYk1RrcSW",
+	"folder": "c0a09015d158170a"
+}

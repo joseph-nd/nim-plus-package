@@ -1,0 +1,23 @@
+{
+	"name": "Kind of a Big Deal",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/kind-of-a-big-deal.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You’re obviously <em>much</em> more important than the average person. You’re also able to skip queues… Sometimes. Your allies can Interpose for you for free (1/encounter). [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UfaIabNcx9jw8qLK"
+}

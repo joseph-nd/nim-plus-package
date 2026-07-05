@@ -1,0 +1,143 @@
+{
+	"name": "The Solar Flare",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/the-solar-flare.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-solar-flare",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4solarflare",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "4d4+@dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4solarflare-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4solarflare"
+							},
+							{
+								"id": "v4solarflare-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Apply Dawnmark (1/turn). Consuming Dawnmark also hits enemies in Line 3 behind the target.",
+								"parentContext": "hit",
+								"parentNode": "v4solarflare"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4solarflare-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4solarflare"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4solarflare-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4solarflare"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Crossbow</strong> &middot; <strong>Price:</strong> 250,000 g</p><p><em>Ornate crossbow with engravings of resplendent saints.</em></p><hr><p><strong>4d4+DEX Piercing.</strong> 2-handed, Load: 1 action, Range 8.</p><p>On hit: Apply <strong>Dawnmark</strong> (1/turn).</p><p>When used to consume Dawnmark, the additional Radiant damage also hits enemies in Line 3 behind the target.</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"load",
+				"range"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 250000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Dawnmark": "onHit",
+			"vol4DawnmarkSplash": "line"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "XRkVGF930dBqf9tp",
+	"folder": "a437aed213945d33"
+}

@@ -1,0 +1,58 @@
+{
+	"name": "Goblin (Cave Spawn)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/goblinoid-tribes/goblin-cave-spawn.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1goblincaver0",
+				"identifier": "",
+				"label": "Skedaddle",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"goblin"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1goblincaver1",
+				"identifier": "",
+				"label": "Stone Cloak",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"stealth"
+				]
+			}
+		],
+		"description": "<p>Green, cunning, and perpetually vilified, Goblins thrive on the edge of chaos. For a Goblin, vanishing into the shadows is not just a skill—it's an identity. After all, what kind of Goblin would you be if you couldn't slip away unnoticed?</p><hr><p><strong>Skedaddle</strong> </p><p>Can move 2 spaces for free after you become the target of an attack or negative effect (after damage, ignoring difficult terrain). </p><p>You know Goblin if your INT is not negative. [M]</p><hr><p><strong>Goblinoid Tribes: Cave Spawn</strong> — <em>The dark, the quiet, the critters, and the hidden. Home.</em></p><p><strong>Stone Cloak</strong></p><p>+1 Stealth. [A]</p><p>You always succeed when hiding amongst rocks. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "a1d1ab6927fcb509",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "cegl9nBby3obCoH4"
+}

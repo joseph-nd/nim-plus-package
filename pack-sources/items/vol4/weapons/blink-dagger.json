@@ -1,0 +1,137 @@
+{
+	"name": "Blink Dagger",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/blink-dagger.webp",
+	"system": {
+		"macro": "",
+		"identifier": "blink-dagger",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4blinkdmg",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "1d4+@dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4blinkdmg-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4blinkdmg"
+							},
+							{
+								"id": "v4blinkdmg-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "On thrown hit: teleport adjacent to the target and retrieve the dagger.",
+								"parentContext": "hit",
+								"parentNode": "v4blinkdmg"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4blinkdmg-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4blinkdmg"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4blinkdmg-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4blinkdmg"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Dagger</strong> &middot; <strong>Price:</strong> 2,250 g</p><p><em>Keen dagger with a blueish hue, perfectly balanced.</em></p><hr><p><strong>1d4+DEX Slashing.</strong> Light, Thrown 4.</p><p>On thrown hit: Teleport adjacent to the target and retrieve the dagger.</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"light",
+				"thrown"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 2250,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "appuTeqxOcjxctsu",
+	"folder": "a437aed213945d33"
+}

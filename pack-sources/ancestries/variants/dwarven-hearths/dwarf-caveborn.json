@@ -1,0 +1,76 @@
+{
+	"name": "Dwarf (Caveborn)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/dwarven-hearths/dwarf-caveborn.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1dwarfcavebr0",
+				"identifier": "",
+				"label": "Stout",
+				"predicate": {},
+				"priority": 1,
+				"type": "maxWounds",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1dwarfcavebr1",
+				"identifier": "",
+				"label": "Stout",
+				"predicate": {},
+				"priority": 1,
+				"type": "maxHitDice",
+				"value": "2",
+				"dieSize": 0
+			},
+			{
+				"disabled": false,
+				"id": "v1dwarfcavebr2",
+				"identifier": "",
+				"label": "Stout",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"dwarvish"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1dwarfcavebr3",
+				"identifier": "",
+				"label": "Stout",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "-1"
+			}
+		],
+		"description": "<p>Dwarf, in the old language, means “stone.” You are resilient, solid, stout. Even when driven to exhaustion, you will not falter. Forgoing speed, you are gifted with physical vitality and a belly that can handle the finest (and worst) consumables this world has to offer.</p><hr><p><strong>Stout</strong></p><p>+2 max Hit Dice [M]</p><p>+1 max Wounds [A]</p><p>-1 Speed [M]</p><p>You know Dwarvish if your INT is not negative [M]</p><hr><p><strong>Dwarven Hearths: Caveborn</strong> — <em>Deep below the earth, you have adapted.</em></p><p><strong>Echo Sense</strong></p><p>Being Blinded does not give you disadvantage, as long as you can hear. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": false,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "4d08b5dea77cc8b7",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hisZeN235SXjyvXq"
+}

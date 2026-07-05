@@ -1,0 +1,42 @@
+{
+	"name": "Catfolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/catfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1catfolkr0",
+				"identifier": "",
+				"label": "Feline Grace",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"stealth"
+				]
+			}
+		],
+		"description": "<p>Agile, graceful, and able to fall impossible distances without injury. Some say they have multiple lives, or perhaps some secret magic. They’re usually preoccupied with finding the next sunbeam.</p><hr><p><strong>Feline Grace</strong></p><p>+1 Stealth. [A]</p><p>Ignore damage from falling or forced movement (1/Safe Rest). [M]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LH3aWYplOXUJEpPe"
+}

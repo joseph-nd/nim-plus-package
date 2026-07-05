@@ -1,0 +1,66 @@
+{
+	"name": "Elf (High Elf)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/elven-clades/elf-high-elf.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1elfhighelfr0",
+				"identifier": "",
+				"label": "Lithe",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"elvish"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1elfhighelfr1",
+				"identifier": "",
+				"label": "Lithe",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1elfhighelfr2",
+				"identifier": "",
+				"label": "Lithe (Advantage on Initiative)",
+				"predicate": {},
+				"priority": 1,
+				"type": "initiativeRollMode",
+				"value": 1,
+				"mode": "adjust"
+			}
+		],
+		"description": "<p>Elves epitomize swiftness and grace. Their tall, slender forms belie their innate speed, grace, and wit. Formidable in both diplomacy and combat, elves strike swiftly, often preventing the worst by acting first.</p><hr><p><strong>Lithe</strong></p><p>Advantage on Initiative</p><p>+1 Speed [M]</p><p>You know Elvish if your INT is not negative</p><hr><p><strong>Elven Clades: High Elf</strong> — <em>Those most connected to the arcane and their ancient forebearers.</em></p><p><strong>Arcane</strong></p><p>Learn any 1 Utility Spell. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": false,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ef343eaff5e9ab52",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "3kyhIPcBxzTVt6XR"
+}

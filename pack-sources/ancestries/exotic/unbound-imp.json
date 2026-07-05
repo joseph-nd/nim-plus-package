@@ -1,0 +1,27 @@
+{
+	"name": "Unbound Imp",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/unbound-imp.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Imps are typically bound as protectors of magic artifacts and ancient tomes. Somehow, you managed to escape the bindings of whichever smelly wizard invoked you. Now, the entire world lays at your tiny feet.</p><hr><p><strong>Pocket Dimension</strong></p><p>You can visit your own personal pocket dimension when you Safe Rest or Field Rest. It takes the shape of a small room, that you can decorate and store items in. [M]</p><hr><p><em>Nim+ Volume I — submitted by Santuric.</em></p>",
+		"exotic": true,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VhgeZKyg1Jy5Oh1C"
+}

@@ -1,0 +1,95 @@
+{
+	"name": "Animosity Rune",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/dverung-runes/animosity-rune.webp",
+	"system": {
+		"macro": "return nimPlus.vol4.applyRune(actor, item);",
+		"identifier": "animosity-rune",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Dverung Weapon Rune</strong> &middot; <strong>Price:</strong> found, not sold</p><p><em>A small rune inscribed on a rare mineral from Kral Vetu.</em></p><hr><p>Adds 1d6 damage. On miss: you take this damage instead.</p><p><em>Dverung Runes meld into equipment, consuming the rune. Capacity: Common &amp; Uncommon 1 rune &middot; Rare &amp; Very Rare 2 runes &middot; Legendary 3 runes. Activate the rune to meld it &mdash; the module applies the effect to the chosen item and enforces capacity.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Squeekie (design) & Uruzrune (theme), Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "consumable",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "smallSized",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Rune": {
+				"slot": "weapon",
+				"key": "animosity",
+				"payload": {
+					"damage": "1d6",
+					"missNote": "Animosity Rune: YOU take the 1d6 rune damage instead."
+				}
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QgvtUIHUxwiQ5OdY",
+	"folder": "a19732fd7c553b2f"
+}

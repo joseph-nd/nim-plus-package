@@ -1,0 +1,136 @@
+{
+	"name": "Lazy Boomerang",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-011-lazy-boomerang.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-011-lazy-boomerang",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm011boom",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "1d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "mm011boom-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "mm011boom"
+							},
+							{
+								"id": "mm011boom-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Returns to the thrower after 1d6 hours.",
+								"parentContext": "hit",
+								"parentNode": "mm011boom"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "mm011boom-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "mm011boom"
+							}
+						],
+						"miss": [
+							{
+								"id": "mm011boom-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "mm011boom"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 8
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Common Thrown Weapon</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Engraved with an image of a sloth.</em></p><hr><p>Always returns to whomever threw it last after 1d6 hours.</p><p><em>Capsule prize #11 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"thrown"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 8
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "T8KGahkEIOdvoBa6",
+	"folder": "c0a09015d158170a"
+}

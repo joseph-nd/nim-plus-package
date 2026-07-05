@@ -1,0 +1,96 @@
+{
+	"name": "Parry Buckler",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/parry-buckler.webp",
+	"system": {
+		"macro": "",
+		"identifier": "parry-buckler",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4parrybuckr0",
+				"identifier": "",
+				"label": "Parry Buckler",
+				"predicate": {},
+				"priority": 1,
+				"formula": "2",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Shield</strong> &middot; <strong>Price:</strong> 800 g</p><p><em>The bane of casual attackers.</em></p><hr><p><strong>2 Armor.</strong></p><p>When you Defend and reduce damage to 0, you may make an opportunity attack for free.</p><p class=\"nim-plus-credit\"><em>&mdash; Khan Wick, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 800,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "VxZxZLIZlNaUcclB",
+	"folder": "e824f6b808017148"
+}

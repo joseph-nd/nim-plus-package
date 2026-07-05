@@ -1,0 +1,120 @@
+{
+	"name": "Wand of Heart's Fire",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/wand-of-hearts-fire.webp",
+	"system": {
+		"macro": "",
+		"identifier": "wand-of-hearts-fire",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4wandofher0",
+				"identifier": "wand-hearts-fire",
+				"label": "Wand of Heart's Fire",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "3",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": []
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4wandofher1",
+				"identifier": "",
+				"label": "Wand of Heart's Fire",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "wand-hearts-fire",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4whfire",
+					"type": "note",
+					"noteType": "info",
+					"text": "Cast the wand's cantrip. Recharge: throw a party for your friends.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Wand</strong> &middot; <strong>Price:</strong> 399 g</p><p><em>Buzzing with joyful memories.</em></p><hr><p><strong>Cantrip</strong> (3 charges)</p><p><strong>Recharge:</strong> Throw a party for your friends.</p><p class=\"nim-plus-credit\"><em>&mdash; CheschireCat, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 399,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "siEMyGDiN9OmXHDj",
+	"folder": "7582b6818536d792"
+}

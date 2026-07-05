@@ -1,0 +1,129 @@
+{
+	"name": "Thunderbolt Azur",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/thunderbolt-azur.webp",
+	"system": {
+		"macro": "",
+		"identifier": "thunderbolt-azur",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4azur",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "2d6+@dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4azur-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4azur"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4azur-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "Chain Lightning: attack the two creatures closest to your target for the same amount.",
+								"parentContext": "criticalHit",
+								"parentNode": "v4azur"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4azur-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4azur"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 16
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Longbow</strong> &middot; <strong>Price:</strong> 1,717,171 g</p><p><em>Bow of pure lightning, bestowed by the Lord of Storms.</em></p><hr><p><strong>2d6+DEX Lightning.</strong> 2-handed, Range 16.</p><p><strong>Chain Lightning.</strong> On crit: Attack the two creatures closest to your target for the same amount (must be within Range).</p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 16
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"range"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 1717171,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4PTlwG8ZT8hloKva",
+	"folder": "a437aed213945d33"
+}

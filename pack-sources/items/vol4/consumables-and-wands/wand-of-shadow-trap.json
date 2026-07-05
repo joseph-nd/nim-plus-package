@@ -1,0 +1,120 @@
+{
+	"name": "Wand of Shadow Trap",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/consumables-and-wands/wand-of-shadow-trap.webp",
+	"system": {
+		"macro": "",
+		"identifier": "wand-of-shadow-trap",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4wandofshr0",
+				"identifier": "wand-shadow-trap",
+				"label": "Wand of Shadow Trap",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "2",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": []
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4wandofshr1",
+				"identifier": "",
+				"label": "Wand of Shadow Trap",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "wand-shadow-trap",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4wstrap",
+					"type": "note",
+					"noteType": "info",
+					"text": "Cast Shadow Trap (tier 1). Recharge: win a game of cards against an infernal being.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Wand</strong> &middot; <strong>Price:</strong> 4,099 g</p><p><em>It's time to duel.</em></p><hr><p><strong>Tier 1</strong> (2 charges)</p><p><strong>Recharge:</strong> Win a game of cards against an infernal being.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 4099,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yhJfXkutoQYxtqZj",
+	"folder": "7582b6818536d792"
+}

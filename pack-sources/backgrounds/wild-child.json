@@ -1,0 +1,23 @@
+{
+	"name": "Wild Child",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/wild-child.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You were raised by wild beasts and know how to communicate with animals using simple noises and body language. You are unfamiliar with civilization and have disadvantage on Influence checks in civilized society. [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "B9IyIOma0eaeRiNs"
+}

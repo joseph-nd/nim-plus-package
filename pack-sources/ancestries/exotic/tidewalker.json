@@ -1,0 +1,39 @@
+{
+	"name": "Tidewalker",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/tidewalker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1tidewalkerr0",
+				"identifier": "",
+				"label": "Tidal Grace",
+				"predicate": {},
+				"priority": 1,
+				"type": "grantMovement",
+				"mode": "swim",
+				"speed": "@attributes.movement.walk"
+			}
+		],
+		"description": "<p>The shallows are in your blood, moving with the rhythm of the sea — fluid and unbound. Though you might walk among those of the shore, the sea always beckons.</p><hr><p><strong>Tidal Grace</strong></p><p>You have a swim Speed, and you can breathe underwater. [A/M]</p><p>You can talk to creatures of the sea if your INT is not negative. [M]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "anxqdOiB4AitVhM2"
+}

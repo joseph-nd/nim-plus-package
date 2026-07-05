@@ -1,0 +1,23 @@
+{
+	"name": "Fearful Reputation",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/fearful-reputation.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>People have always been wary around you. Is it the way you look? When you hit a creature in melee, you may inflict Frightened until the start of your next turn (1/encounter). [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mRLCwlaqqiB6ihaa"
+}

@@ -1,0 +1,126 @@
+{
+	"name": "Pocket Watch of Shadows",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/accessories/pocket-watch-of-shadows.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pocket-watch-of-shadows",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4pocketwatr0",
+				"identifier": "witching-hour",
+				"label": "Witching Hour",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4pocketwatr1",
+				"identifier": "",
+				"label": "Witching Hour",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "witching-hour",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4witching",
+					"type": "note",
+					"noteType": "info",
+					"text": "Witching Hour: summon WIL 1d6 Shadow Minions.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Device</strong> &middot; <strong>Price:</strong> 600 g</p><p><em>Silver contraption tarnished with irremovable soot. Does not tell time.</em></p><hr><p><strong>Witching Hour.</strong> Action: Summon WIL 1d6 Shadow Minions (1/Safe Rest).</p><p class=\"nim-plus-credit\"><em>&mdash; Malikua, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 600,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "vEMCAaGhWhk4FsDA",
+	"folder": "2b19caa6cb03e2e4"
+}

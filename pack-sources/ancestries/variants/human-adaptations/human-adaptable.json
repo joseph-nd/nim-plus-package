@@ -1,0 +1,60 @@
+{
+	"name": "Human (Adaptable)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/human-adaptations/human-adaptable.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1humanadaptr0",
+				"identifier": "",
+				"label": "Skill Bonus for Human",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "+1",
+				"skills": [
+					"arcana",
+					"examination",
+					"finesse",
+					"influence",
+					"insight",
+					"lore",
+					"might",
+					"naturecraft",
+					"perception",
+					"stealth"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1humanadaptr1",
+				"identifier": "",
+				"label": "Human Initiative bonus",
+				"predicate": {},
+				"priority": 1,
+				"type": "initiativeBonus",
+				"value": "+1"
+			}
+		],
+		"description": "<p>Found in every terrain and environment, their curiosity and ambition drive them to explore</p><p>every corner of the world, making them a ubiquitous and versatile race.</p><hr><p><strong>Tenacious</strong></p><p>+1 to all skills and initiative [A]</p><hr><p><strong>Human Adaptations: Adaptable</strong> — <em>In addition to your Tenacious trait, you also gain a Minor Boon.</em></p><p><strong>Adaptations</strong></p><p>You gain a <strong>Minor Boon</strong> of your choice — pick one from the Nimble <em>Boons</em> compendium and drag it onto your character. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": false,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ea2043def9fe7bac",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UFcZcPk0uuU2weTI"
+}

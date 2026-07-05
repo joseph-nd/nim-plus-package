@@ -1,0 +1,23 @@
+{
+	"name": "Exile",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/exile.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You were exiled from your former home. You have knowledge of a network of people who are either also in exile, or sympathetic to your plight. They are likely willing to help you. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CYhMeUJ4KD13C4og"
+}

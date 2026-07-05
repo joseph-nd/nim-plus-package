@@ -1,0 +1,58 @@
+{
+	"name": "Nasfara",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/nasfara.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1nasfarar0",
+				"identifier": "",
+				"label": "Apex Predator",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1nasfarar1",
+				"identifier": "",
+				"label": "Apex Predator",
+				"predicate": {},
+				"priority": 1,
+				"type": "initiativeBonus",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1nasfarar2",
+				"identifier": "",
+				"label": "Apex Predator",
+				"predicate": {},
+				"priority": 1,
+				"type": "unarmedDamage",
+				"value": "1d4"
+			}
+		],
+		"description": "<p>Nomadic felines found in deserts, savannas, and jungles. Natural predators with deadly claws, innate agility, and fearsome swiftness. Only foolish prey would not fear to get on their bad side.</p><hr><p><strong>Apex Predator</strong></p><p>+1 Speed and Initiative. [A]</p><p>Your unarmed strikes deal 1d4 Slashing, and may use DEX instead of STR. [A/M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "e4ssZLUD7NvcPPrF"
+}

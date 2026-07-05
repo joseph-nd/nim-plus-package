@@ -1,0 +1,98 @@
+{
+	"name": "Broom of Flying",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/utility-and-exploration/broom-of-flying.webp",
+	"system": {
+		"macro": "",
+		"identifier": "broom-of-flying",
+		"rules": [
+			{
+				"type": "grantMovement",
+				"disabled": false,
+				"id": "v4broomoffr0",
+				"identifier": "",
+				"label": "Broom of Flying",
+				"predicate": {},
+				"priority": 1,
+				"mode": "fly",
+				"speed": "10"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Vehicle</strong> &middot; <strong>Price:</strong> 499 g</p><p><em>Surprisingly common mode of transportation.</em></p><hr><p>Grants a fly Speed of 10. Requires Concentration.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"concentration"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 499,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "29vM93nSfGp3AoMt",
+	"folder": "0682063bd6361d1a"
+}

@@ -1,0 +1,37 @@
+{
+	"name": "Hedge Knight",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/hedge-knight.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1hedgeknighr0",
+				"identifier": "",
+				"label": "Hedge Knight",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"naturecraft"
+				]
+			}
+		],
+		"description": "<p>You’ve been traveling the lands, serving anyone with coin to pay. Smallfolk tend to respect you. Once per adventure, you may call upon an old contact, such as a lord you served years ago. [M] +1 Naturecraft. [A]</p><hr><p><em>Nim+ Volume I — submitted by Santuric.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "CvMjeyy9DxJeTiQe"
+}

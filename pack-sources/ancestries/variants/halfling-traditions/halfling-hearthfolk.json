@@ -1,0 +1,41 @@
+{
+	"name": "Halfling (Hearthfolk)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/halfling-traditions/halfling-hearthfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1halflingher0",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "+1",
+				"skills": [
+					"stealth"
+				]
+			}
+		],
+		"description": "<p>Kind of like a human, but smaller (except for the feet). Where does our luck come from? Well…you know what they say about rabbit feet? Well, we've got feet for days compared to them. Imagine the amount of luck you could fit into these bad boys!</p><hr><p><strong>Elusive</strong></p><p>+1 to Stealth [A]</p><p>If you fail a save, you can succeed instead, 1/Safe Rest </p><hr><p><strong>Halfling Traditions: Hearthfolk</strong> — <em>The comfortable life of warmth, a full belly, and good company.</em></p><p><strong>Gourmand</strong></p><p>After eating a hearty meal you regain 1 Hit Die (1/Safe Rest). [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": false,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "46c2971099b4ecab",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "EAUKa5XWFtaz0TcP"
+}

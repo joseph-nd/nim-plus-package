@@ -1,0 +1,130 @@
+{
+	"name": "Ladle of the Kobold Champion",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/ladle-of-the-kobold-champion.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ladle-of-the-kobold-champion",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4ladle",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4ladle-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4ladle"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4ladle-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4ladle"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4ladle-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4ladle"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Ladle</strong> &middot; <strong>Price:</strong> 1 g 9 s (Sold out)</p><p><em>Some heroes become legends because of their armaments. Others become legends in spite of it.</em></p><hr><p><strong>1d6+STR Bludgeoning.</strong></p><p><strong>Ladlor's Tenacity.</strong> (Req. a daring spirit) The first time each encounter you would gain Dying, set your HP to 1 and gain the following benefits for 2 turns:</p><ul><li>Add LVL to damage</li><li>Immunity to all damage</li><li>Ignore rushed attacks</li></ul><p><em>While you carry the ladle, the module intercepts the killing blow and applies Ladlor's Tenacity automatically (once per encounter).</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 19,
+			"denomination": "sp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4LadlorsTenacity": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "xyD6VixfjJXRmXM6",
+	"folder": "a437aed213945d33"
+}

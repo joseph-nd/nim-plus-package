@@ -1,0 +1,23 @@
+{
+	"name": "Stitched back to Life",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/stitched-back-to-life.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You were reconstituted from parts of dead people and reawakened during a stormy night. You cannot remember who made you or why. You are immune to Lightning damage [M] and can be brought back to life if you are reassembled. [M] Almost everyone finds you to be horrid and revolting, barring you from civilized society.</p><hr><p><em>Nim+ Volume I — submitted by Santuric.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "B5pm6oUY3rCNnEFK"
+}

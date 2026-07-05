@@ -1,0 +1,34 @@
+{
+	"name": "Mean Hangover",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol1/gear/mean-hangover.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": {
+			"public": "<p>Not so much an item as a burden. Occupies no inventory slot, but takes up your entire morning. Goes away eventually. Usually.</p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0,
+		"stackSize": 1
+	},
+	"effects": [],
+	"folder": "a7a394adddcc868a",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5X2xrrTbrMNABIvU"
+}

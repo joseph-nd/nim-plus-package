@@ -1,0 +1,23 @@
+{
+	"name": "Treasure Hunter",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/treasure-hunter.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>This is not your first time adventuring. Some might call you lucky, you would call it experience. You know the approximate value of artifacts and treasure. You may gain advantage on a skill check related to hunting treasure (KEY/Safe Rest). [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "KMcc1KzcaLRyZlAl"
+}

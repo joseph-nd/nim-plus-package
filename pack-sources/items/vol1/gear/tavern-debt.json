@@ -1,0 +1,34 @@
+{
+	"name": "Plenty of Tavern Debt",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol1/gear/tavern-debt.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": {
+			"public": "<p>A fistful of IOUs from taverns across the realm. Occupies no space in your pack, yet weighs heavily on your mind.</p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"quantity": 1,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0,
+		"stackSize": 1
+	},
+	"effects": [],
+	"folder": "a7a394adddcc868a",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "okV6rX1Kv1vHkrR0"
+}

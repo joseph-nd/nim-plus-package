@@ -1,0 +1,46 @@
+{
+	"name": "Overconfident Heir",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/overconfident-heir.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1overconfidr0",
+				"identifier": "",
+				"label": "Overconfident Heir",
+				"predicate": {},
+				"priority": 1,
+				"type": "maxHpBonus",
+				"value": 2,
+				"perLevel": true
+			},
+			{
+				"disabled": false,
+				"id": "v1overconfidr1",
+				"identifier": "",
+				"label": "Overconfident Heir",
+				"predicate": {},
+				"priority": 1,
+				"type": "armorClass",
+				"formula": "2",
+				"mode": "add"
+			}
+		],
+		"description": "<p>You never believed what your ancestor said about overconfidence anyways. +2 max HP per level. [A] +2 Defense. [A] Attacks <em>never</em> miss you. [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin, SanityWithIn.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wJRASi9Y4mcr7aZD"
+}

@@ -1,0 +1,23 @@
+{
+	"name": "Overprepared Traveler",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/overprepared-traveler.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You usually have just the thing you need. You may withdraw a common tool or item from your pack when it is needed, even if you never mentioned it before (1/Safe Rest). [M] -1 inventory slots. [M]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn, Santuric.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "EC4hsXh8ni3a04hh"
+}

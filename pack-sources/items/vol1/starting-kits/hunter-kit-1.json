@@ -1,0 +1,109 @@
+{
+	"name": "Hunter — Variant Kit 1",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/hunter-kit-1.webp",
+	"system": {
+		"macro": "",
+		"identifier": "hunter-kit-1",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1hunterkit1r0",
+				"identifier": "",
+				"label": "Starting Gear - Sickle",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.XsT9DWdPp0ZhnOZR"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1hunterkit1r1",
+				"identifier": "",
+				"label": "Starting Gear - Hand Axe",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.8hW6gSC7FhAg1HZU"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1hunterkit1r2",
+				"identifier": "",
+				"label": "Starting Gear - Cheap Hides",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.zA3N93almf9RSt34"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1hunterkit1r3",
+				"identifier": "",
+				"label": "Starting Gear - 2 Torches",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.MNFxluopbBHRBybK"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Hunter.</em></p><p>Take this set <strong>instead of</strong> the Hunter’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>Sickle</li><li>Hand Axe</li><li>Cheap Hides</li><li>2 Torches</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"folder": "44ce9b9fd6cbd7f2",
+	"flags": {
+		"nim-plus-package": {
+			"vol1Kit": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "JWSVdMJpCLkVBvnC"
+}

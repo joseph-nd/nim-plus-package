@@ -1,0 +1,137 @@
+{
+	"name": "Glimmering Shield",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/glimmering-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "glimmering-shield",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4glimmeringr0",
+				"identifier": "",
+				"label": "Glimmering Shield",
+				"predicate": {},
+				"priority": 1,
+				"formula": "4",
+				"mode": "add"
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4glimmeringr1",
+				"identifier": "glimmering-shield",
+				"label": "Glimmering Shield",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4glimmeringr2",
+				"identifier": "",
+				"label": "Glimmering Shield",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "glimmering-shield",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4glimmer",
+					"type": "note",
+					"noteType": "info",
+					"text": "Blind an adjacent enemy until the end of their next turn.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Shield</strong> &middot; <strong>Price:</strong> 2,500 g</p><p><em>Reflects light with blinding intensity.</em></p><hr><p><strong>4 Armor</strong> (Req. 2 STR).</p><p>On Defend: Blind an adjacent enemy until the end of their next turn (1/encounter).</p><p class=\"nim-plus-credit\"><em>&mdash; Malikua, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 2,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 2500,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Ust99pfcbrawRWme",
+	"folder": "e824f6b808017148"
+}

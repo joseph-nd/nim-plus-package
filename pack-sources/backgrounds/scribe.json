@@ -1,0 +1,23 @@
+{
+	"name": "Scribe",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/scribe.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You’ve spent a lot of time writing and transcribing various tomes and scrolls. You know two additional languages, but only in writing. [M — pick them with your GM] You always succeed when using spell scrolls. [M]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sMVjdCnHjTkJgHU8"
+}

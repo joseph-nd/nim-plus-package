@@ -1,0 +1,66 @@
+{
+	"name": "Pixie",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/pixie.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1pixier0",
+				"identifier": "",
+				"label": "Tricksy",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "-1"
+			},
+			{
+				"disabled": false,
+				"id": "v1pixier1",
+				"identifier": "",
+				"label": "Tricksy",
+				"predicate": {},
+				"priority": 1,
+				"type": "grantMovement",
+				"mode": "fly",
+				"speed": "@attributes.movement.walk"
+			},
+			{
+				"disabled": false,
+				"id": "v1pixier2",
+				"identifier": "",
+				"label": "Tricksy",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"elvish"
+				]
+			}
+		],
+		"description": "<p>The smallest of the fair folk. Whimsical and unpredictable. Pixies are usually considered harmless, but can be surprisingly competent in combat – especially if mistaken for an insect.</p><hr><p><strong>Tricksy</strong></p><p>-1 Speed. [A]</p><p>You have a fly Speed as long as you are wearing armor no heavier than leather. [A — disable the rule manually while wearing heavier armor]</p><p>Advantage on Stealth. [M]</p><p>You know Elvish if your INT isn’t negative. [A]</p><hr><p><em>Nim+ Volume I — submitted by SanityWithIn.</em></p>",
+		"exotic": true,
+		"size": [
+			"tiny"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5q7PW6NThSD7B5g3"
+}

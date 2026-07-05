@@ -1,0 +1,41 @@
+{
+	"name": "Foxfolk",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/foxfolk.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1foxfolkr0",
+				"identifier": "",
+				"label": "Sly as a… Well, you know",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"influence"
+				]
+			}
+		],
+		"description": "<p>Trust is hard to come by for Foxfolk, as they are often viewed with suspicion. Perhaps that is why they are quick to learn how to make a good impression.</p><hr><p><strong>Sly as a… Well, you know</strong></p><p>When you Defend, you may add your Influence to your Defense (1/encounter). [M]</p><p>+1 Influence. [A]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "BaEIEnhqnhsxLGYw"
+}

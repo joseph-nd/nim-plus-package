@@ -1,0 +1,55 @@
+{
+	"name": "Gnome (Tree Cadet)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/gnomish-branches/gnome-tree-cadet.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1gnometreecr0",
+				"identifier": "",
+				"label": "Optimistic",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"dwarvish"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1gnometreecr1",
+				"identifier": "",
+				"label": "Optimistic",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "-1"
+			}
+		],
+		"description": "<p>Eccentric, curious, and perpetually optimistic, gnomes are cheerful—especially when compared to their typically grumpier and larger kin, the dwarves. Known for their tinkering, spreading cheer, and playful antics, gnomes pursue their passions with a scatterbrained enthusiasm.</p><hr><p><strong>Optimistic</strong></p><p>Allow an ally within Reach 6 to reroll any single die. Resets when healed to your max HP. </p><p>-1 Speed [M]</p><p>You know Dwarvish if your INT is not negative (but you call it Gnomish, of course) [M]</p><hr><p><strong>Gnomish Branches: Tree Cadet</strong> — <em>Reclusive and cheeky, with an affinity for illusion.</em></p><p><strong>Illusionist</strong></p><p>When you Defend, you may add your INT to your Defense (1/encounter). [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": false,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "a4c5d38016b28c5b",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7Cg39KK93FEI66Bm"
+}

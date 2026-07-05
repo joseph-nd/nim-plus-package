@@ -1,0 +1,56 @@
+{
+	"name": "Deepwalker",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/deepwalker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1deepwalkerr0",
+				"identifier": "",
+				"label": "The Call",
+				"predicate": {},
+				"priority": 1,
+				"type": "grantMovement",
+				"mode": "swim",
+				"speed": "@attributes.movement.walk"
+			},
+			{
+				"disabled": false,
+				"id": "v1deepwalkerr1",
+				"identifier": "",
+				"label": "The Call",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"primordial"
+				]
+			}
+		],
+		"description": "<p>A strange and unknowable people from deep beneath the waves, Deepwalkers are as varied from one another as they are from landwalkers. Some say they commune with the ancient denizens of the deep.</p><hr><p><strong>The Call</strong></p><p>You have a swim Speed, and you can breathe underwater. [A/M]</p><p>You know Primordial if your INT is not negative. [A]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "co53MkPB2jYc5JR5"
+}

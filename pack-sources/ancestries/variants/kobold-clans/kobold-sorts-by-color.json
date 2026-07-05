@@ -1,0 +1,58 @@
+{
+	"name": "Kobold (Sorts-by-Color)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/kobold-clans/kobold-sorts-by-color.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1koboldsortr0",
+				"identifier": "",
+				"label": "Wily",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"draconic"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1koboldsortr1",
+				"identifier": "",
+				"label": "Spotter",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"perception"
+				]
+			}
+		],
+		"description": "<p>Small, often maniacal, and dragon–obsessed. Kobolds thrive in the shadows, finding ingenious ways to survive despite their diminutive size. Underestimated by many, Kobolds prove time and again that even the smallest among us can wield great power.</p><hr><p><strong>Wily</strong> </p><p>Force an enemy to reroll a non-critical attack against you, 1/encounter. </p><p>+3 to Influence friendly characters. [M]</p><p>Advantage on skill checks related to dragons. [M]</p><p> You know Draconic if your INT is not negative. [M]</p><hr><p><strong>Kobold Clans: Sorts-by-Color</strong> — <em>I sort it by color! You do not deserve the duty!</em></p><p><strong>Spotter</strong></p><p>+1 Perception. [A]</p><p>Advantage when looking for hidden traps. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"small"
+		]
+	},
+	"effects": [],
+	"folder": "3987924656c11a7e",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ZLVnvag50lZbmtQR"
+}

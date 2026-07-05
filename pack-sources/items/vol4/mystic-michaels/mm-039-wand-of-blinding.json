@@ -1,0 +1,120 @@
+{
+	"name": "Wand of Blinding",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-039-wand-of-blinding.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-039-wand-of-blinding",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4mm039wanr0",
+				"identifier": "wand-blinding",
+				"label": "Wand of Blinding",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "10",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": []
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4mm039wanr1",
+				"identifier": "",
+				"label": "Wand of Blinding",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "wand-blinding",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm039laser",
+					"type": "note",
+					"noteType": "info",
+					"text": "A thin, green beam of light. That's it. That's the wand.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Common Wand</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Metalling rod with a red on/off button.</em></p><hr><p>Creates a thin, green beam of light (10 charges).</p><p><strong>Recharge:</strong> Buy more batteries from Mystic Michael.</p><p><em>Capsule prize #39 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "uLHjy31uBVqND2Sh",
+	"folder": "c0a09015d158170a"
+}

@@ -1,0 +1,27 @@
+{
+	"name": "Jotunn",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/jotunn.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Stout as stone and treacherous as a summer glacier. Jotunn hail from distant lands where they while away the winter dark with many competitions of prowess and cunning.</p><hr><p><strong>Challenger</strong></p><p>+1 Might or Finesse. [M — add 1 point to the skill of your choice]</p><p>You ignore cold weather, and breathe comfortably in extreme altitudes. [M]</p><p>Advantage on skill checks when you engage in duels of wit, speed, strength or drinking. [M]</p><hr><p><em>Nim+ Volume I — submitted by Santuric.</em></p>",
+		"exotic": true,
+		"size": [
+			"large"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "G2cCWENFCVCwfC7O"
+}

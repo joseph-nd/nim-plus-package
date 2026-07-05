@@ -1,0 +1,23 @@
+{
+	"name": "Long Lost",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/long-lost.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You’ve spent a long time lost in the wilds, which has given you an innate sense of direction. You always know the approximate direction of north and the way you came from in dungeons. If only you could find your way home… [M]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "sNqGyqelbd5ycKCo"
+}

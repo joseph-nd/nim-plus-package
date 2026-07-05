@@ -1,0 +1,97 @@
+{
+	"name": "Commander — Variant Kit 2",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/commander-kit-2.webp",
+	"system": {
+		"macro": "",
+		"identifier": "commander-kit-2",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr0",
+				"identifier": "",
+				"label": "Starting Gear - 2 Javelins",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.YbHHJEDlYHoEvyje"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr1",
+				"identifier": "",
+				"label": "Starting Gear - Iron Shield",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.jBG6IrYWBnSHWmdj"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1commanderkr2",
+				"identifier": "",
+				"label": "Starting Gear - Rusty Mail",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.jJHrcyDD6ByCnrFJ"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Commander.</em></p><p>Take this set <strong>instead of</strong> the Commander’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>2 Javelins</li><li>Iron Shield</li><li>Rusty Mail</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"folder": "44ce9b9fd6cbd7f2",
+	"flags": {
+		"nim-plus-package": {
+			"vol1Kit": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FNvB9yWcoxA2ukgS"
+}

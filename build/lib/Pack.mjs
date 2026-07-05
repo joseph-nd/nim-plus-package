@@ -92,6 +92,14 @@ export default class Pack {
 				matches: this.dirName === 'spells',
 				prepare: () => this.#prepareSpellFolderAssignments(),
 			},
+			{
+				matches: this.dirName === 'items',
+				prepare: () => this.#prepareItemFolderAssignments(),
+			},
+			{
+				matches: this.dirName === 'ancestries',
+				prepare: () => this.#prepareAncestryFolderAssignments(),
+			},
 		];
 
 		const matchedHandler = folderAssignmentHandlers.find((handler) => handler.matches);
@@ -276,6 +284,113 @@ export default class Pack {
 			const school = source.system.school.trim().toLowerCase();
 			const folder = foldersBySchool.get(school);
 			if (folder) acc.set(source._id, folder._id);
+			return acc;
+		}, new Map());
+	}
+
+	// Volume items live under items/<volume>/<category>/ and get one
+	// compendium folder per category (named after the zine's sections).
+	// Items outside a volume dir (hexbinder, artificer) keep their existing
+	// folderless layout.
+	static #VOLUME_ITEM_FOLDERS = new Map([
+		['vol4/weapons', 'Vol IV — Weapons'],
+		['vol4/armor-and-shields', 'Vol IV — Armor & Shields'],
+		['vol4/accessories', 'Vol IV — Accessories'],
+		['vol4/utility-and-exploration', 'Vol IV — Utility & Exploration'],
+		['vol4/consumables-and-wands', 'Vol IV — Consumables & Wands'],
+		['vol4/dverung-runes', 'Vol IV — Dverung Runes'],
+		['vol4/mystic-michaels', "Vol IV — Mystic Michael's Machinations"],
+		['vol1/starting-kits', 'Vol I — Variant Starting Equipment'],
+		['vol1/gear', 'Vol I — Adventuring Gear'],
+	]);
+
+	#prepareItemFolderAssignments() {
+		return this.#prepareDirectoryFolderAssignments(
+			Pack.#VOLUME_ITEM_FOLDERS,
+			(parts) => (parts.length >= 3 ? `${parts[0]}/${parts[1]}` : null),
+		);
+	}
+
+	// Vol I ancestries: exotic/ holds the new ancestries, variants/<group>/
+	// holds the sub-ancestry variants (one folder per zine heading).
+	static #ANCESTRY_FOLDERS = new Map([
+		['exotic', 'Vol I — Exotic Ancestries'],
+		['variants/human-adaptations', 'Variants — Human Adaptations'],
+		['variants/dwarven-hearths', 'Variants — Dwarven Hearths'],
+		['variants/elven-clades', 'Variants — Elven Clades'],
+		['variants/halfling-traditions', 'Variants — Halfling Traditions'],
+		['variants/gnomish-branches', 'Variants — Gnomish Branches'],
+		['variants/dragonborn-horns', 'Variants — Dragonborn Horns'],
+		['variants/fiendkin-curses', 'Variants — Fiendkin Curses'],
+		['variants/goblinoid-tribes', 'Variants — Goblinoid Tribes'],
+		['variants/kobold-clans', 'Variants — Kobold Clans'],
+		['variants/orcish-kin', 'Variants — Orcish Kin'],
+		['variants/oozeling-construct-permutations', 'Variants — Oozeling/Construct Permutations'],
+	]);
+
+	#prepareAncestryFolderAssignments() {
+		return this.#prepareDirectoryFolderAssignments(Pack.#ANCESTRY_FOLDERS, (parts) => {
+			if (parts[0] === 'exotic') return 'exotic';
+			if (parts[0] === 'variants' && parts.length >= 3) return `variants/${parts[1]}`;
+			return null;
+		});
+	}
+
+	// Shared engine: map each source file's directory to a compendium folder
+	// via `categoryFromParts` (relative path segments -> key into folderNames).
+	#prepareDirectoryFolderAssignments(folderNames, categoryFromParts) {
+		const items = [...this.data.entries()].filter(([, source]) => typeof source?._id === 'string');
+		if (items.length === 0) return new Map();
+
+		const usedCategories = new Map();
+		const categoryByItemId = new Map();
+
+		for (const [file, source] of items) {
+			const relativePath = path.relative(this.dirPath, file);
+			const parts = relativePath.split(path.sep).filter(Boolean);
+			const category = categoryFromParts(parts);
+			if (!category) continue;
+
+			const folderName = folderNames.get(category);
+			if (!folderName) continue;
+
+			categoryByItemId.set(source._id, category);
+			if (!usedCategories.has(category)) usedCategories.set(category, folderName);
+		}
+
+		if (usedCategories.size === 0) return new Map();
+
+		const statsTemplate = this.#getFolderStatsTemplate(items.map(([, source]) => source));
+		const categoryOrder = [...folderNames.keys()];
+		const foldersByCategory = [...usedCategories.entries()]
+			.sort((a, b) => categoryOrder.indexOf(a[0]) - categoryOrder.indexOf(b[0]))
+			.reduce((acc, [category, folderName], index) => {
+				acc.set(category, {
+					// vol4/<cat> hashes to the same id as the previous
+					// `<packId>-vol4-folder-<cat>` scheme, keeping published
+					// folder ids stable.
+					_id: Pack.#folderIdForDocument(
+						(([head, ...rest]) =>
+							[this.packId, head, 'folder', ...rest].join('-'))(category.split('/')),
+					),
+					_stats: { ...statsTemplate },
+					color: null,
+					description: '',
+					flags: {},
+					folder: null,
+					name: folderName,
+					sort: index * 10,
+					sorting: 'a',
+					type: this.documentType,
+				});
+				return acc;
+			}, new Map());
+
+		this.folderDocuments = [...foldersByCategory.values()];
+
+		return [...categoryByItemId.entries()].reduce((acc, [itemId, category]) => {
+			const folder = foldersByCategory.get(category);
+			if (folder) acc.set(itemId, folder._id);
 			return acc;
 		}, new Map());
 	}

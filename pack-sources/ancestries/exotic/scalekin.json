@@ -1,0 +1,42 @@
+{
+	"name": "Scalekin",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/exotic/scalekin.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1scalekinr0",
+				"identifier": "",
+				"label": "Arid Scales",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"naturecraft"
+				]
+			}
+		],
+		"description": "<p>The hostile and arid desert reaches from which these lizards hail have made them formidable adversaries. Beware their natural defenses.</p><hr><p><strong>Arid Scales</strong></p><p>Deal Poison damage equal to your Naturecraft to a melee attacker when you Defend (1/encounter). [M]</p><p>+1 Naturecraft. [A]</p><hr><p><em>Nim+ Volume I — submitted by Kazok the Goblin, Theleftmouseknop, Raford.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "ae7afdd161b5f466",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ky85Wp4D062R5h5R"
+}

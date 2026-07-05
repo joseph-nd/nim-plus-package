@@ -61,6 +61,21 @@ const api = {
 		allocateAcademic,
 		chooseElementalSpecialist,
 	},
+	// Nim+ Volume IV magic items (see the "Vol IV items" section at the bottom).
+	vol4: {
+		bloodseeker: vol4Bloodseeker,
+		elementalWeapon: vol4ElementalWeapon,
+		applyRune: vol4ApplyRune,
+		dawnmarkApply: vol4DawnmarkApply,
+		dawnmarkConsume: vol4DawnmarkConsume,
+		battlemageInfusion: vol4BattlemageInfusion,
+		realityFold: vol4RealityFold,
+		duneguardBrooch: vol4DuneguardBrooch,
+		blindOracle: vol4BlindOracle,
+		elementalGuidance: vol4ElementalGuidance,
+		jellybean: vol4Jellybean,
+		unicornTear: vol4UnicornTear,
+	},
 };
 
 Hooks.once('init', () => {
@@ -2564,6 +2579,95 @@ function resyncFeatsForActor(actor) {
 	}
 }
 
+// ── Weapon equip toggle ──────────────────────────────────────────────────────
+//
+// Nimble's inventory only draws an equip control for objects that carry
+// `system.rules` (armor/shields get the shield icon; rules-bearing objects get a
+// hand icon — PlayerCharacterInventoryTab.svelte). A plain weapon has no rules,
+// so it falls through to the quantity input with NO equip control at all — there's
+// no way to see or set `system.equipped`, which is exactly what the Dual Wielder /
+// Defensive Duelist feats read. We inject a hand-icon toggle into those weapon
+// cards so the equipped state is visible and settable, mirroring the system's own
+// non-armor equip glyph (solid hand = equipped, outline = not).
+
+function weaponEquipIcon(equipped) {
+	return equipped ? '<i class="fa-solid fa-hand"></i>' : '<i class="fa-regular fa-hand"></i>';
+}
+
+// Idempotent button-state writer. Guards on a `data-equipped` marker so repeated
+// calls from the MutationObserver don't mutate the DOM (and so never re-trigger
+// the observer into a loop) unless the equipped state actually changed.
+function updateWeaponEquipButton(btn, equipped) {
+	const want = equipped ? '1' : '0';
+	if (btn.dataset.equipped === want) return;
+	btn.dataset.equipped = want;
+	btn.innerHTML = weaponEquipIcon(equipped);
+	btn.setAttribute(
+		'data-tooltip',
+		equipped ? 'Equipped — click to unequip' : 'Unequipped — click to equip',
+	);
+	btn.setAttribute('aria-pressed', equipped ? 'true' : 'false');
+}
+
+function buildWeaponEquipButton(actor, item, equipped) {
+	const btn = document.createElement('button');
+	btn.className = 'nimble-button nim-plus-weapon-equip';
+	btn.type = 'button';
+	btn.setAttribute('data-button-variant', 'icon');
+	btn.setAttribute('aria-label', `Toggle equipped: ${item.name}`);
+	updateWeaponEquipButton(btn, equipped);
+	btn.addEventListener('click', async (event) => {
+		event.preventDefault();
+		event.stopPropagation(); // don't let the card's activate-on-click fire
+		const current = actor.items?.get?.(item.id)?.system?.equipped === true;
+		try {
+			await actor.updateItem(item.id, { 'system.equipped': !current });
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to toggle weapon equipped state`, error);
+		}
+	});
+	return btn;
+}
+
+/**
+ * Inject / refresh a weapon equip toggle on the Inventory tab. Inventory cards
+ * carry `.nimble-document-card--actor-inventory` and only mount on that tab, so an
+ * empty result is a no-op on every other tab. We only touch weapon cards that show
+ * the native quantity input (i.e. rules-less weapons with no equip control); cards
+ * where the system already renders its own equip toggle are left untouched.
+ */
+function syncWeaponEquipToggles(app) {
+	const actor = app?.document ?? app?.actor;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+
+	const cards = root.querySelectorAll('.nimble-document-card--actor-inventory[data-item-id]');
+	for (const card of cards) {
+		const header = card.querySelector(':scope > header');
+		if (!header) continue;
+		const existing = header.querySelector(':scope > .nim-plus-weapon-equip');
+
+		const item = actor.items?.get?.(card.dataset.itemId);
+		const isWeapon =
+			item?.type === 'object' && item.system?.objectType === 'weapon';
+		// Only weapons that lack a native equip control (shown by the quantity input).
+		const quantityInput = header.querySelector(':scope > .nimble-document-card__quantity');
+
+		if (!isWeapon || !quantityInput) {
+			existing?.remove();
+			continue;
+		}
+
+		const equipped = item.system?.equipped === true;
+		if (existing) {
+			updateWeaponEquipButton(existing, equipped);
+			continue;
+		}
+		header.insertBefore(buildWeaponEquipButton(actor, item, equipped), quantityInput);
+	}
+}
+
 // Watch the sheet for tab switches / reactive updates (which don't fire a
 // Foundry render hook) and keep the Feats section in the Features tab in sync.
 function setupFeatsTabObserver(app) {
@@ -2574,10 +2678,14 @@ function setupFeatsTabObserver(app) {
 	} catch (_error) {
 		/* previous observer already gone */
 	}
-	const observer = new MutationObserver(() => syncFeatsTabSection(app));
+	const observer = new MutationObserver(() => {
+		syncFeatsTabSection(app);
+		syncWeaponEquipToggles(app);
+	});
 	observer.observe(root, { childList: true, subtree: true });
 	app.__nimPlusFeatsObserver = observer;
 	syncFeatsTabSection(app);
+	syncWeaponEquipToggles(app);
 }
 
 Hooks.on('renderPlayerCharacterSheet', (app, _html) => {
@@ -3423,5 +3531,844 @@ function escape(str) {
 			default:
 				return ch;
 		}
+	});
+}
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Nim+ Volume IV — magic item runtime
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Automation for the Vol IV item pack (`pack-sources/items/vol4/`). Most items
+ * carry static `system.rules` (armorClass, grantMovement, chargePool, …) that
+ * the system applies while the item is equipped; the helpers below cover what
+ * the rules engine can't express:
+ *
+ * - **Dawnmark** (Blazing Dawn set): a stackable mark tracked as an integer
+ *   flag on the *target* actor. On-hit appliers (The Dawnstar, The Solar
+ *   Flare) are wired through `nimble.useItem` so the weapons keep their
+ *   native attack flow; trigger-based appliers (Cuirass on Defend, Gauntlets
+ *   on Grapple, Amulet when a ward is attacked) are click-to-use macros since
+ *   Defend/Grapple aren't hookable. Consumption rolls the stack-scaled die
+ *   (1d4 → 1d6 → … → 1d20) as Radiant damage.
+ * - **Dverung Runes**: `vol4ApplyRune` melds a rune into an owned item —
+ *   appending a damage node / rule / description rider to the target's
+ *   *source* data — enforcing the zine's rarity capacity, then consumes the
+ *   rune.
+ * - **Macro items**: dialogs and rolls for Bloodseeker, Battlemage Gloves,
+ *   Cloak of the Fold, and friends. Items that pair a macro with a charge
+ *   pool decrement the pool manually (the macro path bypasses the system's
+ *   charge consumption, which fires on the regular activation flow only).
+ * - **Derived-data riders**: Strength-o-Maxer (weapon STR requirements −1)
+ *   and Spellslinger's Prism (+KEY damage on cantrips) mirror the feats'
+ *   prepareDerivedData / spell-activate patch techniques.
+ */
+
+const DAWNMARK_FLAG = 'dawnmark';
+const DAWNMARK_DICE = [4, 6, 8, 10, 12, 20];
+
+function vol4ItemFlag(item, key) {
+	return item?.flags?.[MODULE_ID]?.[key] ?? item?.getFlag?.(MODULE_ID, key);
+}
+
+function vol4OwnedWithFlag(actor, key, { equippedOnly = false } = {}) {
+	return (
+		actor?.items?.filter?.(
+			(i) =>
+				i.type === 'object' &&
+				vol4ItemFlag(i, key) !== undefined &&
+				(!equippedOnly || i.system?.equipped === true),
+		) ?? []
+	);
+}
+
+function dawnmarkStacks(actor) {
+	return Number(actor?.getFlag?.(MODULE_ID, DAWNMARK_FLAG) ?? 0);
+}
+
+async function dawnmarkAddStack(targetActor, sourceActor, sourceItem) {
+	const next = dawnmarkStacks(targetActor) + 1;
+	await targetActor.setFlag(MODULE_ID, DAWNMARK_FLAG, next);
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor: sourceActor }),
+		flavor: `<strong>${escape(sourceItem?.name ?? 'Dawnmark')}</strong>`,
+		content: `<p><strong>${escape(targetActor.name)}</strong> is Dawnmarked (${next} stack${next === 1 ? '' : 's'}). On attack, consume all stacks for bonus Radiant damage (1d4 &gt; 1d6 &gt; &hellip; &gt; 1d20).</p>`,
+	});
+}
+
+/**
+ * Consume all Dawnmark stacks on the targeted actor: roll the stack-scaled
+ * die as Radiant damage, apply it, and clear the mark. `splash` (from the
+ * consuming item's flag) is surfaced on the card — adjacent / line splash
+ * needs table adjudication, so it isn't auto-applied to other tokens.
+ */
+async function vol4DawnmarkConsume(actor, item, targetActor = null) {
+	const target = targetActor ?? Array.from(game.user?.targets ?? [])[0]?.actor;
+	if (!target) {
+		ui.notifications?.warn('Target a Dawnmarked creature first.');
+		return null;
+	}
+	const stacks = dawnmarkStacks(target);
+	if (stacks < 1) {
+		ui.notifications?.warn(`${target.name} has no Dawnmark stacks.`);
+		return null;
+	}
+
+	const die = DAWNMARK_DICE[Math.min(stacks, DAWNMARK_DICE.length) - 1];
+	const roll = await new Roll(`1d${die}`).evaluate();
+	await target.unsetFlag(MODULE_ID, DAWNMARK_FLAG);
+	if (typeof target.applyDamage === 'function') await target.applyDamage(roll.total);
+
+	const splash = item ? vol4ItemFlag(item, 'vol4DawnmarkSplash') : null;
+	const splashText =
+		splash === 'adjacent'
+			? ' The bonus Radiant damage also hits enemies adjacent to the target.'
+			: splash === 'line'
+				? ' The bonus Radiant damage also hits enemies in Line 3 behind the target.'
+				: '';
+
+	return roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>Dawnmark consumed</strong> — ${escape(target.name)} (${stacks} stack${stacks === 1 ? '' : 's'}, 1d${die} Radiant).${splashText}`,
+	});
+}
+
+/**
+ * Click-to-use Dawnmark applier for the set pieces whose triggers (Defend,
+ * Interpose, Grapple, ward-attacked) have no system hook. Applies one stack
+ * to the current target.
+ */
+async function vol4DawnmarkApply(actor, item) {
+	const target = Array.from(game.user?.targets ?? [])[0]?.actor;
+	if (!target) {
+		ui.notifications?.warn('Target the creature to Dawnmark first.');
+		return null;
+	}
+	return dawnmarkAddStack(target, actor, item);
+}
+
+// On-hit Dawnmark (The Dawnstar / The Solar Flare) + radiant-spell Dawnmark
+// (Focus of the New Dawn): both ride the native activation flow.
+Hooks.on('nimble.useItem', (item, _chatCard, context) => {
+	const actor = item?.actor;
+	if (!actor || context?.isMiss) return;
+
+	let marks = false;
+	if (item.type === 'object' && vol4ItemFlag(item, 'vol4Dawnmark') === 'onHit') {
+		marks = true;
+	} else if (item.type === 'spell') {
+		const school = item.system?.school;
+		const tier = Number(item.system?.tier ?? 0);
+		if (school === 'radiant' && tier >= 1) {
+			marks = vol4OwnedWithFlag(actor, 'vol4Dawnmark', { equippedOnly: true }).some(
+				(i) => vol4ItemFlag(i, 'vol4Dawnmark') === 'radiantSpells',
+			);
+		}
+	}
+	if (!marks) return;
+
+	const targets = Array.from(context?.targets ?? []);
+	const targetActor = targets[0]?.actor;
+	if (!targetActor) return;
+
+	// Book: consuming and applying can share the same attack — consume first
+	// (if the wielder's weapon can consume and stacks exist), then mark.
+	const canConsume = item.type === 'object' && dawnmarkStacks(targetActor) > 0;
+	const run = async () => {
+		if (canConsume) {
+			const consume = await foundry.applications.api.DialogV2.confirm({
+				window: { title: 'Dawnmark' },
+				content: `<p>Consume <strong>${dawnmarkStacks(targetActor)}</strong> Dawnmark stack(s) on ${escape(targetActor.name)} for bonus Radiant damage?</p>`,
+				rejectClose: false,
+				modal: false,
+			}).catch(() => false);
+			if (consume) await vol4DawnmarkConsume(actor, item, targetActor);
+		}
+		await dawnmarkAddStack(targetActor, actor, item);
+	};
+	run().catch((error) => console.error(`[${MODULE_ID}] Dawnmark on-hit failed`, error));
+});
+
+// The Dwarf's Delight — Cheers! On crit, allies within Reach 4 gain LVL temp
+// HP (advantage on their next attack stays a reminder on the card).
+Hooks.on('nimble.useItem', (item, _chatCard, context) => {
+	if (item?.type !== 'object' || vol4ItemFlag(item, 'vol4DwarfsDelight') !== true) return;
+	if (!context?.isCritical) return;
+	const actor = item.actor;
+	const actorToken = actor?.getActiveTokens?.(true, true)?.[0];
+	if (!actor || !actorToken) return;
+
+	const level = getCharacterLevel(actor) || 1;
+	const gridSize = canvas?.dimensions?.distance ?? 1;
+	const allies = (canvas?.tokens?.placeables ?? []).filter((t) => {
+		const other = t.document;
+		if (!other?.actor || other.actorId === actorToken.actorId) return false;
+		if (other.disposition !== actorToken.disposition) return false;
+		const dx = Math.abs(other.x - actorToken.x) / (canvas.grid?.sizeX ?? canvas.grid?.size ?? 100);
+		const dy = Math.abs(other.y - actorToken.y) / (canvas.grid?.sizeY ?? canvas.grid?.size ?? 100);
+		return Math.max(dx, dy) * gridSize <= 4 * gridSize;
+	});
+
+	const run = async () => {
+		for (const token of allies) {
+			const ally = token.actor;
+			const currentTemp = Number(ally.system?.attributes?.hp?.temp ?? 0);
+			if (level > currentTemp) {
+				await ally.update({ 'system.attributes.hp.temp': level });
+			}
+		}
+		await ChatMessage.create({
+			speaker: ChatMessage.getSpeaker({ actor }),
+			flavor: `<strong>${escape(item.name)} — Cheers!</strong>`,
+			content: `<p>All allies within Reach 4 gain <strong>${level} temp HP</strong> and advantage on their next attack.${allies.length ? '' : ' <em>(No allied tokens found within Reach 4 — apply manually.)</em>'}</p>`,
+		});
+	};
+	run().catch((error) => console.error(`[${MODULE_ID}] Dwarf's Delight crit failed`, error));
+});
+
+// Regal Rest — LVL temp HP on any rest while the bedroll is in inventory.
+Hooks.on('nimble.rest', (payload) => {
+	const actor = payload?.actor;
+	if (!actor) return;
+	if (vol4OwnedWithFlag(actor, 'vol4RegalRest').length === 0) return;
+
+	const level = getCharacterLevel(actor) || 1;
+	const currentTemp = Number(actor.system?.attributes?.hp?.temp ?? 0);
+	const run = async () => {
+		if (level > currentTemp) await actor.update({ 'system.attributes.hp.temp': level });
+		await ChatMessage.create({
+			speaker: ChatMessage.getSpeaker({ actor }),
+			flavor: '<strong>Regal Rest</strong>',
+			content: `<p>${escape(actor.name)} rests in silken comfort and gains <strong>${level} temp HP</strong>.</p>`,
+		});
+	};
+	run().catch((error) => console.error(`[${MODULE_ID}] Regal Rest failed`, error));
+});
+
+// Ladlor's Tenacity — once per combat, intercept the update that would drop
+// the bearer to 0 HP: they stay at 1 HP instead (the empowerment rider goes to
+// chat). Mirrors the module's other pre-update interceptions.
+Hooks.on('preUpdateActor', (actor, changes) => {
+	if (actor?.type !== 'character') return;
+	const newHp = foundry.utils.getProperty(changes, 'system.attributes.hp.value');
+	if (typeof newHp !== 'number' || newHp > 0) return;
+	const currentHp = Number(actor.system?.attributes?.hp?.value ?? 0);
+	if (currentHp <= 0) return;
+
+	const ladle = vol4OwnedWithFlag(actor, 'vol4LadlorsTenacity')[0];
+	if (!ladle) return;
+
+	const combatId = game.combat?.id ?? null;
+	if (!combatId) return; // "each encounter" — only intercept during combat
+	if (actor.getFlag(MODULE_ID, 'ladlorUsedCombat') === combatId) return;
+
+	foundry.utils.setProperty(changes, 'system.attributes.hp.value', 1);
+	actor.setFlag(MODULE_ID, 'ladlorUsedCombat', combatId).catch(() => {});
+	const level = getCharacterLevel(actor) || 1;
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(ladle.name)} — Ladlor's Tenacity</strong>`,
+		content: `<p>${escape(actor.name)} refuses to fall! HP set to <strong>1</strong>. For 2 turns: <strong>+${level} damage</strong> (LVL), <strong>immunity to all damage</strong>, and <strong>ignore rushed attacks</strong>.</p>`,
+	}).catch(() => {});
+});
+
+// ── Vol IV derived-data riders ───────────────────────────────────────────────
+
+// Strength-o-Maxer: while equipped, every owned weapon's STR requirement drops
+// by 1. Derived data only — recomputed each prepare, self-clears on unequip.
+function applyVol4DerivedAdjustments(actor) {
+	const maxer = vol4OwnedWithFlag(actor, 'vol4StrengthOMaxer', { equippedOnly: true })[0];
+	if (!maxer) return;
+	for (const item of actor.items) {
+		if (item.type !== 'object' || item.system?.objectType !== 'weapon') continue;
+		const req = item.system?.properties?.strengthRequirement;
+		if (req && typeof req.value === 'number' && req.value > 0) req.value -= 1;
+	}
+}
+
+// Spellslinger's Prism: +KEY damage on cantrips while the prism is equipped.
+// Same formula-splice-and-restore technique as Elemental Specialist.
+function applyVol4CantripBonus(spell) {
+	if (spell?.type !== 'spell') return null;
+	const actor = spell.actor;
+	if (!actor) return null;
+	if (Number(spell.system?.tier ?? 0) !== 0) return null; // cantrips only
+
+	const prism = vol4OwnedWithFlag(actor, 'vol4CantripBonus', { equippedOnly: true })[0];
+	if (!prism) return null;
+
+	const key = actorKeyMod(actor);
+	if (!Number.isFinite(key) || key <= 0) return null;
+
+	const node = findFirstDamageNode(spell.system?.activation?.effects);
+	if (!node) return null;
+	const original = node.formula;
+	node.formula = `${original} + ${key}`;
+	return () => {
+		node.formula = original;
+	};
+}
+
+Hooks.once('setup', () => {
+	const CharacterClass = CONFIG?.NIMBLE?.Actor?.documentClasses?.character;
+	if (CharacterClass?.prototype?.prepareDerivedData && !CharacterClass.prototype.__nimPlusVol4Patched) {
+		const originalPrep = CharacterClass.prototype.prepareDerivedData;
+		CharacterClass.prototype.prepareDerivedData = function vol4PatchedPrepareDerivedData() {
+			originalPrep.call(this);
+			try {
+				applyVol4DerivedAdjustments(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply Vol IV derived adjustments`, error);
+			}
+		};
+		CharacterClass.prototype.__nimPlusVol4Patched = true;
+	}
+
+	const SpellClass = CONFIG?.NIMBLE?.Item?.documentClasses?.spell;
+	if (SpellClass?.prototype?.activate && !SpellClass.prototype.__nimPlusVol4PrismPatched) {
+		const originalActivate = SpellClass.prototype.activate;
+		SpellClass.prototype.activate = async function vol4PatchedSpellActivate(options = {}) {
+			let restore = null;
+			try {
+				if (!options?.executeMacro) restore = applyVol4CantripBonus(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply Spellslinger's Prism bonus`, error);
+			}
+			try {
+				return await originalActivate.call(this, options);
+			} finally {
+				try {
+					restore?.();
+				} catch (error) {
+					console.error(`[${MODULE_ID}] Failed to restore cantrip formula`, error);
+				}
+			}
+		};
+		SpellClass.prototype.__nimPlusVol4PrismPatched = true;
+	}
+});
+
+// ── Charge helper for macro items ────────────────────────────────────────────
+// The macro path replaces the regular activation flow, so `chargeConsumer`
+// rules never fire for macro items — decrement the pool flag directly.
+const CHARGE_POOL_FLAG_PATH = 'flags.nimble.chargePools';
+
+async function vol4SpendCharge(item, identifier) {
+	const pools = foundry.utils.getProperty(item, CHARGE_POOL_FLAG_PATH) ?? {};
+	const pool = pools[identifier];
+	const rule = (item.system?.rules ?? []).find(
+		(r) => r?.type === 'chargePool' && r?.identifier === identifier,
+	);
+	const max = Number(pool?.max ?? rule?.max ?? 1);
+	const current = Number(pool?.current ?? max);
+	if (current < 1) {
+		ui.notifications?.warn(`${item.name} has no charges remaining.`);
+		return false;
+	}
+	await item.update({
+		[`${CHARGE_POOL_FLAG_PATH}.${identifier}`]: {
+			...(pool ?? { identifier, scope: 'item', sourceItemId: item.id, max }),
+			current: current - 1,
+		},
+	});
+	return true;
+}
+
+// ── Vol IV item macros ───────────────────────────────────────────────────────
+
+/** Bloodseeker — sacrifice up to KEY HP to add that much damage to the strike. */
+async function vol4Bloodseeker(actor, item) {
+	if (!actor || !item) return null;
+	const key = Math.max(1, actorKeyMod(actor) || 1);
+	const maxSacrifice = Math.min(key, Math.max(0, Number(actor.system?.attributes?.hp?.value ?? 0) - 1));
+
+	const sacrifice = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name} — Blood Price` },
+		content: `
+			<form class="nim-plus-bloodseeker">
+				<p>Sacrifice up to <strong>${maxSacrifice}</strong> HP (KEY ${key}) to add that much damage.</p>
+				<div class="form-group"><label>HP to sacrifice</label>
+				<input type="number" name="hp" value="0" min="0" max="${maxSacrifice}" step="1"></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Strike',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-bloodseeker');
+					return Number(form?.elements?.hp?.value ?? 0);
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+	if (sacrifice === null) return null;
+
+	const bonus = Math.max(0, Math.min(maxSacrifice, Math.floor(sacrifice)));
+	if (bonus > 0 && typeof actor.applyDamage === 'function') await actor.applyDamage(bonus);
+
+	const formula = bonus > 0 ? `1d6 + @strength + ${bonus}` : '1d6 + @strength';
+	const roll = await new Roll(formula, actor.getRollData()).evaluate();
+	return roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — Slashing${bonus > 0 ? ` <em>(sacrificed ${bonus} HP)</em>` : ''}`,
+	});
+}
+
+/** Elemental Weapon — rewrite an owned weapon's damage type; consume the enchantment. */
+async function vol4ElementalWeapon(actor, item) {
+	if (!actor || !item) return null;
+	const weapons = actor.items.filter(
+		(i) => i.type === 'object' && i.system?.objectType === 'weapon',
+	);
+	if (weapons.length === 0) {
+		ui.notifications?.warn('No weapons to enchant.');
+		return null;
+	}
+
+	const weaponOpts = weapons.map((w) => `<option value="${w.id}">${escape(w.name)}</option>`).join('');
+	const choice = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name}` },
+		content: `
+			<form class="nim-plus-elemental-weapon">
+				<div class="form-group"><label>Weapon</label><select name="weapon">${weaponOpts}</select></div>
+				<div class="form-group"><label>Element</label><select name="element">
+					<option value="fire">Fire</option>
+					<option value="lightning">Lightning</option>
+					<option value="cold">Ice</option>
+				</select></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Enchant',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-elemental-weapon');
+					if (!form) return null;
+					return { weaponId: form.elements.weapon?.value, element: form.elements.element?.value };
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+	if (!choice?.weaponId) return null;
+
+	const weapon = actor.items.get(choice.weaponId);
+	if (!weapon) return null;
+	const effects = foundry.utils.deepClone(weapon._source?.system?.activation?.effects ?? weapon.system?.activation?.effects ?? []);
+	let changed = false;
+	for (const node of effects) {
+		if (node?.type === 'damage') {
+			node.damageType = choice.element;
+			changed = true;
+		}
+	}
+	if (!changed) {
+		ui.notifications?.warn(`${weapon.name} has no damage roll to enchant.`);
+		return null;
+	}
+	await weapon.update({ 'system.activation.effects': effects });
+	await vol4ConsumeOne(item);
+
+	const label = choice.element === 'cold' ? 'Ice' : choice.element[0].toUpperCase() + choice.element.slice(1);
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p><strong>${escape(weapon.name)}</strong> now deals <strong>${label}</strong> damage.</p>`,
+	});
+}
+
+/** Decrement quantity, deleting the item at 0. */
+async function vol4ConsumeOne(item) {
+	const qty = Number(item.system?.quantity ?? 1);
+	if (qty > 1) return item.update({ 'system.quantity': qty - 1 });
+	return item.delete();
+}
+
+/** Rarity → Dverung rune capacity (zine p. 24). */
+function vol4RuneCapacity(targetItem) {
+	const description = targetItem.system?.description?.public ?? '';
+	if (/legendary/i.test(description)) return 3;
+	if (/very rare|(?<!very )rare/i.test(description)) return 2;
+	return 1;
+}
+
+/**
+ * Meld a Dverung Rune into an owned item. Weapon runes append a damage node
+ * (or on-hit/on-miss rider notes) to the weapon's activation tree; armor
+ * runes append a rule (armorClass / speedBonus / grantMovement / maxHpBonus /
+ * healingPotionBonus) or a description rider. The rune is consumed and the
+ * meld recorded in the target's `vol4Runes` flag for capacity enforcement.
+ */
+async function vol4ApplyRune(actor, item) {
+	if (!actor || !item) return null;
+	const runeSpec = vol4ItemFlag(item, 'vol4Rune');
+	if (!runeSpec?.slot) {
+		ui.notifications?.error(`[${MODULE_ID}] ${item.name} carries no rune definition.`);
+		return null;
+	}
+
+	const eligible = actor.items.filter((i) => {
+		if (i.type !== 'object') return false;
+		if (runeSpec.slot === 'weapon') return i.system?.objectType === 'weapon';
+		return i.system?.objectType === 'armor' || i.system?.objectType === 'shield';
+	});
+	if (eligible.length === 0) {
+		ui.notifications?.warn(`No ${runeSpec.slot} to meld ${item.name} into.`);
+		return null;
+	}
+
+	const rows = eligible
+		.map((i) => {
+			const used = (i.getFlag(MODULE_ID, 'vol4Runes') ?? []).length;
+			const cap = vol4RuneCapacity(i);
+			const full = used >= cap ? ' disabled' : '';
+			return `<option value="${i.id}"${full}>${escape(i.name)} (${used}/${cap} runes)</option>`;
+		})
+		.join('');
+	const targetId = await foundry.applications.api.DialogV2.wait({
+		window: { title: `Meld ${item.name}` },
+		content: `
+			<form class="nim-plus-rune">
+				<p>Melding is permanent and consumes the rune. Capacity: Common/Uncommon 1 &middot; Rare/Very Rare 2 &middot; Legendary 3.</p>
+				<div class="form-group"><label>Meld into</label><select name="target">${rows}</select></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Meld',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-rune');
+					return form?.elements?.target?.value ?? null;
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+	if (!targetId) return null;
+
+	const target = actor.items.get(targetId);
+	if (!target) return null;
+	const used = target.getFlag(MODULE_ID, 'vol4Runes') ?? [];
+	if (used.length >= vol4RuneCapacity(target)) {
+		ui.notifications?.warn(`${target.name} cannot hold more runes.`);
+		return null;
+	}
+
+	const payload = runeSpec.payload ?? {};
+	const updates = {};
+	let detail = '';
+
+	// Damage-type choice (Elemental / Divinity runes)
+	let damageType = null;
+	if (payload.damage) {
+		const choices = payload.damageTypeChoice ?? ['force'];
+		damageType = choices[0];
+		if (choices.length > 1) {
+			const opts = choices
+				.map((t) => `<option value="${t}">${t === 'cold' ? 'Ice' : t[0].toUpperCase() + t.slice(1)}</option>`)
+				.join('');
+			damageType = await foundry.applications.api.DialogV2.wait({
+				window: { title: `${item.name} — Damage Type` },
+				content: `<form class="nim-plus-rune-type"><div class="form-group"><label>Damage type</label><select name="dtype">${opts}</select></div></form>`,
+				buttons: [
+					{
+						action: 'ok',
+						label: 'Choose',
+						default: true,
+						callback: (_event, button, dialog) => {
+							const root = dialog?.element ?? button;
+							return root?.querySelector?.('form.nim-plus-rune-type')?.elements?.dtype?.value ?? null;
+						},
+					},
+					{ action: 'cancel', label: 'Cancel', callback: () => null },
+				],
+				rejectClose: false,
+				modal: false,
+			}).catch(() => null);
+			if (!damageType) return null;
+		}
+	}
+
+	const effects = foundry.utils.deepClone(
+		target._source?.system?.activation?.effects ?? target.system?.activation?.effects ?? [],
+	);
+	const primary = effects.find((n) => n?.type === 'damage');
+	let effectsChanged = false;
+
+	if (payload.damage && damageType) {
+		const nid = `rune-${runeSpec.key}-${foundry.utils.randomID(6)}`;
+		effects.push({
+			id: nid,
+			type: 'damage',
+			damageType,
+			formula: payload.damage,
+			parentContext: null,
+			parentNode: null,
+			canCrit: false,
+			canMiss: true,
+			on: {
+				hit: [
+					{ id: `${nid}-hit`, type: 'damageOutcome', outcome: 'fullDamage', parentContext: 'hit', parentNode: nid },
+				],
+				criticalHit: [],
+				miss: [],
+			},
+		});
+		effectsChanged = true;
+		detail = `+${payload.damage} ${damageType === 'cold' ? 'Ice' : damageType} damage`;
+	}
+	if (payload.hitNote && primary) {
+		primary.on = primary.on ?? { hit: [], criticalHit: [], miss: [] };
+		primary.on.hit = primary.on.hit ?? [];
+		primary.on.hit.push({
+			id: `rune-${runeSpec.key}-note`,
+			type: 'note',
+			noteType: 'info',
+			text: payload.hitNote,
+			parentContext: 'hit',
+			parentNode: primary.id,
+		});
+		effectsChanged = true;
+		detail = detail || payload.hitNote;
+	}
+	if (payload.missNote && primary) {
+		primary.on = primary.on ?? { hit: [], criticalHit: [], miss: [] };
+		primary.on.miss = primary.on.miss ?? [];
+		primary.on.miss.push({
+			id: `rune-${runeSpec.key}-missnote`,
+			type: 'note',
+			noteType: 'warning',
+			text: payload.missNote,
+			parentContext: 'miss',
+			parentNode: primary.id,
+		});
+		effectsChanged = true;
+	}
+	if (effectsChanged) updates['system.activation.effects'] = effects;
+
+	if (payload.rule) {
+		const rules = foundry.utils.deepClone(target._source?.system?.rules ?? target.system?.rules ?? []);
+		rules.push({
+			disabled: target.system?.equipped !== true,
+			id: `rune${runeSpec.key}${foundry.utils.randomID(4)}`.slice(0, 16),
+			identifier: `rune-${runeSpec.key}`,
+			label: item.name,
+			predicate: {},
+			priority: 1,
+			...payload.rule,
+		});
+		updates['system.rules'] = rules;
+		detail = detail || `rule: ${payload.rule.type}`;
+	}
+
+	const riderText = payload.note ?? (!payload.rule && !payload.damage && !payload.hitNote ? runeSpec.key : null);
+	const runeLine = `<p><strong>${escape(item.name)}:</strong> ${escape(payload.note ?? detail ?? 'melded')}</p>`;
+	updates['system.description.public'] = `${target.system?.description?.public ?? ''}${runeLine}`;
+	if (riderText && !detail) detail = riderText;
+
+	updates[`flags.${MODULE_ID}.vol4Runes`] = [...used, runeSpec.key];
+
+	await target.update(updates);
+	await vol4ConsumeOne(item);
+
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>Melded into <strong>${escape(target.name)}</strong>${detail ? ` — ${escape(detail)}` : ''}. (${used.length + 1}/${vol4RuneCapacity(target)} runes)</p>`,
+	});
+}
+
+/** Battlemage Gloves — Infusion: mana-fueled unarmed strike. */
+async function vol4BattlemageInfusion(actor, item) {
+	if (!actor || !item) return null;
+	const mana = Number(actor.system?.resources?.mana?.current ?? 0);
+	const highestTier = Number(actor.system?.resources?.highestUnlockedSpellTier ?? 0);
+	const maxSpend = Math.max(0, Math.min(mana, highestTier));
+	const key = actorKeyMod(actor);
+
+	const spend = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name} — Infusion` },
+		content: `
+			<form class="nim-plus-infusion">
+				<p>Spend up to <strong>${maxSpend}</strong> mana (current ${mana}, highest tier ${highestTier}). Each point: +KEY (${key}) damage and one die step (1d4 &gt; 1d6 &gt; &hellip; &gt; 1d20).</p>
+				<div class="form-group"><label>Mana to spend</label>
+				<input type="number" name="mana" value="0" min="0" max="${maxSpend}" step="1"></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Strike',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-infusion');
+					return Number(form?.elements?.mana?.value ?? 0);
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+	if (spend === null) return null;
+
+	const spent = Math.max(0, Math.min(maxSpend, Math.floor(spend)));
+	if (spent > 0) {
+		await actor.update({ 'system.resources.mana.current': mana - spent });
+	}
+
+	const dieSteps = [4, 6, 8, 10, 12, 20];
+	const die = dieSteps[Math.min(spent, dieSteps.length - 1)];
+	const bonus = spent * key;
+	const formula = `1d${die} + @arcana${bonus > 0 ? ` + ${bonus}` : ''}`;
+	const roll = await new Roll(formula, actor.getRollData()).evaluate();
+	return roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — Force${spent > 0 ? ` <em>(Infusion: ${spent} mana)</em>` : ''}`,
+	});
+}
+
+/** Cloak of the Fold — Reality Fold: teleport, paying 1 HP per space. */
+async function vol4RealityFold(actor, item) {
+	if (!actor || !item) return null;
+	const hp = Number(actor.system?.attributes?.hp?.value ?? 0);
+	const maxSpaces = Math.max(0, hp - 1);
+
+	const spaces = await foundry.applications.api.DialogV2.wait({
+		window: { title: `${item.name} — Reality Fold` },
+		content: `
+			<form class="nim-plus-fold">
+				<p>Teleport to a space you can see, paying <strong>1 HP per space</strong> (up to ${maxSpaces}).</p>
+				<div class="form-group"><label>Spaces</label>
+				<input type="number" name="spaces" value="1" min="1" max="${maxSpaces}" step="1"></div>
+			</form>`,
+		buttons: [
+			{
+				action: 'ok',
+				label: 'Fold',
+				default: true,
+				callback: (_event, button, dialog) => {
+					const root = dialog?.element ?? button;
+					const form = root?.querySelector?.('form.nim-plus-fold');
+					return Number(form?.elements?.spaces?.value ?? 0);
+				},
+			},
+			{ action: 'cancel', label: 'Cancel', callback: () => null },
+		],
+		rejectClose: false,
+		modal: false,
+	}).catch(() => null);
+	if (!spaces || spaces < 1) return null;
+
+	const cost = Math.min(maxSpaces, Math.floor(spaces));
+	if (typeof actor.applyDamage === 'function') await actor.applyDamage(cost);
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)} — Reality Fold</strong>`,
+		content: `<p>${escape(actor.name)} folds through reality, teleporting <strong>${cost}</strong> space${cost === 1 ? '' : 's'} (paid ${cost} HP). Move the token to the destination.</p>`,
+	});
+}
+
+/** Duneguard's Brooch — auto-succeed a save; the brooch crumbles. */
+async function vol4DuneguardBrooch(actor, item) {
+	if (!actor || !item) return null;
+	const confirmed = await foundry.applications.api.DialogV2.confirm({
+		window: { title: item.name },
+		content: `<p>Succeed on the save you just failed? <strong>The brooch crumbles to dust.</strong></p>`,
+		rejectClose: false,
+		modal: false,
+	}).catch(() => false);
+	if (!confirmed) return null;
+
+	await ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>${escape(actor.name)}'s failed save <strong>succeeds instead</strong>. The scarab brooch crumbles to dust.</p>`,
+	});
+	return item.delete();
+}
+
+/** Sight of the Blind Oracle — cast from an ally's position, self-Blind. */
+async function vol4BlindOracle(actor, item) {
+	if (!actor || !item) return null;
+	if (!(await vol4SpendCharge(item, 'blind-oracle'))) return null;
+	await actor.toggleStatusEffect('blinded', { active: true });
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>${escape(actor.name)} casts their next spell from an ally's position, and is <strong>Blinded</strong> until the start of their next turn.</p>`,
+	});
+}
+
+const VOL4_GUIDANCE = [
+	['Fire', 'Points towards the riskiest path.'],
+	['Air', 'Points towards the most direct path.'],
+	['Water', 'Points towards the safest path.'],
+	['Earth', 'Points towards the most consistent path.'],
+];
+
+/** Guidance of the Elements — roll 1d4 and post the guidance. */
+async function vol4ElementalGuidance(actor, item) {
+	if (!actor || !item) return null;
+	if (!(await vol4SpendCharge(item, 'elemental-guidance'))) return null;
+	const roll = await new Roll('1d4').evaluate();
+	const [element, meaning] = VOL4_GUIDANCE[roll.total - 1];
+	return roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — <strong>${element}</strong>: ${meaning}`,
+	});
+}
+
+const VOL4_JELLYBEANS = [
+	['Green Bean', 'Spit onto any surface: grows into a stable, 1-space platform. Dissolves into green goo after 10 minutes.'],
+	['Yellow Bean', 'Chew: Feather Fall for 1 minute. Afterwards you spit up yellow goo.'],
+	['Blue Bean', 'Spit out: covers a 2×2 area with blue goo for 10 minutes — doubles jumping range and height when bounced on.'],
+	['Orange Bean', 'Spit out: covers 6 spaces in a line with orange goo for 10 minutes — doubles movement speed.'],
+	['Purple Bean', 'Chew: grow a size category for 1 minute (up to Large). Afterwards you spit up purple goo.'],
+	['Pink Bean', 'Chew: shrink a size category for 1 minute (down to Tiny). Afterwards you spit up pink goo.'],
+	['Black Bean', 'Spit onto any surface: grows into a climbable pillar up to 5 meters tall. Dissolves into black goo after 10 minutes.'],
+	['White Bean', 'Chew: become adhesive for 1 minute, climbing most surfaces. Afterwards you spit up white goo.'],
+];
+
+/** Traveling Tom's Magic Jellybeans — bite one: 1d8 for the bean. */
+async function vol4Jellybean(actor, item) {
+	if (!actor || !item) return null;
+	if (!(await vol4SpendCharge(item, 'jellybeans'))) return null;
+	const roll = await new Roll('1d8').evaluate();
+	const [bean, effect] = VOL4_JELLYBEANS[roll.total - 1];
+	return roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong> — <strong>${bean}</strong>: ${effect}`,
+	});
+}
+
+/** Tear of a Unicorn — heal 20 HP, remove all wounds, cure all conditions. */
+async function vol4UnicornTear(actor, item) {
+	if (!actor || !item) return null;
+	if (typeof actor.applyHealing === 'function') await actor.applyHealing(20);
+	if (Number(actor.system?.attributes?.wounds?.value ?? 0) > 0) {
+		await actor.update({ 'system.attributes.wounds.value': 0 });
+	}
+	for (const statusId of Array.from(actor.statuses ?? [])) {
+		await actor.toggleStatusEffect(statusId, { active: false }).catch(() => {});
+	}
+	await vol4ConsumeOne(item);
+	return ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content: `<p>${escape(actor.name)} is healed for <strong>20 HP</strong>; all wounds and conditions are removed.</p>`,
 	});
 }

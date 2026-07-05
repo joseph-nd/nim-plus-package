@@ -1,0 +1,146 @@
+{
+	"name": "Entangling Bow",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/entangling-bow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "entangling-bow",
+		"rules": [
+			{
+				"type": "applyCondition",
+				"disabled": false,
+				"id": "v4entanglingr0",
+				"identifier": "",
+				"label": "Entangling Bow",
+				"predicate": {},
+				"priority": 1,
+				"condition": "restrained",
+				"trigger": "onCrit",
+				"duration": {
+					"rounds": null,
+					"turns": null,
+					"seconds": null
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4entbow",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d6+@dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4entbow-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4entbow"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4entbow-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT: target is Restrained (escape DC 10+KEY).",
+								"parentContext": "criticalHit",
+								"parentNode": "v4entbow"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4entbow-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4entbow"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 12
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Shortbow</strong> &middot; <strong>Price:</strong> 3,999 g</p><p><em>Living roots willingly shaped into an armament.</em></p><hr><p><strong>1d6+DEX Piercing.</strong> 2-handed, Range 12.</p><p>On crit: Restrained (escape DC 10+KEY).</p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"range"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 3999,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "HhyjhYbeWRc7JNWI",
+	"folder": "a437aed213945d33"
+}

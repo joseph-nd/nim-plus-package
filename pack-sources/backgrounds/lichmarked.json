@@ -1,0 +1,23 @@
+{
+	"name": "Lichmarked",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/lichmarked.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You were made into a living phylactery by a lich, binding your soul to theirs. You know Necrotic cantrips. [M] While you are Dying, attacking and casting does not risk causing Wounds. [M] You feel a vague pull in the direction of the lich when you sleep.</p><hr><p><em>Nim+ Volume I — submitted by Chthonic Duck.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "dOukbeejG8d17UUd"
+}

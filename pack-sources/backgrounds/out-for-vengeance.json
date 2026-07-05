@@ -1,0 +1,23 @@
+{
+	"name": "Out For Vengeance",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/out-for-vengeance.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Someone wronged you and vengeance demands that they must pay! Work out who your nemesis is – and what they did – with your GM. You have advantage on all checks related to tracking them. While in combat with your nemesis, you are permanently Taunted by them. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oDp02HJkHrf995SA"
+}

@@ -1,0 +1,45 @@
+{
+	"name": "Pegglegged Sailor",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/pegglegged-sailor.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1peggleggedr0",
+				"identifier": "",
+				"label": "Pegglegged Sailor",
+				"predicate": {},
+				"priority": 1,
+				"type": "speedBonus",
+				"value": "-1"
+			},
+			{
+				"disabled": false,
+				"id": "v1peggleggedr1",
+				"identifier": "",
+				"label": "Pegglegged Sailor",
+				"predicate": {},
+				"priority": 1,
+				"type": "armorClass",
+				"formula": "2",
+				"mode": "add"
+			}
+		],
+		"description": "<p>Thump! Thump! Thump! You lost one of your legs in combat. Or was it an accident? Seafaring folk find it respectable, at least. -1 Speed. [A] +2 Armor. [A]</p><hr><p><em>Nim+ Volume I — submitted by Plot-Relevant Commoner.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nkygbSJ3nKjMMojc"
+}

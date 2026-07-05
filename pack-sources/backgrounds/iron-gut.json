@@ -1,0 +1,23 @@
+{
+	"name": "Iron Gut",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/iron-gut.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>Whatever’s going on in there doesn’t seem natural – or maybe you’re just a kobold. You can eat pretty much anything, and you have advantage on saves against ingested poison. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Tc2hlVlrlhjygD4q"
+}

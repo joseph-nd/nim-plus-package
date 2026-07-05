@@ -1,0 +1,23 @@
+{
+	"name": "Plucky Young Hero",
+	"type": "background",
+	"img": "modules/nim-plus-package/assets/backgrounds/plucky-young-hero.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>You got moxie, kid. You’re just looking for that one opportunity to truly make waves. When you hit an enemy with an attack, you may turn it into a crit (1/encounter). If you do so, the next attack against you is a guaranteed crit. [M]</p><hr><p><em>Nim+ Volume I — submitted by The Rotten Pixie.</em></p>"
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "LdWAQlwVUBjX3oxK"
+}

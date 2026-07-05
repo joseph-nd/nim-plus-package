@@ -1,0 +1,137 @@
+{
+	"name": "Refractive Shield",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/refractive-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "refractive-shield",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4refractiver0",
+				"identifier": "",
+				"label": "Refractive Shield",
+				"predicate": {},
+				"priority": 1,
+				"formula": "2",
+				"mode": "add"
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4refractiver1",
+				"identifier": "refractive-shield",
+				"label": "Refractive Shield",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4refractiver2",
+				"identifier": "",
+				"label": "Refractive Shield",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "refractive-shield",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4refract",
+					"type": "note",
+					"noteType": "info",
+					"text": "Reflect the fully-blocked single-target spell back at the caster.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Shield</strong> &middot; <strong>Price:</strong> 4,999 g</p><p><em>Hardwood shield imbued with arcane runes.</em></p><hr><p><strong>2 Armor.</strong></p><p>When you Defend against a single-target spell and reduce damage to 0, you may reflect the spell back at the caster (1/encounter).</p><p class=\"nim-plus-credit\"><em>&mdash; Malikua, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 4999,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Jgs5uECcsIken6BH",
+	"folder": "e824f6b808017148"
+}

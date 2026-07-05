@@ -1,0 +1,134 @@
+{
+	"name": "The Rude Rapier",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/the-rude-rapier.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-rude-rapier",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4rudera",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "2d4+@dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4rudera-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4rudera"
+							},
+							{
+								"id": "v4rudera-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Also deals 1d6 Psychic damage.",
+								"parentContext": "hit",
+								"parentNode": "v4rudera"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4rudera-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4rudera"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4rudera-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS: you suffer 1d6 Psychic damage instead.",
+								"parentContext": "miss",
+								"parentNode": "v4rudera"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Rapier</strong> &middot; <strong>Price:</strong> Please make it shut up</p><p><em>Berates the wielder if they miss with wit as sharp as its edge.</em></p><hr><p><strong>2d4+DEX Piercing &amp; 1d6 Psychic.</strong></p><p>On miss: You suffer the Psychic damage instead.</p><p class=\"nim-plus-credit\"><em>&mdash; The Pebble, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "L7p8MwKoDUSxe0yP",
+	"folder": "a437aed213945d33"
+}

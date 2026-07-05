@@ -1,0 +1,130 @@
+{
+	"name": "Amulet of the North Star",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/accessories/amulet-of-the-north-star.webp",
+	"system": {
+		"macro": "return nimPlus.vol4.dawnmarkApply(actor, item);",
+		"identifier": "amulet-of-the-north-star",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4amuletofr0",
+				"identifier": "warding-bond",
+				"label": "Warding Bond",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4amuletofr1",
+				"identifier": "",
+				"label": "Warding Bond",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "warding-bond",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4northstar",
+					"type": "note",
+					"noteType": "info",
+					"text": "Cast Warding Bond for free.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Amulet</strong> &middot; <strong>Price:</strong> 100,000 g</p><p><em>Made to banish encroaching dark.</em></p><hr><p>Grants the ability to cast Warding Bond for free (1/encounter).</p><p>When you or your ward is attacked, apply <strong>Dawnmark</strong> to the attacker (1/turn).</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 100000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Dawnmark": "onWardAttacked"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "UQcVbFjYtqeigBQm",
+	"folder": "2b19caa6cb03e2e4"
+}

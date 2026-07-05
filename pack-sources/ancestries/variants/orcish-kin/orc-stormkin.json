@@ -1,0 +1,58 @@
+{
+	"name": "Orc (Stormkin)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/orcish-kin/orc-stormkin.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1orcstormkir0",
+				"identifier": "",
+				"label": "Relentless",
+				"predicate": {},
+				"priority": 1,
+				"type": "skillBonus",
+				"value": "1",
+				"skills": [
+					"might"
+				]
+			},
+			{
+				"disabled": false,
+				"id": "v1orcstormkir1",
+				"identifier": "",
+				"label": "Relentless",
+				"predicate": {
+					"intelligence": {
+						"min": 0
+					}
+				},
+				"priority": 1,
+				"type": "grantProficiency",
+				"proficiencyType": "languages",
+				"values": [
+					"goblin"
+				]
+			}
+		],
+		"description": "<p>Just when you think you've bested a mighty Orc, you've merely succeeded in rousing their anger. Engaging in combat with an Orc is no endeavor for the weak-willed. While others may cower before death's approach, Orcs boldly defy its grasp.</p><hr><p><strong>Relentless</strong> </p><p>When you would drop to 0 HP, you may set your HP to LVL instead, 1/Safe Rest. </p><p>+1 Might. [A]</p><p>You know Goblin if your INT is not negative (but you call it Orcish, of course). [M]</p><hr><p><strong>Orcish Kin: Stormkin</strong> — <em>Your blood roils with the coastal storms, the jungle monsoons, and the powerful lightning.</em></p><p><strong>Stormstep</strong></p><p>(1/encounter) Reaction (when hit from range): Move up to your Speed towards the attacker. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "78244436a82135e5",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "7nazD6OPMPuoVeXy"
+}

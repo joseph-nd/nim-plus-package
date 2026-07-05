@@ -1,0 +1,136 @@
+{
+	"name": "Whip of the Archaeologist",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-037-whip-of-the-archaeologist.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-037-whip-of-the-archaeologist",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm037whip",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "1d4+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "mm037whip-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "mm037whip"
+							},
+							{
+								"id": "mm037whip-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "1/encounter: knock the target Prone.",
+								"parentContext": "hit",
+								"parentNode": "mm037whip"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "mm037whip-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "mm037whip"
+							}
+						],
+						"miss": [
+							{
+								"id": "mm037whip-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "mm037whip"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 2
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Whip</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Great for swinging across gaps.</em></p><hr><p><strong>1d4+STR Slashing.</strong> Reach 2 (Req. 3 Lore).</p><p>On hit: Knock target Prone (1/encounter).</p><p><em>Capsule prize #37 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": 2
+			},
+			"selected": [
+				"reach"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "2MuPoFlhwGFVudsg",
+	"folder": "c0a09015d158170a"
+}

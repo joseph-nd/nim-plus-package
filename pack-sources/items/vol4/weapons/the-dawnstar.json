@@ -1,0 +1,139 @@
+{
+	"name": "The Dawnstar",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/the-dawnstar.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-dawnstar",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4dawnstar",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4dawnstar-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4dawnstar"
+							},
+							{
+								"id": "v4dawnstar-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Apply Dawnmark (1/turn). Consuming Dawnmark also hits adjacent enemies.",
+								"parentContext": "hit",
+								"parentNode": "v4dawnstar"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4dawnstar-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4dawnstar"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4dawnstar-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4dawnstar"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Very Rare Mace</strong> &middot; <strong>Price:</strong> 250,000 g</p><p><em>Gilded morning star, made to exact divine retribution.</em></p><hr><p><strong>1d6+STR Piercing.</strong></p><p>On hit: Apply <strong>Dawnmark</strong> (1/turn).</p><p>When used to consume Dawnmark, the additional Radiant damage also hits enemies adjacent to the target.</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 250000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"vol4Dawnmark": "onHit",
+			"vol4DawnmarkSplash": "adjacent"
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "iViYXf8ucU7zQpfr",
+	"folder": "a437aed213945d33"
+}

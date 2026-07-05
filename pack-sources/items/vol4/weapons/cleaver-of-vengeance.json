@@ -1,0 +1,136 @@
+{
+	"name": "Cleaver of Vengeance",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/cleaver-of-vengeance.webp",
+	"system": {
+		"macro": "",
+		"identifier": "cleaver-of-vengeance",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4cleaver",
+					"type": "damage",
+					"damageType": "necrotic",
+					"formula": "3d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4cleaver-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4cleaver"
+							},
+							{
+								"id": "v4cleaver-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Curse: the target gains advantage on its next attack against you (stacks).",
+								"parentContext": "hit",
+								"parentNode": "v4cleaver"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4cleaver-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4cleaver"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4cleaver-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4cleaver"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Cursed Greataxe</strong> &middot; <strong>Price:</strong> 800 g</p><p><em>Armament of a tormented guard, stained by revenge.</em></p><hr><p><strong>3d6+STR Necrotic.</strong> 2-handed (Req. 2 STR).</p><p><strong>Curse.</strong> When you attack an enemy, they gain advantage on their next attack against you (stacks).</p><p class=\"nim-plus-credit\"><em>&mdash; CheschireCat, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 2,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 800,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QhL7DBWlnzxB129F",
+	"folder": "a437aed213945d33"
+}

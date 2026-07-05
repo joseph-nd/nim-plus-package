@@ -1,0 +1,136 @@
+{
+	"name": "Greataxe of Echoes",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/greataxe-of-echoes.webp",
+	"system": {
+		"macro": "",
+		"identifier": "greataxe-of-echoes",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4echoaxe",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "2d6+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4echoaxe-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4echoaxe"
+							},
+							{
+								"id": "v4echoaxe-hitnote",
+								"type": "note",
+								"noteType": "info",
+								"text": "Echostrike (1/turn): another creature within Reach 4 suffers the same damage.",
+								"parentContext": "hit",
+								"parentNode": "v4echoaxe"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4echoaxe-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "v4echoaxe"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4echoaxe-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "v4echoaxe"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Greataxe</strong> &middot; <strong>Price:</strong> 1,750,571 g</p><p><em>Imbued with the ever-burning soul of its previous owner.</em></p><hr><p><strong>2d6+STR Slashing.</strong> 2-handed (Req. 3 STR).</p><p><strong>Echostrike.</strong> On damage: Another creature within Reach 4 suffers the same amount of damage (1/turn).</p><p class=\"nim-plus-credit\"><em>&mdash; DanDraco, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 3,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 1750571,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "O5Em4FRL7BFoG6lx",
+	"folder": "a437aed213945d33"
+}

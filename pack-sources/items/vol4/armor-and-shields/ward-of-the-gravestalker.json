@@ -1,0 +1,137 @@
+{
+	"name": "Ward of the Gravestalker",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/ward-of-the-gravestalker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "ward-of-the-gravestalker",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4wardofthr0",
+				"identifier": "",
+				"label": "Ward of the Gravestalker",
+				"predicate": {},
+				"priority": 1,
+				"formula": "6+@will",
+				"mode": "add"
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4wardofthr1",
+				"identifier": "soul-absorption",
+				"label": "Soul Absorption",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4wardofthr2",
+				"identifier": "",
+				"label": "Soul Absorption",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "soul-absorption",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4gravestalk",
+					"type": "note",
+					"noteType": "info",
+					"text": "Soul Absorption: empowered for 3 turns — attacks deal Necrotic, ignore Armor, heal 10 HP on crit/kill.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Legendary Leather Armor</strong> &middot; <strong>Price:</strong> 1,800,000 g</p><p><em>Tales of Gravestalkers can be found in all corners of the world, their blackened garb a portent of doom.</em></p><hr><p><strong>6+DEX+WIL Armor</strong> (Req. 1 STR).</p><p><strong>Soul Absorption.</strong> (1/encounter) On kill: You may absorb the soul of your victim to become empowered for 3 turns. While empowered, your attacks deal Necrotic damage, ignore Armor and heal you for 10 HP on crit or kill.</p><p class=\"nim-plus-credit\"><em>&mdash; Santuric & SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 1,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 1800000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0XdZOf4yBWf4yAma",
+	"folder": "e824f6b808017148"
+}

@@ -1,0 +1,97 @@
+{
+	"name": "Songweaver — Variant Kit 1",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/songweaver-kit-1.webp",
+	"system": {
+		"macro": "",
+		"identifier": "songweaver-kit-1",
+		"rules": [
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1songweaverr0",
+				"identifier": "",
+				"label": "Starting Gear - Instrument",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nimble.nimble-items.Item.LWLLT7NQxjvL2chh"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1songweaverr1",
+				"identifier": "",
+				"label": "Starting Gear - Fancy Outfit",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.o5a2u37ZvF2H0Ohp"
+			},
+			{
+				"type": "grantItem",
+				"disabled": false,
+				"id": "v1songweaverr2",
+				"identifier": "",
+				"label": "Starting Gear - Perfumed Letter",
+				"predicate": {},
+				"priority": 1,
+				"allowDuplicate": true,
+				"inMemoryOnly": false,
+				"uuid": "Compendium.nim-plus-package.nim-plus-items.Item.hIyiKB94LqUjr5LE"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Songweaver.</em></p><p>Take this set <strong>instead of</strong> the Songweaver’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>Instrument</li><li>Fancy Outfit</li><li>Perfumed Letter</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"featureType": "class",
+		"class": "",
+		"group": "",
+		"gainedAtLevels": [],
+		"selectionCountByLevel": {},
+		"subclass": false
+	},
+	"effects": [],
+	"folder": "44ce9b9fd6cbd7f2",
+	"flags": {
+		"nim-plus-package": {
+			"vol1Kit": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "XppnLeYjdAG6SpNj"
+}

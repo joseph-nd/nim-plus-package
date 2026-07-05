@@ -1,0 +1,126 @@
+{
+	"name": "Robe of Hoarding",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/mystic-michaels/mm-072-robe-of-hoarding.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mm-072-robe-of-hoarding",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4mm072robr0",
+				"identifier": "robe-hoarding",
+				"label": "Robe of Hoarding",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "2",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "2"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4mm072robr1",
+				"identifier": "",
+				"label": "Robe of Hoarding",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "robe-hoarding",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "mm072robe",
+					"type": "note",
+					"noteType": "info",
+					"text": "Pull a random piece of Adventuring Equipment from the pocket; it vanishes after 1 minute.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Uncommon Robe</strong> &middot; <strong>Price:</strong> 10 g per spin</p><p><em>Snug tweed robe. Oddly stylish.</em></p><hr><p>A random item from the list of Adventuring Equipment can be pulled out of its pocket, but goes up in smoke after 1 minute (2/Safe Rest).</p><p><em>Capsule prize #72 &mdash; Mystic Michael's Machine of Random Capsules. No refunds.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Santuric, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "misc",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 0.5,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 10,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wyFuVV5FKKAT5NZ0",
+	"folder": "c0a09015d158170a"
+}

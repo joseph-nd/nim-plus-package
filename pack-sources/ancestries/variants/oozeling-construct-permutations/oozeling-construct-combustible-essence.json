@@ -1,0 +1,48 @@
+{
+	"name": "Oozeling/Construct (Combustible Essence)",
+	"type": "ancestry",
+	"img": "modules/nim-plus-package/assets/ancestries/variants/oozeling-construct-permutations/oozeling-construct-combustible-essence.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"disabled": false,
+				"id": "v1oozelingcor0",
+				"identifier": "",
+				"label": "Odd Constitution",
+				"predicate": {},
+				"priority": 1,
+				"type": "incrementHitDice",
+				"value": "1"
+			},
+			{
+				"disabled": false,
+				"id": "v1oozelingcor1",
+				"identifier": "",
+				"label": "Odd Constitution",
+				"predicate": {},
+				"priority": 1,
+				"type": "maximizeHitDice"
+			}
+		],
+		"description": "<p>What even is a “PeOpLe“ anyway? So what if your heart pumps oil instead of blood, so what if you don't even have a heart!? If you can squish yourself into a pair of pants, or swing a sword like everyone else, who's to say you can't be a pEOpLe, too?!</p><hr><p><strong>Odd Constitution</strong> </p><p>Increment your Hit Dice one step (d6 » d8 » d10 » d12 » d20); they always heal you for the maximum amount. Magical healing always heals you for the minimum amount.</p><hr><p><strong>Oozeling/Construct Permutations: Combustible Essence</strong> — <em>Your body is volatile. You’re usually not allowed near curtains.</em></p><p><strong>Ignite</strong></p><p>You may ignite flammable objects by touch. [M]</p><hr><p><em>Nim+ Volume I ancestry variant (LewisH, Santuric). Variants replace the base ancestry: pick this instead of the standard version. Note: variants make your hero stronger than normal.</em></p>",
+		"exotic": true,
+		"size": [
+			"small",
+			"medium"
+		]
+	},
+	"effects": [],
+	"folder": "96baf82400d88f34",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "I1bEryOPnz7Bzpfi"
+}

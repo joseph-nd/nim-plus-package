@@ -1,0 +1,137 @@
+{
+	"name": "Volatile Shield",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/armor-and-shields/volatile-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "volatile-shield",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "v4volatilesr0",
+				"identifier": "",
+				"label": "Volatile Shield",
+				"predicate": {},
+				"priority": 1,
+				"formula": "2",
+				"mode": "add"
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "v4volatilesr1",
+				"identifier": "volatile-shield",
+				"label": "Volatile Shield",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "v4volatilesr2",
+				"identifier": "",
+				"label": "Volatile Shield",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "volatile-shield",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4volatile",
+					"type": "note",
+					"noteType": "info",
+					"text": "Teleport the attacker 3 spaces in a random direction; the attack may miss.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Shield</strong> &middot; <strong>Price:</strong> 4,999 g</p><p><em>Jagged shield inlaid with fragmented gemstones.</em></p><hr><p><strong>2 Armor.</strong></p><p>When you Defend, teleport the attacker 3 spaces in a random direction. This may cause the attack to miss (1/encounter).</p><p class=\"nim-plus-credit\"><em>&mdash; Malikua, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 4999,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oJRZJGbD0vadA0sl",
+	"folder": "e824f6b808017148"
+}

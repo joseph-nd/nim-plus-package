@@ -1,0 +1,145 @@
+{
+	"name": "Runic Maul",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/vol4/weapons/runic-maul.webp",
+	"system": {
+		"macro": "",
+		"identifier": "runic-maul",
+		"rules": [
+			{
+				"type": "applyCondition",
+				"disabled": false,
+				"id": "v4runicmaulr0",
+				"identifier": "",
+				"label": "Runic Maul",
+				"predicate": {},
+				"priority": 1,
+				"condition": "prone",
+				"trigger": "onMiss",
+				"duration": {
+					"rounds": null,
+					"turns": null,
+					"seconds": null
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "v4runmaul",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d4+@strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "v4runmaul-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "v4runmaul"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "v4runmaul-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT: +20 damage.",
+								"parentContext": "criticalHit",
+								"parentNode": "v4runmaul"
+							}
+						],
+						"miss": [
+							{
+								"id": "v4runmaul-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS: you are knocked Prone.",
+								"parentContext": "miss",
+								"parentNode": "v4runmaul"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Rare Warhammer</strong> &middot; <strong>Price:</strong> 2,000 g</p><p><em>Oversized stone maul engraved with dverung runes.</em></p><hr><p><strong>1d4+STR Bludgeoning.</strong> 2-handed (Req. 4 STR).</p><p>On crit: +20 damage.</p><p>On miss: Knock yourself Prone.</p><p class=\"nim-plus-credit\"><em>&mdash; SanityWithIn, Nim+ Volume IV</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded"
+			],
+			"strengthRequirement": {
+				"value": 4,
+				"overridesTwoHanded": true
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 2000,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Sqte8ReueABTXbUB",
+	"folder": "a437aed213945d33"
+}

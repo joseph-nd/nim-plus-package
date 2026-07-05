@@ -37,7 +37,7 @@ Several `Hooks.on(...)` listeners auto-apply conditions and clean up state:
 nim-plus-package/
 ├── module.json                 # Foundry manifest (the deployable file)
 ├── scripts/main.mjs            # esmodule: nimPlus.* API + Foundry hooks
-├── assets/                     # 470 webp icons for classes, subclasses, features, spells, items, companions
+├── assets/                     # 908 webp icons for classes, subclasses, features, spells, items, ancestries, backgrounds, companions
 ├── package.json
 ├── build/
 │   ├── buildCompendia.mjs      # entry point: pnpm build
@@ -54,6 +54,11 @@ nim-plus-package/
 │   ├── classFeatures/<class>/<group>/<feature>.json
 │   ├── spells/<school>/<spell>.json
 │   ├── items/<class>/<group>/<item>.json
+│   ├── items/vol1/{starting-kits,gear}/<slug>.json   # Vol I variant starting equipment
+│   ├── items/vol4/<category>/<slug>.json             # Vol IV magic items
+│   ├── ancestries/exotic/<slug>.json                 # Vol I exotic ancestries
+│   ├── ancestries/variants/<group>/<slug>.json       # Vol I ancestry variants
+│   ├── backgrounds/<slug>.json                       # Vol I backgrounds (flat dir)
 │   ├── feats/<slug>.json        # optional class-agnostic feats (flat dir)
 │   └── companions/<companion>.json
 └── packs/                      # build output (LevelDB dirs); git-ignored
@@ -62,6 +67,8 @@ nim-plus-package/
     ├── nim-plus-class-features/
     ├── nim-plus-spells/
     ├── nim-plus-items/
+    ├── nim-plus-ancestries/
+    ├── nim-plus-backgrounds/
     └── nim-plus-companions/
 ```
 
@@ -141,6 +148,26 @@ File-path convention drives folder organization in the compendium UI:
 - `system.classes[]` — class slugs that can prepare this spell.
 - `flags.nim-plus-package.furyDiceCost` (optional) — used by Berserker muscle spells to record the conceptual FD requirement separately from the system's mana cost.
 
+### Item JSON (Nim+ Volume IV magic items)
+Vol IV items live under `pack-sources/items/vol4/<category>/<slug>.json`, where `<category>` is one of `weapons`, `armor-and-shields`, `accessories`, `utility-and-exploration`, `consumables-and-wands`, `dverung-runes`, `mystic-michaels` — the build's items folder handler (`Pack.mjs #prepareItemFolderAssignments`) maps each category directory to a compendium folder; items outside `vol4/` (hexbinder, artificer) stay folderless. Each item is an `object` document:
+- `system.objectType` — `weapon` / `armor` / `shield` / `consumable` / `misc`.
+- **Weapons** carry a full activation damage tree (`system.activation.effects[]`: a `damage` node with `formula` like `1d6+@strength`, `damageType`, and `on.hit/criticalHit/miss` children — copy the shape from the system's core weapons). `properties.selected` holds `light` / `thrown` / `twoHanded` / `range` / `reach` / `load` / `vicious` / `concentration`; STR requirements go on `properties.strengthRequirement.value`.
+- **Armor/shields** carry an `armorClass` rule. The system's base AC already includes the DEX mod, so a flat "18 Armor" is `formula: "18-@dexterity"`, "12+DEX (max 2)" is `"12+min(@dexterity,2)-@dexterity"`, and stat-swap armors add the stat directly (`"@influence"`, `"5+@intelligence-@dexterity"`, `"6+@will"`). Rules on objects are auto-disabled while the object is unequipped (the system syncs `rule.disabled` to `system.equipped`).
+- **Rules used by Vol IV items** beyond the feat set: `grantMovement` (fly/swim/climb; `speed` accepts formulas like `floor(@attributes.movement.walk/2)`), `applyCondition` (`trigger`: `onHit`/`onCrit`/`onMiss`/self-triggers), `unarmedDamage`, `initiativeMessage`, `healingPotionBonus`, and `chargePool` + `chargeConsumer` (`recoveries[]` triggers: `safeRest`, `fieldRest`, `encounterStart`, …; narrative recharges use an empty `recoveries` list). Predicated rules work off domain tags (e.g. Trollhide Wrap: `predicate: {"$and": ["self:bloodied"]}`).
+- `flags.nim-plus-package` markers drive the runtime automation: `vol4Dawnmark` (`onHit` / `radiantSpells` / manual-trigger values), `vol4DawnmarkSplash`, `vol4Rune` (`{slot, key, payload}` consumed by `applyRune`), `vol4DwarfsDelight`, `vol4RegalRest`, `vol4LadlorsTenacity`, `vol4StrengthOMaxer`, `vol4CantripBonus`.
+- **Caveat:** items that pair a `system.macro` with a charge pool must decrement the pool inside the macro (`vol4SpendCharge`) — the macro path replaces the regular activation flow, so `chargeConsumer` rules never fire for them.
+- The Vol IV `nimPlus.vol4.*` helpers live in the "Nim+ Volume IV — magic item runtime" section of `scripts/main.mjs`: the Dawnmark engine (`dawnmarkApply` / `dawnmarkConsume` + `nimble.useItem` hooks), `applyRune`, `elementalWeapon`, `bloodseeker`, `battlemageInfusion`, `realityFold`, `duneguardBrooch`, `blindOracle`, `elementalGuidance`, `jellybean`, `unicornTear`, plus the Strength-o-Maxer `prepareDerivedData` rider and the Spellslinger's Prism cantrip formula splice.
+
+### Ancestry & Background JSON (Nim+ Volume I)
+Ancestries live under `pack-sources/ancestries/` (built into **Nim+ Ancestries**), backgrounds flat under `pack-sources/backgrounds/` (**Nim+ Backgrounds**). The system's character-creation dialog indexes ancestry/background items from **every** pack, so shipped documents appear there automatically.
+- **Ancestry** (`type: "ancestry"`): `system.size` (array of `tiny`/`small`/`medium`/`large` — multiple entries render a size choice in the dialog), `system.exotic` (splits the dialog's Core/Exotic sections), `system.rules[]`, HTML `system.description` using the system's `[A]` (automated) / `[M]` (manual) trait-line markers.
+- **Ancestry variants** (`ancestries/variants/<group>/`) are *full replacement* ancestries: copy the base ancestry's `img`/`description`/`rules` verbatim from the system pack and append the variant trait (name them `Base (Variant)` so they sort next to the base). The build's ancestries folder handler (`Pack.mjs #prepareAncestryFolderAssignments`) maps `exotic/` and each `variants/<group>/` directory to a compendium folder.
+- **Background** (`type: "background"`): just `system.rules[]` + `system.description`.
+- Rules used by Vol I docs: `skillBonus`, `speedBonus`, `initiativeBonus`, `armorClass`, `maxHpBonus` (`perLevel: true`), `grantMovement` (swim/fly), `grantProficiency` (languages, INT≥0 predicate), `unarmedDamage`, and a `self:dying`-predicated `damageBonus` (Mousefolk). Situational advantage, 1/encounter reactions, and narrative effects have no rule type — leave them as `[M]` description lines.
+
+### Vol I variant starting-equipment kits
+`pack-sources/items/vol1/starting-kits/` holds one `feature` document per kit (two per core class). Each kit's `system.rules[]` is a list of `grantItem` rules (`allowDuplicate: true`, optional `quantity`) pointing at `Compendium.nimble.nimble-items.Item.<id>` or `Compendium.nim-plus-package.nim-plus-items.Item.<id>`; the system grants every listed item the moment the kit is dropped on a character. Zine-only mundane gear lives in `items/vol1/gear/` as plain `object` documents (`objectType` misc/weapon/consumable). Note the two-phase authoring: gear JSONs must be built once (so the IdBuilder allocates their `_id`s) before kit rules can reference them.
+
 ### Feat JSON
 Feats live in the flat `pack-sources/feats/<slug>.json` directory (built into the **Nim+ Feats** pack). Each is a `feature` document with:
 - `system.identifier` — the kebab-case slug (also the icon filename: `assets/feats/<slug>.webp`).
@@ -153,7 +180,7 @@ Feats live in the flat `pack-sources/feats/<slug>.json` directory (built into th
 
 - `system.rules` — feats with an **always-on** mechanical effect carry a system rule so the bonus applies the moment the feat is taken: `skillBonus` (skills like Perception/Influence/Might/Arcana/Stealth/Finesse/Insight/Examination — note Nimble has no Persuasion skill, so it maps to `influence`), `armorClass` (mode `add`), `speedBonus`, `maxWounds`, `maxHitDice` (`dieSize: 0` = class die), `maxHpBonus` (`perLevel: true` for "×LVL" feats), `grantProficiency` (`proficiencyType: "weapons"`, `values: ["all"]`), and `initiativeBonus` (`value: "@key"` — Vigilant; `@key` resolves to the class KEY modifier via `getRollData`). Triggered/active/reaction abilities, allies-only auras, conditional bonuses (no reliable predicate), and situational advantage (Nimble has **no** situation-scoped advantage rule) are left as rules-empty descriptive features.
 - **Eight feats need automation the rules engine can't express** and are handled in `scripts/main.mjs` instead (see the "Feats — mechanical automation" section there):
-  - **Armor conditionals** — Defensive Duelist (DEX melee weapon, no shield), Dual Wielder (2+ equipped weapons), and the **Bulwark** adjacent-ally aura are added to `system.attributes.armor.value` in a patched `NimbleCharacter.prepareDerivedData` (reached via `CONFIG.NIMBLE.Actor.documentClasses.character`). The predicate domain has no tags for weapon-wielding or aura adjacency, so static `armorClass` rules can't see them. Bulwark recomputes on `updateToken`/`createToken`/`deleteToken`/`canvasReady`.
+  - **Armor conditionals** — Defensive Duelist (DEX melee weapon, no shield), Dual Wielder (2+ equipped weapons), and the **Bulwark** adjacent-ally aura are added to `system.attributes.armor.value` in a patched `NimbleCharacter.prepareDerivedData` (reached via `CONFIG.NIMBLE.Actor.documentClasses.character`). The predicate domain has no tags for weapon-wielding or aura adjacency, so static `armorClass` rules can't see them. Bulwark recomputes on `updateToken`/`createToken`/`deleteToken`/`canvasReady`. The weapon-armor feats read `system.equipped`, which Nimble's inventory only exposes a control for on rules-bearing objects (armor/shields) — so `syncWeaponEquipToggles()` injects a hand-icon equip toggle onto rules-less weapon rows (Inventory tab), driven by the same per-sheet `MutationObserver` as the Feats section.
   - **Elemental Specialist** — a wrapper on `CONFIG.NIMBLE.Item.documentClasses.spell.prototype.activate` appends `+KEY` to the first damage node of any *tiered* spell whose `system.school` matches the choice stored on the feat flag, then restores the formula (so casts don't accumulate the bonus). This scopes by school, which `damageBonus` rules can't.
   - **Healer / Second Wind** are activatable via `system.macro` → `nimPlus.feats.{healerHeal,secondWind}`; **Academic / Elemental Specialist** are configured by dialogs fired from a `createItem` hook. Per-use feat state lives on item flags under `flags.nim-plus-package` (`healerUsed`, `secondWindUsed`, `academicAllocated`, `elementalChosen`).
 
@@ -170,4 +197,4 @@ If you rename or move a source file, the IdBuilder will reallocate an ID for the
 
 ## Asset pipeline
 
-`assets/` ships 470 webp icons covering every class, subclass, feature, spell, item, and companion the module declares. Feature / spell / item / sigil icons render at 512 × 512; portraits (class, subclass, companion) at 768 × 768. All saved as lossy webp (q85) to keep the install zip under ~30 MB.
+`assets/` ships 908 webp icons covering every class, subclass, feature, spell, item, ancestry, background, and companion the module declares. Feature / spell / item / sigil / ancestry / background icons render at 512 × 512; portraits (class, subclass, companion) at 768 × 768. All saved as lossy webp (q85) to keep the install zip manageable. The Vol IV item and Vol I character-creation icons were generated with the sibling `nim-icon-forge` project (Recraft API, custom style matched to the module's existing ChatGPT-made icons) from the prompt sets in `docs/icon-prompts/items/vol4-*.md` and `docs/icon-prompts/vol1/vol1-*.md`; Vol I uses per-type prompt templates (object / creature-bust / kit still-life).
