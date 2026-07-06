@@ -1,7 +1,7 @@
 {
 	"name": "Oathsworn — Variant Kit 1",
 	"type": "feature",
-	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/oathsworn-kit-1.webp",
+	"img": "modules/nim-plus-package/assets/items/vol1/starting-kits/oathsworn-kit-1.svg",
 	"system": {
 		"macro": "",
 		"identifier": "oathsworn-kit-1",
@@ -70,7 +70,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Oathsworn.</em></p><p>Take this set <strong>instead of</strong> the Oathsworn’s standard starting equipment. Dropping this kit on your character grants:</p><ul><li>Pole Hammer</li><li>Rusty Mail</li><li>Padlock & Key</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
+		"description": "<p><em>Nim+ Volume I variant rule (TwinSteel): alternative starting equipment for the Oathsworn.</em></p><p>Take this set <strong>instead of</strong> the Oathsworn’s standard starting equipment. Choose it in the character creator’s Starting Equipment step, or drop this kit on your character; either way it grants:</p><ul><li>Pole Hammer</li><li>Rusty Mail</li><li>Padlock & Key</li></ul><p>Afterwards you may delete this kit item (the granted gear stays), and remember to remove the standard starting equipment if your character already received it.</p>",
 		"featureType": "class",
 		"class": "",
 		"group": "",

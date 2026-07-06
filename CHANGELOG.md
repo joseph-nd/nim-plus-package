@@ -2,6 +2,20 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.1] - 2026-07-05
+
+### Changed
+- **Starting-kit icons are now Foundry-style SVGs**: the 22 Vol I kit items swap their WebP still-life icons for flat white-silhouette SVG icons matching Foundry's core `icons/svg/*` look (game-icons.net style — one bold emblem of the kit's signature gear, transparent background, 512 viewBox). The old WebP icons are removed.
+- **Variant starting kits are now a character-creation option**: the character creator's *Starting Equipment* step offers the selected class's two Nim+ Vol I kits alongside the system's standard-equipment and 50-gp choices. Choosing a kit replaces both (no class starting gear, no gold) and grants the kit's contents to the new character automatically — weapons as one document per unit so each can be equipped independently, quantities preserved on everything else, and a placeholder object created for any grant whose compendium reference no longer resolves (nothing is dropped silently). Granted gear is auto-equipped, mirroring the system's own equipment path. Dropping a kit item on a character still works as before.
+
+### Fixed
+- **Feats section broke the character sheet**: the Feats panel injected into the Features tab borrowed the system's Svelte-scoped card classes, which never apply to injected DOM — feat icons rendered at their natural 512 px size and blew up the layout. The cards now ship their own styles (built on the system's theme variables, so they match the native look in both themes).
+- **Chosen feats no longer also appear under the class**: the system's Features tab nests *every* grouped feature under the class card, so `group: "feats"` items showed up twice. Feat cards are now hidden from the class sublist; they live only in the module's Feats section (the feat-level markers in the class Progression tab are unaffected).
+- **Weapon equip toggle rendered in the wrong place**: the injected equip button had no explicit position in the inventory card's CSS grid and auto-placed into a phantom row below the item image (looking like a broken icon). It is now anchored to the card's charges cell, in line with the other row controls.
+- **Same-name weapons no longer merge into one stack**: the system folds stackable objects into a single document with one shared *equipped* flag, so "equip one of my three daggers" was inexpressible. Weapons now always stay individual documents — the stack-merge is bypassed for weapons, and any quantity > 1 weapon creation (e.g. a kit granting *2 Hand Axes*) is split into separate documents. Non-weapon objects (rations, consumables) keep stacking as before, and nothing limits how many weapons can be equipped.
+- **The Cheat's kits are matched correctly**: kit↔class matching slugifies the class name ("The Cheat" → `the-cheat`), a failed kit-compendium load is retried on the next dialog instead of being cached for the session, and the kit cards re-inject themselves if a reactive re-render removes them.
+- **Kit options load reliably**: the kit list is now read from a field-augmented compendium index instead of fetching and constructing all item documents client-side — the full-document fetch could stall in play and left the Starting Equipment step without kit cards.
+
 ## [0.4.0] - 2026-07-05
 
 ### Added
