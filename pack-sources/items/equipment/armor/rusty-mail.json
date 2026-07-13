@@ -1,0 +1,102 @@
+{
+	"name": "Rusty Mail",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/armor/rusty-mail.webp",
+	"system": {
+		"macro": "",
+		"identifier": "rusty-mail",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "eqrustymailac",
+				"identifier": "rusty-mail",
+				"label": "Rusty Mail",
+				"predicate": {},
+				"priority": 1,
+				"formula": "4 + min(@dexterity,2) - @dexterity",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Mail</p><p><strong>Armor:</strong> 4+DEX (max 2)</p><p><strong>Properties:</strong> Brittle 5</p><p><strong>Cost:</strong> 15 gp</p><hr><p><em><strong>Brittle 5.</strong> Defend against a crit 5 times before being destroyed.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 15,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"brittle": 5
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "tlYIp766YXAyNfDL",
+	"folder": "ad05d9f209e4e11e"
+}

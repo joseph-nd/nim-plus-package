@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "earthquake-dmg"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "earthquake-dmg-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "earthquake-dmg"
+							}
 						]
 					},
 					"canCrit": true,

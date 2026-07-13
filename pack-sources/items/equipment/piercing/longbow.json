@@ -1,0 +1,129 @@
+{
+	"name": "Longbow",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/piercing/longbow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "longbow",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqlongbow",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d8 + @dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqlongbow-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqlongbow"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqlongbow-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqlongbow"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqlongbow-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqlongbow"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 16
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d8+Dex Piercing</p><p><strong>Properties:</strong> 2-handed, Range 16</p><p><strong>Requirement:</strong> 1 STR</p><p><strong>Cost:</strong> 50 gp</p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 16
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"range"
+			],
+			"strengthRequirement": {
+				"value": 1,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 50,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "5gDdAplUXQ5qVJm9",
+	"folder": "4a0df87c5f0b247f"
+}

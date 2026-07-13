@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "terrorDamage1"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "terrorDamage1-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "terrorDamage1"
+							}
 						]
 					},
 					"canCrit": true,

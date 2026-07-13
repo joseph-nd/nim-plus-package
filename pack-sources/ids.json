@@ -832,6 +832,85 @@
 				"thunder-gauntlets-prototype": "QVoFRRgR5dS4pxv8"
 			}
 		},
+		"equipment": {
+			"armor": {
+				"adventurers-garb": "EHj4ibnuGszjpqjN",
+				"brigandine": "fgxyizS29u2ZZhXV",
+				"chain-mail": "PK3XeoK1WyYw6609",
+				"cheap-hides": "lnVnMLJm95rJKcZW",
+				"enchanted-robe": "c5gtnrWdKg3MIhe2",
+				"full-plate": "0Ss9wgmUj4g71xUz",
+				"half-plate": "5WqMPbgvxZz02tHN",
+				"ox-hide": "mu9AdbrknxsEwJvC",
+				"padded-jacket": "XFqHVpLfrgeD3QQm",
+				"rusty-mail": "tlYIp766YXAyNfDL",
+				"rusty-plate": "8XEvDkUozJT64jkI",
+				"scale-mail": "TWNselpY6McC7Ewb",
+				"scholars-outfit": "nNbG9u6WRNZ0agyZ",
+				"spiked-mail": "ia4uB3LPEpaMis4m",
+				"studded-leather": "mqYTD0aKo80hJQVA"
+			},
+			"bludgeoning": {
+				"boomerang": "vpE5cJx6EIhWlhMV",
+				"cestus": "4132ZsOR9qGJDNSk",
+				"club": "eOS6d8vtbTs9V1pq",
+				"flail": "5QNZVo2fclnQNnmZ",
+				"great-maul": "Clq8co81Tflqbj4v",
+				"hammer": "rL46qhwm6gB44J2b",
+				"mace": "cOEgYvBqGYT4bPoM",
+				"pole-hammer": "zpwTaqFUAY0sDCDg",
+				"quarterstaff": "ZtjXWNGrFVI7rXDz",
+				"scepter": "XvvmNobRe8nDICBQ",
+				"slingshot": "qZQfisOrX9gqhswl",
+				"staff-sling": "wPVHR3FdlshaJ2xa",
+				"war-hammer": "CbAbHKKQncxvC1vp"
+			},
+			"piercing": {
+				"blowgun": "S9ZlqxKKWANW9hru",
+				"dagger": "z6mQ1bLugsHsvg1e",
+				"great-bow": "hAA71zQBlB7zzbzk",
+				"hand-crossbow": "rHN5HpgbZglmhdfV",
+				"handheld-ballista": "KJ9zINbmGoHXgLB7",
+				"heavy-crossbow": "OlQdE6GqmZyPzXNG",
+				"javelin": "7hjus6g7kRVzmtMY",
+				"light-crossbow": "eCg3jlqTOs4UB8pQ",
+				"longbow": "5gDdAplUXQ5qVJm9",
+				"morning-star": "XKIu0irGCbASyKgo",
+				"pike": "MunR79eqBaqbHCBI",
+				"rapier": "skS2688Jx93hCwMV",
+				"repeating-crossbow": "7mMCRM2x9qak7cku",
+				"short-sword": "hbbwLt6Nyo4tOnuD",
+				"shortbow": "khisxTb6RpXasbcR",
+				"spear": "8YQnJ8GGaC8CmmmL",
+				"trident": "C4KgTMIjFyovjTL0",
+				"war-pick": "P557tDjza5WBh7h9"
+			},
+			"shields": {
+				"buckler": "vyLR7NJIJYDb3ock",
+				"great-shield": "FU7eFZl2uRTAHV0v",
+				"iron-shield": "DzACyTyEejMa2yjP",
+				"kite-shield": "J6wDgdQuBKzwly08",
+				"leather-shield": "mW3w6s4HBoc5ob3l",
+				"spiked-shield": "GQqgc2hFRp68cszF",
+				"tower-shield": "0pj8GDJqgYrEmkun",
+				"wooden-plank": "x35SZIs4l9TIOC4Z"
+			},
+			"slashing": {
+				"battle-axe": "iUdpXYcC9a0lshy2",
+				"chakram": "0vwif9cdielZ9zU1",
+				"claymore": "UKvgb7BeaSbHITLn",
+				"falchion": "UAYqtlEgQtlbRx5N",
+				"glaive": "SY1ge3BY34GqJT8t",
+				"great-axe": "a48LFKGrZX3yE8ZA",
+				"hatchet": "B2U7zupnKYwnvJfH",
+				"longsword": "ThDfBuCJID6l67yw",
+				"scimitar": "zc5qoOW4iMgGqkT5",
+				"sickle": "VZLWBPRwCfwyHxEk",
+				"twinblade": "fh757LN47w8Vlmzp",
+				"whip": "vxRvGiei9BDiggk8",
+				"zweihander": "KdLFLbscFq8prrbA"
+			}
+		},
 		"hexbinder": {
 			"concoctions": {
 				"affliction": "VlwzOTEPoPzjsBDH",

@@ -1,0 +1,150 @@
+{
+	"name": "Cestus",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/bludgeoning/cestus.webp",
+	"system": {
+		"macro": "",
+		"identifier": "cestus",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqcestus",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d4 + @strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqcestus-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqcestus"
+							},
+							{
+								"id": "eqcestus-feint",
+								"type": "note",
+								"noteType": "info",
+								"text": "Feint: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.",
+								"parentContext": "hit",
+								"parentNode": "eqcestus"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqcestus-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqcestus"
+							},
+							{
+								"id": "eqcestus-feintc",
+								"type": "note",
+								"noteType": "info",
+								"text": "Feint: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.",
+								"parentContext": "criticalHit",
+								"parentNode": "eqcestus"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqcestus-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqcestus"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d4+Str Bludgeoning</p><p><strong>Properties:</strong> Feint, Light, Stack 2</p><p><strong>Cost:</strong> 6 gp</p><hr><p><em><strong>Feint.</strong> On hit/crit: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "stackable",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"light"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 6,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"feint": true
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "4132ZsOR9qGJDNSk",
+	"folder": "7748047abd0b1f01"
+}

@@ -1,0 +1,152 @@
+{
+	"name": "Great Bow",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/piercing/great-bow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "great-bow",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqgreatbow",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d8 + @dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqgreatbow-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqgreatbow"
+							},
+							{
+								"id": "eqgreatbow-push",
+								"type": "note",
+								"noteType": "info",
+								"text": "Push 2: forcibly move the target 2 space(s), ignoring Difficult Terrain.",
+								"parentContext": "hit",
+								"parentNode": "eqgreatbow"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqgreatbow-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqgreatbow"
+							},
+							{
+								"id": "eqgreatbow-pushc",
+								"type": "note",
+								"noteType": "info",
+								"text": "Push 2: forcibly move the target 2 space(s), ignoring Difficult Terrain.",
+								"parentContext": "criticalHit",
+								"parentNode": "eqgreatbow"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqgreatbow-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqgreatbow"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 16
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d8+Dex Piercing</p><p><strong>Properties:</strong> 2-handed, Load: 1 action, Push 2, Range 16</p><p><strong>Requirement:</strong> 2 STR</p><p><strong>Cost:</strong> 100 gp</p><hr><p><em><strong>Load: 1 action.</strong> Some weapons require extra actions to load before each shot.</em></p><p><em><strong>Push 2.</strong> Forcibly move a creature 2 spaces, ignoring Difficult Terrain.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 2,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 16
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"twoHanded",
+				"load",
+				"range"
+			],
+			"strengthRequirement": {
+				"value": 2,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 100,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"push": 2
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hAA71zQBlB7zzbzk",
+	"folder": "4a0df87c5f0b247f"
+}

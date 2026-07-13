@@ -37,7 +37,7 @@ Several `Hooks.on(...)` listeners auto-apply conditions and clean up state:
 nim-plus-package/
 ├── module.json                 # Foundry manifest (the deployable file)
 ├── scripts/main.mjs            # esmodule: nimPlus.* API + Foundry hooks
-├── assets/                     # 908 webp icons for classes, subclasses, features, spells, items, ancestries, backgrounds, companions
+├── assets/                     # 975 webp icons for classes, subclasses, features, spells, items, ancestries, backgrounds, companions
 ├── package.json
 ├── build/
 │   ├── buildCompendia.mjs      # entry point: pnpm build
@@ -56,6 +56,7 @@ nim-plus-package/
 │   ├── items/<class>/<group>/<item>.json
 │   ├── items/vol1/{starting-kits,gear}/<slug>.json   # Vol I variant starting equipment
 │   ├── items/vol4/<category>/<slug>.json             # Vol IV magic items
+│   ├── items/equipment/<category>/<slug>.json        # Expanded Equipment mundane gear
 │   ├── ancestries/exotic/<slug>.json                 # Vol I exotic ancestries
 │   ├── ancestries/variants/<group>/<slug>.json       # Vol I ancestry variants
 │   ├── backgrounds/<slug>.json                       # Vol I backgrounds (flat dir)
@@ -158,6 +159,13 @@ Vol IV items live under `pack-sources/items/vol4/<category>/<slug>.json`, where 
 - **Caveat:** items that pair a `system.macro` with a charge pool must decrement the pool inside the macro (`vol4SpendCharge`) — the macro path replaces the regular activation flow, so `chargeConsumer` rules never fire for them.
 - The Vol IV `nimPlus.vol4.*` helpers live in the "Nim+ Volume IV — magic item runtime" section of `scripts/main.mjs`: the Dawnmark engine (`dawnmarkApply` / `dawnmarkConsume` + `nimble.useItem` hooks), `applyRune`, `elementalWeapon`, `bloodseeker`, `battlemageInfusion`, `realityFold`, `duneguardBrooch`, `blindOracle`, `elementalGuidance`, `jellybean`, `unicornTear`, plus the Strength-o-Maxer `prepareDerivedData` rider and the Spellslinger's Prism cantrip formula splice.
 
+### Item JSON (Expanded Equipment mundane gear)
+Expanded Equipment items live under `pack-sources/items/equipment/<category>/<slug>.json`, where `<category>` is one of `shields`, `armor`, `bludgeoning`, `piercing`, `slashing` — the same `Pack.mjs #VOLUME_ITEM_FOLDERS` map used by Vol I/IV assigns each category directory to its own compendium folder ("Expanded Equipment — Shields" / "Armor" / "Bludgeoning Weapons" / "Piercing Weapons" / "Slashing Weapons"). Documents follow the Vol IV item conventions above (activation damage trees, native `properties.selected`, `armorClass` rules), plus:
+- **Versatile weapons** (War Hammer, Spear, Trident) set `flags.nim-plus-package.equipment.grip.{twoHanded,oneHanded}` to the two damage formulas; `api.equipment.toggleGrip` swaps between them (formula + the `twoHanded` property + the active-grip flag) at the table.
+- `flags.nim-plus-package.equipment` is the key set the runtime automation reads (see `scripts/main.mjs` below): `spiked: true` (retaliation damage), `parry: true` (miss-window note), `brittle: <n>` (starting durability; `brittleRemaining` is runtime-managed, don't author it), `manaBonus: <n>` (focus/implement items), `loud: true` (Stealth disadvantage), and the equip-requirement keys `oneHandedStrRequirement` / `dexRequirement` / `intRequirement` (STR requirements that gate on the *native* `properties.strengthRequirement.value` don't need a flag).
+- Properties with no automatable trigger (Heavy, Feint, Push X, Return, Focus, Partial Cover, the Kite Shield's interpose bonus, the Great Shield's reaction) are left as description text / chat-card note children, matching the Vol IV items' philosophy.
+- The runtime lives in the "Expanded Equipment — mundane gear runtime" section of `scripts/main.mjs`: `nimble.damageApplied` drives Spiked retaliation and Brittle's crit decrement, `nimble.useItem` posts the Parry advisory, `updateItem` posts equip-requirement warnings, and a `setup`-time `prepareDerivedData`/`rollSkillCheck` patch pair adds the mana bonus and Loud's Stealth disadvantage. `api.equipment` / `nimPlus.equipment` exposes `toggleGrip`, `spendBrittle`, and `repairBrittle` for manual bookkeeping (e.g. spending a Brittle use on a Defend, which has no automatable trigger).
+
 ### Ancestry & Background JSON (Nim+ Volume I)
 Ancestries live under `pack-sources/ancestries/` (built into **Nim+ Ancestries**), backgrounds flat under `pack-sources/backgrounds/` (**Nim+ Backgrounds**). The system's character-creation dialog indexes ancestry/background items from **every** pack, so shipped documents appear there automatically.
 - **Ancestry** (`type: "ancestry"`): `system.size` (array of `tiny`/`small`/`medium`/`large` — multiple entries render a size choice in the dialog), `system.exotic` (splits the dialog's Core/Exotic sections), `system.rules[]`, HTML `system.description` using the system's `[A]` (automated) / `[M]` (manual) trait-line markers.
@@ -197,4 +205,4 @@ If you rename or move a source file, the IdBuilder will reallocate an ID for the
 
 ## Asset pipeline
 
-`assets/` ships 908 webp icons covering every class, subclass, feature, spell, item, ancestry, background, and companion the module declares. Feature / spell / item / sigil / ancestry / background icons render at 512 × 512; portraits (class, subclass, companion) at 768 × 768. All saved as lossy webp (q85) to keep the install zip manageable. The Vol IV item and Vol I character-creation icons were generated with the sibling `nim-icon-forge` project (Recraft API, custom style matched to the module's existing ChatGPT-made icons) from the prompt sets in `docs/icon-prompts/items/vol4-*.md` and `docs/icon-prompts/vol1/vol1-*.md`; Vol I uses per-type prompt templates (object / creature-bust / kit still-life).
+`assets/` ships 975 webp icons covering every class, subclass, feature, spell, item, ancestry, background, and companion the module declares. Feature / spell / item / sigil / ancestry / background icons render at 512 × 512; portraits (class, subclass, companion) at 768 × 768. All saved as lossy webp (q85) to keep the install zip manageable. The Vol IV, Vol I, and Expanded Equipment item icons were generated with the sibling `nim-icon-forge` project (Recraft API, custom style matched to the module's existing ChatGPT-made icons) from the prompt sets in `docs/icon-prompts/items/vol4-*.md`, `docs/icon-prompts/vol1/vol1-*.md`, and `docs/icon-prompts/items/equipment.md` (gitignored); Vol I uses per-type prompt templates (object / creature-bust / kit still-life).

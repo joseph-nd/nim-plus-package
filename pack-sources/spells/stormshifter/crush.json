@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "crushDamage1"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "crushDamage1-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "crushDamage1"
+							}
 						]
 					},
 					"canCrit": true,

@@ -1,0 +1,149 @@
+{
+	"name": "Rapier",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/piercing/rapier.webp",
+	"system": {
+		"macro": "",
+		"identifier": "rapier",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqrapier",
+					"type": "damage",
+					"damageType": "piercing",
+					"formula": "1d8 + @dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqrapier-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqrapier"
+							},
+							{
+								"id": "eqrapier-feint",
+								"type": "note",
+								"noteType": "info",
+								"text": "Feint: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.",
+								"parentContext": "hit",
+								"parentNode": "eqrapier"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqrapier-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqrapier"
+							},
+							{
+								"id": "eqrapier-feintc",
+								"type": "note",
+								"noteType": "info",
+								"text": "Feint: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.",
+								"parentContext": "criticalHit",
+								"parentNode": "eqrapier"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqrapier-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqrapier"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 1
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d8+Dex Piercing</p><p><strong>Properties:</strong> Feint</p><p><strong>Requirement:</strong> 2 DEX</p><p><strong>Cost:</strong> 80 gp</p><hr><p><em><strong>Feint.</strong> On hit/crit: you may reroll a single die. Rerolling the Primary die can change a hit to crit or miss.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 80,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"feint": true,
+				"dexRequirement": 2
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "skS2688Jx93hCwMV",
+	"folder": "4a0df87c5f0b247f"
+}

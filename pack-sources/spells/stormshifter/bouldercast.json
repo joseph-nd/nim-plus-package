@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "bouldercastDamage1"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "bouldercastDamage1-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "bouldercastDamage1"
+							}
 						]
 					},
 					"canCrit": true,

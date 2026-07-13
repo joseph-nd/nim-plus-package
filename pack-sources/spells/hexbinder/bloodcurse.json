@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "bloodcurseDamage1"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "bloodcurseDamage1-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "bloodcurseDamage1"
+							}
 						]
 					},
 					"canCrit": true,

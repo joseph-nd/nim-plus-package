@@ -290,9 +290,10 @@ export default class Pack {
 
 	// Volume items live under items/<volume>/<category>/ and get one
 	// compendium folder per category (named after the zine's sections).
-	// Items outside a volume dir (hexbinder, artificer) keep their existing
-	// folderless layout.
 	static #VOLUME_ITEM_FOLDERS = new Map([
+		['hexbinder/concoctions', 'Hexbinder — Concoctions'],
+		['artificer/inventions', 'Artificer — Inventions'],
+		['artificer/prototypes', 'Artificer — Prototypes'],
 		['vol4/weapons', 'Vol IV — Weapons'],
 		['vol4/armor-and-shields', 'Vol IV — Armor & Shields'],
 		['vol4/accessories', 'Vol IV — Accessories'],
@@ -302,6 +303,11 @@ export default class Pack {
 		['vol4/mystic-michaels', "Vol IV — Mystic Michael's Machinations"],
 		['vol1/starting-kits', 'Vol I — Variant Starting Equipment'],
 		['vol1/gear', 'Vol I — Adventuring Gear'],
+		['equipment/shields', 'Expanded Equipment — Shields'],
+		['equipment/armor', 'Expanded Equipment — Armor'],
+		['equipment/bludgeoning', 'Expanded Equipment — Bludgeoning Weapons'],
+		['equipment/piercing', 'Expanded Equipment — Piercing Weapons'],
+		['equipment/slashing', 'Expanded Equipment — Slashing Weapons'],
 	]);
 
 	#prepareItemFolderAssignments() {

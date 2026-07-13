@@ -1,0 +1,150 @@
+{
+	"name": "Boomerang",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/bludgeoning/boomerang.webp",
+	"system": {
+		"macro": "",
+		"identifier": "boomerang",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqboomerang",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "1d4 + @dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqboomerang-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqboomerang"
+							},
+							{
+								"id": "eqboomerang-ret",
+								"type": "note",
+								"noteType": "info",
+								"text": "Return: the weapon flies back to your hand.",
+								"parentContext": "hit",
+								"parentNode": "eqboomerang"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqboomerang-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqboomerang"
+							},
+							{
+								"id": "eqboomerang-retc",
+								"type": "note",
+								"noteType": "info",
+								"text": "Return: the weapon flies back to your hand.",
+								"parentContext": "criticalHit",
+								"parentNode": "eqboomerang"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqboomerang-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqboomerang"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d4+Dex Bludgeoning</p><p><strong>Properties:</strong> Range 6, Return, Stack 3</p><p><strong>Cost:</strong> 5 gp</p><hr><p><em><strong>Return.</strong> On Hit or Crit: Weapon returns to the thrower's hand.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "stackable",
+		"slotsRequired": 1,
+		"stackSize": 3,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 5,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"return": true
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "vpE5cJx6EIhWlhMV",
+	"folder": "7748047abd0b1f01"
+}

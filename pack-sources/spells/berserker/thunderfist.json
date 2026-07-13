@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "thunderfist-dmg"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "thunderfist-dmg-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "thunderfist-dmg"
+							}
 						]
 					},
 					"canCrit": true,

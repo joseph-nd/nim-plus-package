@@ -76,6 +76,13 @@ const api = {
 		jellybean: vol4Jellybean,
 		unicornTear: vol4UnicornTear,
 	},
+	// Nim+ Expanded Equipment — mundane gear (see the "Expanded Equipment"
+	// section at the bottom).
+	equipment: {
+		toggleGrip: equipmentToggleGrip,
+		spendBrittle: equipmentSpendBrittle,
+		repairBrittle: equipmentRepairBrittle,
+	},
 };
 
 Hooks.once('init', () => {
@@ -2514,11 +2521,33 @@ const FEATS_WIDGET_CSS = `
 		cursor: pointer;
 	}
 	.nim-plus-feat-card__img-wrapper {
+		position: relative;
 		flex-shrink: 0;
 		height: 2rem;
 		width: 2rem;
 		margin-inline-end: 0.5rem;
 		border-right: 1px solid var(--nimble-card-border-color);
+	}
+	.nim-plus-feat-card__img-activate {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(0, 0, 0, 0.55);
+		border: 0;
+		color: white;
+		cursor: pointer;
+		font-size: var(--nimble-sm-text);
+		opacity: 0;
+		padding: 0;
+		transition: opacity var(--nimble-standard-transition);
+		z-index: 2;
+	}
+	.nim-plus-feat-card__img-activate:hover,
+	.nim-plus-feat-card__img-activate:focus-visible {
+		opacity: 1;
+		outline: none;
 	}
 	.nim-plus-feat-card__img {
 		display: block;
@@ -2582,10 +2611,14 @@ function featCardHTML(feat) {
 	const img = escape(feat.img || 'icons/svg/upgrade.svg');
 	const req = feat.getFlag?.(MODULE_ID, 'featReq');
 	const reqTag = req ? `<span class="nim-plus-feat-card__req">${escape(req)}</span>` : '';
+	const name = escape(feat.name);
 	return `<li class="nim-plus-feat-card" data-feat-id="${escape(feat.id)}">
 		<div class="nim-plus-feat-card__header" role="button" tabindex="0" data-nim-plus-open-feat="${escape(feat.id)}">
-			<div class="nim-plus-feat-card__img-wrapper"><img class="nim-plus-feat-card__img" src="${img}" alt=""></div>
-			<h4 class="nim-plus-feat-card__name nimble-heading" data-heading-variant="item">${escape(feat.name)}</h4>
+			<div class="nim-plus-feat-card__img-wrapper">
+				<img class="nim-plus-feat-card__img" src="${img}" alt="">
+				<button type="button" class="nim-plus-feat-card__img-activate" data-nim-plus-feat-chat="${escape(feat.id)}" aria-label="Send ${name} to chat"><i class="fa-solid fa-comment"></i></button>
+			</div>
+			<h4 class="nim-plus-feat-card__name nimble-heading" data-heading-variant="item">${name}</h4>
 			${reqTag}
 		</div>
 	</li>`;
@@ -2627,6 +2660,17 @@ function wireFeatsSection(section, actor) {
 			event.preventDefault();
 			const feat = actor.items?.get?.(el.dataset.nimPlusOpenFeat);
 			feat?.sheet?.render(true);
+		});
+	});
+	// Send-to-chat overlay on the feat icon: posts the feat's description to chat
+	// via the system's own item activation (mirrors the native feature card's
+	// comment button). stopPropagation keeps the header's open-sheet click from
+	// also firing.
+	section.querySelectorAll('[data-nim-plus-feat-chat]').forEach((btn) => {
+		btn.addEventListener('click', (event) => {
+			event.preventDefault();
+			event.stopPropagation();
+			actor.activateItem?.(btn.dataset.nimPlusFeatChat);
 		});
 	});
 	section.querySelector('[data-nim-plus-feat="choose"]')?.addEventListener('click', async (event) => {
@@ -4936,3 +4980,455 @@ async function vol4UnicornTear(actor, item) {
 		content: `<p>${escape(actor.name)} is healed for <strong>20 HP</strong>; all wounds and conditions are removed.</p>`,
 	});
 }
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Expanded Equipment — mundane gear runtime
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Automation for the Expanded Equipment content set (67 mundane weapons /
+ * armor / shields, `pack-sources/items/…`). Each item carries a
+ * `flags["nim-plus-package"].equipment` object describing the special
+ * properties the base Nimble object schema can't model. The helpers below
+ * cover what the system's static rules engine can't express:
+ *
+ * - **Spiked** (armor/shield) — melee attackers take 1d4 piercing per spiked
+ *   piece the target wears. Wired to `nimble.damageApplied` (fires GM-side,
+ *   once per damaged target — a multi-target melee hit retaliates once per
+ *   spiked target).
+ * - **Parry** (weapon) — a wielded parry weapon widens the target's miss
+ *   window: a primary die of 2 (which would normally *hit*) instead misses.
+ *   Advisory only (Nimble has no to-hit roll to cancel), posted from
+ *   `nimble.useItem` by reading the primary damage die.
+ * - **Brittle** (weapon/shield) — a Defend/critical charge counter tracked on
+ *   the item flag; destroys (auto-unequips) the item at zero.
+ * - **Mana bonus** (focus/implement) — +N max mana while equipped, added as a
+ *   prepareDerivedData rider (mirrors the Vol IV derived-data riders; mana.max
+ *   is final by the time our wrapper runs — see `_prepareMaxMana` note below).
+ * - **Requirement warnings** — non-blocking `ui.notifications.warn` when an
+ *   under-qualified wearer equips gear with an ability requirement.
+ * - **Grip toggle** — `api.equipment.toggleGrip` swaps a versatile weapon
+ *   between its one- and two-handed damage formulas + `twoHanded` property.
+ * - **Loud** (armor) — disadvantage on Stealth checks, injected cleanly at the
+ *   `rollSkillCheck` patch point.
+ *
+ * Hook-name convention: this module registers the system's custom hooks with
+ * the hard-coded `nimble.` prefix (see the existing `nimble.useItem` /
+ * `nimble.rest` listeners). The system builds these via
+ * `systemHookName(suffix)` = `${SYSTEM_ID}.suffix`; we follow the module's
+ * established literal-prefix convention for `nimble.damageApplied` too.
+ */
+
+const EQUIP_FLAG = 'equipment';
+const SPIKED_DIE = '1d4';
+
+/** Read the `equipment` sub-object off an item's module flags (or null). */
+function equipmentFlag(item) {
+	const flag = item?.flags?.[MODULE_ID]?.[EQUIP_FLAG] ?? item?.getFlag?.(MODULE_ID, EQUIP_FLAG);
+	return flag && typeof flag === 'object' ? flag : null;
+}
+
+/** All of the actor's equipped objects whose `equipment` flag matches `predicate`. */
+function equippedWithEquipment(actor, predicate) {
+	const items = actor?.items?.contents ?? Array.from(actor?.items ?? []);
+	return items.filter((i) => {
+		if (i.type !== 'object' || i.system?.equipped !== true) return false;
+		const flag = equipmentFlag(i);
+		return flag ? !!predicate(flag, i) : false;
+	});
+}
+
+/** An ability modifier off the actor's prepared data (0 when missing). */
+function actorAbilityMod(actor, abilityKey) {
+	return Math.floor(Number(actor?.system?.abilities?.[abilityKey]?.mod ?? 0)) || 0;
+}
+
+/**
+ * True when `item` is a melee attack — either an equipped object weapon or a
+ * monster/NPC feature attack. Nimble's `activation.targets.attackType` is one of
+ * `'' | 'reach' | 'range'` (system `models/item/common.ts` ~80-86); blank and
+ * `reach` are both melee, `range` is ranged. Monster attacks are `monsterFeature`
+ * items whose `subtype` is `action` or `attackSequence` (see
+ * `MonsterFeatureDataModel.ts`); spells and ranged features are excluded so they
+ * never trigger retaliation.
+ */
+function isMeleeAttackItem(item) {
+	if (item?.system?.activation?.targets?.attackType === 'range') return false;
+	if (item?.type === 'object') return item.system?.objectType === 'weapon';
+	if (item?.type === 'monsterFeature') {
+		const subtype = item.system?.subtype;
+		return subtype === 'action' || subtype === 'attackSequence';
+	}
+	return false;
+}
+
+/** The primary DamageRoll from a `nimble.useItem` context (crit/miss die), or null. */
+function findPrimaryDamageRoll(rolls) {
+	if (!Array.isArray(rolls)) return null;
+	return (
+		rolls.find((r) => r && (r.primaryDie !== undefined || r.primaryDieValue !== undefined)) ?? null
+	);
+}
+
+// ── Spiked retaliation + Brittle durability (nimble.damageApplied) ────────────
+//
+// The system fires `nimble.damageApplied` from ChatMessage.applyDamage, which is
+// GM-gated (`if (!game.user?.isGM) return;`) and fires once per applied target.
+// But the system has no already-applied guard: a GM re-clicking "Apply Damage"
+// re-runs the whole loop and re-fires this hook for every target, which would
+// double-fire spiked retaliation and brittle decrements. We remember the
+// (card, target) pairs already processed and no-op on repeats. The spiked
+// retaliation applies its damage via `sourceActor.applyDamage(...)` directly
+// (not through an activation card), so it can never re-enter this hook; the
+// melee guard would reject it anyway.
+const DAMAGE_APPLIED_SEEN = new Set();
+const DAMAGE_APPLIED_SEEN_CAP = 500;
+
+/**
+ * Record a (card, target) pair from a `nimble.damageApplied` payload. Returns
+ * `false` when the pair was already processed (a re-click), so callers can no-op.
+ * The Set is trimmed (oldest-first, insertion-ordered) so it stays bounded.
+ */
+function markDamageApplied(payload) {
+	const cardId = payload?.card?.id;
+	const target = payload?.targetActor;
+	const targetKey = target?.uuid ?? target?.id;
+	if (!cardId || !targetKey) return true; // can't key it — don't block
+	const key = `${cardId}::${targetKey}`;
+	if (DAMAGE_APPLIED_SEEN.has(key)) return false;
+	DAMAGE_APPLIED_SEEN.add(key);
+	while (DAMAGE_APPLIED_SEEN.size > DAMAGE_APPLIED_SEEN_CAP) {
+		const oldest = DAMAGE_APPLIED_SEEN.values().next().value;
+		DAMAGE_APPLIED_SEEN.delete(oldest);
+	}
+	return true;
+}
+
+Hooks.on('nimble.damageApplied', (payload) => {
+	if (!markDamageApplied(payload)) return; // already-applied re-click — no-op
+	try {
+		equipmentSpikedRetaliation(payload);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Spiked retaliation failed`, error);
+	}
+	try {
+		equipmentBrittleOnCrit(payload);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Brittle durability check failed`, error);
+	}
+});
+
+/**
+ * Spiked: when a melee weapon hits a creature wearing spiked armor/shields, the
+ * attacker takes 1d4 piercing per spiked piece (they stack). Retaliation can't
+ * crit or miss, so it's applied as flat damage to the attacker.
+ */
+async function equipmentSpikedRetaliation(payload) {
+	if (!payload || payload.isMiss) return;
+	const { sourceItem, sourceActor, targetActor } = payload;
+	if (!sourceActor || !targetActor) return;
+	if (!isMeleeAttackItem(sourceItem)) return;
+
+	const spiked = equippedWithEquipment(targetActor, (flag) => flag.spiked === true);
+	if (spiked.length === 0) return;
+
+	const formula = Array.from({ length: spiked.length }, () => SPIKED_DIE).join(' + ');
+	const roll = await new Roll(formula).evaluate();
+	const total = Math.max(0, Math.floor(Number(roll.total ?? 0)));
+
+	const names = spiked.map((i) => `<strong>${escape(i.name)}</strong>`).join(', ');
+	await roll.toMessage({
+		speaker: ChatMessage.getSpeaker({ actor: targetActor }),
+		flavor: `Spikes — ${escape(sourceActor.name)} strikes ${escape(targetActor.name)}'s ${names} and takes <strong>${total}</strong> piercing.`,
+	});
+
+	if (total > 0 && typeof sourceActor.applyDamage === 'function') {
+		await sourceActor.applyDamage(total);
+	}
+}
+
+/**
+ * Brittle: a critical hit landed on a creature wearing brittle gear degrades
+ * each brittle piece by one. Delegates to the shared decrement helper.
+ */
+async function equipmentBrittleOnCrit(payload) {
+	if (!payload || !payload.isCritical) return;
+	const { targetActor } = payload;
+	if (!targetActor) return;
+	const brittle = equippedWithEquipment(targetActor, (flag) => Number(flag.brittle) > 0);
+	for (const item of brittle) {
+		// Await sequentially so overlapping item.update() calls don't race.
+		// eslint-disable-next-line no-await-in-loop
+		await equipmentDecrementBrittle(item);
+	}
+}
+
+/**
+ * Decrement an item's brittle counter by one, posting the remaining count. The
+ * counter lives at `flags["nim-plus-package"].equipment.brittleRemaining` and
+ * is seeded from `equipment.brittle` on first use. At zero the item is
+ * destroyed (auto-unequipped) and a destruction message is posted.
+ * @returns {Promise<number|null>} the remaining count, or null when inapplicable.
+ */
+async function equipmentDecrementBrittle(item) {
+	const flag = equipmentFlag(item);
+	const max = Number(flag?.brittle);
+	if (!flag || !(max > 0)) {
+		ui.notifications?.warn(`${item?.name ?? 'Item'} is not a brittle item.`);
+		return null;
+	}
+	const current = Number.isFinite(Number(flag.brittleRemaining)) ? Number(flag.brittleRemaining) : max;
+	const remaining = Math.max(0, current - 1);
+
+	const update = { [`flags.${MODULE_ID}.${EQUIP_FLAG}.brittleRemaining`]: remaining };
+	if (remaining <= 0) update['system.equipped'] = false;
+	await item.update(update);
+
+	const actor = item.actor;
+	if (remaining <= 0) {
+		await ChatMessage.create({
+			speaker: actor ? ChatMessage.getSpeaker({ actor }) : undefined,
+			flavor: `<strong>${escape(item.name)}</strong> — Brittle`,
+			content: `<p><strong>${escape(item.name)} is destroyed!</strong> It shatters and is unequipped.</p>`,
+		});
+	} else {
+		await ChatMessage.create({
+			speaker: actor ? ChatMessage.getSpeaker({ actor }) : undefined,
+			flavor: `<strong>${escape(item.name)}</strong> — Brittle`,
+			content: `<p>${escape(item.name)} cracks further — <strong>${remaining}</strong> use${remaining === 1 ? '' : 's'} remaining before it shatters.</p>`,
+		});
+	}
+	return remaining;
+}
+
+/**
+ * Manually spend one brittle use (e.g. on a Defend, which is a manual action in
+ * Nimble with no automatable trigger). Exposed as `api.equipment.spendBrittle`.
+ */
+async function equipmentSpendBrittle(item) {
+	if (!item) return null;
+	return equipmentDecrementBrittle(item);
+}
+
+/**
+ * Reset an item's brittle counter back to full. Exposed as
+ * `api.equipment.repairBrittle`. Writes `equipment.brittleRemaining` back up to
+ * the item's `equipment.brittle` maximum.
+ */
+async function equipmentRepairBrittle(item) {
+	const flag = equipmentFlag(item);
+	const max = Number(flag?.brittle);
+	if (!flag || !(max > 0)) {
+		ui.notifications?.warn(`${item?.name ?? 'Item'} is not a brittle item.`);
+		return null;
+	}
+	await item.update({ [`flags.${MODULE_ID}.${EQUIP_FLAG}.brittleRemaining`]: max });
+	ui.notifications?.info(`${item.name} repaired — ${max} brittle uses restored.`);
+	return max;
+}
+
+// ── Parry note (nimble.useItem) ──────────────────────────────────────────────
+//
+// Nimble attacks have no separate to-hit roll: the primary damage die decides
+// miss (natural 1) / crit (max face). A Parry weapon widens the defender's miss
+// window by one — a primary die of 2, which would normally connect, is turned
+// aside. There is no roll to cancel, so this posts an advisory reminder; the GM
+// applies the miss. A primary die of 1 already misses, so nothing is posted.
+Hooks.on('nimble.useItem', (item, _chatCard, context) => {
+	try {
+		if (!item || item.type !== 'object' || item.system?.objectType !== 'weapon') return;
+		if (!context) return;
+		const targets = Array.from(context.targets ?? []);
+		if (targets.length === 0) return;
+
+		const primary = findPrimaryDamageRoll(context.rolls);
+		const dieValue = Number(primary?.primaryDieValue);
+		if (!Number.isFinite(dieValue) || dieValue !== 2) return; // 1 already misses; >2 hits
+
+		for (const token of targets) {
+			const targetActor = token?.actor;
+			if (!targetActor) continue;
+			const parry = equippedWithEquipment(targetActor, (flag) => flag.parry === true);
+			if (parry.length === 0) continue;
+			ChatMessage.create({
+				speaker: ChatMessage.getSpeaker({ actor: targetActor }),
+				flavor: `<strong>${escape(parry[0].name)}</strong> — Parry`,
+				content: `<p>Parry — <strong>${escape(targetActor.name)}</strong> deflects the attack (primary die 2): the attack misses.</p>`,
+			}).catch(() => {});
+		}
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Parry note failed`, error);
+	}
+});
+
+// ── Requirement warnings (updateItem: equipped false→true) ────────────────────
+//
+// When gear that carries an ability requirement is equipped, warn (non-blocking)
+// if the wearer's matching ability modifier falls short. Foundry's update diff
+// only carries `system.equipped` when it actually changed, so `=== true` in the
+// diff means a false→true transition. Gated by userId to fire once.
+Hooks.on('updateItem', (item, changes, _options, userId) => {
+	try {
+		if (userId !== game.user?.id) return;
+		if (foundry.utils.getProperty(changes, 'system.equipped') !== true) return;
+		if (item?.type !== 'object') return;
+		const actor = item.actor;
+		if (!actor || actor.type !== 'character') return;
+
+		const flag = equipmentFlag(item) ?? {};
+		const checks = [
+			['strength', Number(item.system?.properties?.strengthRequirement?.value), 'Strength'],
+			['strength', Number(flag.oneHandedStrRequirement), 'Strength (one-handed)'],
+			['dexterity', Number(flag.dexRequirement), 'Dexterity'],
+			['intelligence', Number(flag.intRequirement), 'Intelligence'],
+		];
+
+		for (const [ability, required, label] of checks) {
+			if (!Number.isFinite(required) || required <= 0) continue;
+			const mod = actorAbilityMod(actor, ability);
+			if (mod < required) {
+				ui.notifications?.warn(
+					`${actor.name} equips ${item.name} but has ${label} ${mod} (requires ${required}).`,
+				);
+			}
+		}
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Equipment requirement check failed`, error);
+	}
+});
+
+// ── Grip toggle (api.equipment.toggleGrip) ───────────────────────────────────
+//
+// A versatile weapon carries `equipment.grip = { twoHanded, oneHanded }` damage
+// formulas. Toggling swaps the primary damage-effect formula between them,
+// adds/removes the `twoHanded` property, and persists the active grip on a flag.
+const GRIP_TWO_HANDED = 'twoHanded';
+const GRIP_ONE_HANDED = 'oneHanded';
+
+/**
+ * Swap a versatile weapon between its two-handed and one-handed grips.
+ * Exposed as `api.equipment.toggleGrip`.
+ */
+async function equipmentToggleGrip(item) {
+	const flag = equipmentFlag(item);
+	const grip = flag?.grip;
+	if (!grip || typeof grip.twoHanded !== 'string' || typeof grip.oneHanded !== 'string') {
+		ui.notifications?.warn(`${item?.name ?? 'This item'} has no versatile grip to toggle.`);
+		return null;
+	}
+
+	const currentGrip = flag.activeGrip === GRIP_ONE_HANDED ? GRIP_ONE_HANDED : GRIP_TWO_HANDED;
+	const nextGrip = currentGrip === GRIP_TWO_HANDED ? GRIP_ONE_HANDED : GRIP_TWO_HANDED;
+	const nextFormula = grip[nextGrip];
+
+	// Swap the primary damage formula. Only retune an actual damage node (robust
+	// to a nested effects tree); bail rather than risk retuning a non-damage node.
+	const effects = foundry.utils.deepClone(item.system?.activation?.effects ?? []);
+	const node = findFirstDamageNode(effects);
+	if (!node) {
+		ui.notifications?.warn(`${item.name} has no damage effect to retune.`);
+		return null;
+	}
+	node.formula = nextFormula;
+
+	// Maintain the `twoHanded` weapon property in step with the grip.
+	let selected = Array.from(item.system?.properties?.selected ?? []);
+	if (nextGrip === GRIP_TWO_HANDED) {
+		if (!selected.includes('twoHanded')) selected.push('twoHanded');
+	} else {
+		selected = selected.filter((p) => p !== 'twoHanded');
+	}
+
+	await item.update({
+		'system.activation.effects': effects,
+		'system.properties.selected': selected,
+		[`flags.${MODULE_ID}.${EQUIP_FLAG}.activeGrip`]: nextGrip,
+	});
+
+	const label = nextGrip === GRIP_TWO_HANDED ? 'two-handed' : 'one-handed';
+	const actor = item.actor;
+	await ChatMessage.create({
+		speaker: actor ? ChatMessage.getSpeaker({ actor }) : undefined,
+		flavor: `<strong>${escape(item.name)}</strong> — Grip`,
+		content: `<p>${escape(item.name)} is now wielded <strong>${label}</strong> (damage <code>${escape(nextFormula)}</code>).</p>`,
+	});
+	return nextGrip;
+}
+
+// ── Mana bonus + Loud (prepareDerivedData / rollSkillCheck patches) ───────────
+//
+// Mana: `_prepareMaxMana` sets `system.resources.mana.max` inside
+// prepareDerivedData (character.ts ~239), so wrapping prepareDerivedData and
+// running AFTER the original (as the Vol IV riders do) sees the final value —
+// we add the equipped focus items' `manaBonus` on top. Derived-data only: never
+// written to the DB, recomputed each prepare, self-clears on unequip.
+//
+// Loud: `NimbleCharacter.rollSkillCheck` (character.ts ~1016) computes its roll
+// mode via `calculateRollMode(defaultRollMode, rollModeModifier, rollMode)` =
+// `defaultRollMode + rollModeModifier` (negative = disadvantage). Wrapping it
+// and decrementing `options.rollModeModifier` by 1 for Stealth cleanly injects
+// disadvantage while a Loud item is equipped — no dialog hacking required.
+function applyEquipmentDerivedAdjustments(actor) {
+	const focuses = equippedWithEquipment(actor, (flag) => Number(flag.manaBonus) > 0);
+	if (focuses.length === 0) return;
+	const mana = actor.system?.resources?.mana;
+	if (!mana || typeof mana.max !== 'number') return;
+	let bonus = 0;
+	for (const item of focuses) bonus += Number(equipmentFlag(item)?.manaBonus) || 0;
+	mana.max += bonus;
+}
+
+/** True when the actor wears any equipped item flagged `loud`. */
+function actorHasEquippedLoud(actor) {
+	return equippedWithEquipment(actor, (flag) => flag.loud === true).length > 0;
+}
+
+Hooks.once('setup', () => {
+	const CharacterClass = CONFIG?.NIMBLE?.Actor?.documentClasses?.character;
+
+	// Mana bonus rider — same wrap-prepareDerivedData technique as the Vol IV
+	// riders, added after the original so mana.max is final.
+	if (
+		CharacterClass?.prototype?.prepareDerivedData &&
+		!CharacterClass.prototype.__nimPlusEquipmentManaPatched
+	) {
+		const originalPrep = CharacterClass.prototype.prepareDerivedData;
+		CharacterClass.prototype.prepareDerivedData = function equipmentPatchedPrepareDerivedData() {
+			originalPrep.call(this);
+			try {
+				applyEquipmentDerivedAdjustments(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply Expanded Equipment mana bonus`, error);
+			}
+		};
+		CharacterClass.prototype.__nimPlusEquipmentManaPatched = true;
+	}
+
+	// Loud disadvantage on Stealth — clean injection at the skill-check entry.
+	if (
+		CharacterClass?.prototype?.rollSkillCheck &&
+		!CharacterClass.prototype.__nimPlusEquipmentLoudPatched
+	) {
+		const originalRollSkillCheck = CharacterClass.prototype.rollSkillCheck;
+		CharacterClass.prototype.rollSkillCheck = function equipmentPatchedRollSkillCheck(
+			skillKey,
+			options = {},
+		) {
+			try {
+				if (skillKey === 'stealth' && actorHasEquippedLoud(this)) {
+					options = {
+						...options,
+						rollModeModifier: (Number(options.rollModeModifier) || 0) - 1,
+					};
+					console.debug(
+						`[${MODULE_ID}] ${this.name} wears Loud gear — Stealth check rolled at disadvantage.`,
+					);
+				}
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to apply Loud Stealth disadvantage`, error);
+			}
+			return originalRollSkillCheck.call(this, skillKey, options);
+		};
+		CharacterClass.prototype.__nimPlusEquipmentLoudPatched = true;
+	}
+});

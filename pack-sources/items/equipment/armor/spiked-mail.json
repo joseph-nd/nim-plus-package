@@ -1,0 +1,102 @@
+{
+	"name": "Spiked Mail",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/armor/spiked-mail.webp",
+	"system": {
+		"macro": "",
+		"identifier": "spiked-mail",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "eqspikedmailac",
+				"identifier": "spiked-mail",
+				"label": "Spiked Mail",
+				"predicate": {},
+				"priority": 1,
+				"formula": "5 + min(@dexterity,2) - @dexterity",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Mail</p><p><strong>Armor:</strong> 5+DEX (max 2)</p><p><strong>Properties:</strong> Spiked (On Defend)</p><p><strong>Requirement:</strong> 1 STR</p><p><strong>Cost:</strong> 200 gp</p><hr><p><em><strong>Spiked.</strong> When hit by a melee attack, the attacker takes 1d4 piercing damage in return. Can stack, can't crit or miss.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 1,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 200,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"spiked": true
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ia4uB3LPEpaMis4m",
+	"folder": "ad05d9f209e4e11e"
+}

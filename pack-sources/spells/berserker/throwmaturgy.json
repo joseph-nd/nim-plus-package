@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "throwmaturgy-dmg"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "throwmaturgy-dmg-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "throwmaturgy-dmg"
+							}
 						]
 					},
 					"canCrit": true,

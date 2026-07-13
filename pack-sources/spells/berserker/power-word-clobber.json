@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "power-word-clobber-dmg"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "power-word-clobber-dmg-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "power-word-clobber-dmg"
+							}
 						]
 					},
 					"canCrit": true,

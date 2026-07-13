@@ -1,0 +1,103 @@
+{
+	"name": "Scholar's Outfit",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/armor/scholars-outfit.webp",
+	"system": {
+		"macro": "",
+		"identifier": "scholars-outfit",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "eqscholaroutac",
+				"identifier": "scholars-outfit",
+				"label": "Scholar's Outfit",
+				"predicate": {},
+				"priority": 1,
+				"formula": "4",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Cloth</p><p><strong>Armor:</strong> 4+DEX</p><p><strong>Properties:</strong> +2 Mana</p><p><strong>Requirement:</strong> 2 INT</p><p><strong>Cost:</strong> 200 gp</p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "armor",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 200,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"manaBonus": 2,
+				"intRequirement": 2
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "nNbG9u6WRNZ0agyZ",
+	"folder": "ad05d9f209e4e11e"
+}

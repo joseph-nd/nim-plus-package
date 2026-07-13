@@ -2,6 +2,26 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.5.0] - 2026-07-13
+
+### Added
+- **Expanded Equipment (67 mundane items)**, adapted from the *Expanded Equipment* zine by Danny Rowe, in five new **Nim+ Items** compendium folders: **Shields** (8), **Armor** (15), **Bludgeoning Weapons** (13), **Piercing Weapons** (18), and **Slashing Weapons** (13).
+  - Weapons ship full activation damage trees (crit/miss riders included) and carry the system's native properties (`twoHanded`/`light`/`load`/`range`/`reach`/`thrown`/`vicious`) plus stackable inventory sizing; the three versatile weapons (War Hammer, Spear, Trident) store both grips' damage formulas on `flags["nim-plus-package"].equipment.grip.{twoHanded,oneHanded}` and can be re-gripped in play.
+  - Armor and shields carry `armorClass` formulas (mail: `N + min(@dexterity,2) - @dexterity`; plate: `N - @dexterity`; Enchanted Robe: `4 + @intelligence - @dexterity`), and the Great Shield, Tower Shield, and Full Plate carry `speedBonus` rules (−1 / −2 / −1).
+  - **Mechanical automation** for what the rules engine alone can't express lives in a new "Expanded Equipment — mundane gear runtime" section of `scripts/main.mjs`, driven entirely off each item's `flags["nim-plus-package"].equipment` object: **Spiked** retaliation (melee attackers take 1d4 piercing per spiked piece worn, stacking, via `nimble.damageApplied`); a **Parry** advisory note (a primary damage die of 2 misses instead of hitting while the defender wields a Parry weapon); **Brittle** durability tracking (a Defend/critical-hit counter that destroys and auto-unequips the item at zero — `api.equipment.spendBrittle` / `repairBrittle` cover the manual Defend case); **+2 max Mana** while the Scholar's Outfit is equipped (a `prepareDerivedData` rider); **Loud** gear imposing disadvantage on Stealth checks (a clean `rollSkillCheck` patch); and non-blocking equip-requirement warnings for STR/DEX/INT-gated gear. A new `api.equipment` / `nimPlus.equipment` namespace exposes `toggleGrip`, `spendBrittle`, and `repairBrittle`.
+  - Properties that need table adjudication (Heavy, Feint, Push X, Return, Focus, Partial Cover, the Kite Shield's interpose bonus, the Great Shield's reaction) are left as description text and chat-card note lines, matching the module's existing philosophy.
+  - **67 original icons** under `assets/items/equipment/<category>/` (generated via the sibling `nim-icon-forge` project); prompt set at `docs/icon-prompts/items/equipment.md`.
+
+### Changed
+- **Items compendium**: Hexbinder concoctions and Artificer inventions/prototypes are now grouped into their own compendium folders instead of sitting loose at the pack root.
+
+### Fixed
+- **Spell crit banners**: every crit-capable Nim+ spell (Earthquake, Crush,
+  Thunderfist, Terror, etc. — 10 in all) now shows the **CRIT** banner on its chat
+  card. The crit already resolved mechanically (the primary die explodes on a max
+  roll), but the damage node was missing the `criticalHit` marker note the core
+  spells carry, so the card never labelled the crit.
+
 ## [0.4.1] - 2026-07-05
 
 ### Changed

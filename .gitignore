@@ -5,3 +5,4 @@ docs/
 .idea/
 *.log
 .DS_Store
+*.pdf

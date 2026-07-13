@@ -1,0 +1,112 @@
+{
+	"name": "Tower Shield",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/shields/tower-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "tower-shield",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "eqtowershieldac",
+				"identifier": "tower-shield",
+				"label": "Tower Shield",
+				"predicate": {},
+				"priority": 2,
+				"formula": "6",
+				"mode": "add"
+			},
+			{
+				"type": "speedBonus",
+				"disabled": false,
+				"id": "eqtowershieldspd",
+				"identifier": "",
+				"label": "Tower Shield (Speed penalty)",
+				"predicate": {},
+				"priority": 1,
+				"value": "-2"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Shield</p><p><strong>Armor:</strong> +6</p><p><strong>Properties:</strong> -2 Speed, Partial Cover</p><p><strong>Requirement:</strong> 3 STR</p><p><strong>Cost:</strong> 500 gp</p><hr><p><em><strong>Partial Cover.</strong> Grants Partial Cover.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 3,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 500,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"partialCover": true
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0pj8GDJqgYrEmkun",
+	"folder": "fb56ff9d844a0641"
+}

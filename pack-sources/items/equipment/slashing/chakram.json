@@ -1,0 +1,150 @@
+{
+	"name": "Chakram",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/slashing/chakram.webp",
+	"system": {
+		"macro": "",
+		"identifier": "chakram",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "eqchakram",
+					"type": "damage",
+					"damageType": "slashing",
+					"formula": "1d6 + @dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "eqchakram-hit",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "eqchakram"
+							},
+							{
+								"id": "eqchakram-ret",
+								"type": "note",
+								"noteType": "info",
+								"text": "Return: the weapon flies back to your hand.",
+								"parentContext": "hit",
+								"parentNode": "eqchakram"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "eqchakram-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "eqchakram"
+							},
+							{
+								"id": "eqchakram-retc",
+								"type": "note",
+								"noteType": "info",
+								"text": "Return: the weapon flies back to your hand.",
+								"parentContext": "criticalHit",
+								"parentNode": "eqchakram"
+							}
+						],
+						"miss": [
+							{
+								"id": "eqchakram-miss",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "eqchakram"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": false,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "range",
+				"distance": 6
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Damage:</strong> 1d6+Dex Slashing</p><p><strong>Properties:</strong> Range 6, Return</p><p><strong>Cost:</strong> 40 gp</p><hr><p><em><strong>Return.</strong> On Hit or Crit: Weapon returns to the thrower's hand.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "weapon",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			],
+			"strengthRequirement": {
+				"value": null,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 40,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"return": true
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "0vwif9cdielZ9zU1",
+	"folder": "82f6a9a154d189ac"
+}

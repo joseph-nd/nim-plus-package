@@ -1,0 +1,112 @@
+{
+	"name": "Great Shield",
+	"type": "object",
+	"img": "modules/nim-plus-package/assets/items/equipment/shields/great-shield.webp",
+	"system": {
+		"macro": "",
+		"identifier": "great-shield",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "eqgreatshieldac",
+				"identifier": "great-shield",
+				"label": "Great Shield",
+				"predicate": {},
+				"priority": 2,
+				"formula": "5",
+				"mode": "add"
+			},
+			{
+				"type": "speedBonus",
+				"disabled": false,
+				"id": "eqgreatshieldspd",
+				"identifier": "",
+				"label": "Great Shield (Speed penalty)",
+				"predicate": {},
+				"priority": 1,
+				"value": "-1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "",
+				"distance": 0
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"public": "<p><strong>Type:</strong> Shield</p><p><strong>Armor:</strong> +5</p><p><strong>Properties:</strong> -1 Speed, Reaction (1/round): Push 1</p><p><strong>Requirement:</strong> 3 STR</p><p><strong>Cost:</strong> 250 gp</p><hr><p><em><strong>Reaction (1/round).</strong> Push 1.</em></p><p class=\"nim-plus-credit\"><em>&mdash; Danny Rowe, Expanded Equipment</em></p>",
+			"unidentified": "",
+			"secret": ""
+		},
+		"identified": true,
+		"objectType": "shield",
+		"weaponType": "",
+		"quantity": 1,
+		"equipped": false,
+		"unidentifiedName": "Unidentified Object",
+		"objectSizeType": "slots",
+		"slotsRequired": 1,
+		"stackSize": 2,
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": null
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [],
+			"strengthRequirement": {
+				"value": 3,
+				"overridesTwoHanded": false
+			},
+			"thrownRange": 4
+		},
+		"price": {
+			"value": 250,
+			"denomination": "gp"
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"equipment": {
+				"reaction": "Push 1"
+			}
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FU7eFZl2uRTAHV0v",
+	"folder": "fb56ff9d844a0641"
+}

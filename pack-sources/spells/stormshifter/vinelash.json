@@ -36,6 +36,16 @@
 								"parentContext": "hit",
 								"parentNode": "vinelashDamage1"
 							}
+						],
+						"criticalHit": [
+							{
+								"id": "vinelashDamage1-crit",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "vinelashDamage1"
+							}
 						]
 					},
 					"canCrit": true,

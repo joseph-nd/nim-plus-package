@@ -26,7 +26,7 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **945 documents** across **9 compendium packs**:
+The module currently ships **1,012 documents** across **9 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
@@ -34,7 +34,7 @@ The module currently ships **945 documents** across **9 compendium packs**:
 | **Nim+ Subclasses** | 59 | new subclasses for every core class plus the new classes (see breakdown below) |
 | **Nim+ Class Features** | 441 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
-| **Nim+ Items** | 282 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), and the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below) |
+| **Nim+ Items** | 349 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below), and the **Expanded Equipment** mundane gear set (67 — see **Expanded Equipment** below) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
 | **Nim+ Feats** | 52 | optional class-agnostic feats (off by default — see **Optional: Feats** below) |
 | **Nim+ Ancestries** | 50 | the **Nim+ Volume I** exotic ancestries (19) and ancestry variants (31 — see **Character Creation** below) |
@@ -45,6 +45,12 @@ The module currently ships **945 documents** across **9 compendium packs**:
 The **Nim+ Items** pack ships the complete *Nim+ Volume IV* magic-item zine, organized into seven compendium folders matching the zine's structure: **Weapons**, **Armor & Shields**, **Accessories**, **Utility & Exploration**, **Consumables & Wands** (the 100-item Jasper's Warehouse catalogue), **Dverung Runes** (the optional 20-rune upgrade system), and **Mystic Michael's Machinations** (100 whimsical capsule items).
 
 Items are mechanically wired wherever the printed effect can be expressed, not just transcribed: armor and shields apply their Armor formulas when equipped (including conditional ones like Trollhide Wrap's *+2 while Bloodied*); weapons roll their full damage trees with crit/miss riders (Entangling Bow auto-Restrains on crit, Runic Maul knocks you Prone on miss); fly/swim/climb granters set real movement speeds; and limited-use items track charges with the correct 1/encounter, 1/Safe Rest, or narrative-recharge behavior. On top of that, a runtime layer (`nimPlus.vol4.*`) automates the **Dawnmark** stack engine of the Blazing Dawn set, **Dverung Rune melding** (pick an item, capacity enforced, effect permanently added, rune consumed), **Elemental Weapon** enchanting, Bloodseeker's HP-for-damage strikes, Battlemage Glove infusions, the Ladle of the Kobold Champion's death-defiance, and more. Purely narrative or GM-adjudicated effects stay as descriptive notes on the item's chat card.
+
+### Expanded Equipment
+
+The **Nim+ Items** pack also ships the *Expanded Equipment* zine's **67 mundane items**, organized into five compendium folders: **Shields** (8), **Armor** (15), **Bludgeoning Weapons** (13), **Piercing Weapons** (18), and **Slashing Weapons** (13).
+
+Weapons carry full activation damage trees with the system's native properties (two-handed, light, load, range, reach, thrown, vicious), and the three versatile weapons — War Hammer, Spear, Trident — can be re-gripped one- or two-handed in play. Armor and shields apply their Armor formulas when equipped, including the Great Shield, Tower Shield, and Full Plate's Speed penalty. On top of the static rules, a runtime layer automates **Spiked** gear (melee attackers take 1d4 piercing per spiked piece worn), **Parry** (an advisory note when a wielder's Parry weapon should turn aside a glancing hit), **Brittle** durability (a Defend/critical-hit counter that shatters the item at zero — spend and repair it manually via the equip toggle or `nimPlus.equipment`), the Scholar's Outfit's +2 max Mana, and Loud gear's Stealth disadvantage. Properties that need table adjudication (Heavy, Feint, Push, Return, Focus, Partial Cover, and a couple of reaction abilities) stay as description text and chat-card notes.
 
 ### Character Creation (Nim+ Volume I)
 
