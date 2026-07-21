@@ -1,0 +1,57 @@
+{
+	"name": "Exile's Discipline",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-exile/exiles-discipline.webp",
+	"system": {
+		"macro": "",
+		"identifier": "exiles-discipline",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "KEY/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(KEY/encounter) Your first attack while Focused is an automatic crit and gains Vicious.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-exile",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "r8wz4QmNy5uW1iXt",
+	"folder": "2864b0a199d9c389"
+}

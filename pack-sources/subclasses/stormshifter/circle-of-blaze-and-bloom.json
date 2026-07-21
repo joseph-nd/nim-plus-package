@@ -1,0 +1,25 @@
+{
+	"name": "Circle of Blaze & Bloom",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/stormshifter/circle-of-blaze-and-bloom.webp",
+	"system": {
+		"macro": "",
+		"identifier": "circle-of-blaze-and-bloom",
+		"rules": [],
+		"description": "<p><em>Unchecked growth leads to rot. Nature must take its course for new life to emerge, best guided by a wise hand.</em></p><p>LEVEL 3</p><p><strong>Controlled Burn.</strong> You unlock Fire spells. After upcasting a spell or critting in beastform, you may inflict Smoldering on a creature within Range 6.</p><p>LEVEL 7</p><p><strong>Flash Fire.</strong> Inflict Smoldering when you crit with a Lightning spell.</p><p><strong>Fan the Flames.</strong> Your Wind spells have advantage against Smoldering creatures.</p><p>LEVEL 11</p><p><strong>Wildfire.</strong> (1/encounter) Deal LVL+WIL fire damage to all enemies with Smoldering within Range 6, ending the condition.</p><p>LEVEL 15</p><p><strong>From the Ashes.</strong> (1/Safe Rest) Action (while Dying): Expend all remaining Hit Dice. You heal for the amount rolled, and deal that much fire damage to all adjacent enemies.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "dePeil6l2BqOFfLY",
+	"folder": "bbdbcfedb2a0daf6"
+}

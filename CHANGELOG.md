@@ -2,6 +2,33 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.0] - 2026-07-21
+
+**Subclass harmonization**: 16 subclasses across 10 classes were reworked so their descriptions and feature sets match the official Nim+ publication sheets **verbatim**, replacing the previous paraphrased/community-submission text. Two brand-new subclasses are added; the rest are in-place reworks of existing ones.
+
+### Added
+- **Path of the Titans** (Berserker) — a new subclass distinct from the existing *Path of the Titan's Grip*. 5 features: Blood of the Titans, Reckless Hurl, Thunderous Clap, Titanic Toss, Will of the Titans.
+- **Circle of Blaze & Bloom** (Stormshifter) — a new subclass. 5 features: Controlled Burn, Fan the Flames, Flash Fire, From the Ashes, Wildfire.
+- **Pack counts:** Nim+ Subclasses now ships **61** subclasses (was 59); Nim+ Class Features now ships **447** (was 441); **1,020 documents** total across all packs (was 1,012).
+
+### Changed
+- **Berserker — Path of the Exile**: reworked to match the publication; new feature **Exile's Discipline** takes over the You Are Already Dead icon slot, and Deflect and Counter / Draw Cut / Hound Without a Master were updated to the verbatim text.
+- **The Cheat — Tools of the Trickshot & Tools of the Spider**: harmonized. Tools of the Trickshot gains **Improvise** and **Master Thrower** (replacing Trick Up the Sleeve and Deadly Ricochet); Tools of the Spider gains **Threadshot**, **Woven Threads**, **Arachnophobia**, and **Aspect of the Spider Queen** (replacing Ensnare, Woven Webs, Hidden Webs, and Nexus of Pain). All-in-the-Wrist, Bullseye, and Intercept updated to the verbatim text.
+- **Hunter — Keeper of the Balance**: harmonized; new features **Prune the Corrupted** and **Uncanny Accuracy** replace Wrath of Nature and Intense Focus. Calm Mind, Thrilling Insight, and Wild Surge updated to the verbatim text.
+- **Mage — Invoker of Majesty**: **full redesign** to match the publication. New features **Brilliant Scales**, **Elemental Affinity**, and **Formidable Claws** replace Limitless Wrath, Peerless Intellect, and Prodigious Vigor. **Apodracosis no longer exists on this subclass** — its auto-Concentration hook was removed from `scripts/main.mjs` (see Removed). Blinding Majesty, Fearsome Breath, and Glorious Wings updated to the verbatim text.
+- **Mage — Invoker of Perfection**: harmonized; new features **Arcane Perfection** and **Spell Mastery** replace Unlimited Power and Flawless Execution. Impossible Geometry, Prestidigitation, and Signature Spell School updated to the verbatim text.
+- **Oathsworn — Oath of Valor & Oath of Purification**: harmonized. Oath of Valor gains **Aura of Virtue**, **Defend the Helpless**, **Speak Only Truth**, **Sworn to Courage**, and **Undo the Wicked** (replacing Inspirational Valor, Exemplar of Courage, and No Greater Love), and Balm for the Downcast is renamed to **Uphold the Weak**. Oath of Purification gains **Scorching Defenses** (replacing Purge the Unworthy); Aura of Purity, Blazing Vitality, Burning Crusade, and Holy Brand updated to the verbatim text.
+- **Shadowmancer — Pact of the Id renamed to Pact of the Ego** (full rename — subclass document, feature folder, all six feature files, and both feature/subclass asset directories moved from `pact-of-the-id/` to `pact-of-the-ego/`). Gains **Shadowed Thoughts** and **Slip of the Tongue** (replacing Hyperfixation); Defense Mechanism, Fractured Psyche, Know Your Limits, and Unified Psyche updated to the verbatim text.
+- **Shepherd — Luminary of Darkness & Luminary of Tidings**: harmonized. Luminary of Darkness gains **Guiding Hand** and **Terror of the Dawn** (replacing the two Light in the Darkness features). Luminary of Tidings gains **Breaking News** and **Crier's Vigilance** (replacing Spread the News and The End is Nigh, which moves to Herald of Doom below with new text); Hear Ye Hear Ye and Raise the Alarm updated to the verbatim text.
+  - **Toll the Hour rewritten to new mechanics**: a Reach 6 area effect proclaiming one of two tidings — **Calamity** (every enemy in Reach makes a WIL save, DC `10 + KEY`, or becomes Dazed; Bloodied creatures always auto-fail) or **Jubilation** (every ally in Reach gains WIL Temp HP and may cleanse a condition or harmful effect). When the actor also owns **Crier's Vigilance**, the dialog offers a third **"Both"** button that proclaims both tidings in the same use. The macro auto-finds tokens within Reach via grid distance and disposition, auto-rolls enemy WIL saves where possible (falling back to a manual-resolution note per target it can't roll), and posts one combined chat card.
+- **Songweaver — Herald of Legends & Herald of Doom**: harmonized. Herald of Legends is rebuilt around four new features — **Battle Ballad**, **Finale**, **Recite Legend**, **Solo** — and its old "pick a Legend" progression is gone (see Removed). Herald of Doom gains **Hurt Me Twice**, **Out of Time**, **Precipice of the Abyss**, and **Repent** (replacing Live on Through Your Art, On the Precipice, Pain and Misery, and Tortured Artist), plus **The End is Nigh** (moved over from Luminary of Tidings with new text); Sell the World updated to the verbatim text.
+- **Zephyr — Way of Shadows**: 4 features renamed 1:1 to match the publication — Shadowburst → **Burst of Darkness**, Steal Essence → **Lingering Shade**, Shadow's Embrace → **Shadow Jump**, Coalescence of Shadows → **Unseen Blow** — plus updated verbatim text for Dark Legion and Shadestrike.
+- **Feature icons**: renamed in lockstep with every feature rename above, orphaned icons for retired features deleted, and new icons added for every brand-new feature (including both new subclasses).
+
+### Removed
+- **Songweaver's old "pick a Legend" progression**: the five `songweaver-progression` items (Old Oakum, The Aegis, The Mender, The Stiletto, The Tactician) and Herald of Legends' old Another Legend / Every Legend / Legendary Initiative / Legendkeeper / Summon Legend features are deleted, superseded by Herald of Legends' new four-feature design above.
+- **Apodracosis** (Mage / Invoker of Majesty) and its `nimble.useItem` auto-Concentration hook in `scripts/main.mjs` — the reworked subclass no longer has this feature.
+
 ## [0.5.0] - 2026-07-13
 
 ### Added

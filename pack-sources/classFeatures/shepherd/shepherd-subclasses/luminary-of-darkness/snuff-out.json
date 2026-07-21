@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "1/day",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Light dims nigh imperceptibly in your presence. Nocturnal animals often seem to follow you. As an <strong>action</strong>, you may extinguish all mundane light sources that you can see.</p>",
+		"description": "<p>Light dims nigh imperceptibly in your presence. Nocturnal animals often seem to follow you. (1/day) <strong>Action</strong>: Extinguish all mundane light sources that you can see.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",
 		"gainedAtLevels": [
-			7
+			3
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

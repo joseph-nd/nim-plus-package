@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your Lifebinding Spirit chimes like a bell, and your words carry an aura of importance when speaking in public. Searing Light becomes Toll the Hour.</p>",
+		"description": "<p>Your words carry an aura of importance when speaking in public. Spread joy with tidings of delight, or panic with portents of doom.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-tidings",

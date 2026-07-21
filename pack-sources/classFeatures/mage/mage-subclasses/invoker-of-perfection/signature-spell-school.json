@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Select a Signature spell school from among the schools you know. Your Signature cantrips are cast with advantage, and your Signature spells are automatically upcast 1 tier for free (even beyond your currently unlocked spell tiers).</p>",
+		"description": "<p>Select a Signature spell school from among the schools you know. (1/turn) Gain advantage when casting a Signature cantrip.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-perfection",

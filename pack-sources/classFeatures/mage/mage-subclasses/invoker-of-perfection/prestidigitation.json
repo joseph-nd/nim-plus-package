@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You are able to produce minor magical effects related to your Signature spell school, which can provide mundane utility and impress those impressionable.</p>",
+		"description": "<p>You can produce minor magical effects related to your Signature spell school, which can provide mundane utility and impress those impressionable.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-perfection",

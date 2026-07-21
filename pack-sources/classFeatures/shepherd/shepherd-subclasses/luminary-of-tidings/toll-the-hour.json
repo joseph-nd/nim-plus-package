@@ -9,8 +9,8 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "WIL/Safe Rest — Reach 4",
-				"quantity": 1,
+				"details": "1/encounter — Reach 6",
+				"quantity": 2,
 				"type": "action",
 				"isReaction": false
 			},
@@ -25,7 +25,7 @@
 				"count": 1,
 				"restrictions": "",
 				"attackType": "reach",
-				"distance": 4
+				"distance": 6
 			},
 			"template": {
 				"length": 1,
@@ -34,12 +34,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(WIL/Safe Rest) Action: Proclaim tidings of either:</p><ul><li><strong>Jubilation.</strong> Heal WIL d10 HP to an ally within Reach 4 and cleanse a harmful non-Wound condition or effect.</li><li><strong>Calamity.</strong> Inflict Dazed and WIL d10 Radiant damage to a Hampered, undead or Bloodied enemy within Reach 4.</li></ul>",
+		"description": "<p>(1/encounter) <strong>2 actions</strong>: Proclaim tidings of either:</p><ul><li><strong>Calamity.</strong> (Reach 6) Enemies within Reach must make a <strong>WIL save</strong> (DC 10+KEY) or become <strong>Dazed</strong>. Bloodied creatures always fail.</li><li><strong>Jubilation.</strong> (Reach 6) All allies within Reach gain <strong>WIL Temp HP</strong> and may cleanse a condition or harmful effect.</li></ul>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-tidings",
 		"gainedAtLevels": [
-			3
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

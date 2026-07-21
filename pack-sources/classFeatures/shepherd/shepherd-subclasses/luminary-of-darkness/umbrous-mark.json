@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1 Mana to apply Blinded",
+				"details": "1 healing charge to apply Blinded",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your Lifebinding Spirit is marked by darkness and deals <strong>Necrotic damage</strong>. When you, your Lifebinding Spirit or an ally within Reach 4 deal Necrotic damage to an enemy, you may spend <strong>1 Mana</strong> to also inflict <strong>Blinded</strong> on that enemy until the end of their next turn.</p>",
+		"description": "<p>Your Lifebinding Spirit is marked by darkness and deals <strong>Necrotic damage</strong>. When your Lifebinding Spirit damages an enemy, you may spend <strong>1 healing charge</strong> to inflict <strong>Blinded</strong> until the end of their next turn.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",

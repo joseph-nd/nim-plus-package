@@ -1,0 +1,57 @@
+{
+	"name": "Defense Mechanism",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-ego/defense-mechanism.webp",
+	"system": {
+		"macro": "",
+		"identifier": "defense-mechanism",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "When you Defend",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you Defend, you may sacrifice any number of shadow minions. Add <strong>KEY armor</strong> for each shadow minion sacrificed this way until the start of your next turn.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-ego",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ztUqgPNKHyppNx8o",
+	"folder": "8afc82f51e5e9561"
+}

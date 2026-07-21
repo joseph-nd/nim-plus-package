@@ -1,0 +1,57 @@
+{
+	"name": "Wildfire",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-blaze-and-bloom/wildfire.webp",
+	"system": {
+		"macro": "",
+		"identifier": "wildfire",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter — Range 6",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Deal LVL+WIL fire damage to all enemies with Smoldering within Range 6, ending the condition.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-blaze-and-bloom",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hH1Tqqp5hSPpdEFo",
+	"folder": "5b18fa67ab651c42"
+}

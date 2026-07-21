@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your first melee attack each encounter is an automatic crit. Recharges when you spend an entire round without attacking.</p>",
+		"description": "<p>When you Rage, you may enter a Focused stance. While Focused, your speed becomes 1 and you gain a Fury Die the first time each turn you are targeted by an attack. Your first attack while Focused has advantage and ends the stance.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-exile",

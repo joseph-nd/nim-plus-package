@@ -1,0 +1,57 @@
+{
+	"name": "Aspect of the Spider Queen",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/the-cheat/tools-of-the-spider/aspect-of-the-spider-queen.webp",
+	"system": {
+		"macro": "",
+		"identifier": "aspect-of-the-spider-queen",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You embody the traits of the Spider Queen's brood. You have advantage against Slowed enemies, and ignore Difficult Terrain. You may change the damage type of your melee attacks to acid at will.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-spider",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "7e8ca6696cb73e0a",
+	"_id": "1CahAHw7USuFLoMI"
+}

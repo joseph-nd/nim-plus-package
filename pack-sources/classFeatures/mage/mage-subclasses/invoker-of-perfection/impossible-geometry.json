@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Choose 1 additional Spellshaper ability. You may use 2 Spellshaper abilities when casting Signature spells.</p>",
+		"description": "<p>You may use 2 Spellshaper abilities when casting Signature spells.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-perfection",
 		"gainedAtLevels": [
-			7
+			11
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

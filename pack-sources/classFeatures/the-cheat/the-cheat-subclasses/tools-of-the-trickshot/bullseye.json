@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your Thrown weapons gain +2 Range. Also applies to the Trickshot ricochet.</p>",
+		"description": "<p>You may apply Vicious Opportunist to Thrown weapons.</p>",
 		"featureType": "class",
 		"class": "the-cheat",
 		"group": "tools-of-the-trickshot",
 		"gainedAtLevels": [
-			11
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

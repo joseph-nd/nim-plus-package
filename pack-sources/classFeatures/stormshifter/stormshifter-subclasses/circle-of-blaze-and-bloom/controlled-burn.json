@@ -1,0 +1,57 @@
+{
+	"name": "Controlled Burn",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/stormshifter/circle-of-blaze-and-bloom/controlled-burn.webp",
+	"system": {
+		"macro": "",
+		"identifier": "controlled-burn",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "After upcasting a spell or critting in beastform — Range 6",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You unlock Fire spells. After upcasting a spell or critting in beastform, you may inflict Smoldering on a creature within Range 6.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-blaze-and-bloom",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "mB3NEPDVU82arsv0",
+	"folder": "5b18fa67ab651c42"
+}

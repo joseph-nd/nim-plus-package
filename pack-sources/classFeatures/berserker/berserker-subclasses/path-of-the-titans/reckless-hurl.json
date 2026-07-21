@@ -1,0 +1,57 @@
+{
+	"name": "Reckless Hurl",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titans/reckless-hurl.webp",
+	"system": {
+		"macro": "",
+		"identifier": "reckless-hurl",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Hurl a Thrown weapon with reckless abandon. This attack is an automatic crit, but breaks the weapon upon impact.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titans",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "FFTFzotGycirMwU8",
+	"folder": "fb79b0f73b3ad8ca"
+}

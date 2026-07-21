@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain an aura with a <strong>Reach of 4</strong>. When you Defend against a melee attack, the attacker gains <strong>Smoldering</strong>.</p>",
+		"description": "<p>Gain an aura with a <strong>Reach of 4</strong>. When an enemy within your aura crits you or an ally, that enemy gains <strong>Smoldering</strong>.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-purification",

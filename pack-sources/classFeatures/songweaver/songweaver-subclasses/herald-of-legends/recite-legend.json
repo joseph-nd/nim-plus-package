@@ -1,0 +1,57 @@
+{
+	"name": "Recite Legend",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/recite-legend.webp",
+	"system": {
+		"macro": "",
+		"identifier": "recite-legend",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "expend 1 Songweaver's Inspiration — Range 6",
+				"quantity": 1,
+				"type": "reaction",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Reaction (when you attack or cast a spell): Expend a Songweaver's Inspiration to invoke one of the following Legends on a target within Range 6.</p><ul><li><strong>Legend of Will.</strong> Grant <strong>WIL×2 Temp HP</strong>.</li><li><strong>Legend of Might.</strong> Push <strong>WIL spaces</strong> and knock <strong>Prone</strong>.</li><li><strong>Legend of Snark.</strong> Deal <strong>WIL×2 psychic damage</strong> (ignoring armor).</li><li><strong>Legend of Tragedy.</strong> Inflict <strong>Slowed</strong> and <strong>Poisoned</strong> for one turn.</li></ul>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "8GE2EIfJ6E1bqEZD",
+	"folder": "86341ad2caf67365"
+}

@@ -9,15 +9,15 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "1/Safe Rest",
 				"quantity": 1,
-				"type": "none",
+				"type": "free",
 				"isReaction": false
 			},
 			"duration": {
-				"details": "",
+				"details": "until end of combat",
 				"quantity": 1,
-				"type": "none"
+				"type": "special"
 			},
 			"effects": [],
 			"showDescription": true,
@@ -27,12 +27,12 @@
 			},
 			"template": {
 				"length": 1,
-				"radius": 6,
-				"shape": "circle",
+				"radius": 1,
+				"shape": "",
 				"width": 1
 			}
 		},
-		"description": "<p>You and your allies within your aura gain <strong>KEY Fire damage</strong> and inflict <strong>Smoldering</strong> on crit. <strong>+2 aura Reach</strong>.</p>",
+		"description": "<p>(1/Safe Rest) Until the end of combat, you and all allies within your aura gain <strong>+KEY Fire damage</strong>.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-purification",

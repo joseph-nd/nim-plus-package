@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>For each Fury Dice spent to reduce incoming damage from an attack within melee reach, the attacker takes <strong>STR+DEX</strong> damage (ignoring armor). Does not count as an attack.</p>",
+		"description": "<p>When you expend Fury Dice to reduce incoming damage from an attack within melee reach, the attacker is hit for the amount reduced (ignores armor). Does not count as an attack.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-exile",
 		"gainedAtLevels": [
-			3
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

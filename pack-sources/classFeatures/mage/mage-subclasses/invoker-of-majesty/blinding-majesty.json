@@ -9,13 +9,13 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
-				"quantity": 1,
-				"type": "none",
+				"details": "1/Safe Rest",
+				"quantity": 2,
+				"type": "action",
 				"isReaction": false
 			},
 			"duration": {
-				"details": "until end of their next turn",
+				"details": "until your next turn",
 				"quantity": 1,
 				"type": "special"
 			},
@@ -27,17 +27,17 @@
 			},
 			"template": {
 				"length": 1,
-				"radius": 3,
-				"shape": "circle",
+				"radius": 1,
+				"shape": "",
 				"width": 1
 			}
 		},
-		"description": "<p><em>(Draconic Power)</em> When you unleash your draconic aspect, all enemies within Reach 3 become <strong>Blinded</strong> until the end of their next turn, and gain <strong>Dragonmarked</strong>.</p>",
+		"description": "<p>(1/Safe Rest) 2 actions: All enemies that can see you become <strong>Dazed</strong>, and must make a WIL save (DC 10+KEY) or become <strong>Blinded</strong> until your next turn.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-majesty",
 		"gainedAtLevels": [
-			11
+			15
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

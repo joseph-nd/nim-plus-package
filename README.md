@@ -26,13 +26,13 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **1,012 documents** across **9 compendium packs**:
+The module currently ships **1,020 documents** across **9 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
 | **Nim+ Classes** | 3 | Hexbinder, Artificer, Psion |
-| **Nim+ Subclasses** | 59 | new subclasses for every core class plus the new classes (see breakdown below) |
-| **Nim+ Class Features** | 441 | progression + subclass features for every class above |
+| **Nim+ Subclasses** | 61 | new subclasses for every core class plus the new classes (see breakdown below) |
+| **Nim+ Class Features** | 447 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
 | **Nim+ Items** | 349 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below), and the **Expanded Equipment** mundane gear set (67 — see **Expanded Equipment** below) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
@@ -97,15 +97,15 @@ Many feats are **mechanically automated** rather than text-only. Always-on bonus
 
 | Class | Subclasses shipped by this module |
 |---|---|
-| Berserker | Muscle Mage, Path of the Burning Rage, Path of the Exile, Path of the Titan's Grip |
+| Berserker | Muscle Mage, Path of the Burning Rage, Path of the Exile, Path of the Titan's Grip, Path of the Titans |
 | Commander | Champion of the Arena / Battlefield / Phalanx / Pit / Siege Breaker / Stratagem |
 | Hunter | Keeper of the Balance, Keeper of the Pack, Keeper of Traps |
 | Mage | Invoker of Flame / Frost / Majesty / Perfection / Surges / Wards |
 | Oathsworn | Oath of Eternal Valor, Oath of Purification, Oath of Roaring Thunder, Oath of Valor |
-| Shadowmancer | Pact of the Endless Swarm / High Celestial / Id / Void |
+| Shadowmancer | Pact of the Ego / Endless Swarm / High Celestial / Void |
 | Shepherd | Luminary of Aegis / Darkness / Protection / The Forge / Tidings |
 | Songweaver | Herald of Doom, Herald of Legends, Herald of Singing Steel, Herald of Torment |
-| Stormshifter | Circle of Cinder & Ash, Circle of Spores, Circle of Sun & Moon, Circle of Venom & Web |
+| Stormshifter | Circle of Blaze & Bloom, Circle of Cinder & Ash, Circle of Spores, Circle of Sun & Moon, Circle of Venom & Web |
 | The Cheat | The Honorseeker, Tools of the Gambler / Serpent / Spider / Trickshot |
 | Zephyr | Way of Hurricanes / Iron / Shadows / The Dancer / The Drunken Fist |
 

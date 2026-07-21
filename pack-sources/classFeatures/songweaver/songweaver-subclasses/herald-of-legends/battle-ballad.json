@@ -1,0 +1,57 @@
+{
+	"name": "Battle Ballad",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-legends/battle-ballad.webp",
+	"system": {
+		"macro": "",
+		"identifier": "battle-ballad",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 12,
+				"shape": "circle",
+				"width": 1
+			}
+		},
+		"description": "<p>When you Recite Legend, you and all allies within <strong>12 spaces</strong> who can hear you gain <strong>advantage</strong> on their next attack.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-legends",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "NrV3r6RRWUjx0MYB",
+	"folder": "86341ad2caf67365"
+}

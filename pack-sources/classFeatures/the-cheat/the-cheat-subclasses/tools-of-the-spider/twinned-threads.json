@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Range 6 — only one web at a time",
+				"details": "Range 6 — one thread at a time",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> Link two creatures within Range 6 with an ethereal web. When a Linked creature is dealt damage, other Linked creatures are dealt <strong>half that amount as Psychic damage</strong> (ignoring armor). You can only maintain one web at a time.</p>",
+		"description": "<p><strong>Action:</strong> Link two creatures within Range 6 with an ethereal web. Linked creatures are <strong>Slowed</strong>. When you deal damage to a Linked creature, other Linked creatures take <strong>KEY damage</strong> (ignoring armor). You can maintain one thread.</p>",
 		"featureType": "class",
 		"class": "the-cheat",
 		"group": "tools-of-the-spider",

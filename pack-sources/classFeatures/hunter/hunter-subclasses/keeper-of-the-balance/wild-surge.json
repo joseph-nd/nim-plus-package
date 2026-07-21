@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/encounter) Ignore the Rushed Attacks penalty this turn. Recharges if your quarry crits you or an ally.</p>",
+		"description": "<p>(1/encounter) Ignore the Rushed Attacks penalty this turn.</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-the-balance",

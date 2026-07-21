@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p><em>(Draconic Power)</em> Gain a <strong>Fly</strong> speed.</p>",
+		"description": "<p>Gain a <strong>Fly</strong> speed.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-majesty",
 		"gainedAtLevels": [
-			11
+			15
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When you heal a creature, all enemies adjacent the target take <strong>Fire damage</strong> equal to the amount healed.</p>",
+		"description": "<p>When you heal with a spell or Lay on Hands, all enemies adjacent the healed target suffer <strong>Fire damage</strong> equal to the amount healed (ignoring armor).</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-purification",
 		"gainedAtLevels": [
-			7
+			11
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

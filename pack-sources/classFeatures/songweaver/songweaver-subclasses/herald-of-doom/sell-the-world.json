@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Reach 12 — expend any number of Hit Dice",
+				"details": "1/encounter — Range 12, expend any number of Hit Dice",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> Expend and roll any number of Hit Dice. Heal or damage <strong>any number of other creatures</strong> within Reach 12 equal to the result (split evenly).</p>",
+		"description": "<p><strong>Action:</strong> (1/encounter) Expend any number of Hit Dice. Heal or damage a creature within Range 12 equal to the amount rolled, then recover a <strong>Wound</strong>.</p>",
 		"featureType": "class",
 		"class": "songweaver",
 		"group": "herald-of-doom",
 		"gainedAtLevels": [
-			11
+			15
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

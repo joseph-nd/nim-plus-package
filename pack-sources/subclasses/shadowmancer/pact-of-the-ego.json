@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the Ego",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-ego.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-ego",
+		"rules": [],
+		"description": "<p><em>Power extrinsic makes you a slave to another. Power intrinsic makes you a slave to yourself.</em></p><p>LEVEL 3</p><p><strong>Fractured Psyche.</strong> Your Patron is a power hidden in a deep recess of your mind. You gain proficiency with Leather armor and one type of weapon. Your shadow minions become fragments of your id made manifest. (1/turn) Action: Swap places with a shadow minion.</p><p><strong>Slip of the Tongue.</strong> (1/day) Force a creature you are touching to utter whatever is at the forefront of their mind, good or bad.</p><p>LEVEL 7</p><p><strong>Know Your Limits.</strong> Your limit for shadow minions increases by WIL.</p><p><strong>Shadowed Thoughts.</strong> Choose a Lesser Shadow Invocation.</p><p>LEVEL 11</p><p><strong>Defense Mechanism.</strong> When you Defend, you may sacrifice any number of shadow minions. Add KEY armor for each shadow minion sacrificed this way until the start of your next turn.</p><p>LEVEL 15</p><p><strong>Unified Psyche.</strong> (1/Safe Rest) 3 actions: Swap places with one of your shadow minions and make an attack for free (melee/ranged/cantrip). Ignores Rushed Attack penalty. Repeat this for each shadow minion.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ukmDApoVtN3J4THK"
+}

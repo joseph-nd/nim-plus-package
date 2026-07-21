@@ -22,7 +22,7 @@ The module's esmodule registers a small API on `globalThis.nimPlus` (and `game.m
 
 Several `Hooks.on(...)` listeners auto-apply conditions and clean up state:
 - Class-features and Spells compendium views get level / tier badges and level-sorted entries to mirror the system's core class-features pack.
-- Activating Apodracosis (Mage / Invoker of Majesty) **or Psionic Field (Psion, L1)** auto-applies Concentration via `nimble.useItem`.
+- Activating Psionic Field (Psion, L1) auto-applies Concentration via `nimble.useItem`. (The old Apodracosis auto-Concentration hook was removed when Invoker of Majesty was reworked to match the official Nim+ publication — Apodracosis no longer exists on that subclass.)
 - Sporesphere applies Blinded / Poisoned to hit targets after the activation lands.
 - Safe Rest clears the Seasoned Journeyman selection flag via `nimble.rest`.
 - **`nimbleCombatTurnEnd`** auto-rolls the Psion's Strain Dice at end of turn (only when the actor has an active Psionic Field). If the Psion owns `i-can-hold`, sheds 1 die first.

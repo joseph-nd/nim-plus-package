@@ -1,0 +1,57 @@
+{
+	"name": "Slip of the Tongue",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-ego/slip-of-the-tongue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "slip-of-the-tongue",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/day",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Force a creature you are touching to utter whatever is at the forefront of their mind, good or bad.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-ego",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "pmrNIdgKX4EdwoCK",
+	"folder": "8afc82f51e5e9561"
+}
