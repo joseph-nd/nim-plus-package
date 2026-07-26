@@ -63,6 +63,32 @@ The **Nim+ Ancestries** and **Nim+ Backgrounds** packs ship the *Nim+ Volume I* 
 
 As with the rest of the module, everything expressible is mechanically wired (skill/speed/initiative/Armor bonuses, per-level max HP, swim/fly speeds, languages, unarmed damage, Mousefolk's *+WIL while Dying*), and effects needing table adjudication are kept as clearly marked description lines, using the system's own `[A]` (automated) / `[M]` (manual) markers.
 
+### Class quality-of-life automation
+
+Automation for **core-class** features whose bookkeeping is easy to forget. Controlled by **Game Settings → Configure Settings → Nim+ Package → Enable Class Automation** (**on by default**); switching it off returns every one of them to being rolled and tracked by hand.
+
+Nothing here is a separate item you have to pick, and nothing is written to your characters. Where a feature's mechanics are already expressible in the system's own rules engine but the shipped feature simply doesn't carry the rule, the module supplies that rule in memory, on the feature you already have. Disable the module and every trace of it is gone.
+
+- **The Cheat — Vicious Opportunist** *(1/turn: change the Primary Die of a melee hit on a Distracted target)*. Attack once, not twice. When a Cheat who has the feature attacks with a melee weapon, the weapon's roll dialog gains a **Vicious Opportunist?** checkbox — tick it to declare the target Distracted. The attack then rolls as normal (advantage/disadvantage included) and resolves itself:
+  - Primary Die comes up **max** → it was already a crit; the chat card says so and **the use is not spent**.
+  - Primary Die comes up **1** → the attack missed, and since the feature needs a hit, **the use is not spent**.
+  - Anything in between → the Primary Die is raised to its maximum in place, the crit explosion is rolled onto the same card, and the use is marked spent for the turn.
+
+  The 1/turn budget is keyed to the combat tracker's current round and turn, so it re-arms the moment the turn passes — there is nothing to reset. Out of combat, where there are no turns, the feature is always offered. Holding **Alt** to skip the roll dialog (the system's own shortcut) skips the checkbox with it, so an Alt-click attack is never upgraded.
+
+- **The Cheat — Sneak Attack** *(1/turn: extra damage when you crit)*. You only learn you crit once the dice land, so this one is a prompt rather than a checkbox. Crit with an attack, and a dialog offers your Sneak Attack dice at the right size for your level (1d6 → 3d20 across levels 1–17); accept and they are added to that attack's own damage roll, so they appear on the same chat card, in the same roll tooltip, under the same single *Apply Damage* button. Decline and the use is kept. A **Vicious Opportunist** upgrade counts as a crit, so the two chain naturally: tick the box, upgrade the hit, then get asked about Sneak Attack. The dice table is read from the feature's own description, so a rebalance — or your own homebrew edit — is followed automatically.
+
+- **The Commander — Coordinated Strike!** *(INT uses per Safe Rest)*. The "INT times per Safe Rest" limit exists only in the feature's prose, with no counter behind it. The module supplies the missing charge pool on your existing order, sized to your **INT** modifier: each activation spends one automatically, the order refuses to fire once you are out, and a **Safe Rest** refills it.
+
+- **Feature uses on the tracker rail.** Because Coordinated Strike! is a *free action* you take on someone else's turn, a counter you have to switch tabs to read is a counter you forget. Any class-feature use counter now also appears in the sheet's left-edge tracker rail — the same flyout the Oathsworn's Judgment Dice use — as the feature's icon followed by one pip per use. Click a lit pip to spend down to it, or a dim one to restore up to it. Charged *items* stay on the inventory tab where they belong.
+
+- **The Oathsworn — Radiant Judgement** *(roll Judgment Dice when attacked; spend them on your next melee attack)*.
+  - *Rolling them.* The dice roll the moment an attack is aimed at you — hit or miss — and a chat card announces what came up. (Left to the system, the pool only fills when the GM clicks *Apply Damage*, so a miss never rolled it at all.)
+  - *Spending them.* The feature gives you no choice about which dice to use — on your next melee attack, all of them apply — so the module supplies the auto-bonus consumer the shipped feature is missing. The dice now show in the activation dialog as a read-only **Judgment Dice** row with their total, get folded into the damage roll by the system itself, and are expended afterwards whether that attack hit or missed, exactly as written. Damage still only lands on a hit.
+  - *Features that change the roll.* **Reliable Justice** (Sacred Decree — *"roll with advantage: roll one extra and drop the lowest"*) is applied automatically when the dice roll, and the chat card shows the extra die and the one it dropped. **Aura of Zeal** (Oath of Vengeance — *"roll 1 more"*) adds its die, exactly as Radiant Judgement's own level-14 rider already does. Both stack with the level-14 rider and with the die-size scaling.
+  - Holding **Alt** to skip the roll dialog skips the bonus with it, since the system assembles that bonus in the dialog. The dice are then *not* spent, so nothing is lost — roll normally to use them.
+  - Still manual: **Maximum Judgment** (*set a Judgment Die to its max whenever you are attacked*) and **Avenger** (*change up to N dice to max on gaining Wounds*) change dice you already have, on triggers that need a table call — adjust them from the dice-pool panel on the sheet.
+
 ### Optional: Feats
 
 A class-agnostic Feats system — **off by default**. Enable it in **Game Settings → Configure Settings → Nim+ Package → Enable Feats**. Once on, any character may choose a feat at levels **1, 4, 8, 12, and 16**:

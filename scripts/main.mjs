@@ -5541,3 +5541,1527 @@ Hooks.once('setup', () => {
 		CharacterClass.prototype.__nimPlusEquipmentLoudPatched = true;
 	}
 });
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Class QoL automation — the Cheat, the Commander, the Oathsworn
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Three per-class quality-of-life automations that remove bookkeeping the
+ * player would otherwise have to remember:
+ *
+ *   • Cheat — Vicious Opportunist. One roll instead of two: tick a box in the
+ *     activation dialog, and a hit on a Distracted target is upgraded to a crit
+ *     automatically. Natural crits and misses never spend the 1/turn use.
+ *   • Commander — Coordinated Strike!. Shipped as data (a `chargePool` +
+ *     `chargeConsumer` rule pair on the Nim+ copy of the feature), so the
+ *     INT-per-Safe-Rest counter is tracked, spent, and refilled by the system's
+ *     own charge subsystem. No runtime code — see the pack source.
+ *   • Oathsworn — Radiant Judgement. Judgment Dice roll themselves on a missed
+ *     incoming attack too, not only when damage lands, and the rolled total is
+ *     added to the next melee weapon swing as radiant damage, then expended.
+ *
+ * ── Update-resilience notes ───────────────────────────────────────────────────
+ * Everything below is written to *degrade to nothing* if the Nimble system
+ * changes shape underneath it, rather than to break the game:
+ *
+ *   - Every patch is applied through a named wrapper that always calls the
+ *     original, guarded by a `__nimPlus*Patched` sentinel and a try/catch, so a
+ *     throw inside our logic can never swallow an attack roll.
+ *   - Classes are resolved by *capability* (a prototype that owns the methods we
+ *     rely on), never by `constructor.name` — the system ships minified, so
+ *     class names are mangled while method names survive.
+ *   - Hook names are derived from `game.system.id` rather than hardcoded, so the
+ *     `nimble-dev` build works too.
+ *   - The dice-pool refill for "an enemy attacked me" is performed by *emitting
+ *     the system's own `damageApplied` hook*, which is what the system's
+ *     `onAttacked` trigger already listens to — we re-use its refill engine
+ *     instead of reimplementing pool maths.
+ *   - Feature detection is by `system.identifier`, which the system derives from
+ *     the item name, so renames of ids we don't control are tolerated where
+ *     practical (the Judgment pool is found by a fuzzy identifier match, which
+ *     covers both "judgment" and "judgement" spellings).
+ */
+
+const CLASS_QOL_SETTING = 'enableClassAutomation';
+
+/** `nimble` on a stable install, `nimble-dev` on a dev build. */
+function sysId() {
+	return game.system?.id ?? 'nimble';
+}
+
+/** Namespaced Nimble hook name (`nimble.useItem`, …). */
+function sysHook(name) {
+	return `${sysId()}.${name}`;
+}
+
+function classQoLEnabled() {
+	try {
+		return game.settings?.get?.(MODULE_ID, CLASS_QOL_SETTING) !== false;
+	} catch (_error) {
+		// Settings not registered yet (very early data prep) — stay inert.
+		return false;
+	}
+}
+
+Hooks.once('init', () => {
+	game.settings.register(MODULE_ID, CLASS_QOL_SETTING, {
+		name: 'Enable Class Automation',
+		hint: "Automates bookkeeping for the Cheat's Vicious Opportunist (one-roll crit upgrade) and the Oathsworn's Radiant Judgement (auto-rolled Judgment Dice, auto-applied radiant damage). Turn off to roll everything by hand.",
+		scope: 'world',
+		config: true,
+		type: Boolean,
+		default: true,
+	});
+});
+
+/**
+ * A stable identity for "the current turn". Used instead of a reset hook so the
+ * 1/turn budget re-arms itself the moment the combat tracker moves on — nothing
+ * to clear, nothing to miss if a hook is renamed upstream. Returns null outside
+ * of a running combat, where there are no turns to budget against.
+ */
+function currentTurnKey() {
+	const combat = game.combat;
+	if (!combat?.started) return null;
+	return `${combat.id}:${combat.round}:${combat.turn}`;
+}
+
+/**
+ * A melee weapon is an equipment `object` of type `weapon` whose activation is
+ * not thrown/ranged. Nimble models attack range as
+ * `system.activation.targets.attackType` ∈ {'', 'reach', 'range'}, with a
+ * `range` entry in `system.properties.selected` as a secondary marker.
+ */
+function isMeleeWeapon(item) {
+	if (!item || item.type !== 'object') return false;
+	if (item.system?.objectType !== 'weapon') return false;
+	if (item.system?.activation?.targets?.attackType === 'range') return false;
+	const properties = item.system?.properties?.selected;
+	if (Array.isArray(properties) && properties.includes('range')) return false;
+	return true;
+}
+
+/**
+ * Nimble's `DamageRoll` class, located by capability rather than by name (the
+ * shipped bundle is minified, so `cls.name` is a mangled two-letter identifier
+ * while method names are preserved). Returns null if the system ever stops
+ * registering a roll class with this shape — callers then simply do nothing.
+ */
+function getDamageRollClass() {
+	const registered = CONFIG?.Dice?.rolls;
+	if (!Array.isArray(registered)) return null;
+	return (
+		registered.find(
+			(cls) =>
+				typeof cls?.prototype?._evaluate === 'function' &&
+				typeof cls?.prototype?._finalizeOutcome === 'function' &&
+				typeof cls?.prototype?._recalculateTotal === 'function',
+		) ?? null
+	);
+}
+
+/**
+ * The item activation currently in flight, as a stack (an activation can open a
+ * dialog and await it, so in principle another can start on top). The DamageRoll
+ * patch reads the top of the stack to learn which actor/item it is rolling for —
+ * `DamageRoll` itself carries no back-reference to either.
+ */
+const activationStack = [];
+
+function currentActivation() {
+	return activationStack.at(-1) ?? null;
+}
+
+/* ── Cheat — Vicious Opportunist ─────────────────────────────────────────────
+ *
+ * "(1/turn) When you hit a Distracted target with a melee attack, you may change
+ *  the Primary Die roll to whatever you like (changing it to the max value
+ *  counts as a crit)."
+ *
+ * Optimal play is always "change it to max", so the only decision the player
+ * actually makes is *whether the target is Distracted* — which is why the opt-in
+ * is a checkbox on the activation dialog rather than a second prompt after the
+ * roll. Once ticked:
+ *
+ *   primary die = 1        → the attack missed; VO needs a hit, so nothing is
+ *                            spent and the miss stands.
+ *   primary die = max      → already a crit; announced, nothing spent.
+ *   anything in between    → the kept primary die is raised to max in place,
+ *                            the crit explosion is rolled, and the 1/turn use
+ *                            is marked spent.
+ *
+ * The upgrade mutates the *existing* roll rather than re-rolling it, so the
+ * damage dice the player already saw are the damage dice that land, and only the
+ * primary die changes — exactly what the feature says it does.
+ */
+
+const VICIOUS_IDENTIFIER = 'vicious-opportunist';
+const VICIOUS_USED_FLAG = 'cheat.viciousUsedAt';
+const VICIOUS_FIELD_CLASS = 'nim-plus-vicious';
+
+/**
+ * Set while an activation dialog that offered the checkbox was submitted with it
+ * ticked. Consumed by the first eligible DamageRoll of that activation.
+ */
+let viciousArm = null;
+
+/** Outcome recorded by the roll patch, announced once the activation resolves. */
+let viciousOutcome = null;
+
+function viciousUseAvailable(actor) {
+	if (!actor) return false;
+	const turnKey = currentTurnKey();
+	// Outside combat there is no turn structure to meter against, so the feature
+	// is always offered and adjudicated at the table.
+	if (turnKey === null) return true;
+	return actor.getFlag?.(MODULE_ID, VICIOUS_USED_FLAG) !== turnKey;
+}
+
+async function markViciousUsed(actor) {
+	const turnKey = currentTurnKey();
+	// Out of combat, store a value that can never equal a real turn key so the
+	// next attack is offered again.
+	await actor.setFlag(MODULE_ID, VICIOUS_USED_FLAG, turnKey ?? `untracked:${foundry.utils.randomID()}`);
+}
+
+function viciousEligible(actor, item) {
+	if (!classQoLEnabled()) return false;
+	if (!actor || actor.type !== 'character') return false;
+	if (!actorOwnsFeat(actor, VICIOUS_IDENTIFIER)) return false;
+	return isMeleeWeapon(item);
+}
+
+/**
+ * Add the opt-in checkbox to the system's activation dialog. The dialog is a
+ * Svelte-rendered ApplicationV2, so its internals are off-limits, but Foundry
+ * still fires `render<ClassName>` with the root element and the app exposes the
+ * `actor`/`item` it was opened for.
+ *
+ * Two placement rules keep this stable across re-renders and system updates:
+ * the control is appended as the LAST child of the dialog body (past every
+ * Svelte-managed node, so Svelte's anchor-based updates can never shuffle it),
+ * and it borrows the `svelte-*` hash class off a native sibling — the dialog's
+ * `.nimble-roll-modifiers*` rules are component-scoped and would otherwise not
+ * apply to markup we injected. If either anchor disappears the checkbox simply
+ * never renders and the weapon rolls exactly as it does today.
+ */
+function injectViciousCheckbox(app, root) {
+	const actor = app?.actor;
+	const item = app?.item;
+	if (!viciousEligible(actor, item)) return;
+
+	root.querySelectorAll(`.${VICIOUS_FIELD_CLASS}`).forEach((el) => el.remove());
+
+	const sibling = root.querySelector('.nimble-roll-modifiers-container');
+	const body = sibling?.parentElement ?? root.querySelector('.nimble-sheet__body');
+	if (!body) return;
+
+	const scopedClass =
+		Array.from(sibling?.classList ?? []).find((name) => name.startsWith('svelte-')) ?? '';
+
+	const available = viciousUseAvailable(actor);
+	const tooltip = available
+		? 'Target is Distracted — if this attack hits without critting, the Primary Die is raised to its max value (a crit). Spends the 1/turn use; a natural crit or a miss spends nothing.'
+		: 'Vicious Opportunist has already been used this turn.';
+
+	// Mirrors the dialog's own "Hide From Players?" row exactly: a bare label
+	// directly inside the container, label text first, checkbox last. The inner
+	// `.nimble-roll-modifiers` wrapper is deliberately absent — its `label input`
+	// rule sets `flex: 1` plus padding and a border, which is right for the text
+	// inputs it was written for and stretches a checkbox into a wide empty box.
+	const container = document.createElement('div');
+	container.className =
+		`nimble-roll-modifiers-container ${VICIOUS_FIELD_CLASS} ${scopedClass}`.trim();
+	container.innerHTML = `
+		<label class="${scopedClass}" data-tooltip="${escape(tooltip)}">
+			Vicious Opportunist?${available ? '' : ' <em>(used this turn)</em>'}
+			<input
+				type="checkbox"
+				class="modifier-item__checkbox ${scopedClass}"
+				data-nim-plus-vicious="1"
+				${available ? '' : 'disabled'}
+			/>
+		</label>
+	`;
+	body.append(container);
+}
+
+/**
+ * Wrap the dialog's `submitActivation` once, so a ticked checkbox arms the next
+ * roll. Patched lazily off a live instance because the class is not exported
+ * anywhere reachable from a module.
+ */
+function ensureActivationDialogPatched(app) {
+	const proto = app?.constructor?.prototype;
+	if (!proto || proto.__nimPlusViciousPatched) return;
+	const originalSubmit = proto.submitActivation;
+	if (typeof originalSubmit !== 'function') return;
+
+	proto.submitActivation = function patchedSubmitActivation(results) {
+		try {
+			const root = this.element instanceof HTMLElement ? this.element : this.element?.[0];
+			const checkbox = root?.querySelector?.('[data-nim-plus-vicious]');
+			viciousArm =
+				checkbox?.checked && !checkbox.disabled
+					? { actorId: this.actor?.id ?? null, itemId: this.item?.id ?? null }
+					: null;
+		} catch (error) {
+			viciousArm = null;
+			console.error(`[${MODULE_ID}] Failed to read the Vicious Opportunist checkbox`, error);
+		}
+		return originalSubmit.call(this, results);
+	};
+	proto.__nimPlusViciousPatched = true;
+}
+
+Hooks.on('renderItemActivationConfigDialog', (app, element) => {
+	try {
+		const root = element instanceof HTMLElement ? element : element?.[0] ?? app?.element;
+		if (!root) return;
+		ensureActivationDialogPatched(app);
+		injectViciousCheckbox(app, root);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to render the Vicious Opportunist control`, error);
+	}
+});
+
+/**
+ * Raise an evaluated DamageRoll's kept primary die to its maximum face, roll the
+ * resulting crit explosion, and restate the roll's outcome.
+ *
+ * Mirrors what the system does when a max primary die is rolled naturally:
+ * `standard` explosion style continues rolling while the die keeps coming up
+ * max (Foundry's `x` modifier semantics, replayed by hand because the modifier
+ * already ran during evaluation); `vicious` weapons delegate to the system's own
+ * two-dice explosion chain.
+ *
+ * @returns {{ from: number, to: number }|null} what changed, or null if the roll
+ *          was not in a shape this can safely touch.
+ */
+async function upgradePrimaryDieToCrit(roll) {
+	// Modifier-mode rolls (formulas carrying Nimble's c/cv/v/n tokens) have no
+	// single PrimaryDie to raise, and `brutalPrimary` re-points the primary die
+	// at whichever die rolled highest. Neither shape occurs on a player's melee
+	// weapon today; both are skipped rather than guessed at.
+	if (roll.modifierMode || roll.options?.brutalPrimary) return null;
+	if (!roll.options?.canCrit) return null;
+
+	const primary = roll.primaryDie;
+	const faces = primary?.faces;
+	if (!primary || !Number.isFinite(faces) || faces < 2) return null;
+
+	const kept = primary.results?.find((r) => r.active && !r.discarded);
+	if (!kept || typeof kept.result !== 'number') return null;
+	if (kept.result >= faces) return null; // already a crit — caller handles it
+	if (kept.result <= 1) return null; // a miss — Vicious Opportunist needs a hit
+
+	const from = kept.result;
+	kept.result = faces;
+	kept.exploded = true;
+
+	if (
+		roll.options?.explosionStyle === 'vicious' &&
+		typeof roll._evaluateViciousExplosion === 'function'
+	) {
+		// Vicious weapons explode two dice at a time with only the left one
+		// chaining — delegate to the system's own implementation of that.
+		await roll._evaluateViciousExplosion(primary);
+	} else if (roll.options?.explosionStyle !== 'none') {
+		// Replay Foundry's `x` modifier: keep rolling one more die while it maxes.
+		const MAX_CHAIN = 100;
+		let last = faces;
+		for (let i = 0; last === faces && i < MAX_CHAIN; i += 1) {
+			const explosion = await new Roll(`1d${faces}`).evaluate();
+			const value = explosion.dice?.[0]?.results?.[0]?.result ?? explosion.total;
+			if (!Number.isFinite(value)) break;
+			primary.results.push({ result: value, active: true, exploded: value === faces });
+			last = value;
+		}
+	}
+
+	roll._recalculateTotal();
+
+	// `_recalculateTotal` sums every active result, so the "primary die does not
+	// count as damage" adjustment the system applied during evaluation has to be
+	// re-applied against the new value.
+	if (roll.options?.primaryDieAsDamage === false) {
+		roll.excludedPrimaryDieValue = faces;
+		roll._total = (roll._total ?? 0) - faces;
+	}
+
+	roll.isCritical = true;
+	roll.isMiss = false;
+	roll.critCount = 1;
+	roll.resetFormula();
+
+	return { from, to: faces };
+}
+
+/**
+ * Wrap `DamageRoll#_evaluate` so an armed Vicious Opportunist can act on the
+ * result the instant it exists — before `activate()` reads `isCritical` off the
+ * roll, before `nimble.preUseItem` fires, and before the chat card is built. The
+ * card, the crit branch of the effect tree, and Dice So Nice therefore all see a
+ * single, coherent critical hit.
+ */
+function patchDamageRollForClassQoL() {
+	const DamageRollClass = getDamageRollClass();
+	if (!DamageRollClass || DamageRollClass.prototype.__nimPlusDamageRollPatched) return;
+
+	const originalEvaluate = DamageRollClass.prototype._evaluate;
+	DamageRollClass.prototype._evaluate = async function patchedDamageRollEvaluate(options) {
+		const result = await originalEvaluate.call(this, options);
+
+		// Order matters: Vicious Opportunist can turn a hit into a crit, and a crit
+		// is what Sneak Attack triggers on.
+		try {
+			await applyViciousOpportunist(this);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Vicious Opportunist could not modify the roll`, error);
+		}
+
+		try {
+			await offerSneakAttack(this);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Sneak Attack could not modify the roll`, error);
+		}
+
+		return result;
+	};
+	DamageRollClass.prototype.__nimPlusDamageRollPatched = true;
+}
+
+async function applyViciousOpportunist(roll) {
+	if (!viciousArm) return;
+
+	const activation = currentActivation();
+	if (!activation?.vicious) return;
+	if (viciousArm.itemId && activation.item?.id && viciousArm.itemId !== activation.item.id) return;
+
+	// One activation gets at most one upgrade attempt, whatever happens next.
+	viciousArm = null;
+
+	if (roll.isMiss) {
+		viciousOutcome = { kind: 'miss' };
+		return;
+	}
+	if (roll.isCritical) {
+		viciousOutcome = { kind: 'natural-crit' };
+		return;
+	}
+
+	const change = await upgradePrimaryDieToCrit(roll);
+	viciousOutcome = change ? { kind: 'upgraded', ...change } : { kind: 'unavailable' };
+}
+
+function announceViciousOutcome(actor, item, outcome) {
+	if (!outcome) return;
+	const speaker = ChatMessage.getSpeaker({ actor });
+	const name = escape(item?.name ?? 'the attack');
+
+	if (outcome.kind === 'natural-crit') {
+		ChatMessage.create({
+			speaker,
+			flavor: '<strong>Vicious Opportunist</strong>',
+			content: `<p>${name} <strong>crit on its own</strong> — Vicious Opportunist was not needed, and the use is still available this turn.</p>`,
+		});
+		return;
+	}
+
+	if (outcome.kind === 'miss') {
+		ChatMessage.create({
+			speaker,
+			flavor: '<strong>Vicious Opportunist</strong>',
+			content: `<p>${name} <strong>missed</strong>. Vicious Opportunist only triggers on a hit, so the use is still available this turn.</p>`,
+		});
+		return;
+	}
+
+	// The roll had no Primary Die to raise — an area attack, or an attack made
+	// without proficiency, both of which the system flags as unable to crit.
+	if (outcome.kind === 'unavailable') {
+		ChatMessage.create({
+			speaker,
+			flavor: '<strong>Vicious Opportunist</strong>',
+			content: `<p>${name} cannot crit, so Vicious Opportunist had nothing to change. The use is still available this turn.</p>`,
+		});
+		return;
+	}
+
+	ChatMessage.create({
+		speaker,
+		flavor: '<strong>Vicious Opportunist</strong>',
+		content: `<p>Primary Die changed from <strong>${outcome.from}</strong> to <strong>${outcome.to}</strong> — <strong>critical hit!</strong></p><p><em>Used for this turn.</em></p>`,
+	});
+}
+
+/* ── Cheat — Sneak Attack ────────────────────────────────────────────────────
+ *
+ * "(1/turn) When you crit, deal additional damage."
+ *  Level 1: 1d6 · 3: 1d8 · 7: 2d8 · 9: 2d10 · 11: 2d12 · 15: 2d20 · 17: 3d20
+ *
+ * Unlike Vicious Opportunist, the trigger here is not knowable in advance — you
+ * find out you crit when the dice land. So this is a prompt rather than a
+ * checkbox, and it only ever appears on a crit the player can still spend a use
+ * on. The extra dice are appended to the attack's own damage roll, so they show
+ * up on the same card, in the same roll tooltip, under the same single Apply
+ * Damage button. A Vicious Opportunist upgrade counts: it produces a real crit,
+ * and Sneak Attack is offered on it exactly as on a natural one.
+ *
+ * The scaling table is read out of the feature's own description rather than
+ * hard-coded, so an upstream rebalance — or a homebrew edit on the actor's own
+ * copy — is followed automatically. The printed table is the fallback.
+ */
+
+const SNEAK_IDENTIFIER = 'sneak-attack';
+const SNEAK_USED_FLAG = 'cheat.sneakUsedAt';
+const SNEAK_FALLBACK_TABLE = [
+	[1, '1d6'],
+	[3, '1d8'],
+	[7, '2d8'],
+	[9, '2d10'],
+	[11, '2d12'],
+	[15, '2d20'],
+	[17, '3d20'],
+];
+
+/** Set by the roll patch when dice were added; announced once the card exists. */
+let sneakOutcome = null;
+
+function sneakUseAvailable(actor) {
+	if (!actor) return false;
+	const turnKey = currentTurnKey();
+	// Outside combat there is no turn structure to meter against.
+	if (turnKey === null) return true;
+	return actor.getFlag?.(MODULE_ID, SNEAK_USED_FLAG) !== turnKey;
+}
+
+async function markSneakUsed(actor) {
+	const turnKey = currentTurnKey();
+	await actor.setFlag(
+		MODULE_ID,
+		SNEAK_USED_FLAG,
+		turnKey ?? `untracked:${foundry.utils.randomID()}`,
+	);
+}
+
+function actorFeature(actor, identifier) {
+	return (
+		actor?.items?.find?.((item) => item.type === 'feature' && item.system?.identifier === identifier) ??
+		null
+	);
+}
+
+function actorLevel(actor) {
+	const fromLevels = Number(actor?.levels?.character);
+	if (Number.isFinite(fromLevels) && fromLevels > 0) return fromLevels;
+	try {
+		const fromRollData = Number(actor?.getRollData?.()?.level);
+		if (Number.isFinite(fromRollData) && fromRollData > 0) return fromRollData;
+	} catch (_error) {
+		// Fall through to the floor below.
+	}
+	return 1;
+}
+
+/** Pull "Level 7: 2d8" pairs out of the feature text. */
+function parseScalingTable(feature) {
+	const plain = String(feature?.system?.description ?? '').replace(/<[^>]+>/g, ' ');
+	const table = [];
+	for (const match of plain.matchAll(/level\s*(\d+)\s*:\s*(\d*d\d+)/gi)) {
+		const level = Number.parseInt(match[1], 10);
+		if (Number.isFinite(level)) table.push([level, match[2]]);
+	}
+	return table;
+}
+
+/** The highest table entry the actor's level has reached. */
+function sneakAttackFormula(actor, feature) {
+	const parsed = parseScalingTable(feature);
+	const table = parsed.length > 0 ? parsed : SNEAK_FALLBACK_TABLE;
+	const level = actorLevel(actor);
+
+	let best = null;
+	for (const [threshold, formula] of table) {
+		if (threshold > level) continue;
+		if (!best || threshold >= best[0]) best = [threshold, formula];
+	}
+	return best?.[1] ?? null;
+}
+
+/**
+ * Append extra damage to an already-evaluated roll, so it lands on the attack's
+ * own card instead of a second one. The terms are pushed onto the roll and the
+ * total adjusted directly rather than via `_recalculateTotal`, which would undo
+ * the system's "primary die does not count as damage" adjustment.
+ */
+async function appendDamageToRoll(roll, formula, flavor) {
+	const bonus = await new Roll(formula).evaluate();
+	const total = Number(bonus.total);
+	if (!Number.isFinite(total)) return null;
+
+	const faces =
+		bonus.dice?.flatMap((die) =>
+			die.results.filter((result) => result.active && !result.discarded).map((r) => r.result),
+		) ?? [];
+
+	const OperatorTerm = foundry.dice?.terms?.OperatorTerm;
+	if (OperatorTerm) {
+		const operator = new OperatorTerm({ operator: '+' });
+		// Terms carried by an evaluated roll must themselves read as evaluated, or
+		// the card fails to rebuild the roll on other clients.
+		operator._evaluated = true;
+		for (const term of bonus.terms) {
+			if (term?.options && !term.options.flavor) term.options.flavor = flavor;
+		}
+		roll.terms.push(operator, ...bonus.terms);
+		roll._total = (roll._total ?? 0) + total;
+		roll.resetFormula();
+	} else {
+		// No term class to splice with: the damage still lands, just without a
+		// breakdown in the tooltip.
+		roll._total = (roll._total ?? 0) + total;
+	}
+
+	return { total, faces };
+}
+
+/**
+ * Offer Sneak Attack on a crit. Runs inside the damage roll's own evaluation, so
+ * everything downstream — the crit branch of the effect tree, the chat card, the
+ * damage the GM applies — sees one coherent roll.
+ */
+async function offerSneakAttack(roll) {
+	if (!classQoLEnabled()) return;
+	if (roll?.isCritical !== true) return;
+
+	const activation = currentActivation();
+	// One offer per activation, however many damage rolls it produces.
+	if (!activation || activation.sneakHandled) return;
+
+	const actor = activation.actor;
+	if (!actor || actor.type !== 'character') return;
+
+	const feature = actorFeature(actor, SNEAK_IDENTIFIER);
+	if (!feature) return;
+
+	activation.sneakHandled = true;
+	if (!sneakUseAvailable(actor)) return;
+
+	const formula = sneakAttackFormula(actor, feature);
+	if (!formula) return;
+
+	const confirmed = await foundry.applications.api.DialogV2.confirm({
+		window: { title: 'Sneak Attack' },
+		content:
+			`<p><strong>Critical hit!</strong> Add Sneak Attack damage (<code>${escape(formula)}</code>)?</p>` +
+			'<p><em>Once per turn — declining keeps the use.</em></p>',
+		yes: { label: 'Sneak Attack', icon: 'fa-solid fa-user-ninja' },
+		no: { label: 'Save it' },
+		modal: true,
+		rejectClose: false,
+	});
+	if (!confirmed) return;
+
+	const bonus = await appendDamageToRoll(roll, formula, 'Sneak Attack');
+	if (!bonus) return;
+	activation.sneak = { formula, ...bonus };
+}
+
+function announceSneakAttack(actor, sneak) {
+	const breakdown = sneak.faces?.length ? ` → ${sneak.faces.join(', ')}` : '';
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: '<strong>Sneak Attack</strong>',
+		content:
+			`<p><strong>+${sneak.total}</strong> damage (<code>${escape(sneak.formula)}</code>${escape(breakdown)}) added to the critical hit.</p>` +
+			'<p><em>Used for this turn.</em></p>',
+	});
+}
+
+/* ── Supplying rules the system's own content leaves out ─────────────────────
+ *
+ * Some Nimble features describe mechanics the rules engine already supports but
+ * ship without the rule that would drive them. Radiant Judgement defines a dice
+ * pool and nothing that spends it; Coordinated Strike! documents "INT times per
+ * Safe Rest" in prose with no counter behind it.
+ *
+ * Reimplementing those mechanics from outside is the wrong move — that is what
+ * made the first pass at Radiant Judgement double up against the activation
+ * dialog's own dice-spending UI. Instead we build the missing rule out of the
+ * system's own rule class and drop it into the item's live rules map, so the
+ * engine drives the feature exactly as it would if the content had shipped
+ * complete.
+ *
+ * Nothing is written to the database: `item.system.rules` — the persisted
+ * source — is untouched, and the synthetic rule is rebuilt from scratch on
+ * every data preparation. Turn the module off and no trace of it remains. Each
+ * injector also checks whether an equivalent rule is already present, so on the
+ * day Nimble ships these rules itself we quietly stop adding our own.
+ */
+
+function itemRuleValues(item) {
+	const rules = item?.rules;
+	if (!rules || typeof rules.values !== 'function') return [];
+	return Array.from(rules.values());
+}
+
+function hasActiveRule(item, predicate) {
+	return itemRuleValues(item).some((rule) => rule && !rule.disabled && predicate(rule));
+}
+
+/**
+ * Build a rule from the system's own registered data model and attach it to the
+ * item's live rules map. Returns null — silently, leaving the feature entirely
+ * unautomated — if that rule type is no longer registered.
+ */
+function addSyntheticRule(item, source) {
+	const RuleClass = CONFIG?.NIMBLE?.ruleDataModels?.[source?.type];
+	if (!RuleClass || typeof item?.rules?.set !== 'function') return null;
+	try {
+		const rule = new RuleClass(source, { parent: item, strict: false });
+		item.rules.set(rule.id ?? source.id, rule);
+		return rule;
+	} catch (error) {
+		console.error(
+			`[${MODULE_ID}] Could not build a ${source?.type} rule for ${item?.name}`,
+			error,
+		);
+		return null;
+	}
+}
+
+/* ── Commander — Coordinated Strike! ─────────────────────────────────────────
+ *
+ * "(1/round) Free action: you and an ally within 6 spaces both immediately make
+ *  a weapon attack or cast a cantrip for free. You can do this INT times/Safe
+ *  Rest."
+ *
+ * That last sentence lives only in the prose — the shipped feature carries no
+ * rule, so the count is the player's to remember. The charge subsystem models
+ * this shape exactly, so supplying the pair of rules it expects is the whole
+ * job: the sheet draws the counter on the feature card, activating the order
+ * spends a charge, the order is blocked at zero, and a Safe Rest refills it.
+ */
+
+const COORDINATED_STRIKE_IDENTIFIER = 'coordinated-strike';
+
+function ensureCoordinatedStrikeCounter(item) {
+	if (item?.system?.identifier !== COORDINATED_STRIKE_IDENTIFIER) return;
+	// Any charge pool at all means this is already metered — by a future system
+	// update, or by a homebrew edit that deserves to win over ours.
+	if (hasActiveRule(item, (rule) => rule.type === 'chargePool')) return;
+
+	addSyntheticRule(item, {
+		id: 'nimPlusCoordStrikePool',
+		type: 'chargePool',
+		identifier: COORDINATED_STRIKE_IDENTIFIER,
+		label: 'Coordinated Strike!',
+		scope: 'item',
+		max: '@intelligence',
+		dieSize: null,
+		initial: 'max',
+		recoveries: [{ trigger: 'safeRest', mode: 'refresh', value: '1' }],
+	});
+
+	addSyntheticRule(item, {
+		id: 'nimPlusCoordStrikeUse',
+		type: 'chargeConsumer',
+		label: 'Coordinated Strike!',
+		poolIdentifier: COORDINATED_STRIKE_IDENTIFIER,
+		poolScope: 'item',
+		cost: '1',
+	});
+}
+
+/* ── Oathsworn — Radiant Judgement ───────────────────────────────────────────
+ *
+ * "Whenever an enemy attacks you, if you have no Judgment Dice, roll your
+ *  Judgment dice (2d6). On your next melee attack this encounter, if you hit,
+ *  deal that much additional radiant damage. The dice are expended whether you
+ *  hit or miss."
+ *
+ * The system models the pool: `radiant-judgement.json` carries a `dicePool`
+ * rule with an `onAttacked` refill and an `encounterEnd` clear, and the level
+ * scaling (d8/d10/d12/d20, +1 die at 14) rides on `modifyPool` rules. What it
+ * does not carry is a `diceConsumer`, and without one the activation dialog
+ * falls back to treating the dice as manually spendable — it draws them as
+ * buttons and asks the player to choose which ones to spend. The feature offers
+ * no such choice: on your next melee attack, all of them apply.
+ *
+ * So we supply the missing consumer in `autoBonus` mode, restricted to melee
+ * delivery. The system then adds every face to qualifying melee damage on its
+ * own and renders the pool as a read-only summary row, because nothing about it
+ * is optional. Two gaps are left for this code to close:
+ *
+ *   1. `autoBonus` pools deliberately never decrement — the mode exists for
+ *      snowballing pools like the Berserker's Fury Dice. Radiant Judgement
+ *      expends its dice, so we clear the pool after a swing that actually
+ *      carried the bonus (hit or miss, exactly as written).
+ *   2. `onAttacked` is driven off `nimble.damageApplied`, which only fires when
+ *      the GM applies damage — so being attacked does not roll the dice, and a
+ *      miss never rolls them at all. We watch attack cards aimed at an
+ *      Oathsworn and emit the same hook the system listens to, re-using its
+ *      refill engine rather than reimplementing it, then announce the result.
+ */
+
+const JUDGMENT_CONSUMER_RULE_ID = 'nimPlusJudgmentConsumer';
+
+/**
+ * Features that change how many Judgment Dice are rolled, or how they are
+ * rolled. Radiant Judgement's own level-14 rider ("roll 1 more") ships as a
+ * `modifyPool` rule; the two below say the same kind of thing in prose and ship
+ * with no rules at all, so we supply or apply them.
+ */
+const RELIABLE_JUSTICE_IDENTIFIER = 'reliable-justice';
+const AURA_OF_ZEAL_IDENTIFIER = 'aura-of-zeal';
+
+/**
+ * Every pool of one kind the actor owns, item-scoped and actor-scoped alike.
+ * Both subsystems persist their state the same way — `flags.<sysId>.<kind>`,
+ * keyed by pool identifier — so one walker serves both.
+ */
+function* iteratePoolFlags(actor, flagKey) {
+	const scope = sysId();
+	for (const item of actor?.items ?? []) {
+		const pools = item.flags?.[scope]?.[flagKey];
+		if (!pools || typeof pools !== 'object') continue;
+		for (const [key, pool] of Object.entries(pools)) {
+			if (pool && typeof pool === 'object') yield { document: item, key, pool, scope: 'item' };
+		}
+	}
+
+	const actorPools = actor?.flags?.[scope]?.[flagKey];
+	if (!actorPools || typeof actorPools !== 'object') return;
+	for (const [key, pool] of Object.entries(actorPools)) {
+		if (!key.startsWith('actor:')) continue;
+		if (pool && typeof pool === 'object') yield { document: actor, key, pool, scope: 'actor' };
+	}
+}
+
+function* iterateDicePools(actor) {
+	yield* iteratePoolFlags(actor, 'dicePools');
+}
+
+function* iterateChargePools(actor) {
+	yield* iteratePoolFlags(actor, 'chargePools');
+}
+
+function poolRefillsOn(pool, trigger) {
+	const refills = pool?.refills;
+	return Array.isArray(refills) && refills.some((entry) => entry?.trigger === trigger);
+}
+
+/**
+ * Locate the Oathsworn's Judgment dice pool in flag storage. Identified by a
+ * fuzzy identifier match — the system spells it "judgment" in the rule and
+ * "Judgement" in the feature name, and either could shift — plus the presence of
+ * an `onAttacked` refill, which is what makes it the roll-when-struck pool this
+ * automation is allowed to spend on the player's behalf.
+ */
+function findJudgmentPool(actor) {
+	if (!actor) return null;
+	for (const entry of iterateDicePools(actor)) {
+		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
+		if (!identifier.includes('judg')) continue;
+		if (!poolRefillsOn(entry.pool, 'onAttacked')) continue;
+		return entry;
+	}
+	return null;
+}
+
+/**
+ * True when the actor owns at least one `onAttacked` pool that is currently
+ * empty — i.e. an incoming attack has something to refill. Kept generic rather
+ * than Oathsworn-specific so any future class with the same trigger benefits.
+ */
+function hasEmptyOnAttackedPool(actor) {
+	for (const entry of iterateDicePools(actor)) {
+		if (!poolRefillsOn(entry.pool, 'onAttacked')) continue;
+		const faces = entry.pool.faces;
+		if (!Array.isArray(faces) || faces.length === 0) return true;
+	}
+	return false;
+}
+
+function judgmentFaces(entry) {
+	const faces = entry?.pool?.faces;
+	if (!Array.isArray(faces)) return [];
+	return faces.filter((face) => Number.isFinite(face) && face > 0);
+}
+
+/** Empty the pool, flagged so the system's sync pass leaves the write alone. */
+async function clearJudgmentPool(entry) {
+	if (!entry?.document) return;
+	const scope = sysId();
+	await entry.document.update(
+		{ flags: { [scope]: { dicePools: { [entry.key]: { faces: [] } } } } },
+		{ [scope]: { skipDicePoolSync: true } },
+	);
+}
+
+/**
+ * The item-level `dicePool` rule behind a roll-when-attacked pool, if this item
+ * defines one. Matched on a fuzzy identifier (the system spells it "judgment" in
+ * the rule and "Judgement" in the feature name, and either could shift) plus the
+ * presence of an `onAttacked` refill, which is what makes it this pool.
+ */
+function judgmentPoolRule(item) {
+	for (const rule of itemRuleValues(item)) {
+		if (rule?.type !== 'dicePool' || rule.disabled) continue;
+		const identifier = String(rule.identifier || rule.id || '').toLowerCase();
+		if (!identifier.includes('judg')) continue;
+		if (!poolRefillsOn(rule, 'onAttacked')) continue;
+		return rule;
+	}
+	return null;
+}
+
+/**
+ * Give the Judgment pool the `diceConsumer` the system's content omits: every
+ * face, automatically, on melee attacks only. Skipped entirely if some consumer
+ * already targets the pool, so a future system-side fix wins over ours.
+ */
+function ensureJudgmentConsumer(item) {
+	const poolRule = judgmentPoolRule(item);
+	if (!poolRule) return;
+
+	const identifier = String(poolRule.identifier || poolRule.id || '').trim();
+	if (identifier.length < 1) return;
+
+	const alreadyConsumed = hasActiveRule(
+		item,
+		(rule) =>
+			rule.type === 'diceConsumer' &&
+			String(rule.poolIdentifier ?? '').trim().toLowerCase() === identifier.toLowerCase(),
+	);
+	if (alreadyConsumed) return;
+
+	addSyntheticRule(item, {
+		id: JUDGMENT_CONSUMER_RULE_ID,
+		type: 'diceConsumer',
+		label: 'Radiant Judgement (Nim+)',
+		poolIdentifier: identifier,
+		poolScope: poolRule.scope ?? 'item',
+		mode: 'autoBonus',
+		bonusOnAttackDelivery: 'melee',
+		cost: '1',
+	});
+}
+
+/**
+ * Oath of Vengeance — **Aura of Zeal**: "Whenever you roll Judgment Dice, roll 1
+ * more." Word for word what Radiant Judgement's level-14 rider does, and that one
+ * ships as a `modifyPool` rule — so this is the same rule on a different feature.
+ * The aura half of Aura of Zeal (Radiant Judgement also triggering when an ally
+ * in the aura is attacked) stays a table call.
+ */
+function ensureJudgmentPoolModifier(item) {
+	if (item?.system?.identifier !== AURA_OF_ZEAL_IDENTIFIER) return;
+	if (hasActiveRule(item, (rule) => rule.type === 'modifyPool')) return;
+
+	addSyntheticRule(item, {
+		id: 'nimPlusZealJudgmentDice',
+		type: 'modifyPool',
+		label: 'Aura of Zeal: roll 1 more',
+		poolType: 'dice',
+		poolIdentifier: 'judgment',
+		dieSize: null,
+		maxDelta: '+1',
+	});
+}
+
+/**
+ * The label the system tags each auto-applied face with, as
+ * `+<face>[<label>]` — see `buildAutoBonusFormula`. Reproduced here because it
+ * is the one honest signal that the bonus made it onto a roll.
+ */
+function judgmentPoolLabel(entry) {
+	const label = String(entry?.pool?.label ?? '').trim();
+	return label.length > 0 ? label : null;
+}
+
+/** Snapshot the live Judgment Dice before a melee swing that may consume them. */
+function snapshotJudgment(weapon) {
+	if (!classQoLEnabled()) return null;
+	const actor = weapon?.actor;
+	if (!actor || actor.type !== 'character') return null;
+	if (!isMeleeWeapon(weapon)) return null;
+
+	const entry = findJudgmentPool(actor);
+	const faces = judgmentFaces(entry);
+	if (faces.length === 0) return null;
+
+	const label = judgmentPoolLabel(entry);
+	if (!label) return null;
+
+	return { entry, faces, label, total: faces.reduce((sum, face) => sum + face, 0) };
+}
+
+/**
+ * Whether a roll on the finished card is tagged with the pool's label — i.e.
+ * whether the system actually folded the dice into the damage. Holding Alt skips
+ * the activation dialog, and the auto-bonus formula is assembled *by* that
+ * dialog, so a fast-forwarded swing carries no bonus. Checking rather than
+ * assuming means those dice are never burned for nothing.
+ */
+function cardCarriesJudgment(card, label) {
+	const tag = `[${label}]`;
+	for (const roll of card?.rolls ?? []) {
+		const formula = roll?.formula ?? roll?._formula;
+		if (typeof formula === 'string' && formula.includes(tag)) return true;
+	}
+	return false;
+}
+
+/** "The dice are expended whether you hit or miss." */
+async function expendJudgment(actor, card, snapshot) {
+	if (!snapshot) return;
+	if (!cardCarriesJudgment(card, snapshot.label)) return;
+
+	try {
+		await clearJudgmentPool(snapshot.entry);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to expend the Judgment Dice`, error);
+		return;
+	}
+
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: '<strong>Radiant Judgement</strong>',
+		content:
+			`<p><strong>${snapshot.total} radiant damage</strong> (${snapshot.faces.join(' + ')}) added to the attack — applied on a hit only.</p>` +
+			'<p><em>Judgment Dice expended.</em></p>',
+	});
+}
+
+/** `"d8"` → `8`. Null for anything that is not a die size. */
+function dieSizeFaces(dieSize) {
+	const match = /^d(\d+)$/i.exec(String(dieSize ?? '').trim());
+	const faces = match ? Number.parseInt(match[1], 10) : Number.NaN;
+	return Number.isFinite(faces) && faces > 1 ? faces : null;
+}
+
+/**
+ * Sacred Decree — **Reliable Justice**: "Whenever you roll Judgment Dice, roll
+ * with advantage (roll one extra and drop the lowest)."
+ *
+ * Applied to the freshly rolled faces before they are written, so the pool never
+ * momentarily holds the un-advantaged set and the announcement below reports what
+ * the player actually keeps. The extra die is rolled *synchronously* because a
+ * `preUpdate` hook cannot await — if that is unavailable (Foundry's manual dice
+ * fulfillment turns every roll into an async prompt) the decree is skipped for
+ * that roll rather than producing a half-applied result.
+ */
+function applyReliableJustice(actor, entry, faces) {
+	if (!actorOwnsFeat(actor, RELIABLE_JUSTICE_IDENTIFIER)) return null;
+
+	const size = dieSizeFaces(entry?.pool?.dieSize);
+	if (!size) return null;
+
+	let extra;
+	try {
+		extra = Number(new Roll(`1d${size}`).evaluateSync().total);
+	} catch (error) {
+		console.warn(
+			`[${MODULE_ID}] Reliable Justice needs a synchronous roll and could not make one`,
+			error,
+		);
+		return null;
+	}
+	if (!Number.isFinite(extra)) return null;
+
+	const kept = [...faces, extra].sort((a, b) => a - b);
+	const dropped = kept.shift();
+	return { faces: kept, extra, dropped };
+}
+
+/**
+ * Handle the pool going from empty to rolled, whichever path filled it: the
+ * trigger below on an incoming attack, or the system's own `onAttacked` refill
+ * when the GM applies damage. Watching the resulting flag write rather than the
+ * trigger means one announcement per roll, no matter who caused it.
+ *
+ * Runs *before* the write, for two reasons: the pool's previous contents are
+ * still readable (the state is rewritten wholesale for reasons that have nothing
+ * to do with rolling — a die size changing at level-up, this module adding its
+ * consumer — and empty-to-rolled is the only transition worth reacting to), and
+ * mutating `changed` here lets Reliable Justice adjust the dice in the same
+ * write.
+ *
+ * GM-only: every path that rolls this pool runs on the GM's client — the trigger
+ * below, and the system's own refill when the GM applies damage — so restricting
+ * it there guarantees exactly one card and one adjustment per roll.
+ */
+function announceJudgmentRoll(document, changed) {
+	if (!classQoLEnabled()) return;
+	if (!game.user?.isGM) return;
+
+	const scope = sysId();
+	const changedPools = changed?.flags?.[scope]?.dicePools;
+	if (!changedPools || typeof changedPools !== 'object') return;
+
+	const actor = document instanceof Actor ? document : (document?.actor ?? null);
+	if (!actor || actor.type !== 'character') return;
+
+	for (const [key, delta] of Object.entries(changedPools)) {
+		let faces = delta?.faces;
+		if (!Array.isArray(faces) || faces.length === 0) continue;
+
+		const previous = foundry.utils.getProperty(
+			document,
+			`flags.${scope}.dicePools.${key}.faces`,
+		);
+		if (Array.isArray(previous) && previous.length > 0) continue;
+
+		// Only pools that roll in response to being attacked — a Fury Dice write
+		// or any other pool's bookkeeping is none of our business.
+		const live = Array.from(iterateDicePools(actor)).find((entry) => entry.key === key);
+		if (!live || !poolRefillsOn(live.pool, 'onAttacked')) continue;
+
+		const advantage = applyReliableJustice(actor, live, faces);
+		if (advantage) {
+			// Mutating the pending update is what makes this one write, not two.
+			delta.faces = advantage.faces;
+			faces = advantage.faces;
+		}
+
+		const total = faces.reduce((sum, face) => sum + face, 0);
+		const label = judgmentPoolLabel(live) ?? 'Judgment Dice';
+		const advantageNote = advantage
+			? `<p><em>Reliable Justice — rolled an extra ${escape(live.pool.dieSize ?? 'die')} (${advantage.extra}) and dropped the lowest (${advantage.dropped}).</em></p>`
+			: '';
+
+		ChatMessage.create({
+			speaker: ChatMessage.getSpeaker({ actor }),
+			flavor: `<strong>${escape(label)}</strong>`,
+			content:
+				`<p>Rolled <strong>${faces.join(', ')}</strong> — <strong>${total}</strong> extra radiant damage on the next melee attack this encounter.</p>` +
+				advantageNote,
+		});
+	}
+}
+
+/**
+ * Roll the Judgment Dice for every Oathsworn an attack was aimed at, by emitting
+ * the very hook the system's `onAttacked` refill trigger subscribes to.
+ *
+ * "Whenever an enemy attacks you" is the trigger as written, so this fires on
+ * the attack card itself — hit or miss alike. Left to the system, the refill
+ * runs off `nimble.damageApplied`, which means the dice only appear once the GM
+ * clicks Apply Damage, and on a miss they never appear at all.
+ *
+ * The refill mode is `setIfEmpty`, so the system's later firing for the same
+ * attack is a no-op against the pool this already filled.
+ *
+ * Runs on the GM's client only: `createChatMessage` fires everywhere, so a
+ * single privileged executor avoids duplicate writes, and the GM owns every
+ * actor whose flags need updating.
+ */
+function rollJudgmentForAttackTargets(message) {
+	if (!classQoLEnabled()) return;
+	if (!game.user?.isGM) return;
+
+	const system = message?.system;
+
+	// Attack cards carry a hit/miss verdict; anything that does not (a saving
+	// throw prompt, a healing card, a plain feature) is not an attack.
+	if (typeof system?.isMiss !== 'boolean') return;
+
+	const targets = system.targets;
+	if (!Array.isArray(targets) || targets.length === 0) return;
+
+	const attackerId = message.flags?.[sysId()]?.actorId ?? null;
+
+	for (const uuid of targets) {
+		let targetActor = null;
+		try {
+			targetActor = fromUuidSync(uuid)?.actor ?? null;
+		} catch (_error) {
+			targetActor = null;
+		}
+		if (!targetActor || targetActor.type !== 'character') continue;
+		if (attackerId && targetActor.id === attackerId) continue; // not "an enemy"
+		if (!hasEmptyOnAttackedPool(targetActor)) continue;
+
+		Hooks.callAll(sysHook('damageApplied'), { targetActor });
+	}
+}
+
+Hooks.on('createChatMessage', (message) => {
+	try {
+		rollJudgmentForAttackTargets(message);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to roll Judgment Dice for an incoming attack`, error);
+	}
+});
+
+for (const hook of ['preUpdateItem', 'preUpdateActor']) {
+	Hooks.on(hook, (document, changed) => {
+		try {
+			announceJudgmentRoll(document, changed);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to announce a Judgment Dice roll`, error);
+		}
+		// Never veto the write: this hook only observes.
+		return undefined;
+	});
+}
+
+/* ── Sheet — feature use counters on the tracker rail ────────────────────────
+ *
+ * The system's own tracker rail — the little flyout down the left edge of the
+ * character sheet, where an Oathsworn's Judgment Dice show up — deliberately
+ * skips charge pools that carry no die size, on the grounds that those are
+ * "pure counters ... already rendered by ChargeIndicator elsewhere on the
+ * sheet". Elsewhere means the Features tab.
+ *
+ * For a resource you spend in the middle of someone else's turn — Coordinated
+ * Strike! being the obvious case — a counter you have to change tabs to read is
+ * a counter you forget. So those pools are mirrored onto the rail alongside the
+ * system's own, restricted to pools that come from **class features**: a bag
+ * full of charged magic items belongs on the inventory tab, not here.
+ *
+ * Styling borrows the rail's own CSS custom properties rather than copying any
+ * values, so it follows the sheet's theme, and the whole thing is re-derived
+ * from flag state on every render — there is no state of our own to drift.
+ */
+
+const CHARGE_RAIL_CLASS = 'nim-plus-charge-rail';
+const CHARGE_RAIL_STYLE_ID = 'nim-plus-charge-rail-styles';
+
+/** Count-only charge pools that a feature granted, in sheet order. */
+function featureChargePools(actor) {
+	const pools = [];
+	for (const entry of iterateChargePools(actor)) {
+		const pool = entry.pool;
+		if (pool.dieSize != null) continue; // roll-on-spend: the system already rails it
+		const max = Number(pool.max);
+		if (!Number.isFinite(max) || max < 1) continue;
+
+		const source = actor.items?.get?.(pool.sourceItemId) ?? null;
+		if (source?.type !== 'feature') continue;
+
+		pools.push({
+			...entry,
+			max,
+			current: Math.max(0, Math.min(Number(pool.current) || 0, max)),
+			label: String(pool.label ?? source.name ?? 'Uses'),
+			img: source.img ?? null,
+		});
+	}
+	return pools.sort((a, b) => a.label.localeCompare(b.label));
+}
+
+function ensureChargeRailStyles() {
+	if (document.getElementById(CHARGE_RAIL_STYLE_ID)) return;
+	const style = document.createElement('style');
+	style.id = CHARGE_RAIL_STYLE_ID;
+	style.textContent = `
+		.${CHARGE_RAIL_CLASS}__panel {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.625rem;
+			padding: 0.25rem;
+			background: color-mix(in srgb, var(--nimble-sheet-background) 85%, transparent);
+			border: 1px solid var(--nimble-dice-pool-tracker-panel-border-color, currentColor);
+			border-left: none;
+			border-radius: 0 6px 6px 0;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+		}
+		.${CHARGE_RAIL_CLASS}__group {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.125rem;
+		}
+		.${CHARGE_RAIL_CLASS}__badge {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 1.625rem;
+			height: 1.625rem;
+			padding: 0;
+			overflow: hidden;
+			background: var(--nimble-dice-pool-tracker-badge-background, transparent);
+			border: 1px solid var(--nimble-dark-text-color, currentColor);
+			border-radius: 4px;
+			cursor: default;
+		}
+		.${CHARGE_RAIL_CLASS}__badge img {
+			width: 100%;
+			height: 100%;
+			border: none;
+			object-fit: cover;
+		}
+		.${CHARGE_RAIL_CLASS}__badge i {
+			font-size: 0.875rem;
+			color: var(--nimble-dark-text-color, currentColor);
+		}
+		.${CHARGE_RAIL_CLASS}__pip {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 1.625rem;
+			height: 1.625rem;
+			padding: 0;
+			background: var(--nimble-dice-pool-tracker-badge-background, transparent);
+			border: 1px solid var(--nimble-dice-pool-tracker-pip-border-color, currentColor);
+			border-radius: 4px;
+			cursor: pointer;
+			transition: border-color 0.15s ease, background 0.15s ease;
+		}
+		.${CHARGE_RAIL_CLASS}__pip i { font-size: 0.875rem; }
+		.${CHARGE_RAIL_CLASS}__pip--available {
+			border-color: var(--nimble-dice-pool-tracker-available-color, currentColor);
+		}
+		.${CHARGE_RAIL_CLASS}__pip--available i {
+			color: var(--nimble-dice-pool-tracker-available-color, currentColor);
+		}
+		.${CHARGE_RAIL_CLASS}__pip--available:hover {
+			background: var(--nimble-dice-pool-tracker-pip-hover-background, transparent);
+		}
+		.${CHARGE_RAIL_CLASS}__pip--spent i { opacity: 0.35; }
+	`;
+	document.head.append(style);
+}
+
+async function setChargePoolCurrent(entry, next) {
+	const clamped = Math.max(0, Math.min(Math.round(next), entry.max));
+	if (clamped === entry.current) return;
+	await entry.document.update({
+		flags: { [sysId()]: { chargePools: { [entry.key]: { current: clamped } } } },
+	});
+}
+
+function injectChargeRail(app, root) {
+	if (!classQoLEnabled()) return;
+	const actor = app?.document ?? app?.actor;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+
+	root.querySelectorAll(`.${CHARGE_RAIL_CLASS}`).forEach((el) => el.remove());
+
+	const rail = root.querySelector('.nimble-sheet__left-trackers');
+	if (!rail) return;
+
+	const pools = featureChargePools(actor);
+	if (pools.length === 0) return;
+
+	ensureChargeRailStyles();
+
+	const container = document.createElement('div');
+	container.className = CHARGE_RAIL_CLASS;
+
+	const panel = document.createElement('div');
+	panel.className = `${CHARGE_RAIL_CLASS}__panel`;
+
+	for (const pool of pools) {
+		const group = document.createElement('div');
+		group.className = `${CHARGE_RAIL_CLASS}__group`;
+
+		const badge = document.createElement('div');
+		badge.className = `${CHARGE_RAIL_CLASS}__badge`;
+		badge.dataset.tooltip = `${pool.label} — ${pool.current}/${pool.max} uses`;
+		badge.dataset.tooltipDirection = 'RIGHT';
+		badge.innerHTML = pool.img
+			? `<img src="${escape(pool.img)}" alt="">`
+			: '<i class="fa-solid fa-circle-dot"></i>';
+		group.append(badge);
+
+		for (let index = 0; index < pool.max; index += 1) {
+			const available = index < pool.current;
+			const pip = document.createElement('button');
+			pip.type = 'button';
+			pip.className =
+				`${CHARGE_RAIL_CLASS}__pip ${CHARGE_RAIL_CLASS}__pip--${available ? 'available' : 'spent'}`;
+			pip.dataset.tooltip = available
+				? `Spend a use of ${pool.label}`
+				: `Restore a use of ${pool.label}`;
+			pip.dataset.tooltipDirection = 'RIGHT';
+			pip.innerHTML = '<i class="fa-solid fa-circle"></i>';
+			// Clicking an available pip spends down to it; clicking a spent one
+			// restores up to it. Both read as "set the counter to here".
+			pip.addEventListener('click', () => {
+				setChargePoolCurrent(pool, available ? index : index + 1).catch((error) =>
+					console.error(`[${MODULE_ID}] Failed to adjust ${pool.label}`, error),
+				);
+			});
+			group.append(pip);
+		}
+
+		panel.append(group);
+	}
+
+	container.append(panel);
+	rail.append(container);
+}
+
+/**
+ * Re-inject on any open character sheet. The sheets are Svelte-rendered and
+ * update their own state in place without a Foundry re-render, so a pool change
+ * would otherwise leave our pips stale.
+ */
+function refreshChargeRails(actorId = null) {
+	const apps = foundry.applications?.instances?.values?.() ?? [];
+	for (const app of apps) {
+		const actor = app?.document ?? app?.actor;
+		if (!(actor instanceof Actor) || actor.type !== 'character') continue;
+		if (actorId && actor.id !== actorId) continue;
+		const root = app.element instanceof HTMLElement ? app.element : null;
+		if (!root?.querySelector('.nimble-sheet__left-trackers')) continue;
+		try {
+			injectChargeRail(app, root);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to refresh the use counters`, error);
+		}
+	}
+}
+
+Hooks.on('renderPlayerCharacterSheet', (app, html) => {
+	const root = html instanceof HTMLElement ? html : html?.[0];
+	if (!root) return;
+	try {
+		injectChargeRail(app, root);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to add the use counters to the sheet`, error);
+	}
+});
+
+for (const hook of ['updateItem', 'updateActor']) {
+	Hooks.on(hook, (document, changed) => {
+		// Only charge-pool writes can change what the rail draws.
+		if (!changed?.flags?.[sysId()]?.chargePools) return;
+		const actor = document instanceof Actor ? document : (document?.actor ?? null);
+		if (actor?.type !== 'character') return;
+		refreshChargeRails(actor.id);
+	});
+}
+
+// Registered at setup, not at load: `sysHook` needs `game.system` to exist.
+Hooks.once('setup', () => {
+	for (const hook of ['chargePool.changed', 'chargePool.recovered']) {
+		Hooks.on(sysHook(hook), () => refreshChargeRails());
+	}
+});
+
+/* ── Wiring ─────────────────────────────────────────────────────────────────── */
+
+/**
+ * Every rule this module supplies on the system's behalf, applied to one item.
+ * Called from item data preparation, so it runs on load, on every update, and
+ * on every level-up — there is no "install" step to miss and nothing to undo.
+ */
+function injectMissingRules(item) {
+	if (!classQoLEnabled()) return;
+	if (item?.type !== 'feature' || !item.rules) return;
+	ensureJudgmentConsumer(item);
+	ensureJudgmentPoolModifier(item);
+	ensureCoordinatedStrikeCounter(item);
+}
+
+Hooks.once('setup', () => {
+	try {
+		patchDamageRollForClassQoL();
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to patch DamageRoll for class automation`, error);
+	}
+
+	// `prepareBaseData` is where the system builds `item.rules` from the stored
+	// source, so it is the one place a synthetic rule can be added early enough
+	// for the pool engines — which read that map — to see it.
+	const FeatureClass = CONFIG?.NIMBLE?.Item?.documentClasses?.feature;
+	if (FeatureClass?.prototype && !FeatureClass.prototype.__nimPlusRulesPatched) {
+		const originalPrepareBaseData = FeatureClass.prototype.prepareBaseData;
+		FeatureClass.prototype.prepareBaseData = function patchedPrepareBaseData(...args) {
+			const result = originalPrepareBaseData?.apply(this, args);
+			try {
+				injectMissingRules(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to supply rules for ${this?.name}`, error);
+			}
+			return result;
+		};
+		FeatureClass.prototype.__nimPlusRulesPatched = true;
+	}
+
+	// Weapons are `object` items and do not override `activate`, so patching the
+	// object class's prototype gives us a seam that only ever sees weapon/gear
+	// use — features and spells keep their untouched inherited implementation.
+	const ObjectClass = CONFIG?.NIMBLE?.Item?.documentClasses?.object;
+	if (ObjectClass?.prototype?.activate && !ObjectClass.prototype.__nimPlusClassQoLPatched) {
+		const originalObjectActivate = ObjectClass.prototype.activate;
+		ObjectClass.prototype.activate = async function patchedObjectActivate(options = {}) {
+			if (options?.executeMacro || !classQoLEnabled()) {
+				return originalObjectActivate.call(this, options);
+			}
+
+			const actor = this.actor;
+			let judgment = null;
+			try {
+				judgment = snapshotJudgment(this);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to read the Judgment Dice`, error);
+			}
+
+			viciousArm = null;
+			viciousOutcome = null;
+			activationStack.push({ actor, item: this, vicious: viciousEligible(actor, this) });
+
+			let card = null;
+			try {
+				card = await originalObjectActivate.call(this, options);
+			} finally {
+				const finished = activationStack.pop();
+				viciousArm = null;
+				sneakOutcome = finished?.sneak ?? null;
+			}
+
+			// The activation was cancelled (dialog dismissed, charges missing, a
+			// `preUseItem` veto): nothing was rolled, so nothing is spent.
+			if (!card) {
+				viciousOutcome = null;
+				sneakOutcome = null;
+				return card;
+			}
+
+			const outcome = viciousOutcome;
+			const sneak = sneakOutcome;
+			viciousOutcome = null;
+			sneakOutcome = null;
+			try {
+				if (outcome) {
+					announceViciousOutcome(actor, this, outcome);
+					if (outcome.kind === 'upgraded') await markViciousUsed(actor);
+				}
+				if (sneak) {
+					announceSneakAttack(actor, sneak);
+					await markSneakUsed(actor);
+				}
+				await expendJudgment(actor, card, judgment);
+			} catch (error) {
+				console.error(`[${MODULE_ID}] Failed to resolve class automation for ${this.name}`, error);
+			}
+
+			return card;
+		};
+		ObjectClass.prototype.__nimPlusClassQoLPatched = true;
+	}
+});
+
+/** Housekeeping: the per-turn markers are meaningless once the combat is gone. */
+Hooks.on('deleteCombat', (combat) => {
+	for (const combatant of combat?.combatants ?? []) {
+		const actor = combatant?.actor;
+		if (!actor?.isOwner) continue;
+		for (const flag of [VICIOUS_USED_FLAG, SNEAK_USED_FLAG]) {
+			if (actor.getFlag?.(MODULE_ID, flag) === undefined) continue;
+			actor
+				.unsetFlag(MODULE_ID, flag)
+				.catch((error) =>
+					console.error(`[${MODULE_ID}] Failed to clear the ${flag} marker`, error),
+				);
+		}
+	}
+});

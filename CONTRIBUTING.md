@@ -91,11 +91,16 @@ Re-runs are idempotent: existing IDs in `ids.json` are reused; new files get fre
 
 ## Installing into Foundry (developer)
 
-Symlink (or copy) the module directory into `Data/modules/nim-plus-package/`. Only `module.json`, `packs/`, `scripts/`, and `assets/` need to be present at runtime. Enable the module in your world's settings. On Linux:
-
 ```sh
-ln -sfn "$PWD" ~/.local/share/FoundryVTT/Data/modules/nim-plus-package
+pnpm build        # packs/ must exist before Foundry starts
+pnpm dev:link     # symlinks this working tree into Data/modules/nim-plus-package
 ```
+
+`dev:link` reads the data path from Foundry's own `Config/options.json` (override with `FOUNDRY_DATA=/path`), and refuses to touch a real directory already sitting at that name — an installed release has to be moved out of the way by hand first. `pnpm dev:unlink` removes the link.
+
+Once linked, the module Foundry loads *is* the working tree: edit `scripts/main.mjs`, reload the browser (F5), done. Only `module.json`, `packs/`, `scripts/`, and `assets/` are read at runtime; Foundry ignores `pack-sources/`, `build/`, `node_modules/`, and the rest. Changes under `pack-sources/` still need `pnpm build` plus a **full server restart**, since Foundry holds the LevelDB packs open.
+
+Never have both a link and an installed copy of the same module ID present — Foundry scans every subdirectory of `Data/modules/` for a manifest and will report a duplicate-ID conflict.
 
 ## Releasing
 
