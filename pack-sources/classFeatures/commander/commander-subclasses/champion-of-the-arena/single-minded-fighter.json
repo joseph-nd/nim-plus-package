@@ -5,7 +5,106 @@
 	"system": {
 		"macro": "",
 		"identifier": "single-minded-fighter",
-		"rules": [],
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l2",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +2 max Combat Dice (level 2 Orders)",
+				"predicate": {},
+				"priority": 1,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+2"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l6",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +1 max Combat Dice (level 6 Order)",
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				},
+				"priority": 2,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l8",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +1 max Combat Dice (level 8 Order)",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				},
+				"priority": 3,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l10",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +1 max Combat Dice (level 10 Order)",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				},
+				"priority": 4,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l12",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +1 max Combat Dice (level 12 Order)",
+				"predicate": {
+					"level": {
+						"min": 12
+					}
+				},
+				"priority": 5,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "single-minded-max-l16",
+				"identifier": "",
+				"label": "Single-Minded Fighter → +1 max Combat Dice (level 16 Order)",
+				"predicate": {
+					"level": {
+						"min": 16
+					}
+				},
+				"priority": 6,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": null,
+				"maxDelta": "+1"
+			}
+		],
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
@@ -43,7 +142,11 @@
 		"subclass": true
 	},
 	"effects": [],
-	"flags": {},
+	"flags": {
+		"nim-plus-package": {
+			"foregoesFeatureGroup": "commanders-orders"
+		}
+	},
 	"_stats": {
 		"coreVersion": "13",
 		"systemId": "nimble",

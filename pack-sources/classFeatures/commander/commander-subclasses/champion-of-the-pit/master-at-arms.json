@@ -43,7 +43,11 @@
 		"subclass": true
 	},
 	"effects": [],
-	"flags": {},
+	"flags": {
+		"nim-plus-package": {
+			"combatDiceAdvantage": true
+		}
+	},
 	"_stats": {
 		"coreVersion": "13",
 		"systemId": "nimble",

@@ -5553,10 +5553,15 @@ Hooks.once('setup', () => {
  *   • Cheat — Vicious Opportunist. One roll instead of two: tick a box in the
  *     activation dialog, and a hit on a Distracted target is upgraded to a crit
  *     automatically. Natural crits and misses never spend the 1/turn use.
- *   • Commander — Coordinated Strike!. Shipped as data (a `chargePool` +
- *     `chargeConsumer` rule pair on the Nim+ copy of the feature), so the
- *     INT-per-Safe-Rest counter is tracked, spent, and refilled by the system's
- *     own charge subsystem. No runtime code — see the pack source.
+ *   • Cheat — Sneak Attack. Offered as a prompt on a crit, with the extra dice
+ *     folded into the attack's own damage roll.
+ *   • Commander — Coordinated Strike!. Supplied as a `chargePool` +
+ *     `chargeConsumer` rule pair, so the INT-per-Safe-Rest counter is tracked,
+ *     spent, and refilled by the system's own charge subsystem.
+ *   • Commander — Combat Dice & Combat Tactics. The tactic becomes a choice you
+ *     make on the attack: pick it in the activation dialog, its Combat Die rolls
+ *     into the attack's own damage, and the die is spent only when the tactic
+ *     actually did something. Inerrant Strike is offered on a miss instead.
  *   • Oathsworn — Radiant Judgement. Judgment Dice roll themselves on a missed
  *     incoming attack too, not only when damage lands, and the rolled total is
  *     added to the next melee weapon swing as radiant damage, then expended.
@@ -5607,7 +5612,7 @@ function classQoLEnabled() {
 Hooks.once('init', () => {
 	game.settings.register(MODULE_ID, CLASS_QOL_SETTING, {
 		name: 'Enable Class Automation',
-		hint: "Automates bookkeeping for the Cheat's Vicious Opportunist (one-roll crit upgrade) and the Oathsworn's Radiant Judgement (auto-rolled Judgment Dice, auto-applied radiant damage). Turn off to roll everything by hand.",
+		hint: "Automates bookkeeping for the Cheat (Vicious Opportunist's one-roll crit upgrade, Sneak Attack on a crit), the Commander (Combat Tactics picked on the attack itself, Combat Dice spent and tracked with it, Coordinated Strike! use counter) and the Oathsworn (auto-rolled Judgment Dice, auto-applied radiant damage). Turn off to roll everything by hand.",
 		scope: 'world',
 		config: true,
 		type: Boolean,
@@ -5788,19 +5793,20 @@ function injectViciousCheckbox(app, root) {
 }
 
 /**
- * Wrap the dialog's `submitActivation` once, so a ticked checkbox arms the next
- * roll. Patched lazily off a live instance because the class is not exported
- * anywhere reachable from a module.
+ * Wrap the dialog's `submitActivation` once, so the controls this module injects
+ * arm the next roll. Patched lazily off a live instance because the class is not
+ * exported anywhere reachable from a module.
  */
 function ensureActivationDialogPatched(app) {
 	const proto = app?.constructor?.prototype;
-	if (!proto || proto.__nimPlusViciousPatched) return;
+	if (!proto || proto.__nimPlusActivationDialogPatched) return;
 	const originalSubmit = proto.submitActivation;
 	if (typeof originalSubmit !== 'function') return;
 
 	proto.submitActivation = function patchedSubmitActivation(results) {
+		const root = this.element instanceof HTMLElement ? this.element : this.element?.[0];
+
 		try {
-			const root = this.element instanceof HTMLElement ? this.element : this.element?.[0];
 			const checkbox = root?.querySelector?.('[data-nim-plus-vicious]');
 			viciousArm =
 				checkbox?.checked && !checkbox.disabled
@@ -5810,31 +5816,113 @@ function ensureActivationDialogPatched(app) {
 			viciousArm = null;
 			console.error(`[${MODULE_ID}] Failed to read the Vicious Opportunist checkbox`, error);
 		}
+
+		try {
+			const select = root?.querySelector?.('[data-nim-plus-tactic]');
+			const key = select && !select.disabled ? String(select.value ?? '') : '';
+			tacticArm = key
+				? { actorId: this.actor?.id ?? null, itemId: this.item?.id ?? null, key }
+				: null;
+		} catch (error) {
+			tacticArm = null;
+			console.error(`[${MODULE_ID}] Failed to read the Combat Tactic picker`, error);
+		}
+
 		return originalSubmit.call(this, results);
 	};
-	proto.__nimPlusViciousPatched = true;
+	proto.__nimPlusActivationDialogPatched = true;
 }
 
 Hooks.on('renderItemActivationConfigDialog', (app, element) => {
+	const root = element instanceof HTMLElement ? element : element?.[0] ?? app?.element;
+	if (!root) return;
+
 	try {
-		const root = element instanceof HTMLElement ? element : element?.[0] ?? app?.element;
-		if (!root) return;
 		ensureActivationDialogPatched(app);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to patch the activation dialog`, error);
+	}
+
+	try {
 		injectViciousCheckbox(app, root);
 	} catch (error) {
 		console.error(`[${MODULE_ID}] Failed to render the Vicious Opportunist control`, error);
 	}
+
+	try {
+		injectCombatTacticPicker(app, root);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to render the Combat Tactic picker`, error);
+	}
+
+	try {
+		hideRollModeForDicelessActivation(app, root);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to tidy the activation dialog`, error);
+	}
 });
+
+/**
+ * True when this activation has damage or healing to state but no dice anywhere
+ * in it — a card that reports a fixed number, or none at all.
+ *
+ * Deliberately conservative: an activation whose effects declare no formula at
+ * all could still be rolling through some path we cannot see from here, so only
+ * a positive "there are formulas, and not one of them has a die in it" counts.
+ */
+function activationHasNoDice(item) {
+	const effects = item?.system?.activation?.effects;
+	if (!Array.isArray(effects) || effects.length < 1) return false;
+
+	let sawFormula = false;
+	const hasDie = /\d*d\d+/i;
+
+	const visit = (nodes) => {
+		for (const node of nodes ?? []) {
+			if (typeof node?.formula === 'string' && node.formula.trim().length > 0) {
+				sawFormula = true;
+				if (hasDie.test(node.formula)) return true;
+			}
+			for (const branch of Object.values(node?.on ?? {})) {
+				if (visit(branch)) return true;
+			}
+		}
+		return false;
+	};
+
+	if (visit(effects)) return false;
+	return sawFormula;
+}
+
+/**
+ * Take the advantage/disadvantage slider off an activation that rolls nothing.
+ *
+ * Coordinated Strike! is the case in hand: a free action that grants you and an
+ * ally an attack each. Those attacks are rolled on their own, with their own
+ * dialogs and their own advantage — so a slider here reads as though it will
+ * change them, and changes nothing at all.
+ *
+ * Only the slider goes. Situational Modifiers and the primary-die fields are
+ * just as inert on a card like this, but they at least alter the number it
+ * prints, and the slider is the one that looks like it means something.
+ */
+function hideRollModeForDicelessActivation(app, root) {
+	if (!classQoLEnabled()) return;
+	if (!activationHasNoDice(app?.item)) return;
+
+	ensureCombatTacticStyles();
+	root
+		.querySelector('.nimble-roll-mode-config')
+		?.classList.add(`${COMBAT_TACTIC_FIELD_CLASS}__hidden`);
+}
 
 /**
  * Raise an evaluated DamageRoll's kept primary die to its maximum face, roll the
  * resulting crit explosion, and restate the roll's outcome.
  *
- * Mirrors what the system does when a max primary die is rolled naturally:
- * `standard` explosion style continues rolling while the die keeps coming up
- * max (Foundry's `x` modifier semantics, replayed by hand because the modifier
- * already ran during evaluation); `vicious` weapons delegate to the system's own
- * two-dice explosion chain.
+ * The explosion itself is `explodeRaisedPrimaryDie`, shared with Inerrant
+ * Strike — the other feature that pushes a primary die to its maximum after the
+ * dice have already been rolled.
  *
  * @returns {{ from: number, to: number }|null} what changed, or null if the roll
  *          was not in a shape this can safely touch.
@@ -5860,25 +5948,7 @@ async function upgradePrimaryDieToCrit(roll) {
 	kept.result = faces;
 	kept.exploded = true;
 
-	if (
-		roll.options?.explosionStyle === 'vicious' &&
-		typeof roll._evaluateViciousExplosion === 'function'
-	) {
-		// Vicious weapons explode two dice at a time with only the left one
-		// chaining — delegate to the system's own implementation of that.
-		await roll._evaluateViciousExplosion(primary);
-	} else if (roll.options?.explosionStyle !== 'none') {
-		// Replay Foundry's `x` modifier: keep rolling one more die while it maxes.
-		const MAX_CHAIN = 100;
-		let last = faces;
-		for (let i = 0; last === faces && i < MAX_CHAIN; i += 1) {
-			const explosion = await new Roll(`1d${faces}`).evaluate();
-			const value = explosion.dice?.[0]?.results?.[0]?.result ?? explosion.total;
-			if (!Number.isFinite(value)) break;
-			primary.results.push({ result: value, active: true, exploded: value === faces });
-			last = value;
-		}
-	}
+	await explodeRaisedPrimaryDie(roll, primary, faces);
 
 	roll._recalculateTotal();
 
@@ -5913,12 +5983,19 @@ function patchDamageRollForClassQoL() {
 	DamageRollClass.prototype._evaluate = async function patchedDamageRollEvaluate(options) {
 		const result = await originalEvaluate.call(this, options);
 
-		// Order matters: Vicious Opportunist can turn a hit into a crit, and a crit
-		// is what Sneak Attack triggers on.
+		// Order matters: Vicious Opportunist can turn a hit into a crit, an Inerrant
+		// Strike reroll can produce one out of a miss, and a crit is what Sneak
+		// Attack triggers on.
 		try {
 			await applyViciousOpportunist(this);
 		} catch (error) {
 			console.error(`[${MODULE_ID}] Vicious Opportunist could not modify the roll`, error);
+		}
+
+		try {
+			await applyCombatTactic(this);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] The Combat Tactic could not modify the roll`, error);
 		}
 
 		try {
@@ -6113,6 +6190,10 @@ async function appendDamageToRoll(roll, formula, flavor) {
 		// the card fails to rebuild the roll on other clients.
 		operator._evaluated = true;
 		for (const term of bonus.terms) {
+			// Never on an operator: a term's formula is `expression[flavor]`, so a
+			// flavoured `*` would serialise as `*[Lunging Strike]` and the roll would
+			// no longer parse when another client rebuilds the card.
+			if (term instanceof OperatorTerm) continue;
 			if (term?.options && !term.options.flavor) term.options.flavor = flavor;
 		}
 		roll.terms.push(operator, ...bonus.terms);
@@ -6185,7 +6266,9 @@ function announceSneakAttack(actor, sneak) {
  * Some Nimble features describe mechanics the rules engine already supports but
  * ship without the rule that would drive them. Radiant Judgement defines a dice
  * pool and nothing that spends it; Coordinated Strike! documents "INT times per
- * Safe Rest" in prose with no counter behind it.
+ * Safe Rest" in prose with no counter behind it; the Commander's Combat Dice
+ * refill themselves at Initiative but declare nothing for "lost when combat
+ * ends", so one recovery entry is added to the rule that is already there.
  *
  * Reimplementing those mechanics from outside is the wrong move — that is what
  * made the first pass at Radiant Judgement double up against the activation
@@ -6274,6 +6357,1742 @@ function ensureCoordinatedStrikeCounter(item) {
 		cost: '1',
 	});
 }
+
+/* ── Commander — Master Commander ────────────────────────────────────────────
+ *
+ * "When you roll Initiative, regain 1 spent use of Coordinated Strike (it is
+ *  lost if not spent during that encounter). Attacks made from your Coordinated
+ *  Strikes also now ignore disadvantage.
+ *  Levels 5, 9, 13, 17: Gain +1 use of Coordinated Strike per Safe Rest."
+ *
+ * Another feature shipped with `rules: []`, so all three clauses are prose. Two
+ * of them are the charge subsystem's own vocabulary:
+ *
+ *   - The per-level uses are a `modifyPool` ladder, one `+1` for each of the
+ *     four levels. The feature is granted once and never re-granted — the
+ *     level-up window filters out anything already owned — so the levels have to
+ *     be predicates on that single copy rather than four copies of the item.
+ *   - "Regain 1 spent use when you roll Initiative" is an `onInitiativeRolled`
+ *     recovery of `add 1`, which clamps at the maximum: with nothing spent there
+ *     is nothing to regain, exactly as written.
+ *
+ * The third clause — the granted use being lost if the encounter ends without
+ * it — has no vocabulary, since recovery values cannot go negative. It is the
+ * one part done in code, below.
+ *
+ * "Attacks ignore disadvantage" is left to the table: the attacks Coordinated
+ * Strike grants are made separately, each with its own dialog, and nothing
+ * connects them back to the order that prompted them.
+ */
+
+const MASTER_COMMANDER_MATCH = /master\s*commander/i;
+const COORD_STRIKE_TEMP_USE_FLAG = 'coordinatedStrikeTempUse';
+
+function actorHasMasterCommander(actor) {
+	for (const item of actor?.items ?? []) {
+		if (item?.type !== 'feature') continue;
+		if (MASTER_COMMANDER_MATCH.test(String(item.name ?? ''))) return true;
+	}
+	return false;
+}
+
+/** The Coordinated Strike! use counter in flag state, however it was created. */
+function findCoordinatedStrikePool(actor) {
+	for (const entry of iterateChargePools(actor)) {
+		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
+		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
+
+		const max = Math.max(0, Math.floor(Number(entry.pool.max) || 0));
+		return {
+			...entry,
+			max,
+			current: Math.max(0, Math.min(Math.floor(Number(entry.pool.current) || 0), max)),
+			label: String(entry.pool.label ?? 'Coordinated Strike!'),
+		};
+	}
+	return null;
+}
+
+/** +1 use at each of the four levels the feature calls out. */
+function ensureMasterCommanderUses(item) {
+	if (!MASTER_COMMANDER_MATCH.test(String(item.name ?? ''))) return;
+
+	const alreadyModifies = hasActiveRule(
+		item,
+		(rule) =>
+			rule.type === 'modifyPool' &&
+			rule.poolType === 'charge' &&
+			String(rule.poolIdentifier ?? '')
+				.toLowerCase()
+				.includes(COORDINATED_STRIKE_IDENTIFIER),
+	);
+	if (alreadyModifies) return;
+
+	[5, 9, 13, 17].forEach((minLevel, index) => {
+		addSyntheticRule(item, {
+			id: `nimPlusMasterCommanderUses-${index}`,
+			type: 'modifyPool',
+			identifier: '',
+			label: `${item.name} → +1 use of Coordinated Strike!`,
+			predicate: { level: { min: minLevel } },
+			priority: index + 1,
+			poolType: 'charge',
+			poolIdentifier: COORDINATED_STRIKE_IDENTIFIER,
+			dieSize: null,
+			maxDelta: '+1',
+		});
+	});
+}
+
+/**
+ * Give the Coordinated Strike! pool its Initiative recovery, once its owner has
+ * Master Commander. Written onto whichever `chargePool` rule is there rather
+ * than onto ours specifically, so it still lands if a future system version
+ * ships the pool itself.
+ */
+function ensureMasterCommanderRecovery(item) {
+	if (item?.system?.identifier !== COORDINATED_STRIKE_IDENTIFIER) return;
+	if (!actorHasMasterCommander(item.parent)) return;
+
+	for (const rule of itemRuleValues(item)) {
+		if (rule?.type !== 'chargePool' || rule.disabled) continue;
+		const identifier = String(rule.identifier ?? rule.id ?? '').toLowerCase();
+		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
+
+		const recoveries = Array.isArray(rule.recoveries) ? rule.recoveries : [];
+		if (recoveries.some((entry) => entry?.trigger === 'onInitiativeRolled')) continue;
+		try {
+			rule.recoveries = [
+				...recoveries,
+				{ trigger: 'onInitiativeRolled', mode: 'add', value: '1' },
+			];
+		} catch (error) {
+			console.error(
+				`[${MODULE_ID}] Could not add Master Commander's Initiative recovery`,
+				error,
+			);
+		}
+	}
+}
+
+/**
+ * Remember that the Initiative recovery actually handed a use back, and what the
+ * count was immediately afterwards.
+ *
+ * Recorded only when the pool really moved: at full uses there is nothing spent
+ * to regain, the recovery clamps to no change, and there is nothing to take away
+ * at the end either.
+ */
+function noteCoordinatedStrikeRecovery(payload) {
+	if (!classQoLEnabled()) return;
+	if (payload?.trigger !== 'onInitiativeRolled') return;
+
+	const actor = payload.actor;
+	if (actor?.type !== 'character' || !actor.isOwner) return;
+	if (!actorHasMasterCommander(actor)) return;
+
+	const pool = findCoordinatedStrikePool(actor);
+	if (!pool) return;
+
+	for (const entry of payload.recovery ?? []) {
+		if (entry?.poolId !== pool.key) continue;
+		if (!(entry.recoveredAmount > 0)) continue;
+		actor
+			.setFlag(MODULE_ID, COORD_STRIKE_TEMP_USE_FLAG, entry.newValue)
+			.catch((error) =>
+				console.error(`[${MODULE_ID}] Could not note the regained use`, error),
+			);
+		return;
+	}
+}
+
+/**
+ * "It is lost if not spent during that encounter."
+ *
+ * The regained use is only taken back when the count is still exactly where the
+ * recovery left it. Spend anything at all during the fight and the granted use
+ * is the one you spent — the reading that never punishes a player for having
+ * used the feature — and a count that has since gone *up* was topped up by
+ * something else, a Safe Rest most likely, which is not ours to dock.
+ */
+async function expireCoordinatedStrikeTempUse(actor) {
+	const granted = Number(actor?.getFlag?.(MODULE_ID, COORD_STRIKE_TEMP_USE_FLAG));
+	if (!Number.isFinite(granted)) return;
+
+	await actor.unsetFlag(MODULE_ID, COORD_STRIKE_TEMP_USE_FLAG);
+
+	const pool = findCoordinatedStrikePool(actor);
+	if (!pool || pool.current !== granted || pool.current < 1) return;
+	await setChargePoolCurrent(pool, pool.current - 1);
+}
+
+// The GM alone runs the clean-up: `deleteCombat` fires for everyone, and a GM
+// can write to any character, so this settles every combatant exactly once.
+Hooks.on('deleteCombat', () => {
+	if (!classQoLEnabled() || !game.user?.isGM) return;
+	for (const actor of game.actors ?? []) {
+		if (actor?.type !== 'character') continue;
+		expireCoordinatedStrikeTempUse(actor).catch((error) =>
+			console.error(`[${MODULE_ID}] Could not expire the regained use for ${actor.name}`, error),
+		);
+	}
+});
+
+// Registered at setup, not at load: `sysHook` needs `game.system` to exist.
+Hooks.once('setup', () => {
+	Hooks.on(sysHook('chargePool.recovered'), (payload) => {
+		try {
+			noteCoordinatedStrikeRecovery(payload);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to track the regained use`, error);
+		}
+	});
+});
+
+/* ── Commander — Combat Dice & Combat Tactics ────────────────────────────────
+ *
+ * "1/attack, you can expend a Combat Die to add one of the following effects to
+ *  your attack." — with STR Combat Dice gained when you roll Initiative, each a
+ *  d6 that grows to a d20 as you level.
+ *
+ * The resource is modelled: `fit-for-any-battlefield.json` carries a
+ * `chargePool` (`combat-dice`, `max: "@strength"`, `dieSize: "d6"`, refreshed
+ * `onInitiativeRolled`) plus the `modifyPool` rules that upgrade the die at
+ * levels 5/9/13/17. `dieSize` on a charge pool means "roll-on-spend": the count
+ * is how many times you may roll that die, and the system's own sheet rail draws
+ * one pip per die with a click-to-roll-and-spend button.
+ *
+ * That is exactly the rule as written — "extra damage equal to **a roll of** your
+ * Combat Die" — so the dice are *not* pre-rolled here. What the content does not
+ * carry is anything connecting the resource to the five Combat Tactic items,
+ * whose only content is the paragraph describing them, and there is no moment at
+ * which a player says "I am using Heavy Strike on this swing". Without that, the
+ * rail's button is the whole feature: it rolls a die at any time, spends it
+ * immediately, and leaves the player to work out what it was for.
+ *
+ * So this section supplies the missing half:
+ *
+ *   - **A "Combat Tactic" picker on the attack.** The activation dialog lists the
+ *     tactics this Commander actually chose, filtered to the weapon in hand
+ *     (Lunging and Sweeping name your Reach, so they are melee-only).
+ *   - **The Combat Die is rolled into the attack's own damage roll**, so it shares
+ *     the card, the tooltip and the single Apply Damage button — and Lunging
+ *     Strike's "2× a roll of your Combat Die" is one die doubled rather than two
+ *     dice, which is a different spread of damage for the same average.
+ *   - **The die is spent only when the tactic did something.** Heavy Strike says
+ *     "when you hit", so a miss costs nothing and is not even rolled.
+ *   - **Inerrant Strike responds to a miss**, so it cannot be declared in advance:
+ *     it is offered as a prompt the moment an attack misses.
+ *   - **Sweeping Strike's "this attack does not miss on a 1"** is applied to the
+ *     roll itself, so the card reads as a hit.
+ *   - **Combat Dice are lost when combat ends** — the pool ships with no
+ *     `encounterEnd` recovery, so a Commander walks out of a fight still holding
+ *     the dice they did not use. One recovery entry, added in memory, fixes it.
+ *   - **Commanding Presence** is a Combat Tactic but an Action rather than an
+ *     attack rider, and nothing makes it cost anything. It is blocked with an
+ *     empty pool and spends a die on use; its die is never rolled, because the
+ *     save DC is 10+STR and the value is never read.
+ *
+ * The system's own charge stepper for this pool stays in the dialog and keeps
+ * working — it is the escape hatch for spending a die on anything this section
+ * does not model. It is hidden only while a tactic is actually selected, so the
+ * same attack can never spend two dice through two different controls.
+ *
+ * ── Update-resilience ────────────────────────────────────────────────────────
+ * The pool is found by a fuzzy identifier/label match on flag state rather than
+ * by a hardcoded rule id; the tactics are found by matching the actor's own
+ * feature names, so a rename or a homebrew copy still resolves; the encounter-end
+ * recovery stands down the day the content declares one itself; and every DOM
+ * anchor is optional, so a missing one means the picker does not render and the
+ * weapon rolls exactly as it does today.
+ */
+
+const COMBAT_DICE_IDENTIFIER = 'combat-dice';
+const COMBAT_TACTIC_FIELD_CLASS = 'nim-plus-combat-tactic';
+const COMBAT_TACTIC_STYLE_ID = 'nim-plus-combat-tactic-styles';
+const COMMANDING_PRESENCE_MATCH = /commanding.presence/i;
+const COMBAT_DICE_ADVANTAGE_MATCH = /master\s*at\s*arms|relentless\s*assault/i;
+
+/**
+ * Subclass features whose text changes the size of the Combat Dice pool.
+ *
+ * These are carried as `modifyPool` rules in the content itself — this table is
+ * the repair for the copies that predate them. An item on a character sheet is a
+ * snapshot of the compendium as it was the day it was granted and is never
+ * updated afterwards, so a Commander who took *Seasoned Combatant* before the
+ * rule existed would keep a feature that does nothing for the rest of the
+ * campaign. Every entry is skipped when the item already carries a Combat Dice
+ * `modifyPool` of its own, so the content always wins and nothing ever doubles.
+ *
+ * `deltas` is `[maxDelta, minimumLevel]`; a null level means it always applies.
+ */
+const COMBAT_DICE_POOL_BONUSES = [
+	{ id: 'nimPlusSeasonedCombatant', match: /seasoned\s*combatant/i, deltas: [['+1', null]] },
+	{ id: 'nimPlusRelentlessAssault', match: /relentless\s*assault/i, deltas: [['+2', null]] },
+	{
+		id: 'nimPlusSingleMindedFighter',
+		match: /single.?minded\s*fighter/i,
+		// The two Orders chosen at level 2, then one more at each level an Order
+		// would have been chosen.
+		deltas: [
+			['+2', null],
+			['+1', 6],
+			['+1', 8],
+			['+1', 10],
+			['+1', 12],
+			['+1', 16],
+		],
+	},
+];
+
+function ensureCombatDicePoolBonus(item) {
+	const bonus = COMBAT_DICE_POOL_BONUSES.find(
+		(entry) =>
+			entry.match.test(String(item.name ?? '')) ||
+			entry.match.test(String(item.system?.identifier ?? '')),
+	);
+	if (!bonus) return;
+
+	// The content's own rule, if this copy is new enough to have it.
+	const alreadyModifies = hasActiveRule(
+		item,
+		(rule) =>
+			rule.type === 'modifyPool' &&
+			rule.poolType === 'charge' &&
+			String(rule.poolIdentifier ?? '')
+				.toLowerCase()
+				.includes(COMBAT_DICE_IDENTIFIER),
+	);
+	if (alreadyModifies) return;
+
+	bonus.deltas.forEach(([maxDelta, minLevel], index) => {
+		addSyntheticRule(item, {
+			id: `${bonus.id}-${index}`,
+			type: 'modifyPool',
+			identifier: '',
+			label: `${item.name} → ${maxDelta} max Combat Dice`,
+			predicate: minLevel === null ? {} : { level: { min: minLevel } },
+			priority: index + 1,
+			poolType: 'charge',
+			poolIdentifier: COMBAT_DICE_IDENTIFIER,
+			dieSize: null,
+			maxDelta,
+		});
+	});
+}
+
+/**
+ * The tactics that ride on an attack, in the order they are offered.
+ *
+ * `dieMultiplier` is how many times the rolled die is added to the damage —
+ * Lunging Strike deals "2× a roll of your Combat Die", which is one die doubled,
+ * not two dice; Sweeping Strike adds no damage at all and only needs a die to
+ * have been spent. `requiresHit` marks the tactics whose text is conditional on
+ * connecting, and those alone leave the die unspent on a miss. `delivery`
+ * filters the picker to the weapons the tactic can be used with.
+ */
+const COMBAT_TACTICS = [
+	{
+		key: 'heavy-strike',
+		name: 'Heavy Strike',
+		match: /heavy\s*strike/i,
+		delivery: 'any',
+		dieMultiplier: 1,
+		requiresHit: true,
+		short: 'push + a Combat Die of damage',
+		rider:
+			'Push a Medium creature <strong>STR spaces</strong> — a Small creature twice as far, a Large creature half as far (round down).',
+	},
+	{
+		key: 'lunging-strike',
+		name: 'Lunging Strike',
+		match: /lunging\s*strike/i,
+		delivery: 'melee',
+		dieMultiplier: 2,
+		requiresHit: false,
+		short: '+1 Reach, twice a Combat Die of damage',
+		rider: 'This attack was made with <strong>+1 Reach</strong>.',
+	},
+	{
+		key: 'sweeping-strike',
+		name: 'Sweeping Strike',
+		match: /sweeping\s*strike/i,
+		delivery: 'melee',
+		dieMultiplier: 0,
+		requiresHit: false,
+		cannotMiss: true,
+		short: 'area attack, cannot miss on a 1 (2 actions, no bonus damage)',
+		rider:
+			'Damage <strong>every target</strong> in a contiguous area within your weapon’s Reach. Costs <strong>2 actions</strong> — deduct the second one by hand.',
+	},
+];
+
+/**
+ * Not in the list above because it is not declarable: Inerrant Strike is the
+ * answer to a miss, so it is offered after the dice land.
+ */
+const INERRANT_STRIKE = {
+	key: 'inerrant-strike',
+	name: 'Inerrant Strike',
+	match: /inerrant\s*strike/i,
+	dieMultiplier: 1,
+	rider: 'The attack was rerolled and the Primary Die raised by 1.',
+};
+
+/** Set when an activation dialog was submitted with a tactic chosen. */
+let tacticArm = null;
+
+/** Outcome recorded by the roll patch, resolved once the activation lands. */
+let tacticOutcome = null;
+
+/**
+ * The Commander's Combat Dice pool, read from charge-pool flag state.
+ *
+ * Matched on a fuzzy identifier or label — the rule ships as `combat-dice` today
+ * but a homebrew copy or a rename should still resolve — and only accepted when
+ * it carries a `dieSize`, which is what marks a charge pool as the roll-on-spend
+ * kind rather than a plain counter. Returns null for anyone who has not reached
+ * level 4.
+ */
+function findCombatDicePool(actor) {
+	if (!actor) return null;
+
+	for (const entry of iterateChargePools(actor)) {
+		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
+		const label = String(entry.pool.label ?? '').toLowerCase();
+		if (!identifier.includes(COMBAT_DICE_IDENTIFIER) && !label.includes('combat dice')) continue;
+		if (!entry.pool.dieSize) continue;
+
+		const max = Math.max(0, Math.floor(Number(entry.pool.max) || 0));
+		return {
+			...entry,
+			dieSize: String(entry.pool.dieSize),
+			max,
+			current: Math.max(0, Math.min(Math.floor(Number(entry.pool.current) || 0), max)),
+			label: String(entry.pool.label ?? 'Combat Dice'),
+		};
+	}
+
+	return null;
+}
+
+/**
+ * Expend one die. The roll itself is not made here — a tactic's die is rolled
+ * into the attack's own damage roll, and Commanding Presence never rolls one at
+ * all — so this is purely the count.
+ */
+async function spendCombatDie(actor, pool) {
+	if (!pool || pool.current < 1) return null;
+
+	const remaining = pool.current - 1;
+	await setChargePoolCurrent(pool, remaining);
+
+	Hooks.callAll(sysHook('chargePool.changed'), {
+		actor,
+		poolId: pool.key,
+		poolLabel: pool.label,
+		previousValue: pool.current,
+		newValue: remaining,
+		maxValue: pool.max,
+		reason: 'consume',
+		trigger: 'manual',
+	});
+
+	return { remaining };
+}
+
+/**
+ * "You roll Combat Dice with advantage" — Champion of the Pit's *Master at Arms*
+ * and Champion of the Siege Breaker's *Relentless Assault* today.
+ *
+ * Read from a module flag on the feature rather than from its name, so a
+ * subclass added later only has to set `flags.<module>.combatDiceAdvantage` to
+ * be picked up, with no change here. Advantage on a die roll is "roll two, keep
+ * the higher", which is `2dN kh1`.
+ */
+function combatDiceAdvantage(actor) {
+	for (const item of actor?.items ?? []) {
+		if (item.getFlag?.(MODULE_ID, 'combatDiceAdvantage') === true) return true;
+		// A copy granted before the flag existed carries none, so the feature is
+		// also recognised by name — an item on a sheet is a snapshot of the pack
+		// as it was the day it was granted, and is never updated afterwards.
+		if (COMBAT_DICE_ADVANTAGE_MATCH.test(String(item.name ?? ''))) return true;
+	}
+	return false;
+}
+
+/**
+ * The formula for a tactic's Combat Die: one die, multiplied if the tactic
+ * doubles it, rolled with advantage where the character has it.
+ */
+function combatDieFormula(actor, pool, multiplier) {
+	const die = combatDiceAdvantage(actor) ? `2${pool.dieSize}kh1` : `1${pool.dieSize}`;
+	return multiplier > 1 ? `${multiplier} * ${die}` : die;
+}
+
+/** How a tactic's Combat Die reads in the dialog: `2 × 1d6`, `1d6 (adv)`. */
+function combatDieLabel(actor, pool, multiplier) {
+	const die = `1${pool.dieSize}${combatDiceAdvantage(actor) ? ' adv' : ''}`;
+	return multiplier > 1 ? `${multiplier} × ${die}` : die;
+}
+
+/** True when this Commander has taken the given tactic. */
+function ownsCombatTactic(actor, tactic) {
+	for (const item of actor?.items ?? []) {
+		if (item.type !== 'feature') continue;
+		if (tactic.match.test(String(item.system?.identifier ?? ''))) return true;
+		if (tactic.match.test(String(item.name ?? ''))) return true;
+	}
+	return false;
+}
+
+/**
+ * 'melee' / 'ranged' for a weapon that makes an attack, null for anything else.
+ * Mirrors the system's own reading of `activation.targets.attackType`, with the
+ * `range` property as the secondary marker it also honours.
+ */
+function weaponAttackDelivery(item) {
+	if (!item || item.type !== 'object') return null;
+	if (item.system?.objectType !== 'weapon') return null;
+	if (item.system?.activation?.targets?.attackType === 'range') return 'ranged';
+	const properties = item.system?.properties?.selected;
+	if (Array.isArray(properties) && properties.includes('range')) return 'ranged';
+	return 'melee';
+}
+
+/** The declarable tactics this Commander can use with this weapon. */
+function availableCombatTactics(actor, item) {
+	const delivery = weaponAttackDelivery(item);
+	if (!delivery) return [];
+	return COMBAT_TACTICS.filter(
+		(tactic) =>
+			(tactic.delivery === 'any' || tactic.delivery === delivery) &&
+			ownsCombatTactic(actor, tactic),
+	);
+}
+
+function ensureCombatTacticStyles() {
+	if (document.getElementById(COMBAT_TACTIC_STYLE_ID)) return;
+	const style = document.createElement('style');
+	style.id = COMBAT_TACTIC_STYLE_ID;
+	style.textContent = `
+		.${COMBAT_TACTIC_FIELD_CLASS}__select {
+			flex: 1;
+			min-width: 0;
+			padding: 0.375rem 0.5rem;
+			border: 1px solid var(--nimble-border-color, currentColor);
+			border-radius: var(--nimble-border-radius, 4px);
+		}
+		.${COMBAT_TACTIC_FIELD_CLASS}__note {
+			margin: 0.375rem 0 0;
+			font-size: 0.8125rem;
+			line-height: 1.35;
+			opacity: 0.8;
+		}
+		.${COMBAT_TACTIC_FIELD_CLASS}__note--empty { opacity: 0.6; font-style: italic; }
+		.${COMBAT_TACTIC_FIELD_CLASS}__hidden { display: none !important; }
+	`;
+	document.head.append(style);
+}
+
+/** Font Awesome's die icon for a die size, matching the system's own mapping. */
+function dieFaceIcon(dieSize) {
+	const known = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20'];
+	return known.includes(String(dieSize)) ? `fa-dice-${dieSize}` : 'fa-dice-d6';
+}
+
+/**
+ * Take over the dialog's **Spend Pool Dice** row for the Combat Dice pool.
+ *
+ * The system draws every roll-on-spend charge pool as a stepper that adds
+ * `+Nd6[Combat Dice]` to the damage and decrements the pool. For Combat Dice
+ * that control is wrong on its own terms: a Combat Die is only ever spent *as* a
+ * Combat Tactic, so a stepper offering to spend two of them on an attack that
+ * may take none is an invitation to break the rule the dice exist for. Wherever
+ * the tactic picker renders, the stepper is replaced.
+ *
+ * What replaces it is the same row, read-only: the pool's own die icon and
+ * label, then what the chosen tactic will actually roll, in place of the
+ * stepper's count. The row appears only once a tactic is selected, so an attack
+ * with no tactic shows no Combat Dice at all — and the section's heading and
+ * border go with it if that was the only pool on offer.
+ *
+ * Every anchor is optional and every class name is the system's own, so if the
+ * markup moves in a future version the worst case is that the native stepper
+ * stays and no row of ours appears.
+ */
+function syncCombatDiceSpendRow(root, actor, pool, tactic, scopedClass) {
+	const section = root.querySelector('.nimble-pool-spend');
+	if (!section) return;
+
+	const hiddenClass = `${COMBAT_TACTIC_FIELD_CLASS}__hidden`;
+	const wanted = pool.label.trim().toLowerCase();
+
+	// The native row for this pool, always hidden — never toggled back, because
+	// the picker is now the only way this pool is spent.
+	let anchor = null;
+	for (const row of section.querySelectorAll('.nimble-pool-spend__row')) {
+		if (row.dataset.nimPlusTacticRow) continue;
+		const label = row.querySelector('.nimble-pool-spend__label')?.textContent?.trim().toLowerCase();
+		if (label !== wanted) continue;
+		row.classList.add(hiddenClass);
+		anchor = row;
+	}
+
+	section.querySelectorAll('[data-nim-plus-tactic-row]').forEach((row) => row.remove());
+
+	if (tactic) {
+		// `2 × 1d6` for Lunging Strike, `1d6` for the tactics that add one die, and
+		// a plain count for Sweeping Strike, which spends a die without rolling it.
+		const spend =
+			tactic.dieMultiplier > 0 ? combatDieLabel(actor, pool, tactic.dieMultiplier) : '1 die';
+
+		const row = document.createElement('div');
+		row.className = `nimble-pool-spend__row ${COMBAT_TACTIC_FIELD_CLASS} ${scopedClass}`.trim();
+		row.dataset.nimPlusTacticRow = '1';
+		row.innerHTML = `
+			<span class="nimble-pool-spend__label ${scopedClass}">
+				<i class="fa-solid ${dieFaceIcon(pool.dieSize)} ${scopedClass}"></i>
+				${escape(pool.label)}
+			</span>
+			<div class="nimble-pool-spend__stepper ${scopedClass}">
+				<span class="nimble-pool-spend__stepper-value ${scopedClass}">
+					<strong class="${scopedClass}">${escape(spend)}</strong>
+					<span class="nimble-pool-spend__stepper-available ${scopedClass}">/ ${pool.current}</span>
+				</span>
+			</div>
+		`;
+
+		// Back where the stepper was, so the panel does not reshuffle as tactics
+		// are tried on and off.
+		if (anchor) anchor.after(row);
+		else section.append(row);
+	}
+
+	// If Combat Dice were the only pool on offer, the leftover heading is noise.
+	const stillVisible = Array.from(section.querySelectorAll('.nimble-pool-spend__row')).some(
+		(row) => !row.classList.contains(hiddenClass),
+	);
+	const container = section.closest('.nimble-roll-modifiers-container') ?? section;
+	container.classList.toggle(hiddenClass, !stillVisible);
+}
+
+/**
+ * Add the tactic picker to the activation dialog. Placement follows the same two
+ * rules as the Vicious Opportunist checkbox: appended as the LAST child of the
+ * dialog body, past every Svelte-managed node, and carrying the `svelte-*` hash
+ * class borrowed off a native sibling so the dialog's component-scoped styles
+ * reach it.
+ */
+function injectCombatTacticPicker(app, root) {
+	if (!classQoLEnabled()) return;
+
+	const actor = app?.actor;
+	const item = app?.item;
+	if (!actor || actor.type !== 'character') return;
+
+	root.querySelectorAll(`.${COMBAT_TACTIC_FIELD_CLASS}`).forEach((el) => el.remove());
+
+	const pool = findCombatDicePool(actor);
+	// A pool sized to a non-positive STR is not a resource to offer a choice over.
+	if (!pool || pool.max < 1) return;
+
+	ensureCombatTacticStyles();
+
+	const sibling = root.querySelector('.nimble-roll-modifiers-container');
+	const body = sibling?.parentElement ?? root.querySelector('.nimble-sheet__body');
+	if (!body) return;
+
+	const scopedClass =
+		Array.from(sibling?.classList ?? []).find((name) => name.startsWith('svelte-')) ?? '';
+
+	// Commanding Presence spends a die on its own, so its dialog must not also
+	// offer the stepper — that would be two spends for one use. The cost is shown
+	// in its place, since it is not otherwise visible anywhere in the dialog.
+	if (isCommandingPresence(item)) {
+		syncCombatDiceSpendRow(root, actor, pool, { dieMultiplier: 0 }, scopedClass);
+		return;
+	}
+
+	const tactics = availableCombatTactics(actor, item);
+	if (tactics.length === 0) {
+		// Nothing here can spend a Combat Die — the dice are only ever spent as a
+		// Combat Tactic on an attack, or by Commanding Presence above — so the
+		// native stepper is offering a spend that has nowhere to go. Coordinated
+		// Strike! is the obvious case: a free action that grants attacks rather
+		// than making one.
+		syncCombatDiceSpendRow(root, actor, pool, null, scopedClass);
+		return;
+	}
+
+	const empty = pool.current < 1;
+	const options = [
+		'<option value="">— No tactic —</option>',
+		...tactics.map(
+			(tactic) =>
+				`<option value="${tactic.key}">${escape(tactic.name)} — ${escape(tactic.short)}</option>`,
+		),
+	].join('');
+
+	const container = document.createElement('div');
+	container.className =
+		`nimble-roll-modifiers-container ${COMBAT_TACTIC_FIELD_CLASS} ${scopedClass}`.trim();
+	container.innerHTML = `
+		<div class="nimble-roll-modifiers ${scopedClass}">
+			<label class="${scopedClass}">
+				Combat Tactic:
+				<select
+					class="${COMBAT_TACTIC_FIELD_CLASS}__select ${scopedClass}"
+					data-nim-plus-tactic="1"
+					${empty ? 'disabled' : ''}
+				>${options}</select>
+			</label>
+			<p class="${COMBAT_TACTIC_FIELD_CLASS}__note ${COMBAT_TACTIC_FIELD_CLASS}__note--empty"></p>
+		</div>
+	`;
+
+	const select = container.querySelector('select');
+	const note = container.querySelector(`.${COMBAT_TACTIC_FIELD_CLASS}__note`);
+
+	const idle = empty
+		? 'No Combat Dice left — you gain STR of them when you roll Initiative.'
+		: `${pool.current} of ${pool.max} Combat Dice (${pool.dieSize}) left. One tactic per attack.`;
+
+	function describe() {
+		const tactic = tactics.find((entry) => entry.key === select.value);
+		// The Spend Pool Dice row above now carries what will be rolled, so the
+		// note only has to say what the tactic does and what it costs.
+		syncCombatDiceSpendRow(root, actor, pool, tactic, scopedClass);
+
+		if (!tactic) {
+			note.className =
+				`${COMBAT_TACTIC_FIELD_CLASS}__note ${COMBAT_TACTIC_FIELD_CLASS}__note--empty ${scopedClass}`.trim();
+			note.textContent = idle;
+			return;
+		}
+
+		const damage = tactic.dieMultiplier > 0 ? "Rolled into this attack's damage. " : '';
+		const cost = tactic.requiresHit
+			? 'Spends a Combat Die on a hit; a miss costs nothing.'
+			: 'Spends a Combat Die.';
+		note.className = `${COMBAT_TACTIC_FIELD_CLASS}__note ${scopedClass}`.trim();
+		note.innerHTML = `${damage}${tactic.rider} ${cost}`;
+	}
+
+	select.addEventListener('change', describe);
+	describe();
+
+	body.append(container);
+}
+
+/**
+ * Resolve the tactic the player declared in the dialog against the roll that just
+ * landed. The Combat Die is rolled here, into the attack's own damage roll, so it
+ * shares the card and the Apply Damage button; spending and announcing wait until
+ * the activation has actually produced that card.
+ */
+async function resolveDeclaredTactic(roll, activation, armed) {
+	const tactic = COMBAT_TACTICS.find((entry) => entry.key === armed.key);
+	if (!tactic) return null;
+
+	// Re-read the pool rather than trusting the dialog's snapshot: the die may
+	// have been spent elsewhere while the dialog was open.
+	const pool = findCombatDicePool(activation.actor);
+	if (!pool || pool.current < 1) return { tactic, spend: false, kind: 'empty' };
+
+	if (tactic.cannotMiss && roll.isMiss === true) {
+		roll.isMiss = false;
+	}
+
+	// "When you hit, …" — nothing landed, so nothing is rolled and nothing spent.
+	if (tactic.requiresHit && roll.isMiss === true) {
+		return { tactic, spend: false, kind: 'miss' };
+	}
+
+	let bonus = null;
+	if (tactic.dieMultiplier > 0) {
+		// "2× a roll of your Combat Die" is one die doubled, not two dice — same
+		// average, wider spread, and it is what the tactic says.
+		const formula = combatDieFormula(activation.actor, pool, tactic.dieMultiplier);
+		bonus = await appendDamageToRoll(roll, formula, tactic.name);
+	}
+
+	return {
+		tactic,
+		spend: true,
+		kind: 'applied',
+		bonus,
+		pool,
+		face: bonus?.faces?.[0] ?? null,
+		amount: bonus?.total ?? 0,
+	};
+}
+
+/** The kept (active, undiscarded) result of a die term. */
+function keptDieResult(term) {
+	return term?.results?.find((result) => result.active && !result.discarded) ?? null;
+}
+
+/**
+ * Roll the crit explosion for a primary die that has just been raised to its max
+ * face by a feature rather than by the dice.
+ *
+ * Mirrors what the system does for a natural max: `vicious` weapons delegate to
+ * its own two-dice chain, `standard` replays Foundry's `x` modifier by hand
+ * (the modifier itself already ran during evaluation), and `none` rolls nothing.
+ */
+async function explodeRaisedPrimaryDie(roll, primary, faces) {
+	if (roll.options?.explosionStyle === 'none') return;
+
+	if (
+		roll.options?.explosionStyle === 'vicious' &&
+		typeof roll._evaluateViciousExplosion === 'function'
+	) {
+		await roll._evaluateViciousExplosion(primary);
+		return;
+	}
+
+	const MAX_CHAIN = 100;
+	let last = faces;
+	for (let i = 0; last === faces && i < MAX_CHAIN; i += 1) {
+		const explosion = await new Roll(`1d${faces}`).evaluate();
+		const value = explosion.dice?.[0]?.results?.[0]?.result ?? explosion.total;
+		if (!Number.isFinite(value)) break;
+		primary.results.push({ result: value, active: true, exploded: value === faces });
+		last = value;
+	}
+}
+
+/**
+ * Reroll every die of a missed attack and raise the new Primary Die by 1 — the
+ * whole of Inerrant Strike's mechanical text.
+ *
+ * The dice are rerolled *in place*, which means the primary die's own khn/kln
+ * (advantage) and `x` (explosion) modifiers are re-applied by Foundry rather
+ * than reimplemented here. Results are snapshotted first and restored if any
+ * term fails to reroll, so a failure leaves the original roll untouched instead
+ * of a half-rerolled one.
+ *
+ * A rerolled primary die can be at most `faces`, and +1 can never take it back
+ * down to 1, so the attack always stops being a miss — which is what the tactic
+ * is for.
+ */
+async function rerollAttackForInerrantStrike(roll) {
+	const Die = foundry.dice?.terms?.Die;
+	const primary = roll.primaryDie;
+	const faces = primary?.faces;
+	if (!Die || !primary || !Number.isFinite(faces) || faces < 2) return null;
+
+	const dieTerms = roll.terms.filter((term) => term instanceof Die);
+	const snapshot = dieTerms.map((term) => foundry.utils.deepClone(term.results));
+	const before = keptDieResult(primary)?.result ?? null;
+
+	try {
+		for (const term of dieTerms) {
+			term.results = [];
+			// `evaluate` refuses to run twice; clearing the flag is what lets the
+			// term re-roll itself with all of its modifiers intact.
+			term._evaluated = false;
+			await term.evaluate();
+		}
+	} catch (error) {
+		dieTerms.forEach((term, index) => {
+			term.results = snapshot[index];
+			term._evaluated = true;
+		});
+		console.error(`[${MODULE_ID}] Inerrant Strike could not reroll the attack`, error);
+		return null;
+	}
+
+	const kept = keptDieResult(primary);
+	if (!kept) {
+		dieTerms.forEach((term, index) => {
+			term.results = snapshot[index];
+		});
+		return null;
+	}
+
+	const rerolled = kept.result;
+	const raised = Math.min(faces, rerolled + 1);
+	const overflow = Math.max(0, rerolled + 1 - faces);
+	const raisedIntoMax = rerolled < faces && raised === faces;
+	kept.result = raised;
+	if (raisedIntoMax) kept.exploded = true;
+
+	if (raisedIntoMax && roll.options?.canCrit) {
+		await explodeRaisedPrimaryDie(roll, primary, faces);
+	}
+
+	// The +1 can push the die past its own maximum; the system's own
+	// `primaryDieModifier` preset carries that excess as a flat term, so this does
+	// the same rather than silently dropping it.
+	const Terms = foundry.dice?.terms;
+	if (overflow > 0 && Terms?.OperatorTerm && Terms?.NumericTerm) {
+		const operator = new Terms.OperatorTerm({ operator: '+' });
+		operator._evaluated = true;
+		const numeric = new Terms.NumericTerm({
+			number: overflow,
+			options: { flavor: 'Inerrant Strike' },
+		});
+		numeric._evaluated = true;
+		roll.terms.push(operator, numeric);
+	}
+
+	roll._recalculateTotal();
+
+	// `_recalculateTotal` sums every active result, so the system's "the primary
+	// die does not count as damage" adjustment has to be re-applied against the
+	// value that is now on the die.
+	if (roll.options?.primaryDieAsDamage === false) {
+		roll.excludedPrimaryDieValue = raised;
+		roll._total = (roll._total ?? 0) - raised;
+	}
+
+	roll.isCritical = roll.options?.canCrit
+		? primary.results.some((result) => result.active && !result.discarded && result.result === faces)
+		: false;
+	roll.critCount = roll.isCritical ? 1 : 0;
+	roll.isMiss = roll.options?.canMiss ? (primary.isMiss ?? false) : false;
+	roll.resetFormula();
+
+	return { before, rerolled, raised, overflow };
+}
+
+/**
+ * Offer Inerrant Strike on a miss. Like Sneak Attack this has to be a prompt
+ * rather than a dialog control — you do not know the attack missed until it has.
+ */
+async function offerInerrantStrike(roll, activation) {
+	const actor = activation.actor;
+	if (!ownsCombatTactic(actor, INERRANT_STRIKE)) return null;
+	if (!weaponAttackDelivery(activation.item)) return null;
+
+	// Modifier-mode formulas have no single primary die to reroll, and a Brutal
+	// remapping re-points it at whichever die rolled highest. Neither shape can be
+	// rerolled coherently, so the tactic is not offered rather than guessed at.
+	if (roll.modifierMode || roll.options?.brutalPrimary) return null;
+	if (!roll.primaryDie) return null;
+
+	const pool = findCombatDicePool(actor);
+	if (!pool || pool.current < 1) return null;
+
+	const confirmed = await foundry.applications.api.DialogV2.confirm({
+		window: { title: 'Inerrant Strike' },
+		content:
+			'<p><strong>Missed.</strong> Expend a Combat Die on <strong>Inerrant Strike</strong>?</p>' +
+			`<p>The attack is rerolled, the Primary Die is raised by 1, and <strong>${combatDieLabel(actor, pool, INERRANT_STRIKE.dieMultiplier)}</strong> is added to the damage.</p>` +
+			`<p><em>${pool.current} of ${pool.max} Combat Dice left.</em></p>`,
+		yes: { label: 'Inerrant Strike', icon: 'fa-solid fa-crosshairs' },
+		no: { label: 'Let it miss' },
+		modal: true,
+		rejectClose: false,
+	}).catch(() => false);
+	if (!confirmed) return null;
+
+	const reroll = await rerollAttackForInerrantStrike(roll);
+	if (!reroll) return null;
+
+	const bonus = await appendDamageToRoll(
+		roll,
+		combatDieFormula(actor, pool, INERRANT_STRIKE.dieMultiplier),
+		INERRANT_STRIKE.name,
+	);
+	return {
+		tactic: INERRANT_STRIKE,
+		spend: true,
+		kind: 'applied',
+		bonus,
+		pool,
+		face: bonus?.faces?.[0] ?? null,
+		amount: bonus?.total ?? 0,
+		reroll,
+	};
+}
+
+/**
+ * The Combat Tactics half of the DamageRoll patch. Runs after Vicious
+ * Opportunist (which can turn a hit into a crit) and before Sneak Attack (which
+ * triggers on one), so an Inerrant Strike that rerolls into a crit is offered a
+ * Sneak Attack exactly as a natural crit would be.
+ */
+async function applyCombatTactic(roll) {
+	if (!classQoLEnabled()) return;
+
+	const activation = currentActivation();
+	// A damage roll outside a tracked activation — a macro item, a monster — can
+	// never be the attack the tactic was declared on, so drop the arm rather than
+	// letting it survive to the next weapon swing.
+	if (!activation) {
+		tacticArm = null;
+		return;
+	}
+	// One tactic per attack, however many damage rolls the activation produces.
+	if (activation.tacticHandled) return;
+
+	const actor = activation.actor;
+	if (!actor || actor.type !== 'character') return;
+
+	let outcome = null;
+
+	const armed = tacticArm;
+	if (armed && (!armed.itemId || !activation.item?.id || armed.itemId === activation.item.id)) {
+		tacticArm = null;
+		outcome = await resolveDeclaredTactic(roll, activation, armed);
+	}
+
+	// A declared tactic that never landed — Heavy Strike on a miss — leaves this
+	// attack's one Combat Die unspent, so Inerrant Strike can still claim it.
+	if (!outcome?.spend && roll?.isMiss === true) {
+		outcome = (await offerInerrantStrike(roll, activation)) ?? outcome;
+	}
+
+	activation.tacticHandled = true;
+	if (outcome) activation.tactic = outcome;
+}
+
+/** Spend the die and report what the tactic did, once the card exists. */
+async function resolveCombatTacticOutcome(actor, item, outcome) {
+	if (!outcome) return;
+
+	const { tactic } = outcome;
+	const speaker = ChatMessage.getSpeaker({ actor });
+	const name = escape(item?.name ?? 'the attack');
+
+	if (outcome.kind === 'empty') {
+		ChatMessage.create({
+			speaker,
+			flavor: `<strong>${escape(tactic.name)}</strong>`,
+			content: `<p>No Combat Dice left — ${name} resolved without the tactic.</p>`,
+		});
+		return;
+	}
+
+	if (outcome.kind === 'miss') {
+		ChatMessage.create({
+			speaker,
+			flavor: `<strong>${escape(tactic.name)}</strong>`,
+			content: `<p>${name} <strong>missed</strong>, and ${escape(tactic.name)} only triggers on a hit — <em>no Combat Die spent</em>.</p>`,
+		});
+		return;
+	}
+
+	let spent = null;
+	try {
+		spent = await spendCombatDie(actor, outcome.pool);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to spend a Combat Die`, error);
+	}
+
+	const parts = [];
+	if (outcome.reroll) {
+		parts.push(
+			`<p>Rerolled the attack: Primary Die <strong>${outcome.reroll.rerolled}</strong> + 1 → <strong>${outcome.reroll.raised}</strong>${
+				outcome.reroll.overflow > 0 ? ` (+${outcome.reroll.overflow} carried over)` : ''
+			}.</p>`,
+		);
+	}
+	if (outcome.amount > 0) {
+		parts.push(
+			`<p>Combat Die <strong>${outcome.face ?? outcome.amount}</strong>${
+				tactic.dieMultiplier > 1 ? ` doubled` : ''
+			} — <strong>+${outcome.amount}</strong> damage.</p>`,
+		);
+	}
+	if (tactic.rider) parts.push(`<p>${tactic.rider}</p>`);
+
+	const remaining = spent?.remaining ?? null;
+	parts.push(
+		`<p><em>Combat Die spent — ${
+			remaining === null
+				? 'pool unchanged'
+				: remaining > 0
+					? `${remaining} of ${outcome.pool.max} left`
+					: 'none left'
+		}.</em></p>`,
+	);
+
+	ChatMessage.create({
+		speaker,
+		flavor: `<strong>${escape(tactic.name)}</strong>`,
+		content: parts.join(''),
+	});
+}
+
+/**
+ * "Combat Dice are lost when combat ends."
+ *
+ * The shipped pool refreshes itself `onInitiativeRolled` and declares nothing for
+ * the other end of the fight, so unspent dice survive the encounter and carry
+ * into the next one. The charge subsystem dispatches an `encounterEnd` trigger
+ * already — there is simply no recovery entry listening for it — so one entry
+ * added in memory is the whole fix, and the day the content declares its own we
+ * stop adding ours.
+ *
+ * `recoveries` is replaced rather than pushed to, so the rule's own source array
+ * is never mutated: this lives on the prepared instance and evaporates when the
+ * module is turned off, at which point the system's next sync pass rewrites the
+ * persisted pool state from the rules and the entry disappears with it.
+ */
+function ensureCombatDiceDiscard(item) {
+	for (const rule of itemRuleValues(item)) {
+		if (rule?.type !== 'chargePool' || rule.disabled) continue;
+
+		const identifier = String(rule.identifier || rule.id || '').toLowerCase();
+		if (!identifier.includes(COMBAT_DICE_IDENTIFIER)) continue;
+
+		const recoveries = Array.isArray(rule.recoveries) ? rule.recoveries : [];
+		if (recoveries.some((entry) => entry?.trigger === 'encounterEnd')) continue;
+
+		try {
+			rule.recoveries = [...recoveries, { trigger: 'encounterEnd', mode: 'set', value: '0' }];
+		} catch (error) {
+			// A field the data model exposes read-only. Nothing else in the section
+			// depends on this, so the dice simply keep their old behaviour.
+			console.error(`[${MODULE_ID}] Could not add the Combat Dice encounter-end reset`, error);
+		}
+	}
+}
+
+/* ── Commander — an extra Combat Tactic at a subclass level ──────────────────
+ *
+ * Champion of the Pit's *Seasoned Combatant* reads "Choose a Combat Tactic and
+ * gain +1 max Combat Dice". The pool half is a `modifyPool` rule on the feature;
+ * the choice half has nowhere to live.
+ *
+ * The level-up window builds its selection groups from an index keyed by class
+ * identifier and level: the core tactics are registered under `commander` at
+ * levels 4/6/8/10/12/16, and a subclass cannot add itself to that list — the
+ * whole path runs inside the dialog's own state, with no hook and no registry to
+ * extend. Subclass features are always auto-granted, never offered as a choice.
+ *
+ * So the section is added to the dialog's DOM and the confirm button hooked, the
+ * same way the Feats section already is. What is offered is the *real* tactic
+ * documents from whichever pack ships them, found by their own class/group
+ * fields rather than by name, so a homebrew tactic in another pack appears here
+ * too — and the trigger is a module flag on the granting feature, so a subclass
+ * added later needs no change here.
+ */
+
+const TACTIC_LEVELUP_CLASS = 'nim-plus-levelup-tactic';
+const TACTIC_GROUP = 'combat-tactics';
+
+/**
+ * The group key a subclass's features are filed under.
+ *
+ * Derived exactly the way the level-up window derives it — the subclass item's
+ * **name**, slugified — rather than from `system.identifier`, which is not what
+ * the system matches on and is not always populated.
+ */
+function actorSubclassGroup(actor) {
+	const parentClass = actor?.items?.find?.((item) => item.type === 'class')?.system?.identifier;
+	const subclass =
+		actor?.items?.find?.(
+			(item) => item.type === 'subclass' && (!parentClass || item.system?.parentClass === parentClass),
+		) ?? actor?.items?.find?.((item) => item.type === 'subclass');
+	const name = String(subclass?.name ?? '');
+	if (name.length < 1) return null;
+	return name.slugify({ strict: true });
+}
+
+/** Every Combat Tactic document in the world's packs, whatever ships them. */
+let combatTacticDocsCache = null;
+async function loadCombatTacticDocs() {
+	if (combatTacticDocsCache) return combatTacticDocsCache;
+
+	const docs = [];
+	for (const pack of game.packs ?? []) {
+		if (pack.documentName !== 'Item') continue;
+		let index;
+		try {
+			index = await pack.getIndex({ fields: ['type', 'system.class', 'system.group'] });
+		} catch (_error) {
+			continue; // A pack we cannot read is a pack we skip.
+		}
+		for (const entry of index) {
+			if (entry.type !== 'feature') continue;
+			if (entry.system?.group !== TACTIC_GROUP) continue;
+			// Republished elsewhere — offering it here would put the same feature in
+			// two groups at once.
+			if (SUPERSEDED_CORE_FEATURES.some((sup) => sup.name === entry.name)) continue;
+			const doc = await pack.getDocument(entry._id).catch(() => null);
+			if (doc) docs.push(doc);
+		}
+	}
+
+	combatTacticDocsCache = docs.sort((a, b) => a.name.localeCompare(b.name));
+	return combatTacticDocsCache;
+}
+
+/**
+ * True when the level being gained brings a feature that grants a Combat Tactic
+ * choice. Read from the module flag rather than from a hardcoded subclass/level
+ * pair, so this follows the content.
+ */
+async function levelGrantsCombatTactic(actor, level) {
+	const group = actorSubclassGroup(actor);
+	if (!group) return false;
+
+	for (const pack of game.packs ?? []) {
+		if (pack.documentName !== 'Item') continue;
+		let index;
+		try {
+			index = await pack.getIndex({ fields: ['type', 'system.group', 'system.gainedAtLevels'] });
+		} catch (_error) {
+			continue;
+		}
+		for (const entry of index) {
+			if (entry.type !== 'feature') continue;
+			if (entry.system?.group !== group) continue;
+			const levels = entry.system?.gainedAtLevels;
+			if (!Array.isArray(levels) || !levels.includes(level)) continue;
+
+			// The flag is read off the document rather than the index: a compendium
+			// index only carries the fields it was asked for, and module flags are
+			// not among the ones the system registers.
+			const doc = await pack.getDocument(entry._id).catch(() => null);
+			if (doc?.getFlag?.(MODULE_ID, 'grantsCombatTactic') === true) return true;
+		}
+	}
+
+	return false;
+}
+
+/** Grant a chosen tactic, carrying its compendium source like the feat path. */
+async function grantCombatTactic(actor, uuid) {
+	const docs = await loadCombatTacticDocs();
+	const chosen = docs.find((doc) => doc.uuid === uuid);
+	if (!chosen) return null;
+
+	const source = chosen.toObject();
+	delete source._id;
+	source._stats = source._stats ?? {};
+	source._stats.compendiumSource = chosen.uuid;
+	const [created] = await actor.createEmbeddedDocuments('Item', [source]);
+	ui.notifications?.info(`${actor.name} gained the ${chosen.name} Combat Tactic.`);
+	return created ?? null;
+}
+
+async function injectLevelUpCombatTacticSection(app) {
+	if (!classQoLEnabled()) return;
+
+	const actor = app?.data?.document;
+	if (!(actor instanceof Actor) || actor.type !== 'character' || !actor.isOwner) return;
+	if (typeof app?.data?.classIdentifier !== 'string') return;
+
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+	const { body, footer } = await waitForLevelUpAnchors(root);
+	if (!body || !footer) return;
+	if (root.querySelector(`.${TACTIC_LEVELUP_CLASS}`)) return;
+
+	const newLevel = (Number(getCharacterLevel(actor)) || 0) + 1;
+	if (!(await levelGrantsCombatTactic(actor, newLevel))) return;
+
+	// Tactics already taken are not on offer again.
+	const owned = new Set(
+		(actor.items ?? [])
+			.filter((item) => item.type === 'feature')
+			.map((item) => String(item.name ?? '').toLowerCase()),
+	);
+	const available = (await loadCombatTacticDocs()).filter(
+		(doc) => !owned.has(String(doc.name ?? '').toLowerCase()),
+	);
+	if (available.length === 0) return;
+
+	// Re-check after the awaits: the dialog may have closed, or another render
+	// could have injected in the meantime.
+	if (!root.isConnected || root.querySelector(`.${TACTIC_LEVELUP_CLASS}`)) return;
+
+	ensureFeatStyles();
+	const rows = available
+		.map((doc) => {
+			const desc = String(doc.system?.description ?? '')
+				.replace(/<[^>]+>/g, ' ')
+				.replace(/\s+/g, ' ')
+				.trim();
+			return `
+				<label class="nim-plus-feat-pick__row">
+					<input type="radio" name="nim-plus-levelup-tactic" value="${escape(doc.uuid)}">
+					<span class="nim-plus-feat-pick__main">
+						<span class="nim-plus-feat-pick__name">${escape(doc.name)}</span>
+						<span class="nim-plus-feat-pick__desc">${escape(desc)}</span>
+					</span>
+				</label>`;
+		})
+		.join('');
+
+	const section = document.createElement('section');
+	section.className = TACTIC_LEVELUP_CLASS;
+	section.innerHTML = `
+		<header>
+			<h3 class="nimble-heading" data-heading-variant="section">Combat Tactic (Choose one)</h3>
+		</header>
+		<div class="nim-plus-feat-pick__list">${rows}</div>`;
+
+	// Capture phase, so this runs before the dialog's own submit: with nothing
+	// chosen the level-up is blocked, because the tactic is owed at this level.
+	const confirmHandler = (event) => {
+		const selected = section.querySelector('input[name="nim-plus-levelup-tactic"]:checked');
+		if (!selected) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			ui.notifications?.warn('Choose a Combat Tactic to finish your level-up.');
+			return;
+		}
+		if (section.dataset.granted) return;
+		section.dataset.granted = 'true';
+		grantCombatTactic(actor, selected.value).catch((error) =>
+			console.error(`[${MODULE_ID}] Failed to grant a Combat Tactic from the level-up window`, error),
+		);
+	};
+
+	// Keep the section attached and the button hooked across the dialog's own
+	// reactive re-renders; re-appending the same detached node preserves the
+	// radio choice, so the observer is a safe self-heal.
+	const ensure = () => {
+		const live = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+		if (!live?.isConnected) return;
+		const liveBody = live.querySelector('.nimble-sheet__body');
+		if (liveBody && !section.isConnected) liveBody.appendChild(section);
+		const confirmBtn = live.querySelector('.nimble-sheet__footer .nimble-button');
+		if (confirmBtn && !confirmBtn.dataset.nimPlusTacticHooked) {
+			confirmBtn.dataset.nimPlusTacticHooked = 'true';
+			confirmBtn.addEventListener('click', confirmHandler, true);
+		}
+	};
+
+	ensure();
+	try {
+		app.__nimPlusTacticObserver?.disconnect();
+	} catch (_error) {
+		/* no previous observer */
+	}
+	const observer = new MutationObserver(() => ensure());
+	observer.observe(root, { childList: true, subtree: true });
+	app.__nimPlusTacticObserver = observer;
+}
+
+Hooks.on('renderGenericDialog', (app) => {
+	injectLevelUpCombatTacticSection(app).catch((error) =>
+		console.error(`[${MODULE_ID}] Failed to add the Combat Tactic choice to the level-up window`, error),
+	);
+});
+
+Hooks.on('closeGenericDialog', (app) => {
+	try {
+		app.__nimPlusTacticObserver?.disconnect();
+	} catch (_error) {
+		/* nothing to disconnect */
+	}
+});
+
+/* ── Commander — foregoing a whole feature group ─────────────────────────────
+ *
+ * Champion of the Arena's *Single-Minded Fighter* reads "You forego all
+ * Commander's Orders. Whenever you would choose one, you gain +1 max Combat Die
+ * instead." The second half is a ladder of `modifyPool` rules on the feature —
+ * two dice for the pair chosen at level 2, one more at each of 6, 8, 10, 12 and
+ * 16. The first half has to stop the choice from being offered at all.
+ *
+ * The level-up window cannot be told this from data: it requires one pick per
+ * selection group before it will submit, and that check reads Svelte state
+ * nothing outside the component can reach. So it is handled from both ends —
+ * the group is taken out of the window, and the item is refused at creation.
+ * The refusal is the half that actually matters: it holds for every route an
+ * Order could arrive by, including a drag onto the sheet, so the DOM half is
+ * only there to stop the window offering a choice that would be thrown away.
+ *
+ * Driven by a `foregoesFeatureGroup` module flag naming the group, so this is
+ * not specific to Orders or to this subclass.
+ */
+
+/**
+ * Core features this module republishes under a different group.
+ *
+ * **Commanding Presence** ships under Combat Tactics, matching the rulebook,
+ * where the header promises "1/attack, you can expend a Combat Die to add one of
+ * the following effects **to your attack**". It is the only one of the five that
+ * is not an attack rider at all — a standalone Action with a WIL save — so it is
+ * republished as a Commander's Order, which is what it behaves like.
+ *
+ * The replacement is a real item in this module's pack, filed under
+ * `commanders-orders` at the levels Orders are chosen, so the level-up window
+ * offers and grants it through the system's own selection machinery with nothing
+ * intercepted. All that is left here is taking the core card out of the Combat
+ * Tactics group, so the same feature is not on offer twice.
+ *
+ * Deliberately a *reclassification*, not a rules change: it still costs a Combat
+ * Die. Note the knock-on — as an Order it is now given up by Single-Minded
+ * Fighter, which foregoes that whole group.
+ */
+const SUPERSEDED_CORE_FEATURES = [{ name: 'Commanding Presence', group: 'combat-tactics' }];
+
+/** Take the superseded core cards out of the group they were published in. */
+function hideSupersededLevelUpCards(root) {
+	for (const superseded of SUPERSEDED_CORE_FEATURES) {
+		const wantedGroup = superseded.group.replace(/[^a-z0-9]/gi, '').toLowerCase();
+		const wantedName = superseded.name.trim().toLowerCase();
+
+		for (const section of root.querySelectorAll('.feature-group')) {
+			const heading = section.querySelector('h4')?.textContent ?? '';
+			if (heading.replace(/[^a-z0-9]/gi, '').toLowerCase() !== wantedGroup) continue;
+
+			for (const card of section.querySelectorAll('.feature-item')) {
+				const name = card.querySelector('.feature-row__name')?.textContent?.trim().toLowerCase();
+				if (name !== wantedName) continue;
+				card.style.display = 'none';
+			}
+		}
+	}
+}
+
+/** The feature groups this character has given up, from their own features. */
+function foregoneFeatureGroups(actor) {
+	const groups = new Set();
+	for (const item of actor?.items ?? []) {
+		const group = item.getFlag?.(MODULE_ID, 'foregoesFeatureGroup');
+		if (typeof group === 'string' && group.length > 0) groups.add(group);
+	}
+	return groups;
+}
+
+Hooks.on('preCreateItem', (item, source) => {
+	try {
+		if (!classQoLEnabled()) return true;
+		const actor = item?.parent;
+		if (!(actor instanceof Actor)) return true;
+		if (source?.type !== 'feature') return true;
+
+		const group = String(source?.system?.group ?? '');
+		if (group.length < 1) return true;
+		if (!foregoneFeatureGroups(actor).has(group)) return true;
+
+		ui.notifications?.info(
+			`${actor.name} has foregone ${group.replace(/-/g, ' ')} — ${source.name} was not added.`,
+		);
+		return false;
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to check a foregone feature group`, error);
+		return true;
+	}
+});
+
+/**
+ * Take a foregone group out of the level-up window.
+ *
+ * The window refuses to submit until each selection group has its picks, so the
+ * group cannot simply be hidden — a pick is made on the player's behalf first,
+ * purely to satisfy that check, and the `preCreateItem` guard above discards
+ * whatever was picked. Selecting through the card's own button rather than by
+ * writing state keeps this on the component's supported path.
+ */
+function stripForegoneLevelUpGroups(app) {
+	if (!classQoLEnabled()) return;
+
+	const actor = app?.data?.document;
+	if (!(actor instanceof Actor) || actor.type !== 'character') return;
+	const groups = foregoneFeatureGroups(actor);
+	if (groups.size < 1) return;
+
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+
+	const wanted = new Set([...groups].map((group) => group.replace(/[^a-z0-9]/gi, '').toLowerCase()));
+
+	for (const section of root.querySelectorAll('.feature-group')) {
+		const heading = section.querySelector('h4')?.textContent ?? '';
+		if (!wanted.has(heading.replace(/[^a-z0-9]/gi, '').toLowerCase())) continue;
+		if (section.dataset.nimPlusForegone) continue;
+		section.dataset.nimPlusForegone = 'true';
+
+		// Satisfy the window's completion check. Clicking every card once is safe
+		// and needs no reading of the group's state: a click adds that feature,
+		// and once the group is at its cap the rest are ignored outright. A group
+		// with no buttons is one the window grants outright — nothing to satisfy.
+		for (const button of section.querySelectorAll('.feature-row__actions button')) {
+			button.click();
+		}
+
+		section.style.display = 'none';
+	}
+}
+
+Hooks.on('renderGenericDialog', (app) => {
+	const root = app?.element instanceof HTMLElement ? app.element : app?.element?.[0];
+	if (!root) return;
+
+	// The class-feature groups are fetched from the packs after the window opens,
+	// so there is nothing to strip on this frame — and the window re-renders as
+	// selections change. An observer covers both; the per-section marker inside
+	// makes every pass after the first a no-op.
+	const run = () => {
+		try {
+			hideSupersededLevelUpCards(root);
+			stripForegoneLevelUpGroups(app);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to adjust the level-up window's feature groups`, error);
+		}
+	};
+
+	run();
+	try {
+		app.__nimPlusForegoneObserver?.disconnect();
+	} catch (_error) {
+		/* no previous observer */
+	}
+	const observer = new MutationObserver(run);
+	observer.observe(root, { childList: true, subtree: true });
+	app.__nimPlusForegoneObserver = observer;
+});
+
+Hooks.on('closeGenericDialog', (app) => {
+	try {
+		app.__nimPlusForegoneObserver?.disconnect();
+	} catch (_error) {
+		/* nothing to disconnect */
+	}
+});
+
+/**
+ * When the feature that foregoes a group is gained, the members already on the
+ * sheet are the ones its text gives up ("you forego **all** Commander's
+ * Orders"), and the extra Combat Dice are the compensation for exactly those.
+ * Offered rather than done: deleting a player's features silently is not this
+ * module's call, and a table may well have ruled otherwise.
+ */
+Hooks.on('createItem', (item) => {
+	try {
+		if (!classQoLEnabled()) return;
+		const group = item?.getFlag?.(MODULE_ID, 'foregoesFeatureGroup');
+		if (typeof group !== 'string' || group.length < 1) return;
+
+		const actor = item.parent;
+		if (!(actor instanceof Actor) || !actor.isOwner) return;
+
+		const owned = actor.items.filter(
+			(entry) => entry.type === 'feature' && entry.system?.group === group,
+		);
+		if (owned.length < 1) return;
+
+		const names = owned.map((entry) => entry.name).join(', ');
+		foundry.applications.api.DialogV2.confirm({
+			window: { title: item.name },
+			content:
+				`<p><strong>${escape(item.name)}</strong> foregoes all ${escape(group.replace(/-/g, ' '))}, and its extra Combat Dice are the compensation for them.</p>` +
+				`<p>Remove the ${owned.length} already on the sheet?</p><p><em>${escape(names)}</em></p>`,
+			yes: { label: 'Remove them' },
+			no: { label: 'Keep them' },
+			modal: false,
+			rejectClose: false,
+		})
+			.then((confirmed) => {
+				if (!confirmed) return null;
+				return actor.deleteEmbeddedDocuments(
+					'Item',
+					owned.map((entry) => entry.id),
+				);
+			})
+			.catch((error) => console.error(`[${MODULE_ID}] Failed to remove foregone features`, error));
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to offer removal of foregone features`, error);
+	}
+});
+
+/** Whether this item is the Commanding Presence combat tactic. */
+function isCommandingPresence(item) {
+	if (item?.type !== 'feature') return false;
+	return (
+		COMMANDING_PRESENCE_MATCH.test(String(item.system?.identifier ?? '')) ||
+		COMMANDING_PRESENCE_MATCH.test(String(item.name ?? ''))
+	);
+}
+
+/**
+ * Commanding Presence costs a Combat Die like every other Combat Tactic, but it
+ * is an Action rather than an attack rider — there is no attack roll to hang a
+ * picker on, and its die is never rolled at all, because the save DC is 10+STR
+ * and the die's value is never read. So it is handled without a prompt: blocked
+ * when the pool is empty, and one die spent on use.
+ *
+ * Driven off the system's own use hooks rather than another prototype patch, so
+ * there is one less method wrapped.
+ */
+function blockCommandingPresenceWithoutDice(item) {
+	if (!classQoLEnabled()) return true;
+	if (!isCommandingPresence(item)) return true;
+
+	const pool = findCombatDicePool(item.actor);
+	// Not a Commander with the pool at all — leave the feature alone.
+	if (!pool || pool.max < 1) return true;
+	if (pool.current > 0) return true;
+
+	ui.notifications?.warn(
+		`${item.name} costs a Combat Die, and ${item.actor?.name ?? 'this character'} has none.`,
+	);
+	return false;
+}
+
+async function spendCommandingPresenceDie(item) {
+	if (!classQoLEnabled()) return;
+	if (!isCommandingPresence(item)) return;
+
+	const actor = item.actor;
+	const pool = findCombatDicePool(actor);
+	if (!pool || pool.current < 1) return;
+
+	const spent = await spendCombatDie(actor, pool);
+	if (!spent) return;
+
+	ChatMessage.create({
+		speaker: ChatMessage.getSpeaker({ actor }),
+		flavor: `<strong>${escape(item.name)}</strong>`,
+		content:
+			`<p><em>Combat Die spent — ${
+				spent.remaining > 0 ? `${spent.remaining} of ${pool.max} left` : 'none left'
+			}.</em></p>`,
+	});
+}
+
+// Registered at setup, not at load: `sysHook` needs `game.system` to exist.
+Hooks.once('setup', () => {
+	Hooks.on(sysHook('preUseItem'), (item) => {
+		try {
+			return blockCommandingPresenceWithoutDice(item);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to check Commanding Presence's cost`, error);
+			return true;
+		}
+	});
+
+	Hooks.on(sysHook('useItem'), (item) => {
+		spendCommandingPresenceDie(item).catch((error) =>
+			console.error(`[${MODULE_ID}] Failed to spend Commanding Presence's Combat Die`, error),
+		);
+	});
+});
+
+/**
+ * True while a fight is on the combat tracker.
+ *
+ * Deliberately *not* `combat.started`, which is a derived getter meaning
+ * `round > 0 && turns.length > 0` — false for an encounter that has its
+ * combatants staged but has not had Begin Combat clicked yet. That is still very
+ * much a fight from the table's point of view, and gating on `started` made
+ * combat-only UI vanish during setup and reappear a click later.
+ *
+ * A combat with no combatants is somebody having opened the tracker, so it does
+ * not count. The other end needs no test: ending an encounter deletes the Combat
+ * document outright, so the last one leaving the tracker is the fight ending.
+ */
+function encounterActive() {
+	for (const combat of game.combats ?? []) {
+		if ((combat?.combatants?.size ?? 0) > 0) return true;
+	}
+	return false;
+}
+
+/** Every hook after which `encounterActive()` may have changed its answer. */
+const ENCOUNTER_EDGE_HOOKS = [
+	'createCombat',
+	'updateCombat',
+	'deleteCombat',
+	'combatStart',
+	'createCombatant',
+	'deleteCombatant',
+];
+
+/**
+ * Take the Combat Dice group off the sheet's tracker rail while there is no
+ * encounter.
+ *
+ * The system rails every roll-on-spend charge pool as one pip per die, and shows
+ * the rail whenever the pool has capacity — right for a resource you carry
+ * around, wrong for one that only exists inside a fight. Out of combat a
+ * Commander has no Combat Dice at all, and a row of permanently spent pips is a
+ * reminder of a resource you cannot have. Inside a fight it stays visible even at
+ * zero, because "none left" is worth knowing.
+ *
+ * The group is matched by the pool's own label appearing in the badge tooltip and
+ * toggled rather than hidden once, because the tracker is Svelte-rendered and
+ * reuses its nodes across state changes.
+ */
+function syncCombatDiceTrackerVisibility(root, actor) {
+	const pool = findCombatDicePool(actor);
+	if (!pool) return;
+
+	const label = pool.label.trim().toLowerCase();
+	if (label.length < 1) return;
+
+	ensureCombatTacticStyles();
+	const hidden = `${COMBAT_TACTIC_FIELD_CLASS}__hidden`;
+	const hide = classQoLEnabled() && !encounterActive();
+
+	const tracker = root.querySelector('.dice-pool-tracker');
+	if (!tracker) return;
+
+	for (const group of tracker.querySelectorAll('.dice-pool-tracker__group')) {
+		const tooltip = String(
+			group.querySelector('[data-tooltip]')?.getAttribute('data-tooltip') ?? '',
+		).toLowerCase();
+		if (!tooltip.includes(label)) continue;
+		group.classList.toggle(hidden, hide);
+	}
+
+	// An all-hidden rail would otherwise leave an empty bordered box behind.
+	const anyVisible = Array.from(tracker.querySelectorAll('.dice-pool-tracker__group')).some(
+		(group) => !group.classList.contains(hidden),
+	);
+	tracker.classList.toggle(hidden, !anyVisible);
+}
+
+/** Re-apply the above on every open character sheet. */
+function refreshCombatDiceTrackers(actorId = null) {
+	const apps = foundry.applications?.instances?.values?.() ?? [];
+	for (const app of apps) {
+		const actor = app?.document ?? app?.actor;
+		if (!(actor instanceof Actor) || actor.type !== 'character') continue;
+		if (actorId && actor.id !== actorId) continue;
+		const root = app.element instanceof HTMLElement ? app.element : null;
+		if (!root) continue;
+		try {
+			syncCombatDiceTrackerVisibility(root, actor);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to update the Combat Dice tracker`, error);
+		}
+	}
+}
+
+Hooks.on('renderPlayerCharacterSheet', (app, html) => {
+	const root = html instanceof HTMLElement ? html : html?.[0];
+	const actor = app?.document ?? app?.actor;
+	if (!root || !(actor instanceof Actor)) return;
+	try {
+		syncCombatDiceTrackerVisibility(root, actor);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to update the Combat Dice tracker`, error);
+	}
+});
+
+for (const hook of ['updateItem', 'updateActor']) {
+	Hooks.on(hook, (document, changed) => {
+		if (!changed?.flags?.[sysId()]?.chargePools) return;
+		const actor = document instanceof Actor ? document : (document?.actor ?? null);
+		if (actor?.type !== 'character') return;
+		refreshCombatDiceTrackers(actor.id);
+	});
+}
+
+// The rail's visibility follows the encounter, so every edge of one redraws it —
+// including the combatants arriving and leaving, since a staged fight counts.
+for (const hook of ENCOUNTER_EDGE_HOOKS) {
+	Hooks.on(hook, () => refreshCombatDiceTrackers());
+}
+
+Hooks.once('setup', () => {
+	for (const hook of ['chargePool.changed', 'chargePool.recovered']) {
+		Hooks.on(sysHook(hook), () => refreshCombatDiceTrackers());
+	}
+});
 
 /* ── Oathsworn — Radiant Judgement ───────────────────────────────────────────
  *
@@ -6723,6 +8542,10 @@ for (const hook of ['preUpdateItem', 'preUpdateActor']) {
  * system's own, restricted to pools that come from **class features**: a bag
  * full of charged magic items belongs on the inventory tab, not here.
  *
+ * The rail exists for the moment of play these counters are spent in, so it is
+ * there for the fight and gone the rest of the time — the Features tab still
+ * carries every counter, including out of combat.
+ *
  * Styling borrows the rail's own CSS custom properties rather than copying any
  * values, so it follows the sheet's theme, and the whole thing is re-derived
  * from flag state on every render — there is no state of our own to drift.
@@ -6836,6 +8659,48 @@ async function setChargePoolCurrent(entry, next) {
 	});
 }
 
+/**
+ * Does this feature declare a consumer for its own pool? If it does, using the
+ * feature is what spends the charge — moving the counter here as well would
+ * spend it twice.
+ */
+function poolHasChargeConsumer(item, entry) {
+	const identifier = String(entry.pool?.identifier ?? entry.key ?? '').toLowerCase();
+	if (identifier.length < 1) return false;
+	return hasActiveRule(item, (rule) => {
+		if (rule.type !== 'chargeConsumer') return false;
+		const target = String(rule.poolIdentifier || rule.identifier || rule.id || '').toLowerCase();
+		return target === identifier;
+	});
+}
+
+/**
+ * Spending a single use *is* the feature being used, so it goes through the
+ * sheet's own activation path — the same chat card you get from the Features
+ * tab, the same macro, the same refusal at zero — rather than quietly moving a
+ * number. Anything else the pips can express (restoring a use, or dropping the
+ * counter by several at once) is bookkeeping, and only sets the count.
+ *
+ * The spend itself is left to whoever owns it: a feature that declares a
+ * `chargeConsumer` has one deducted by the system as part of the use, and only a
+ * feature without one needs us to move the counter afterwards. A use that never
+ * produced a card was refused or cancelled, and costs nothing either way.
+ */
+async function useOrSetChargePool(entry, next) {
+	const item = entry.document;
+	const actor = item?.parent;
+	const spendsOne = next === entry.current - 1;
+
+	if (!spendsOne || !(actor instanceof Actor) || typeof actor.activateItem !== 'function') {
+		await setChargePoolCurrent(entry, next);
+		return;
+	}
+
+	const card = await actor.activateItem(item.id);
+	if (!card) return;
+	if (!poolHasChargeConsumer(item, entry)) await setChargePoolCurrent(entry, next);
+}
+
 function injectChargeRail(app, root) {
 	if (!classQoLEnabled()) return;
 	const actor = app?.document ?? app?.actor;
@@ -6845,6 +8710,8 @@ function injectChargeRail(app, root) {
 
 	const rail = root.querySelector('.nimble-sheet__left-trackers');
 	if (!rail) return;
+
+	if (!encounterActive()) return;
 
 	const pools = featureChargePools(actor);
 	if (pools.length === 0) return;
@@ -6876,15 +8743,18 @@ function injectChargeRail(app, root) {
 			pip.type = 'button';
 			pip.className =
 				`${CHARGE_RAIL_CLASS}__pip ${CHARGE_RAIL_CLASS}__pip--${available ? 'available' : 'spent'}`;
-			pip.dataset.tooltip = available
-				? `Spend a use of ${pool.label}`
-				: `Restore a use of ${pool.label}`;
+			const usesOne = available && index === pool.current - 1;
+			pip.dataset.tooltip = usesOne
+				? `Use ${pool.label}`
+				: available
+					? `Set ${pool.label} to ${index} uses`
+					: `Set ${pool.label} to ${index + 1} uses`;
 			pip.dataset.tooltipDirection = 'RIGHT';
 			pip.innerHTML = '<i class="fa-solid fa-circle"></i>';
 			// Clicking an available pip spends down to it; clicking a spent one
 			// restores up to it. Both read as "set the counter to here".
 			pip.addEventListener('click', () => {
-				setChargePoolCurrent(pool, available ? index : index + 1).catch((error) =>
+				useOrSetChargePool(pool, available ? index : index + 1).catch((error) =>
 					console.error(`[${MODULE_ID}] Failed to adjust ${pool.label}`, error),
 				);
 			});
@@ -6946,6 +8816,11 @@ Hooks.once('setup', () => {
 	}
 });
 
+// The rail only exists during an encounter, so every edge of one redraws it.
+for (const hook of ENCOUNTER_EDGE_HOOKS) {
+	Hooks.on(hook, () => refreshChargeRails());
+}
+
 /* ── Wiring ─────────────────────────────────────────────────────────────────── */
 
 /**
@@ -6959,7 +8834,141 @@ function injectMissingRules(item) {
 	ensureJudgmentConsumer(item);
 	ensureJudgmentPoolModifier(item);
 	ensureCoordinatedStrikeCounter(item);
+	// After the counter exists: this writes onto the pool rule the line above
+	// supplies when the content carries none of its own.
+	ensureMasterCommanderRecovery(item);
+	ensureMasterCommanderUses(item);
+	ensureCombatDiceDiscard(item);
+	ensureCombatDicePoolBonus(item);
 }
+
+/**
+ * `prepareBaseData` is where the system builds `item.rules` from the stored
+ * source, so it is the one place a synthetic rule can be added early enough for
+ * the pool engines — which read that map — to see it.
+ *
+ * Installed from `init` rather than `setup`, and idempotent so a second call is
+ * free. The timing matters: `Game#setupGame` runs `initializeDocuments()`
+ * *before* it fires the `setup` hook, so by then every world item already
+ * exists — and a Nimble item builds its rules exactly once, its `prepareData`
+ * short-circuiting on an `initialized` flag from then on. A patch installed at
+ * `setup` therefore never reached a single item that was already in the world;
+ * it only caught items created afterwards. That is why a feature worked
+ * perfectly the moment it was granted and was quietly unautomated after the next
+ * reload.
+ */
+function patchFeatureRulePreparation() {
+	const FeatureClass = CONFIG?.NIMBLE?.Item?.documentClasses?.feature;
+	if (!FeatureClass?.prototype || FeatureClass.prototype.__nimPlusRulesPatched) return false;
+
+	const originalPrepareBaseData = FeatureClass.prototype.prepareBaseData;
+	FeatureClass.prototype.prepareBaseData = function patchedPrepareBaseData(...args) {
+		const result = originalPrepareBaseData?.apply(this, args);
+		try {
+			injectMissingRules(this);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Failed to supply rules for ${this?.name}`, error);
+		}
+		return result;
+	};
+	FeatureClass.prototype.__nimPlusRulesPatched = true;
+	return true;
+}
+
+/**
+ * Rebuild the rules of features that were prepared before the patch landed.
+ *
+ * Only needed when the system registered its document classes after we did — we
+ * both listen for `init`, and the loser of that race would otherwise be a whole
+ * world of items holding rule maps with nothing of ours in them. Clearing the
+ * item's `initialized` flag is what makes the system's own `prepareData` run a
+ * second time; the actor is re-prepared afterwards so anything derived from
+ * those rules is rebuilt with them.
+ */
+function reprepareFeatureRules() {
+	for (const actor of game.actors ?? []) {
+		if (actor?.type !== 'character') continue;
+		let touched = false;
+		for (const item of actor.items ?? []) {
+			if (item?.type !== 'feature' || item.initialized !== true) continue;
+			item.initialized = false;
+			touched = true;
+		}
+		if (!touched) continue;
+		try {
+			actor.prepareData();
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Could not re-prepare ${actor?.name}`, error);
+		}
+	}
+}
+
+/**
+ * True when an item declares a charge pool that its stored pool state has no
+ * entry for — the signature of state written while our rules were missing.
+ *
+ * The system rebuilds that state from the live rules and persists it, but only
+ * from a document CRUD hook, so a world that has just been repaired carries the
+ * stale version until something happens to the actor. This is how we find those
+ * actors without duplicating the system's map builder.
+ */
+function actorHasUnsyncedChargePool(actor) {
+	// Both scopes in one set: an `actor`-scoped pool is stored on the actor, not
+	// on the item that declares it, and looking only at the item would report
+	// every one of those as missing on every load.
+	const known = new Set();
+	for (const entry of iterateChargePools(actor)) {
+		known.add(String(entry.pool?.identifier ?? entry.key));
+	}
+
+	for (const item of actor?.items ?? []) {
+		const rules = item?.rules;
+		if (!rules?.values) continue;
+		for (const rule of rules.values()) {
+			if (rule?.type !== 'chargePool' || rule.disabled) continue;
+			const identifier = String(rule.identifier || rule.id || '');
+			if (identifier.length > 0 && !known.has(identifier)) return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Nudge the system into re-syncing pool state for any actor left stale by the
+ * bug above. Writing one of our own flags is the whole trick: the system syncs
+ * on `updateActor` and ignores updates that touch its own pool flag, so a
+ * namespaced write of ours is the smallest thing that reaches it. Guarded by the
+ * mismatch test, so it writes once after a repair and never again.
+ */
+async function resyncStaleChargePools() {
+	if (!game.user?.isGM || !classQoLEnabled()) return;
+	for (const actor of game.actors ?? []) {
+		if (actor?.type !== 'character') continue;
+		if (!actorHasUnsyncedChargePool(actor)) continue;
+		// Always a different value, or Foundry would diff the write away and the
+		// `updateActor` the system listens for would never fire.
+		const previous = Number(actor.getFlag(MODULE_ID, 'chargePoolResync')) || 0;
+		try {
+			await actor.update({ [`flags.${MODULE_ID}.chargePoolResync`]: previous + 1 });
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Could not re-sync pool state for ${actor?.name}`, error);
+		}
+	}
+}
+
+Hooks.once('init', () => {
+	try {
+		patchFeatureRulePreparation();
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to patch feature rule preparation`, error);
+	}
+});
+
+Hooks.once('ready', () => {
+	resyncStaleChargePools().catch((error) =>
+		console.error(`[${MODULE_ID}] Failed to re-sync charge pool state`, error),
+	);
+});
 
 Hooks.once('setup', () => {
 	try {
@@ -6968,22 +8977,12 @@ Hooks.once('setup', () => {
 		console.error(`[${MODULE_ID}] Failed to patch DamageRoll for class automation`, error);
 	}
 
-	// `prepareBaseData` is where the system builds `item.rules` from the stored
-	// source, so it is the one place a synthetic rule can be added early enough
-	// for the pool engines — which read that map — to see it.
-	const FeatureClass = CONFIG?.NIMBLE?.Item?.documentClasses?.feature;
-	if (FeatureClass?.prototype && !FeatureClass.prototype.__nimPlusRulesPatched) {
-		const originalPrepareBaseData = FeatureClass.prototype.prepareBaseData;
-		FeatureClass.prototype.prepareBaseData = function patchedPrepareBaseData(...args) {
-			const result = originalPrepareBaseData?.apply(this, args);
-			try {
-				injectMissingRules(this);
-			} catch (error) {
-				console.error(`[${MODULE_ID}] Failed to supply rules for ${this?.name}`, error);
-			}
-			return result;
-		};
-		FeatureClass.prototype.__nimPlusRulesPatched = true;
+	try {
+		// Late only if the system beat us to `init`; the re-prep repairs whatever
+		// was built in the meantime and is a no-op when the patch was already in.
+		if (patchFeatureRulePreparation()) reprepareFeatureRules();
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to patch feature rule preparation`, error);
 	}
 
 	// Weapons are `object` items and do not override `activate`, so patching the
@@ -7007,6 +9006,8 @@ Hooks.once('setup', () => {
 
 			viciousArm = null;
 			viciousOutcome = null;
+			tacticArm = null;
+			tacticOutcome = null;
 			activationStack.push({ actor, item: this, vicious: viciousEligible(actor, this) });
 
 			let card = null;
@@ -7015,7 +9016,9 @@ Hooks.once('setup', () => {
 			} finally {
 				const finished = activationStack.pop();
 				viciousArm = null;
+				tacticArm = null;
 				sneakOutcome = finished?.sneak ?? null;
+				tacticOutcome = finished?.tactic ?? null;
 			}
 
 			// The activation was cancelled (dialog dismissed, charges missing, a
@@ -7023,18 +9026,24 @@ Hooks.once('setup', () => {
 			if (!card) {
 				viciousOutcome = null;
 				sneakOutcome = null;
+				tacticOutcome = null;
 				return card;
 			}
 
 			const outcome = viciousOutcome;
 			const sneak = sneakOutcome;
+			const tactic = tacticOutcome;
 			viciousOutcome = null;
 			sneakOutcome = null;
+			tacticOutcome = null;
 			try {
 				if (outcome) {
 					announceViciousOutcome(actor, this, outcome);
 					if (outcome.kind === 'upgraded') await markViciousUsed(actor);
 				}
+				// Before Sneak Attack: an Inerrant Strike reroll is what produced the
+				// crit that Sneak Attack was then offered on.
+				if (tactic) await resolveCombatTacticOutcome(actor, this, tactic);
 				if (sneak) {
 					announceSneakAttack(actor, sneak);
 					await markSneakUsed(actor);
