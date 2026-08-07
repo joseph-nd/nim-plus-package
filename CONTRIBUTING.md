@@ -33,12 +33,13 @@ scripts/
 ├── hexbinder/ + macros/    # per-feature `system.macro` entry points
 ├── feats/                  # optional Feats system (settings, UI, level-up)
 │   └── mechanics/          #   the eight feats needing real automation
+├── ancestry/               # use counters parsed from ancestry trait text
 ├── vol1/                   # variant starting kits
 ├── vol4/                   # Volume IV magic items
 ├── equipment/              # Expanded Equipment mundane gear
 ├── classes/                # class QoL automation (see classes/shared/settings.mjs)
 │   ├── shared/             #   the setting, activation stack, dialog + roll patches
-│   ├── cheat/ commander/ oathsworn/
+│   ├── cheat/ commander/ oathsworn/ shadowmancer/
 │   ├── rule-injection.mjs  #   supplies rules the system's content leaves out
 │   └── activation-lifecycle.mjs  # wraps object activation, resolves outcomes
 └── ui/                     # sheet furniture: charge rail, trackers, encounter state

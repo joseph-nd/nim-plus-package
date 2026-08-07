@@ -5,9 +5,13 @@ import { ensureCoordinatedStrikeCounter } from './commander/coordinated-strike.m
 import { ensureMasterCommanderRecovery, ensureMasterCommanderUses } from './commander/master-commander.mjs';
 import { ensureJudgmentConsumer, ensureJudgmentPoolModifier } from './oathsworn/judgment-rules.mjs';
 import { iterateChargePools } from '../core/pools.mjs';
+import { ensureAncestryUseCounters } from '../ancestry/use-counters.mjs';
 import { classQoLEnabled } from './shared/settings.mjs';
 
 /* ── Wiring ─────────────────────────────────────────────────────────────────── */
+
+/** The item types this module supplies rules for, and so must re-prepare. */
+const INJECTED_RULE_TYPES = new Set(['feature', 'ancestry']);
 
 /**
  * Every rule this module supplies on the system's behalf, applied to one item.
@@ -43,22 +47,43 @@ function injectMissingRules(item) {
  * perfectly the moment it was granted and was quietly unautomated after the next
  * reload.
  */
-export function patchFeatureRulePreparation() {
-	const FeatureClass = CONFIG?.NIMBLE?.Item?.documentClasses?.feature;
-	if (!FeatureClass?.prototype || FeatureClass.prototype.__nimPlusRulesPatched) return false;
+function patchRulePreparation(documentClass, sentinel, inject) {
+	if (!documentClass?.prototype || documentClass.prototype[sentinel]) return false;
 
-	const originalPrepareBaseData = FeatureClass.prototype.prepareBaseData;
-	FeatureClass.prototype.prepareBaseData = function patchedPrepareBaseData(...args) {
+	const originalPrepareBaseData = documentClass.prototype.prepareBaseData;
+	documentClass.prototype.prepareBaseData = function patchedPrepareBaseData(...args) {
 		const result = originalPrepareBaseData?.apply(this, args);
 		try {
-			injectMissingRules(this);
+			inject(this);
 		} catch (error) {
 			console.error(`[${MODULE_ID}] Failed to supply rules for ${this?.name}`, error);
 		}
 		return result;
 	};
-	FeatureClass.prototype.__nimPlusRulesPatched = true;
+	documentClass.prototype[sentinel] = true;
 	return true;
+}
+
+export function patchFeatureRulePreparation() {
+	return patchRulePreparation(
+		CONFIG?.NIMBLE?.Item?.documentClasses?.feature,
+		'__nimPlusRulesPatched',
+		injectMissingRules,
+	);
+}
+
+/**
+ * The same seam on the ancestry class, for the use counters its traits describe
+ * in prose. A separate prototype, so it needs its own patch and its own
+ * sentinel — nothing about the charge subsystem cares which of the two declared
+ * the pool.
+ */
+export function patchAncestryRulePreparation() {
+	return patchRulePreparation(
+		CONFIG?.NIMBLE?.Item?.documentClasses?.ancestry,
+		'__nimPlusAncestryRulesPatched',
+		ensureAncestryUseCounters,
+	);
 }
 
 /**
@@ -71,12 +96,12 @@ export function patchFeatureRulePreparation() {
  * second time; the actor is re-prepared afterwards so anything derived from
  * those rules is rebuilt with them.
  */
-export function reprepareFeatureRules() {
+export function reprepareInjectedRules() {
 	for (const actor of game.actors ?? []) {
 		if (actor?.type !== 'character') continue;
 		let touched = false;
 		for (const item of actor.items ?? []) {
-			if (item?.type !== 'feature' || item.initialized !== true) continue;
+			if (!INJECTED_RULE_TYPES.has(item?.type) || item.initialized !== true) continue;
 			item.initialized = false;
 			touched = true;
 		}
@@ -145,8 +170,9 @@ async function resyncStaleChargePools() {
 Hooks.once('init', () => {
 	try {
 		patchFeatureRulePreparation();
+		patchAncestryRulePreparation();
 	} catch (error) {
-		console.error(`[${MODULE_ID}] Failed to patch feature rule preparation`, error);
+		console.error(`[${MODULE_ID}] Failed to patch item rule preparation`, error);
 	}
 });
 

@@ -17,8 +17,11 @@ import { encounterActive, ENCOUNTER_EDGE_HOOKS } from './encounter.mjs';
  * For a resource you spend in the middle of someone else's turn — Coordinated
  * Strike! being the obvious case — a counter you have to change tabs to read is
  * a counter you forget. So those pools are mirrored onto the rail alongside the
- * system's own, restricted to pools that come from **class features**: a bag
- * full of charged magic items belongs on the inventory tab, not here.
+ * system's own, restricted to pools that come from a **class feature or an
+ * ancestry**: a bag full of charged magic items belongs on the inventory tab,
+ * not here. Ancestry traits earn their place for the same reason features do —
+ * "1/encounter" reactions like the Orc's *Stormstep* are spent on somebody
+ * else's turn, and the Features tab is the wrong place to be hunting for them.
  *
  * The rail exists for the moment of play these counters are spent in, so it is
  * there for the fight and gone the rest of the time — the Features tab still
@@ -32,7 +35,10 @@ import { encounterActive, ENCOUNTER_EDGE_HOOKS } from './encounter.mjs';
 const CHARGE_RAIL_CLASS = 'nim-plus-charge-rail';
 const CHARGE_RAIL_STYLE_ID = 'nim-plus-charge-rail-styles';
 
-/** Count-only charge pools that a feature granted, in sheet order. */
+/** Item types whose count-only pools belong on the rail. */
+const RAILED_POOL_SOURCES = new Set(['feature', 'ancestry']);
+
+/** Count-only charge pools a feature or ancestry granted, in sheet order. */
 export function featureChargePools(actor) {
 	const pools = [];
 	for (const entry of iterateChargePools(actor)) {
@@ -42,7 +48,7 @@ export function featureChargePools(actor) {
 		if (!Number.isFinite(max) || max < 1) continue;
 
 		const source = actor.items?.get?.(pool.sourceItemId) ?? null;
-		if (source?.type !== 'feature') continue;
+		if (!RAILED_POOL_SOURCES.has(source?.type)) continue;
 
 		pools.push({
 			...entry,

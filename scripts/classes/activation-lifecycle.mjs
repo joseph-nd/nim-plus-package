@@ -18,7 +18,11 @@ import {
 import { resolveCombatTacticOutcome } from './commander/tactic-resolution.mjs';
 import { setTacticArm, setTacticOutcome, tacticOutcome } from './commander/tactics.mjs';
 import { expendJudgment, snapshotJudgment } from './oathsworn/judgment.mjs';
-import { patchFeatureRulePreparation, reprepareFeatureRules } from './rule-injection.mjs';
+import {
+	patchAncestryRulePreparation,
+	patchFeatureRulePreparation,
+	reprepareInjectedRules,
+} from './rule-injection.mjs';
 import { activationStack } from './shared/activation.mjs';
 import { patchDamageRollForClassQoL } from './shared/damage-roll-patch.mjs';
 import { classQoLEnabled } from './shared/settings.mjs';
@@ -33,9 +37,10 @@ Hooks.once('setup', () => {
 	try {
 		// Late only if the system beat us to `init`; the re-prep repairs whatever
 		// was built in the meantime and is a no-op when the patch was already in.
-		if (patchFeatureRulePreparation()) reprepareFeatureRules();
+		const patched = [patchFeatureRulePreparation(), patchAncestryRulePreparation()];
+		if (patched.some(Boolean)) reprepareInjectedRules();
 	} catch (error) {
-		console.error(`[${MODULE_ID}] Failed to patch feature rule preparation`, error);
+		console.error(`[${MODULE_ID}] Failed to patch item rule preparation`, error);
 	}
 
 	// Weapons are `object` items and do not override `activate`, so patching the

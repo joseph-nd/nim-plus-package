@@ -23,6 +23,9 @@ import { MODULE_ID } from '../../core/constants.mjs';
  *   • Oathsworn — Radiant Judgement. Judgment Dice roll themselves on a missed
  *     incoming attack too, not only when damage lands, and the rolled total is
  *     added to the next melee weapon swing as radiant damage, then expended.
+ *   • Shadowmancer — spell tiers. The system unlocks tiers from one table shared
+ *     by every caster; the Shadowmancer has a ladder of its own, so its cap is
+ *     recomputed from that ladder instead.
  *
  * ── Update-resilience notes ───────────────────────────────────────────────────
  * Everything under `scripts/classes/` is written to *degrade to nothing* if the
@@ -64,7 +67,7 @@ export function classQoLEnabled() {
 Hooks.once('init', () => {
 	game.settings.register(MODULE_ID, CLASS_QOL_SETTING, {
 		name: 'Enable Class Automation',
-		hint: "Automates bookkeeping for the Cheat (Vicious Opportunist's one-roll crit upgrade, Sneak Attack on a crit), the Commander (Combat Tactics picked on the attack itself, Combat Dice spent and tracked with it, Coordinated Strike! use counter) and the Oathsworn (auto-rolled Judgment Dice, auto-applied radiant damage). Turn off to roll everything by hand.",
+		hint: "Automates bookkeeping for the Cheat (Vicious Opportunist's one-roll crit upgrade, Sneak Attack on a crit), the Commander (Combat Tactics picked on the attack itself, Combat Dice spent and tracked with it, Coordinated Strike! use counter) and the Oathsworn (auto-rolled Judgment Dice, auto-applied radiant damage). Also corrects the Shadowmancer's spell-tier progression, which the system unlocks on the standard caster ladder. Turn off to roll everything by hand.",
 		scope: 'world',
 		config: true,
 		type: Boolean,

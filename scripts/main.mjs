@@ -56,7 +56,7 @@ import './equipment/damage-applied.mjs';
 import './equipment/hooks.mjs';
 import './equipment/derived.mjs';
 
-// ── Class automation — the Cheat, the Commander, the Oathsworn ──────────────
+// ── Class automation — the Cheat, the Commander, the Oathsworn, the Shadowmancer
 // See `classes/shared/settings.mjs` for what this covers and how it is written
 // to degrade to nothing if the system changes shape underneath it.
 import './classes/shared/settings.mjs';
@@ -67,6 +67,7 @@ import './classes/commander/superseded-features.mjs';
 import './classes/commander/commanding-presence.mjs';
 import './ui/combat-dice-tracker.mjs';
 import './classes/oathsworn/judgment.mjs';
+import './classes/shadowmancer/spell-tiers.mjs';
 import './ui/charge-rail.mjs';
 import './classes/rule-injection.mjs';
 import './classes/activation-lifecycle.mjs';
