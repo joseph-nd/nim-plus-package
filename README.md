@@ -26,13 +26,13 @@ Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
 
 ## What's included
 
-The module currently ships **1,020 documents** across **9 compendium packs**:
+The module currently ships **1,021 documents** across **9 compendium packs**:
 
 | Pack | Count | Contents |
 |---|---|---|
 | **Nim+ Classes** | 3 | Hexbinder, Artificer, Psion |
 | **Nim+ Subclasses** | 61 | new subclasses for every core class plus the new classes (see breakdown below) |
-| **Nim+ Class Features** | 447 | progression + subclass features for every class above |
+| **Nim+ Class Features** | 448 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
 | **Nim+ Items** | 349 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below), and the **Expanded Equipment** mundane gear set (67 — see **Expanded Equipment** below) |
 | **Nim+ Companions** | 1 | Spirit Companion (Shepherd / Luminary of Tidings summon) |
