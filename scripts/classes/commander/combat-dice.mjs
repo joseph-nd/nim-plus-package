@@ -157,6 +157,7 @@ export function findCombatDicePool(actor) {
 	if (!actor) return null;
 
 	for (const entry of iterateChargePools(actor)) {
+		if (entry.pool.hidden) continue; // an internal gate, not a resource
 		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
 		const label = String(entry.pool.label ?? '').toLowerCase();
 		if (!identifier.includes(COMBAT_DICE_IDENTIFIER) && !label.includes('combat dice')) continue;

@@ -2,6 +2,15 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.9.1] - 2026-08-07
+
+**Catching up with system 0.8.9**, which ships Commander automation of its own — the Coordinated Strike pools and consumer, Master Commander's Initiative regain and use ladder, the Combat Dice pool and its die-size upgrades, the Judgment Dice pool. None of that collides with this module: every rule it supplies is only supplied when the content declares none, so on 0.8.9 the system's version wins and ours is never built. What did need fixing is a display assumption that predates the new pools.
+
+### Fixed
+- **The tracker rail no longer shows a phantom extra use of Coordinated Strike!** System 0.8.9 ships the feature's automation itself, as *two* charge pools: the uses (INT, refreshed on a Safe Rest) and a second, `hidden` one holding the "once per round" gate. The system draws only the pools that are not hidden; the rail did not check, so a level-2 Commander with INT +2 was shown three pips for two uses. Hidden pools are now skipped everywhere this module reads them — the rail, the Combat Dice lookup, and Master Commander's own — and the Initiative regain in particular no longer lands on the round gate, which would have allowed the order twice in the first round.
+- **Master Commander no longer raises the maximum number of Coordinated Strikes.** The copy of the feature the system ships carries a block the published feature does not — *"Levels 5, 9, 13, 17: Gain +1 use of Coordinated Strike per Safe Rest"* — and the module supplied a `modifyPool` ladder for it. On the published reading the maximum stays at INT for the whole career, and what the feature gives you is the **regain**: *"when you roll Initiative, regain 1 spent use"* means a use has to have been spent before the fight for there to be anything to get back. The ladder is gone; the Initiative recovery, which was already an `add 1` clamped at the maximum, is untouched and is now the feature's only effect on the pool.
+  - The rules were synthetic, so they are simply no longer built — but the maximum they produced was **written to the character**: the system persists each pool's computed max in flag state and rewrites it only when a freshly computed map differs. A Commander carrying an inflated maximum gets it corrected the next time anything updates the actor, which in play is immediate.
+
 ## [0.9.0] - 2026-08-07
 
 **Counters for the ancestry traits that have them, and the Shadowmancer's own spell-tier ladder.** Both are cases of content whose rules live only in the prose: an ancestry trait that says "1/Safe Rest" ships with an empty `rules` array, and the system's spell-tier table is hardcoded once for every caster with no way for a class to say it climbs differently.

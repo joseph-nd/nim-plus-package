@@ -44,6 +44,9 @@ export function featureChargePools(actor) {
 	for (const entry of iterateChargePools(actor)) {
 		const pool = entry.pool;
 		if (pool.dieSize != null) continue; // roll-on-spend: the system already rails it
+		// A hidden pool is an internal gate rather than a resource — Coordinated
+		// Strike!'s "once per round" is one — and the system draws none of them.
+		if (pool.hidden) continue;
 		const max = Number(pool.max);
 		if (!Number.isFinite(max) || max < 1) continue;
 

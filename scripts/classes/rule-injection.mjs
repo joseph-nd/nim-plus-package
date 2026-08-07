@@ -2,7 +2,7 @@ import { MODULE_ID } from '../core/constants.mjs';
 import { ensureCombatDicePoolBonus } from './commander/combat-dice.mjs';
 import { ensureCombatDiceDiscard } from './commander/combat-dice-discard.mjs';
 import { ensureCoordinatedStrikeCounter } from './commander/coordinated-strike.mjs';
-import { ensureMasterCommanderRecovery, ensureMasterCommanderUses } from './commander/master-commander.mjs';
+import { ensureMasterCommanderRecovery } from './commander/master-commander.mjs';
 import { ensureJudgmentConsumer, ensureJudgmentPoolModifier } from './oathsworn/judgment-rules.mjs';
 import { iterateChargePools } from '../core/pools.mjs';
 import { ensureAncestryUseCounters } from '../ancestry/use-counters.mjs';
@@ -27,7 +27,6 @@ function injectMissingRules(item) {
 	// After the counter exists: this writes onto the pool rule the line above
 	// supplies when the content carries none of its own.
 	ensureMasterCommanderRecovery(item);
-	ensureMasterCommanderUses(item);
 	ensureCombatDiceDiscard(item);
 	ensureCombatDicePoolBonus(item);
 }

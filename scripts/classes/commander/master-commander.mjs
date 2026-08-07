@@ -1,31 +1,34 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { sysHook } from '../../core/system.mjs';
-import { itemRuleValues, hasActiveRule, addSyntheticRule } from '../../core/rules.mjs';
+import { itemRuleValues } from '../../core/rules.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
 import { iterateChargePools, setChargePoolCurrent } from '../../core/pools.mjs';
 import { COORDINATED_STRIKE_IDENTIFIER } from './coordinated-strike.mjs';
 
 /* ── Commander — Master Commander ────────────────────────────────────────────
  *
- * "When you roll Initiative, regain 1 spent use of Coordinated Strike (it is
- *  lost if not spent during that encounter). Attacks made from your Coordinated
- *  Strikes also now ignore disadvantage.
- *  Levels 5, 9, 13, 17: Gain +1 use of Coordinated Strike per Safe Rest."
+ * "Your Combat Dice are now d8s. When you roll Initiative, regain 1 spent use
+ *  of Coordinated Strike (it is lost if not spent during that encounter).
+ *  Attacks made from your Coordinated Strikes also now ignore disadvantage."
  *
- * Another feature shipped with `rules: []`, so all three clauses are prose. Two
- * of them are the charge subsystem's own vocabulary:
+ * The feature ships with `rules: []`, so every clause is prose.
  *
- *   - The per-level uses are a `modifyPool` ladder, one `+1` for each of the
- *     four levels. The feature is granted once and never re-granted — the
- *     level-up window filters out anything already owned — so the levels have to
- *     be predicates on that single copy rather than four copies of the item.
- *   - "Regain 1 spent use when you roll Initiative" is an `onInitiativeRolled`
- *     recovery of `add 1`, which clamps at the maximum: with nothing spent there
- *     is nothing to regain, exactly as written.
+ * **This feature grants no extra uses.** The copy the system ships carries a
+ * trailing block the published feature does not — "Levels 5, 9, 13, 17: Gain
+ * +1 use of Coordinated Strike per Safe Rest" — and the module used to supply a
+ * `modifyPool` ladder for it. On the publication's reading the maximum stays at
+ * INT for the whole career and what this feature gives you is the *regain*: a
+ * use has to have been spent before Initiative for there to be anything to get
+ * back. That reading is what is implemented, so nothing here touches the pool's
+ * maximum.
  *
- * The third clause — the granted use being lost if the encounter ends without
- * it — has no vocabulary, since recovery values cannot go negative. It is the
- * one part done in code, below.
+ * The regain itself is the charge subsystem's own vocabulary — an
+ * `onInitiativeRolled` recovery of `add 1`, which clamps at the maximum, so
+ * with nothing spent it is a no-op exactly as written.
+ *
+ * The other half of that clause — the granted use being lost if the encounter
+ * ends without it — has no vocabulary, since recovery values cannot go
+ * negative. It is the one part done in code, below.
  *
  * "Attacks ignore disadvantage" is left to the table: the attacks Coordinated
  * Strike grants are made separately, each with its own dialog, and nothing
@@ -43,9 +46,17 @@ function actorHasMasterCommander(actor) {
 	return false;
 }
 
-/** The Coordinated Strike! use counter in flag state, however it was created. */
+/**
+ * The Coordinated Strike! use counter in flag state, however it was created.
+ *
+ * The feature carries more than one pool as of system 0.8.9 — the uses, and a
+ * hidden one gating it to once per round — and both identifiers begin with the
+ * feature's own, so the hidden ones are skipped rather than matched by luck of
+ * iteration order.
+ */
 export function findCoordinatedStrikePool(actor) {
 	for (const entry of iterateChargePools(actor)) {
+		if (entry.pool.hidden) continue;
 		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
 		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
 
@@ -60,49 +71,22 @@ export function findCoordinatedStrikePool(actor) {
 	return null;
 }
 
-/** +1 use at each of the four levels the feature calls out. */
-export function ensureMasterCommanderUses(item) {
-	if (!MASTER_COMMANDER_MATCH.test(String(item.name ?? ''))) return;
-
-	const alreadyModifies = hasActiveRule(
-		item,
-		(rule) =>
-			rule.type === 'modifyPool' &&
-			rule.poolType === 'charge' &&
-			String(rule.poolIdentifier ?? '')
-				.toLowerCase()
-				.includes(COORDINATED_STRIKE_IDENTIFIER),
-	);
-	if (alreadyModifies) return;
-
-	[5, 9, 13, 17].forEach((minLevel, index) => {
-		addSyntheticRule(item, {
-			id: `nimPlusMasterCommanderUses-${index}`,
-			type: 'modifyPool',
-			identifier: '',
-			label: `${item.name} → +1 use of Coordinated Strike!`,
-			predicate: { level: { min: minLevel } },
-			priority: index + 1,
-			poolType: 'charge',
-			poolIdentifier: COORDINATED_STRIKE_IDENTIFIER,
-			dieSize: null,
-			maxDelta: '+1',
-		});
-	});
-}
-
 /**
- * Give the Coordinated Strike! pool its Initiative recovery, once its owner has
- * Master Commander. Written onto whichever `chargePool` rule is there rather
- * than onto ours specifically, so it still lands if a future system version
- * ships the pool itself.
+ * Give the Coordinated Strike! use counter its Initiative recovery, once its
+ * owner has Master Commander. Written onto whichever `chargePool` rule is there
+ * rather than onto ours specifically, so it still lands now that the system
+ * ships the pool itself — which it has done since 0.8.9.
+ *
+ * The hidden pool that shares the feature is skipped: it is the "once per
+ * round" gate, refreshed at the start of every turn, and handing it a second
+ * use at Initiative would let the order be given twice in the first round.
  */
 export function ensureMasterCommanderRecovery(item) {
 	if (item?.system?.identifier !== COORDINATED_STRIKE_IDENTIFIER) return;
 	if (!actorHasMasterCommander(item.parent)) return;
 
 	for (const rule of itemRuleValues(item)) {
-		if (rule?.type !== 'chargePool' || rule.disabled) continue;
+		if (rule?.type !== 'chargePool' || rule.disabled || rule.hidden) continue;
 		const identifier = String(rule.identifier ?? rule.id ?? '').toLowerCase();
 		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
 
