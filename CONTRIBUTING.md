@@ -97,7 +97,7 @@ nim-plus-package/
 │   └── lib/
 │       ├── IdBuilder.mjs       # stable _id allocation, persisted in pack-sources/ids.json
 │       ├── Pack.mjs            # JSON → folder organization → LevelDB
-│       └── LevelDB.mjs         # Foundry v13 LevelDB writer
+│       └── LevelDB.mjs         # Foundry LevelDB writer
 ├── pack-sources/               # editable JSON authoring (NOT distributed)
 │   ├── ids.json                # _id ledger; commit me
 │   ├── classes/<class>.json
@@ -136,7 +136,7 @@ pnpm build
 `pnpm build` runs `node build/buildCompendia.mjs`, which:
 
 1. Walks `pack-sources/` and assigns or reuses stable 16-char `_id`s (recorded in `pack-sources/ids.json`). When a file moves, the IdBuilder generates a new ID for the new path and rewrites any UUID references in other source files automatically.
-2. Loads each subdirectory as a Pack, organizes documents into Foundry folders (class folders for subclasses, class + progression / subclass folders for features, school folders for spells), and writes each pack to `packs/<pack-name>/` as a Foundry v13 LevelDB store.
+2. Loads each subdirectory as a Pack, organizes documents into Foundry folders (class folders for subclasses, class + progression / subclass folders for features, school folders for spells), and writes each pack to `packs/<pack-name>/` as a Foundry LevelDB store.
 
 Re-runs are idempotent: existing IDs in `ids.json` are reused; new files get fresh IDs that get appended.
 

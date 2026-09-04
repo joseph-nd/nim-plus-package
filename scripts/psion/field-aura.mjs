@@ -41,49 +41,69 @@ Hooks.on('nimble.useItem', (item) => {
  * toggle. Falls back to "no light" if nothing was stashed.
  */
 const PSION_AURA_FLAG = 'psionicFieldPrevLight';
-const PSION_FIELD_TEMPLATE_FLAG = 'psionicFieldTemplateId';
+const PSION_FIELD_REGION_FLAG = 'psionicFieldRegionId';
+/** Pre-v14 flag: the id of the MeasuredTemplate the aura used to draw. */
+const PSION_FIELD_LEGACY_TEMPLATE_FLAG = 'psionicFieldTemplateId';
 const PSION_FIELD_REACH = 3;
+const PSION_FIELD_COLOR = '#39d6c8';
 const PSION_AURA_LIGHT = {
 	dim: 3,
 	bright: 0,
-	color: '#39d6c8',
+	color: PSION_FIELD_COLOR,
 	alpha: 0.35,
 	luminosity: 0.5,
 	angle: 360,
 	// No animation — animated lights run shader passes per frame on the
 	// canvas, which hits Firefox especially hard. The dim radius + color +
-	// MeasuredTemplate boundary already convey the aura.
+	// Region boundary already convey the aura.
 	animation: { type: 'none', speed: 1, intensity: 1, reverse: false },
 };
 
-function getTokenCenter(doc) {
+/**
+ * The token's centre, in scene pixels. `changes` is the update payload when
+ * called from an `updateToken` hook: on Foundry v14 a token's document
+ * coordinates trail its movement animation, so inside the hook `doc.x`/`doc.y`
+ * still hold the origin and only the payload knows the destination.
+ */
+function getTokenCenter(doc, changes = {}) {
 	const scene = doc.parent;
 	const gridSize = scene?.grid?.size ?? 100;
+	const x = typeof changes.x === 'number' ? changes.x : doc.x;
+	const y = typeof changes.y === 'number' ? changes.y : doc.y;
 	return {
-		x: doc.x + (doc.width * gridSize) / 2,
-		y: doc.y + (doc.height * gridSize) / 2,
+		x: x + (doc.width * gridSize) / 2,
+		y: y + (doc.height * gridSize) / 2,
 	};
 }
 
-async function createPsionicFieldTemplate(doc) {
+/**
+ * The Region shape for the field: a grid-conformed circle of Reach squares
+ * around the token's centre. Foundry v14 folded MeasuredTemplate into Region
+ * (the template document is deprecated until v16), and Region shapes measure
+ * in pixels, so the radius scales by the scene grid size — the same convention
+ * the system's own AoE placement uses.
+ */
+function psionicFieldShape(doc, changes = {}) {
+	const gridSize = doc.parent?.grid?.size ?? 100;
+	const { x, y } = getTokenCenter(doc, changes);
+	return { type: 'circle', x, y, radius: PSION_FIELD_REACH * gridSize, gridBased: true };
+}
+
+function getPsionicFieldRegion(doc) {
+	const regionId = doc.getFlag(MODULE_ID, PSION_FIELD_REGION_FLAG);
+	return regionId ? (doc.parent?.regions?.get?.(regionId) ?? null) : null;
+}
+
+async function createPsionicFieldRegion(doc) {
 	const scene = doc.parent;
 	if (!scene) return;
-	const existing = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
-	if (existing && scene.templates?.get?.(existing)) return; // already there
-	const gridDistance = scene.grid?.distance ?? 5;
-	const { x, y } = getTokenCenter(doc);
-	const [template] = await scene.createEmbeddedDocuments('MeasuredTemplate', [
+	if (getPsionicFieldRegion(doc)) return; // already there
+	const [region] = await scene.createEmbeddedDocuments('Region', [
 		{
-			t: 'circle',
-			user: game.user.id,
-			distance: PSION_FIELD_REACH * gridDistance,
-			direction: 0,
-			angle: 0,
-			width: 0,
-			x,
-			y,
-			fillColor: '#39d6c8',
-			borderColor: '#0aa697',
+			name: 'Psionic Field',
+			shapes: [psionicFieldShape(doc)],
+			color: PSION_FIELD_COLOR,
+			visibility: CONST.REGION_VISIBILITY.ALWAYS,
 			flags: {
 				[MODULE_ID]: {
 					psionicField: true,
@@ -92,16 +112,23 @@ async function createPsionicFieldTemplate(doc) {
 			},
 		},
 	]);
-	if (template) await doc.setFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG, template.id);
+	if (region) await doc.setFlag(MODULE_ID, PSION_FIELD_REGION_FLAG, region.id);
 }
 
-async function removePsionicFieldTemplate(doc) {
-	const templateId = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
-	if (templateId) {
-		const scene = doc.parent;
-		const template = scene?.templates?.get?.(templateId);
-		if (template) await template.delete();
-		await doc.unsetFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
+async function removePsionicFieldRegion(doc) {
+	const region = getPsionicFieldRegion(doc);
+	if (region) await region.delete();
+	if (doc.getFlag(MODULE_ID, PSION_FIELD_REGION_FLAG) !== undefined) {
+		await doc.unsetFlag(MODULE_ID, PSION_FIELD_REGION_FLAG);
+	}
+
+	// A field drawn on v13 left a MeasuredTemplate behind; v14 migrates those
+	// into Regions under the same id, so the legacy flag still points at it.
+	const legacyId = doc.getFlag(MODULE_ID, PSION_FIELD_LEGACY_TEMPLATE_FLAG);
+	if (legacyId !== undefined) {
+		const legacy = doc.parent?.regions?.get?.(legacyId);
+		if (legacy) await legacy.delete();
+		await doc.unsetFlag(MODULE_ID, PSION_FIELD_LEGACY_TEMPLATE_FLAG);
 	}
 }
 
@@ -116,12 +143,12 @@ async function setPsionicFieldAura(actor, on) {
 					await doc.setFlag(MODULE_ID, PSION_AURA_FLAG, prev);
 				}
 				await doc.update({ light: PSION_AURA_LIGHT });
-				await createPsionicFieldTemplate(doc);
+				await createPsionicFieldRegion(doc);
 			} else {
 				const prev = doc.getFlag(MODULE_ID, PSION_AURA_FLAG);
 				await doc.update({ light: prev ?? { dim: 0, bright: 0, alpha: 0.5, color: null } });
 				if (prev !== undefined) await doc.unsetFlag(MODULE_ID, PSION_AURA_FLAG);
-				await removePsionicFieldTemplate(doc);
+				await removePsionicFieldRegion(doc);
 			}
 		} catch (error) {
 			console.error(`[${MODULE_ID}] Failed to ${on ? 'apply' : 'remove'} Psionic Field aura`, error);
@@ -130,7 +157,7 @@ async function setPsionicFieldAura(actor, on) {
 }
 
 // Gate by userId: createActiveEffect / deleteActiveEffect fire on every
-// client, but only the triggering user should mutate the scene (templates,
+// client, but only the triggering user should mutate the scene (regions,
 // tokens) to avoid duplicate creates and race-y deletes.
 Hooks.on('createActiveEffect', (effect, _options, userId) => {
 	if (userId !== game.user.id) return;
@@ -150,20 +177,15 @@ Hooks.on('deleteActiveEffect', (effect, _options, userId) => {
 	setPsionicFieldAura(actor, false).catch(() => {});
 });
 
-// Follow-the-token: when a token with an active Psionic Field template moves,
-// re-center the template on the new token position. Gated by userId so only
-// the user who moved the token issues the template update.
+// Follow-the-token: when a token with an active Psionic Field moves, re-centre
+// the field's Region on the new token position. Gated by userId so only the
+// user who moved the token issues the Region update.
 Hooks.on('updateToken', (doc, changes, _options, userId) => {
 	if (userId !== game.user.id) return;
 	if (!('x' in changes || 'y' in changes)) return;
-	const templateId = doc.getFlag(MODULE_ID, PSION_FIELD_TEMPLATE_FLAG);
-	if (!templateId) return;
-	const scene = doc.parent;
-	const template = scene?.templates?.get?.(templateId);
-	if (!template) return;
-	const { x, y } = getTokenCenter(doc);
-	template.update({ x, y }).catch((error) => {
-		console.error(`[${MODULE_ID}] Failed to move Psionic Field template`, error);
+	const region = getPsionicFieldRegion(doc);
+	if (!region) return;
+	region.update({ shapes: [psionicFieldShape(doc, changes)] }).catch((error) => {
+		console.error(`[${MODULE_ID}] Failed to move Psionic Field region`, error);
 	});
 });
-

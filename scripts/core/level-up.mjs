@@ -8,10 +8,14 @@
  *
  * What does tell them apart is the singleton id the system stamps on the
  * level-up dialog (`<actorId>-level-up`, from `NimbleCharacter#getLevelUpDialogId`).
- * It reaches us as an ordinary application option, because Foundry itself reads
- * `options.uniqueId` when it builds the application's DOM id. The window title
- * is kept as a fallback for the day that stops being true — a dialog we cannot
- * identify is one we leave alone.
+ * On Foundry v13 it reached us as an ordinary application option, because Foundry
+ * read `options.uniqueId` when it built the application's DOM id. Foundry v14
+ * overwrites `options.uniqueId` with its own counter (`"61"`) for every
+ * ApplicationV2, so that option no longer carries the system's id. The system
+ * still keeps the id privately and exposes it through its singleton registry
+ * (`GenericDialog.getOpen(id)`), which is registered before `renderGenericDialog`
+ * fires; that is the primary match now. The window title is kept as a last
+ * fallback — a dialog we cannot identify is one we leave alone.
  *
  * Nothing here registers a hook, so importing it cannot disturb load order.
  */
@@ -32,10 +36,12 @@ export function levelUpDialogActor(app) {
 			? actor.getLevelUpDialogId()
 			: `${actor.id}-level-up`;
 
-	const uniqueId = app?.options?.uniqueId;
-	if (typeof uniqueId === 'string' && uniqueId.length > 0) {
-		return uniqueId === expectedId ? actor : null;
-	}
+	// v13: the system's id survives as the application option.
+	if (app?.options?.uniqueId === expectedId) return actor;
+
+	// v14: ask the system's singleton registry which dialog owns the id.
+	const registered = app?.constructor?.getOpen?.(expectedId);
+	if (registered) return registered === app ? actor : null;
 
 	// No id to match on: fall back to the title, which the system writes as
 	// "<name>: Level Up (6 → 7)". The level-down window reads "Level Down", so

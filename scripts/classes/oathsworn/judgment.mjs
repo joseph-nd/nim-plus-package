@@ -1,6 +1,6 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
-import { sysId, sysHook } from '../../core/system.mjs';
+import { sysId } from '../../core/system.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
 import { isMeleeWeapon } from '../shared/combat.mjs';
 import { actorOwnsFeat } from '../../feats/mechanics/helpers.mjs';
@@ -9,7 +9,6 @@ import {
 	RELIABLE_JUSTICE_IDENTIFIER,
 	clearJudgmentPool,
 	findJudgmentPool,
-	hasEmptyOnAttackedPool,
 	judgmentFaces,
 	poolRefillsOn,
 } from './judgment-rules.mjs';
@@ -184,60 +183,6 @@ function announceJudgmentRoll(document, changed) {
 		});
 	}
 }
-
-/**
- * Roll the Judgment Dice for every Oathsworn an attack was aimed at, by emitting
- * the very hook the system's `onAttacked` refill trigger subscribes to.
- *
- * "Whenever an enemy attacks you" is the trigger as written, so this fires on
- * the attack card itself — hit or miss alike. Left to the system, the refill
- * runs off `nimble.damageApplied`, which means the dice only appear once the GM
- * clicks Apply Damage, and on a miss they never appear at all.
- *
- * The refill mode is `setIfEmpty`, so the system's later firing for the same
- * attack is a no-op against the pool this already filled.
- *
- * Runs on the GM's client only: `createChatMessage` fires everywhere, so a
- * single privileged executor avoids duplicate writes, and the GM owns every
- * actor whose flags need updating.
- */
-function rollJudgmentForAttackTargets(message) {
-	if (!classQoLEnabled()) return;
-	if (!game.user?.isGM) return;
-
-	const system = message?.system;
-
-	// Attack cards carry a hit/miss verdict; anything that does not (a saving
-	// throw prompt, a healing card, a plain feature) is not an attack.
-	if (typeof system?.isMiss !== 'boolean') return;
-
-	const targets = system.targets;
-	if (!Array.isArray(targets) || targets.length === 0) return;
-
-	const attackerId = message.flags?.[sysId()]?.actorId ?? null;
-
-	for (const uuid of targets) {
-		let targetActor = null;
-		try {
-			targetActor = fromUuidSync(uuid)?.actor ?? null;
-		} catch (_error) {
-			targetActor = null;
-		}
-		if (!targetActor || targetActor.type !== 'character') continue;
-		if (attackerId && targetActor.id === attackerId) continue; // not "an enemy"
-		if (!hasEmptyOnAttackedPool(targetActor)) continue;
-
-		Hooks.callAll(sysHook('damageApplied'), { targetActor });
-	}
-}
-
-Hooks.on('createChatMessage', (message) => {
-	try {
-		rollJudgmentForAttackTargets(message);
-	} catch (error) {
-		console.error(`[${MODULE_ID}] Failed to roll Judgment Dice for an incoming attack`, error);
-	}
-});
 
 for (const hook of ['preUpdateItem', 'preUpdateActor']) {
 	Hooks.on(hook, (document, changed) => {

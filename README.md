@@ -2,11 +2,11 @@
 
 A Foundry VTT module that ships extra content for the [Nimble system](https://github.com/Nimble-Co/FoundryVTT-Nimble): the Hexbinder, Artificer, and Psion classes, additional subclasses for every core class, the spells / items / companions those features rely on, and a small runtime helper layer (`nimPlus.*`) that wires up the macros some features use.
 
-Foundry v13 only. Requires the `nimble` system (≥ 0.8.4).
+Foundry v14 only. Requires the `nimble` system (≥ 0.9.0).
 
 ## Install (end users)
 
-**Prerequisites.** Foundry VTT v13 with the [Nimble system](https://github.com/Nimble-Co/FoundryVTT-Nimble) (≥ 0.8.4) installed and enabled in your world.
+**Prerequisites.** Foundry VTT v14 with the [Nimble system](https://github.com/Nimble-Co/FoundryVTT-Nimble) (≥ 0.9.0) installed and enabled in your world.
 
 1. Open Foundry's setup screen → **Add-on Modules** tab.
 2. Click **Install Module**.
@@ -97,7 +97,7 @@ Nothing here is a separate item you have to pick, and nothing is written to your
 - **Feature uses on the tracker rail.** Because Coordinated Strike! is a *free action* you take on someone else's turn, a counter you have to switch tabs to read is a counter you forget. Any class-feature use counter now also appears in the sheet's left-edge tracker rail — the same flyout the Oathsworn's Judgment Dice use — as the feature's icon followed by one pip per use. Click the last lit pip to **use** the feature — you get the same chat card, macro and out-of-uses refusal as clicking it on the Features tab, and the use is deducted once. Clicking any other pip just sets the count: a dim one restores up to it, a lit one further down spends down to it without announcing anything. The rail is there **during a fight only**, since that is when these are spent, and the Features tab still carries every counter. A fight counts from the moment it is on the combat tracker — you do not have to have clicked *Begin Combat* — until the encounter ends. Charged *items* stay on the inventory tab where they belong.
 
 - **The Oathsworn — Radiant Judgement** *(roll Judgment Dice when attacked; spend them on your next melee attack)*.
-  - *Rolling them.* The dice roll the moment an attack is aimed at you — hit or miss — and a chat card announces what came up. (Left to the system, the pool only fills when the GM clicks *Apply Damage*, so a miss never rolled it at all.)
+  - *Rolling them.* The system rolls the pool through its own `onAttacked` trigger, when the GM applies the attack's damage; the module leaves that alone and adds a chat card announcing what came up.
   - *Spending them.* The feature gives you no choice about which dice to use — on your next melee attack, all of them apply — so the module supplies the auto-bonus consumer the shipped feature is missing. The dice now show in the activation dialog as a read-only **Judgment Dice** row with their total, get folded into the damage roll by the system itself, and are expended afterwards whether that attack hit or missed, exactly as written. Damage still only lands on a hit.
   - *Features that change the roll.* **Reliable Justice** (Sacred Decree — *"roll with advantage: roll one extra and drop the lowest"*) is applied automatically when the dice roll, and the chat card shows the extra die and the one it dropped. **Aura of Zeal** (Oath of Vengeance — *"roll 1 more"*) adds its die, exactly as Radiant Judgement's own level-14 rider already does. Both stack with the level-14 rider and with the die-size scaling.
   - Holding **Alt** to skip the roll dialog skips the bonus with it, since the system assembles that bonus in the dialog. The dice are then *not* spent, so nothing is lost — roll normally to use them.

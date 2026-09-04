@@ -67,20 +67,6 @@ export function findJudgmentPool(actor) {
 	return null;
 }
 
-/**
- * True when the actor owns at least one `onAttacked` pool that is currently
- * empty — i.e. an incoming attack has something to refill. Kept generic rather
- * than Oathsworn-specific so any future class with the same trigger benefits.
- */
-export function hasEmptyOnAttackedPool(actor) {
-	for (const entry of iterateDicePools(actor)) {
-		if (!poolRefillsOn(entry.pool, 'onAttacked')) continue;
-		const faces = entry.pool.faces;
-		if (!Array.isArray(faces) || faces.length === 0) return true;
-	}
-	return false;
-}
-
 export function judgmentFaces(entry) {
 	const faces = entry?.pool?.faces;
 	if (!Array.isArray(faces)) return [];

@@ -2,6 +2,21 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.10.0] - 2026-09-04
+
+**Foundry VTT v14.** The Nimble system moved to Foundry v14 in 0.9.0 (and now requires it), so this module follows: the manifest declares Foundry 14 / Nimble ≥ 0.9.0, and the three places where v14 changed behaviour under the module's feet are fixed. Everything else was verified live on Foundry 14.367 + Nimble 0.9.0: all nine packs load with no validation errors, character creation, class / ancestry / background / spell / item embedding, sheet injections (strain widget, compendium level and tier badges), item activation, rests and the level-up window all run with a clean console.
+
+### Changed
+- **Requires Foundry VTT v14 and Nimble ≥ 0.9.0.** The manifest's compatibility block now reads minimum 14 / verified 14.367 with no maximum, because Foundry v14 refused the old `maximum: 13` manifest and left the module disabled without an error.
+- **The Psionic Field aura is drawn as a Region instead of a MeasuredTemplate.** Foundry v14 folded MeasuredTemplate into the Region document (the template document is deprecated and goes away in v16, and every use logged a deprecation warning). The field is now a player-visible, grid-conformed circular Region of Reach 3 around the Psion's token, in the same teal as the token light, flagged the same way the old template was; it is created when Concentration starts, follows the token as it moves, and is removed when Concentration ends. A field that was left on the scene by a v13 session is cleaned up too: Foundry migrates old templates into Regions under the same id, and the aura still remembers that id.
+
+### Removed
+- **Judgment Dice are no longer rolled by the module when an attack card is posted.** The module used to fire the system's `onAttacked` refill itself the moment an attack targeted an Oathsworn, hit or miss, so the dice appeared before the GM applied damage. That is gone: the pool now fills only when the system's own trigger fires (on *Apply Damage*). The announcement card, Reliable Justice's advantage and the auto-spend on the next melee attack are unchanged.
+
+### Fixed
+- **The level-up window is recognised again.** The module told the level-up window apart from the other system dialogs by the singleton id the system stamps on it (`<actorId>-level-up`), read from the application's `uniqueId` option. Foundry v14 overwrites that option with its own counter for every ApplicationV2, so the check never matched and none of the level-up injections (Feats picks, Commander Combat Tactics, superseded-feature notes) fired. The window is now identified through the system's own dialog registry, with the title kept as a last fallback.
+- **Auras that depend on token position update after the move, not before it.** On Foundry v14 a token's document coordinates trail its movement animation, so inside `updateToken` the token still reports where it *was*. The Psionic Field Region now reads the destination from the update itself, and the Bulwark adjacency refresh runs a second time once the animation has settled.
+
 ## [0.9.1] - 2026-08-07
 
 **Catching up with system 0.8.9**, which ships Commander automation of its own — the Coordinated Strike pools and consumer, Master Commander's Initiative regain and use ladder, the Combat Dice pool and its die-size upgrades, the Judgment Dice pool. None of that collides with this module: every rule it supplies is only supplied when the content declares none, so on 0.8.9 the system's version wins and ours is never built. What did need fixing is a display assumption that predates the new pools.
