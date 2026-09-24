@@ -1,0 +1,57 @@
+{
+	"name": "Live On Through Your Art",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/songweaver/herald-of-doom/live-on-through-your-art.webp",
+	"system": {
+		"macro": "",
+		"identifier": "live-on-through-your-art",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>The first time each encounter you would drop to 0 HP, set your HP to 1 instead and transform into a ghostly apparition. While in this state, you cannot be healed, ignore all damage less than LVL, and Frighten all enemies within Reach 6. Ends after WIL turns, or you drop to 0 HP.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-doom",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "imrLCu21MtIkUv1I",
+	"folder": "7aef0d2a5d98cd27"
+}

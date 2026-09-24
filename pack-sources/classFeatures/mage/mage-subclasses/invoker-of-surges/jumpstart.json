@@ -5,24 +5,13 @@
 	"system": {
 		"macro": "",
 		"identifier": "jumpstart",
-		"rules": [
-			{
-				"type": "initiativeBonus",
-				"value": "@abilities.intelligence.mod",
-				"disabled": false,
-				"id": "jumpstart-init",
-				"identifier": "",
-				"label": "Jumpstart — +INT Initiative",
-				"predicate": {},
-				"priority": 1
-			}
-		],
+		"rules": [],
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "When you roll Initiative",
 				"quantity": 1,
-				"type": "none",
+				"type": "free",
 				"isReaction": false
 			},
 			"duration": {
@@ -43,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain +INT Initiative. When you roll initiative, become Charged; on a result of 20+, become Supercharged instead.</p>",
+		"description": "<p>When you roll Initiative, become Charged; and gain 1 additional action on the first round of combat.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-surges",

@@ -1,0 +1,57 @@
+{
+	"name": "Embercaster",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-flame/embercaster.webp",
+	"system": {
+		"macro": "",
+		"identifier": "embercaster",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1 Mana (optional)",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When casting Flame Dart, you can spend 1 mana to roll 3d4 instead and ignore all disadvantage.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-flame",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "BhpdSigiRtN4fUG7",
+	"folder": "9ce20096d9d04850"
+}

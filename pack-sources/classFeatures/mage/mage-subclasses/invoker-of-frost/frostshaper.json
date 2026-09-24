@@ -1,0 +1,59 @@
+{
+	"name": "Frostshaper",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-frost/frostshaper.webp",
+	"system": {
+		"macro": "",
+		"identifier": "frostshaper",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 Fire or Lightning spell and treat it as an ice spell. Gained again at levels 11 and 15 (Frostshaper 2 and 3); each pick converts one additional spell.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-frost",
+		"gainedAtLevels": [
+			7,
+			11,
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "NV3HFUaxzoVYDpOh",
+	"folder": "278a5d66a07d271a"
+}

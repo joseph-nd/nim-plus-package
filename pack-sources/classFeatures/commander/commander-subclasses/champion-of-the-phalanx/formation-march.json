@@ -1,0 +1,57 @@
+{
+	"name": "Formation March",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/commander/champion-of-the-phalanx/formation-march.webp",
+	"system": {
+		"macro": "",
+		"identifier": "formation-march",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you move, allies within Reach of your weapon may move with you for free.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-phalanx",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "M9goAT6Xp0VyXcQX",
+	"folder": "e172aec421cb4ccf"
+}

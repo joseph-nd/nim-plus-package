@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Muscle Spell — Requires 5 FD, when attacked",
+				"details": "Muscle Spell — Requires 5 FD, Reach 1, when attacked",
 				"quantity": 1,
 				"type": "reaction",
 				"isReaction": true
@@ -33,7 +33,7 @@
 			}
 		},
 		"description": {
-			"baseEffect": "<p><strong>Reaction · When attacked.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 5 FD.</strong> Make an adjacent creature Interpose for you.</p>",
+			"baseEffect": "<p><strong>Reaction · Reach 1 · When attacked.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 5 FD.</strong> Move another Medium or smaller creature into your space and you move to another adjacent space. (Each reaction is limited to 1/round.)</p>",
 			"higherLevelEffect": "",
 			"upcastEffect": ""
 		},

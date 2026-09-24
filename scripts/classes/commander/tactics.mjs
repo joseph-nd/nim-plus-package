@@ -1,6 +1,6 @@
 import { escape } from '../../core/html.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
-import { COMBAT_TACTIC_FIELD_CLASS, findCombatDicePool, isCommandingPresence } from './combat-dice.mjs';
+import { COMBAT_TACTIC_FIELD_CLASS, findCombatDicePool } from './combat-dice.mjs';
 import { ensureCombatTacticStyles, syncCombatDiceSpendRow } from './tactic-styles.mjs';
 
 
@@ -140,19 +140,11 @@ export function injectCombatTacticPicker(app, root) {
 	const scopedClass =
 		Array.from(sibling?.classList ?? []).find((name) => name.startsWith('svelte-')) ?? '';
 
-	// Commanding Presence spends a die on its own, so its dialog must not also
-	// offer the stepper — that would be two spends for one use. The cost is shown
-	// in its place, since it is not otherwise visible anywhere in the dialog.
-	if (isCommandingPresence(item)) {
-		syncCombatDiceSpendRow(root, actor, pool, { dieMultiplier: 0 }, scopedClass);
-		return;
-	}
-
 	const tactics = availableCombatTactics(actor, item);
 	if (tactics.length === 0) {
 		// Nothing here can spend a Combat Die — the dice are only ever spent as a
-		// Combat Tactic on an attack, or by Commanding Presence above — so the
-		// native stepper is offering a spend that has nowhere to go. Coordinated
+		// Combat Tactic on an attack — so the native stepper is offering a spend
+		// that has nowhere to go (Commanding Presence, an Order, lands here). Coordinated
 		// Strike! is the obvious case: a free action that grants attacks rather
 		// than making one.
 		syncCombatDiceSpendRow(root, actor, pool, null, scopedClass);

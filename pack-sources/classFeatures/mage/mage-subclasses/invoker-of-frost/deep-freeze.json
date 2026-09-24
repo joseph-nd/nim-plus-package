@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Reduce the mana cost of all spells by 2 while you have any Temp HP from Frost Shield. Choose 1 additional Lightning or Fire spell and treat it as an Ice spell.</p>",
+		"description": "<p>Reduce the mana cost of all spells by 2 while you have any Temp HP from Frost Shield.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-frost",

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/encounter) Deal LVL+WIL fire damage to all enemies with Smoldering within Range 6, ending the condition.</p>",
+		"description": "<p>Action: Deal LVL+WIL Fire damage to all enemies within Range 6 with Smoldering, ending the condition.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-blaze-and-bloom",

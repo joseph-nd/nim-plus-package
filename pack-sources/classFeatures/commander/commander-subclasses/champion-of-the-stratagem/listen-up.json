@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your Commander's Orders that target an ally or enemy may affect <strong>one additional valid target</strong>. Choose another Commander's Order.</p>",
+		"description": "<p>Your Commander's Orders that target an ally or enemy may affect one additional valid target. Choose another Commander's Order.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-stratagem",

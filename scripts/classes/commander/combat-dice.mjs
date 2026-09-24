@@ -64,16 +64,6 @@ import { iterateChargePools, setChargePoolCurrent } from '../../core/pools.mjs';
 export const COMBAT_DICE_IDENTIFIER = 'combat-dice';
 export const COMBAT_TACTIC_FIELD_CLASS = 'nim-plus-combat-tactic';
 export const COMBAT_TACTIC_STYLE_ID = 'nim-plus-combat-tactic-styles';
-export const COMMANDING_PRESENCE_MATCH = /commanding.presence/i;
-
-/** Whether this item is the Commanding Presence combat tactic. */
-export function isCommandingPresence(item) {
-	if (item?.type !== 'feature') return false;
-	return (
-		COMMANDING_PRESENCE_MATCH.test(String(item.system?.identifier ?? '')) ||
-		COMMANDING_PRESENCE_MATCH.test(String(item.name ?? ''))
-	);
-}
 const COMBAT_DICE_ADVANTAGE_MATCH = /master\s*at\s*arms|relentless\s*assault/i;
 
 /**

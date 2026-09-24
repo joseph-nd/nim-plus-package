@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/round — On Initiative or gaining a Wound — Reach 6",
+				"details": "On Initiative — Reach 2",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -34,7 +34,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/round) On your turn, you may suffer a Wound. Whenever you roll Initiative or gain a Wound, you may spawn <strong>KEY Shades</strong> within Reach 6 of yourself. Shades are <strong>ethereal figures unaffected by damage</strong>. When you move, your Shades may move 2 at the same time.</p>",
+		"description": "<p>Whenever you roll Initiative, you may conjure KEY Shades within Reach 2. Shades are ethereal and untargetable, and disappear at the end of the encounter. When you move, you may move your Shades up to half your Speed at the same time.</p>",
 		"featureType": "class",
 		"class": "zephyr",
 		"group": "way-of-shadows",

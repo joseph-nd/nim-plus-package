@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You can only cast Ice spells from now on. Choose 1 Fire or Lightning spell and treat it as an Ice spell.</p>",
+		"description": "<p>You can only cast Ice spells from now on. You unlock ice spells 1 level earlier.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-frost",

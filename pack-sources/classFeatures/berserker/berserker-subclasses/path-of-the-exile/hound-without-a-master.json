@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain advantage on DEX and WIL saves while Focused.</p>",
+		"description": "<p>While Raging, you gain double advantage on WIL saves and cannot be Charmed.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-exile",

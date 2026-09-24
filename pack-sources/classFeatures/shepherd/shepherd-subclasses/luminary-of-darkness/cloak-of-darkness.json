@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Spend a Searing Light charge",
+				"details": "1/encounter — WIL turns",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action</strong>: Spend a <strong>Searing Light charge</strong> to don a billowing <strong>Cloak of Darkness</strong> for up to <strong>WIL turns</strong>. The Cloak inflicts <strong>Blinded</strong> on all adjacent enemies.</p>",
+		"description": "<p>(1/encounter) Action: Don a billowing Cloak of Darkness for up to WIL turns. The Cloak has an aura that inflicts Blinded on enemies within Reach 2.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",

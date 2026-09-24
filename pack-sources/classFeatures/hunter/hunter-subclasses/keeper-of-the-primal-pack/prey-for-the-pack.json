@@ -1,0 +1,57 @@
+{
+	"name": "Prey for the Pack",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-the-primal-pack/prey-for-the-pack.webp",
+	"system": {
+		"macro": "",
+		"identifier": "prey-for-the-pack",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "free",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Designate your quarry as Prey. When you hit your Prey in melee, your allies gain advantage on attacks against it until the start of your next turn.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-the-primal-pack",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "RkTvj2uXODkWNaTZ",
+	"folder": "251279f32b62c52c"
+}

@@ -207,6 +207,7 @@
 					"strength-of-mind": "OF3ze2BrcIy6yBET"
 				},
 				"path-of-the-burning-rage": {
+					"boundless-flames": "U2BYeP97jifGsyO9",
 					"explosion": "qWPcPtnBLgLaOQxR",
 					"hot-headed": "bIhGJsiNwZCmjdcN",
 					"overflowing-fury": "NriYAQQC6eehnEKx",
@@ -216,17 +217,17 @@
 				"path-of-the-exile": {
 					"deflect-and-counter": "OHyR7gciUtakYxo3",
 					"draw-cut": "ko3mbWofIHeJquGq",
-					"exiles-discipline": "r8wz4QmNy5uW1iXt",
 					"hound-without-a-master": "KYfDW1GGJJVINj83",
 					"sudden-rush": "Ly9B5intf13JXVLR",
 					"you-are-already-dead": "6FLgighvzePkwSJN"
 				},
-				"path-of-the-titans": {
-					"blood-of-the-titans": "2epPnFniR6k0H5ib",
-					"reckless-hurl": "FFTFzotGycirMwU8",
-					"thunderous-clap": "TWwx8yGoFwewloRq",
-					"titanic-toss": "l7jtMNnxvYh1RATG",
-					"will-of-the-titans": "lZpTNILq4eUOXLGc"
+				"path-of-the-titan": {
+					"blood-of-the-titan": "2epPnFniR6k0H5ib",
+					"crushing-grip": "8BRH7MHznJuhVehG",
+					"enormous-potential": "J7Y9pZa46Q6VS6mt",
+					"mighty-grasp": "EGPBAVs7FvLvBAaR",
+					"skull-rattler": "oFO4f5VklC2a9FT7",
+					"titanic-toss": "l7jtMNnxvYh1RATG"
 				},
 				"path-of-the-titans-grip": {
 					"catch": "a7VPxhQifmf91qTu",
@@ -242,7 +243,7 @@
 			"commander-subclasses": {
 				"champion-of-the-arena": {
 					"glory-seeker": "HHknODerlLgGEd9c",
-					"outlast-and-outmatch": "LIlnw8guL2RPminr",
+					"outlast-outmatch": "LIlnw8guL2RPminr",
 					"pushed-to-the-brink": "7cYwixjIrlD4heEU",
 					"remarkable-strategy": "e7FLL0xX7vfrCHkA",
 					"showstopping-strike": "atMTMIHMjt6YmuqE",
@@ -256,10 +257,10 @@
 					"surprise-assault": "aRfuKOjzRXoj910B"
 				},
 				"champion-of-the-phalanx": {
+					"formation-march": "M9goAT6Xp0VyXcQX",
 					"polearm-mastery": "A7wBZZya3A2TqgUH",
 					"shoulder-to-shoulder": "heZbmQCoG0Hyb0da",
-					"skewering-stab": "UWo4zbbEHiM6agW5",
-					"together-we-march": "M9goAT6Xp0VyXcQX",
+					"skewer": "UWo4zbbEHiM6agW5",
 					"together-we-stand": "hJPi4CFVauZVhiTM"
 				},
 				"champion-of-the-pit": {
@@ -267,25 +268,22 @@
 					"master-at-arms": "XJrkUzHa6ELAzPhq",
 					"ready-for-action": "mJsOYbpEmTwy7hfX",
 					"seasoned-combatant": "yp8lQuEi1GCBe6qm",
-					"studied-strikes": "NdMioOR2eLEsfmHq"
+					"studied-strike": "NdMioOR2eLEsfmHq"
 				},
 				"champion-of-the-siege-breaker": {
-					"even-the-odds": "xJavA9wGme1alrAX",
-					"hold-the-line": "mh1VD1Z9FBEdh19i",
+					"against-the-hordes": "xJavA9wGme1alrAX",
 					"mighty-cleave": "vCajHjortnU0GtyC",
 					"relentless-assault": "epNBCBQDbIprcmsh",
 					"shatter-formation": "MBtyDg3ZUZJan54Q",
+					"siege-veteran": "mh1VD1Z9FBEdh19i",
 					"tear-asunder": "AMkgmUoitZebsX7a"
 				},
 				"champion-of-the-stratagem": {
-					"hit-the-weak-spot": "8o2Mtb3yUEoo6HB9",
 					"listen-up": "rXOCOru3nG8BJ6rY",
 					"master-and-commander": "1ier6EsJV6Z0UYFF",
 					"new-orders": "sppOmuxdVxGRrqJp",
 					"powerful-voice": "3VPxA7hgYiSxJMH9",
-					"rallying-cry": "p1wTXuzjHPvmRUy1",
-					"shake-it-off": "19sMOK5vNlmsSHLi",
-					"watch-out": "Ev9O8I61KcVUlexA"
+					"rallying-cry": "p1wTXuzjHPvmRUy1"
 				}
 			},
 			"commanders-orders": {
@@ -351,19 +349,24 @@
 			"hunter-subclasses": {
 				"keeper-of-the-balance": {
 					"calm-mind": "T8DbiGkWCbRhzQYy",
-					"intense-focus": "FejVySmXVdxww4lT",
-					"prune-the-corrupted": "XJbpgBxw09SlwkHw",
+					"intense-focus": "go8thqlmJ265HydR",
 					"thrilling-insight": "wjdrirXrLgVsoKRl",
-					"uncanny-accuracy": "go8thqlmJ265HydR",
 					"wild-surge": "r5nqg0Cvt1cRpQGt",
-					"wrath-of-nature": "Cq3nRrqkTqRzaD2O"
+					"wrath-of-nature": "XJbpgBxw09SlwkHw"
 				},
 				"keeper-of-the-pack": {
-					"fearsome-alpha": "xbb2fnnYOQftlF8n",
+					"fearsome-alpha": "O10WWn7H2tY5GRei",
+					"ferocious-takedown": "0KKmuQ7F5SIQE7Na",
+					"frenzied-pack": "tISdbStA5Jju3dXD",
+					"lead-the-hunt": "6vP2RhwnvZiKWqwg",
+					"marked-for-death": "YhBzEitqihp6jOUN",
+					"the-lions-share": "5oLfk67YO7gjd5KN"
+				},
+				"keeper-of-the-primal-pack": {
 					"ferocious-takedown": "8NVKd4ypcGCfTsmI",
-					"frenzied-pack": "sxc5EtB0n8un2rCo",
 					"lead-the-hunt": "I8KLbOp4ewwfNOUL",
-					"marked-for-death": "6EtWKhY37NRrStkO",
+					"prey-for-the-pack": "RkTvj2uXODkWNaTZ",
+					"scent-of-blood": "h4DH5NIY0Gpkj7dn",
 					"the-lions-share": "OovCVlNrDRUJkaO9"
 				},
 				"keeper-of-traps": {
@@ -380,51 +383,43 @@
 		"mage": {
 			"mage-subclasses": {
 				"invoker-of-flame": {
-					"embers": "5xCFZtyuDzrwsgD7",
+					"embercaster": "BhpdSigiRtN4fUG7",
 					"fiery-dedication": "mLUyFY48Mj3RqnqK",
 					"fireshaper": "xX9VQW7rMlWeLrLp",
-					"flame-weaver": "oZacoQtOksABUKj3",
 					"flash-fire": "WJtbPBasWqomzsi4",
-					"the-phoenix": "5no8d37GfQrLB4Gv",
-					"thy-embers-keeper": "WH6hGXpuRxcAmpmU",
-					"wildfire": "3jrAZI2TMeq2dykG"
+					"phoenixform": "5no8d37GfQrLB4Gv",
+					"thy-embers-keeper": "WH6hGXpuRxcAmpmU"
 				},
 				"invoker-of-frost": {
 					"aura-of-cold": "c7ldEz2dHKDzH2Kv",
 					"bitter-cold": "p02DCh1fYLijdFcq",
 					"crown-of-ice": "giXKVEuIcL2tf9tt",
 					"crystalline-aegis": "lMFPzNKzqw7WR2mH",
-					"deep-freeze": "emLx4Sg8TqYIyXHw"
+					"deep-freeze": "emLx4Sg8TqYIyXHw",
+					"frostshaper": "NV3HFUaxzoVYDpOh"
 				},
 				"invoker-of-majesty": {
-					"apodracosis": "RavDYkxHEU6xD16q",
+					"apodracosis": "F1CmjReuilTHBT30",
 					"blinding-majesty": "4ziZUG8O6ck900b8",
-					"brilliant-scales": "F1CmjReuilTHBT30",
-					"elemental-affinity": "5oPzjaSNetxvBDz7",
 					"fearsome-breath": "wDkSieKoqUvV8E5i",
-					"formidable-claws": "tISxnW7jC1M8MEKg",
 					"glorious-wings": "qnOH6P99QXVybWnq",
 					"limitless-wrath": "eo2OEmDaHJE3keWU",
 					"peerless-intellect": "dA6yHKb8EMFhO2ju",
 					"prodigious-vigor": "2VEvGlgKM3eus7h0"
 				},
 				"invoker-of-perfection": {
-					"arcane-perfection": "yQBXTbaagK2iKr2E",
-					"flawless-execution": "NfypWdUoYicFfU0O",
+					"flawless-execution": "W7Rpg6R40bLJ5TEN",
 					"impossible-geometry": "0lrW4huc7cuGOocK",
 					"prestidigitation": "h6CrTwxc5jV4jG1M",
 					"signature-spell-school": "pGVq2OSCv8TmlGXV",
-					"spell-mastery": "W7Rpg6R40bLJ5TEN",
-					"unlimited-power": "VCrwAv56B8NZWQ0a"
+					"unlimited-power": "yQBXTbaagK2iKr2E"
 				},
 				"invoker-of-surges": {
-					"conduit-of-power": "zQBON2f4zEzgcvBA",
+					"blur": "e3wMi2jKy0sKiW3U",
 					"electrical-dedication": "UoQc4sdmy2okNNyd",
 					"haywire": "XmGx5ynjYaegcmLu",
 					"jumpstart": "l8DNBJpC4p4DCDS5",
-					"lingering-charge": "imZtiBdd45fJtGS8",
-					"power-surge": "VFE1TgZzsqgoC6XY",
-					"supercharged-abilities": "SnXXK37G3nfcDkdY"
+					"power-surge": "VFE1TgZzsqgoC6XY"
 				},
 				"invoker-of-wards": {
 					"abjurer": "FKQQspmPmCPbxdPp",
@@ -448,26 +443,19 @@
 					"blazing-vitality": "HFIWm74cYqYEun0V",
 					"burning-crusade": "Nd9EAlqTwwWH8ia3",
 					"holy-brand": "E1YlW1R8YB1qV6Lp",
-					"purge-the-unworthy": "yByYKSTgvXO0Uc3n",
-					"scorching-defenses": "1fz7Vn5YXIaCLiLg"
+					"purge-the-unworthy": "yByYKSTgvXO0Uc3n"
 				},
 				"oath-of-roaring-thunder": {
-					"harbinger-of-the-storm": "kA9maW0hFwLoz1Ms",
+					"aura-of-gales": "kA9maW0hFwLoz1Ms",
 					"stormstrike": "iZDmtbaTPRtlRVCG",
 					"thunderous-judgment": "gfMcVvY4UFpl3AcY",
 					"thunderous-strike": "DxFzkitbo2Llbkrs"
 				},
 				"oath-of-valor": {
-					"aura-of-virtue": "ASQXTfu2tPQ9jcO2",
-					"balm-for-the-downcast": "NkoCMUy49nAK9RsM",
-					"defend-the-helpless": "hUvnHDWODq5qnXkX",
-					"exemplar-of-courage": "jW6jmN3tscu6aJZe",
-					"inspirational-valor": "9vB0SLjGxP7NUVwq",
-					"no-greater-love": "PL9gFtSGAiQTiyHS",
-					"speak-only-truth": "Rjq2SCKSzWsbNaRP",
-					"sworn-to-courage": "LCCY06sFdXag5hw5",
-					"undo-the-wicked": "QDj95VKbWcAcq6H7",
-					"uphold-the-weak": "q3IY6MOjPyA4sa39"
+					"aura-of-valor": "g71WK1WyPBiRngCU",
+					"balm-for-the-downcast": "egtR1C9skuA1zgol",
+					"exemplar-of-courage": "8ouCcJd58r9VyTmI",
+					"no-greater-love": "9v70FWBqhCnzOIJy"
 				}
 			}
 		},
@@ -535,13 +523,14 @@
 		},
 		"shadowmancer": {
 			"shadowmancer-subclasses": {
-				"pact-of-the-ego": {
-					"defense-mechanism": "ztUqgPNKHyppNx8o",
-					"fractured-psyche": "2dWjTmxuonASEjLg",
-					"know-your-limits": "c4pvcsVYM292CBJh",
-					"shadowed-thoughts": "ULPk38roFg1tanBc",
-					"slip-of-the-tongue": "pmrNIdgKX4EdwoCK",
-					"unified-psyche": "VTVwxNBCvSITkuyc"
+				"pact-of-the-celestial": {
+					"blinding-sacrifice": "TFyKEroO0rF0eiCW",
+					"divine-intervention": "oxrSoc2op1XwqMUE",
+					"penance-for-your-sins": "yIl3130XbMyJoEO3",
+					"radiant-potential": "11DxO4Nhb8sir8R9",
+					"redemption-within-reach": "EtNGikxarOJ2Vrec",
+					"see-the-light": "GOQQPTLlqSgXt3JW",
+					"serve-the-light": "QNkCyKI4rQB18fZl"
 				},
 				"pact-of-the-endless-swarm": {
 					"instant-infestation": "BowuI62Jmr2BNXcZ",
@@ -549,18 +538,12 @@
 					"summon-hive": "rWBflb0qRobciAjo",
 					"swarming-clouds": "yReq2Fr8ggkqaSK6"
 				},
-				"pact-of-the-high-celestial": {
-					"celestial-apotheosis": "EtNGikxarOJ2Vrec",
-					"celestial-armor": "oxrSoc2op1XwqMUE",
-					"divine-bestowal": "11DxO4Nhb8sir8R9",
-					"radiant-blast": "yIl3130XbMyJoEO3"
-				},
 				"pact-of-the-id": {
-					"defense-mechanism": "EnTyotwc28tLfwIE",
-					"fractured-psyche": "krm5bWReeSCC04fM",
-					"hyperfixation": "crpl55G2m4GZbIm1",
-					"know-your-limits": "DwRleADH0FBUOJOd",
-					"unified-psyche": "izGDwscHvl3xq2O0"
+					"defense-mechanism": "ztUqgPNKHyppNx8o",
+					"fractured-psyche": "2dWjTmxuonASEjLg",
+					"hyperfixation": "NP4CsDWlcw6Yol7T",
+					"know-your-limits": "c4pvcsVYM292CBJh",
+					"unified-psyche": "VTVwxNBCvSITkuyc"
 				},
 				"pact-of-the-void": {
 					"the-consuming-dark": "PIf0qZq3BaAuEMiM",
@@ -584,12 +567,10 @@
 				},
 				"luminary-of-darkness": {
 					"cloak-of-darkness": "tOTVJTCDW3M2UeMr",
-					"guiding-hand": "G2xRc9mcLPI2rLmV",
 					"light-in-the-darkness": "m91zBWok69AOmvGL",
 					"light-in-the-darkness-2": "k9PxQnXXB6Lr3JJu",
 					"lost-in-shadow": "B8oh6CiDVHuIckkn",
 					"snuff-out": "gpfurJ2V1WwRfOLr",
-					"terror-of-the-dawn": "MAyeFSckoE9rJYUO",
 					"umbrous-mark": "kfp1zNBrYYebmnno"
 				},
 				"luminary-of-protection": {
@@ -607,8 +588,6 @@
 					"seasoned-journeyman": "Wzylxwzb3SMCzmgx"
 				},
 				"luminary-of-tidings": {
-					"breaking-news": "XH5N9c39fqGIaBIT",
-					"criers-vigilance": "nCf1dGBbbdm4YA75",
 					"hear-ye-hear-ye": "wLic1kSeLTN2PsT3",
 					"raise-the-alarm": "2Z1Hv1lJgXT6oNCt",
 					"spread-the-news": "Sq25lS6c0nyy9wVu",
@@ -627,15 +606,10 @@
 			},
 			"songweaver-subclasses": {
 				"herald-of-doom": {
-					"hurt-me-twice": "5ybJWINTDvn6LE6K",
 					"live-on-through-your-art": "imrLCu21MtIkUv1I",
 					"on-the-precipice": "OdotdTgpJCEomHxR",
-					"out-of-time": "9vfzmrcoUdSBsrOJ",
 					"pain-and-misery": "qJSSUuZFGoi0bHVK",
-					"precipice-of-the-abyss": "eM62oTYlO7OpsCNj",
-					"repent": "M5YqPeXhqsf3qbae",
 					"sell-the-world": "U0MyAW9DFbqtZO0L",
-					"the-end-is-nigh": "8lfAYTd0PDXoYOCg",
 					"tortured-artist": "Q8X1oIfHPXdf3teq"
 				},
 				"herald-of-legends": {
@@ -643,9 +617,10 @@
 					"battle-ballad": "NrV3r6RRWUjx0MYB",
 					"every-legend": "7FyjB1GIEpI7Z48B",
 					"finale": "kknehD9ftU3cpRuY",
+					"inspiring-tune": "FvIxsnXCVTr0hQBn",
 					"legendary-initiative": "sOnDz4jW8w6wSjTd",
 					"legendkeeper": "YgTKO8orb5GzLpq6",
-					"recite-legend": "8GE2EIfJ6E1bqEZD",
+					"razors-wit": "wuxxqtJbpoqQyZfD",
 					"solo": "MQv5NlZRA0qfxx5H",
 					"summon-legend": "mddlPUAMs06oHgiW"
 				},
@@ -750,26 +725,20 @@
 					"volatile-toxins": "30Ry9j6KQSOlxlt7"
 				},
 				"tools-of-the-spider": {
-					"arachnophobia": "TqghDK9br3sTMIvZ",
-					"aspect-of-the-spider-queen": "1CahAHw7USuFLoMI",
-					"ensnare": "zVtkDA7R0hHPLqpd",
+					"ensnare": "JyKS6dEEtQQYhPmg",
 					"hidden-webs": "L19fiyaCkAAVUqFF",
 					"nexus-of-pain": "dMfcMhKqF92Gr8Ct",
 					"spider-climb": "7CPtiktTtVbKraUB",
-					"threadshot": "JyKS6dEEtQQYhPmg",
 					"twinned-threads": "U0TAYiDBa38xaywm",
-					"woven-threads": "8jLf9mKYWhzUdvwX",
-					"woven-webs": "QNSKLy59TsU1nPDQ"
+					"woven-webs": "8jLf9mKYWhzUdvwX"
 				},
 				"tools-of-the-trickshot": {
 					"all-in-the-wrist": "UvbJxaSXJvc9uAW1",
 					"bullseye": "hdbB2LEBmx5H03ZU",
-					"deadly-ricochet": "0qQd0B2imRPvSHUK",
+					"deadly-ricochet": "mGz7AtilEufxQoFz",
 					"impossible-angle": "N5ORjIYImxAO5g96",
-					"improvise": "ajHD6oGdODjYgrtG",
 					"intercept": "IQ0rpT5a0JRER2Ja",
-					"master-thrower": "mGz7AtilEufxQoFz",
-					"trick-up-the-sleeve": "jyrgdWDSy0YpDR8L"
+					"trick-up-the-sleeve": "ajHD6oGdODjYgrtG"
 				}
 			}
 		},
@@ -791,16 +760,12 @@
 					"steel-yourself": "DhlgopAzDFDL791c"
 				},
 				"way-of-shadows": {
-					"burst-of-darkness": "yuZ4ooaO0XvXpAZR",
 					"coalescence-of-shadows": "VHmcI6tBiPmVrAyX",
 					"dark-legion": "TKDHm1ohffZqgnCb",
-					"lingering-shade": "iUmEJQNVulqYiFvu",
 					"shadestrike": "RqJGij2IHe5fLppF",
-					"shadow-jump": "d7mR3M4g8yhZDbUS",
 					"shadowburst": "6o9k6ySk64AvjsEe",
 					"shadows-embrace": "CFBLwPCeDA3r34dH",
-					"steal-essence": "0ExQaDaCUHfRyAOo",
-					"unseen-blow": "OcdtfVzab5oIdpBy"
+					"steal-essence": "0ExQaDaCUHfRyAOo"
 				},
 				"way-of-the-dancer": {
 					"center-of-attention": "Vc9LO1Gh1AargPxv",
@@ -1323,7 +1288,7 @@
 			"muscle-mage": "RDypWhLqLoBpnbvu",
 			"path-of-the-burning-rage": "fEtVA1lFHsRnXEkM",
 			"path-of-the-exile": "liE0QY1gMiEGHaZ6",
-			"path-of-the-titans": "tv4w9ItnCsFXdiyV",
+			"path-of-the-titan": "tv4w9ItnCsFXdiyV",
 			"path-of-the-titans-grip": "ufx5EljHfj82u69k"
 		},
 		"commander": {
@@ -1341,7 +1306,8 @@
 		},
 		"hunter": {
 			"keeper-of-the-balance": "vrJIhGyuWTsiCopf",
-			"keeper-of-the-pack": "uWSCO2Nx84o0fs90",
+			"keeper-of-the-pack": "9MjLlPMDTQF5wUIO",
+			"keeper-of-the-primal-pack": "uWSCO2Nx84o0fs90",
 			"keeper-of-traps": "0MgK6oR4Y6cIPlL2"
 		},
 		"mage": {
@@ -1364,10 +1330,9 @@
 			"adept-of-illusions": "nOuK52yQf9ipYwh7"
 		},
 		"shadowmancer": {
-			"pact-of-the-ego": "ukmDApoVtN3J4THK",
+			"pact-of-the-celestial": "bRS10riIBo4mNhcT",
 			"pact-of-the-endless-swarm": "fDPWXpzbdH9oMvkp",
-			"pact-of-the-high-celestial": "bRS10riIBo4mNhcT",
-			"pact-of-the-id": "wlqthHw8WAiR3gPM",
+			"pact-of-the-id": "ukmDApoVtN3J4THK",
 			"pact-of-the-void": "yyD6l3zTEKVBhKyW"
 		},
 		"shepherd": {

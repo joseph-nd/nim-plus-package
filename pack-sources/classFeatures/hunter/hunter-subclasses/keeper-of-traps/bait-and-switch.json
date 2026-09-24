@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You and your allies can Interpose within Reach 4 vs Taunted attackers.</p><p>(1/encounter) You can use Decoy for free while Prone.</p>",
+		"description": "<p>You and your allies gain +2 Reach on Interposing vs Taunted attackers. (1/encounter) You can use Decoy for free while Prone.</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-traps",

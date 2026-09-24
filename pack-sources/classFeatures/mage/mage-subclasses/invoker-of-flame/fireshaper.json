@@ -32,12 +32,14 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Choose 1 additional Lightning or Ice spell and treat it as a fire spell.</p>",
+		"description": "<p>Choose 1 Ice or Lightning spell and treat it as a fire spell. Gained again at levels 11 and 15 (Fireshaper 2 and 3); each pick converts one additional spell.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-flame",
 		"gainedAtLevels": [
-			7
+			7,
+			11,
+			15
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

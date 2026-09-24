@@ -1,165 +1,118 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
-import { actorOwnsFeat, actorKeyMod } from '../feats/mechanics/helpers.mjs';
+import { actorOwnsFeat } from '../feats/mechanics/helpers.mjs';
+import { vol4SpendCharge } from '../vol4/charges.mjs';
 
 /**
- * Toll the Hour (Luminary of Tidings, L7) — proclaim a tiding of either:
- *   - Calamity.  (Reach 6) Enemies within Reach must make a WIL save
- *     (DC 10+KEY) or become Dazed. Bloodied creatures always fail.
- *   - Jubilation. (Reach 6) All allies within Reach gain WIL Temp HP and may
- *     cleanse a condition or harmful effect.
+ * Toll the Hour (Luminary of Tidings, L3 — revised Vol 3).
+ *   (WIL/Safe Rest) Action: Proclaim tidings of either:
+ *   - Jubilation. Heal WIL d10 HP to an ally within Reach 4 and cleanse a
+ *     harmful non-Wound condition or effect.
+ *   - Calamity.   Inflict Dazed and WIL d10 Radiant damage to a Hampered,
+ *     undead or Bloodied enemy within Reach 4.
+ *   Spread the News (L11): affects ALL enemies or allies within Reach 4.
  *
- * With Crier's Vigilance (L15) the caster gets an extra use per encounter and
- * may choose both tidings at once — offered as a third dialog option when the
- * actor owns that feature.
- *
- * Usage (1/encounter, 2/encounter with Crier's Vigilance) is not tracked at
- * runtime — this module has no per-encounter charge tracker for subclass
- * features (see `cost.details` on the item), so enforcement is left to the
- * player/GM, matching every other 1/encounter feature in this file.
+ * Uses are tracked by the `toll-the-hour` chargePool rule on the item (max
+ * WIL, refreshed on Safe Rest); the macro path bypasses chargeConsumer rules,
+ * so the charge is spent here. Recipients: the user's current targets, or —
+ * with Spread the News — every token of the right disposition within Reach 4.
  */
+const REACH = 4;
+const HAMPERING = ['hampered', 'dazed', 'grappled', 'prone', 'slowed', 'restrained'];
+
 export async function tollTheHour(actor, item) {
 	if (!actor || !item) {
 		ui.notifications?.error(`[${MODULE_ID}] tollTheHour: missing actor or item.`);
 		return null;
 	}
 
-	const REACH = 6;
-	const hasVigilance = actorOwnsFeat(actor, 'criers-vigilance');
-	const wil = Math.max(0, Number(actor.system?.abilities?.will?.mod ?? 0));
-	const dc = 10 + actorKeyMod(actor);
-
-	const buttons = [
-		{ action: 'calamity', label: 'Calamity', default: true, callback: () => 'calamity' },
-		{ action: 'jubilation', label: 'Jubilation', callback: () => 'jubilation' },
-	];
-	if (hasVigilance) {
-		buttons.push({ action: 'both', label: "Both (Crier's Vigilance)", callback: () => 'both' });
-	}
+	const spread = actorOwnsFeat(actor, 'spread-the-news');
+	const wil = Math.max(1, Number(actor.system?.abilities?.will?.mod ?? 0));
 
 	const choice = await foundry.applications.api.DialogV2.wait({
 		window: { title: `${item.name} — Choose a Tiding` },
-		content: `<p>Proclaim tidings of (1/encounter${hasVigilance ? ", 2/encounter with Crier's Vigilance" : ''}):</p>
+		content: `<p>(WIL/Safe Rest) Action: Proclaim tidings of either:</p>
 			<ul>
-				<li><strong>Calamity.</strong> (Reach ${REACH}) Enemies within Reach must make a <strong>WIL save</strong> (DC ${dc}) or become <strong>Dazed</strong>. Bloodied creatures always fail.</li>
-				<li><strong>Jubilation.</strong> (Reach ${REACH}) All allies within Reach gain <strong>${wil} Temp HP</strong> and may cleanse a condition or harmful effect.</li>
+				<li><strong>Jubilation.</strong> Heal <strong>${wil}d10 HP</strong> to ${spread ? 'all allies' : 'an ally'} within Reach ${REACH} and cleanse a harmful non-Wound condition or effect.</li>
+				<li><strong>Calamity.</strong> Inflict <strong>Dazed</strong> and <strong>${wil}d10 Radiant damage</strong> to ${spread ? 'all' : 'a'} Hampered, undead or Bloodied ${spread ? 'enemies' : 'enemy'} within Reach ${REACH}.</li>
 			</ul>
-			${hasVigilance ? `<p><em>Crier's Vigilance:</em> you may proclaim both tidings in one use.</p>` : ''}`,
-		buttons,
+			<p><em>${spread ? 'Spread the News: every eligible token within Reach is affected.' : 'Target the recipient first; with no target the nearest eligible token within Reach is used.'}</em></p>`,
+		buttons: [
+			{ action: 'jubilation', label: 'Jubilation', default: true, callback: () => 'jubilation' },
+			{ action: 'calamity', label: 'Calamity', callback: () => 'calamity' },
+		],
 		rejectClose: false,
 		modal: false,
 	}).catch(() => null);
-
 	if (!choice) return null;
 
-	const doCalamity = choice === 'calamity' || choice === 'both';
-	const doJubilation = choice === 'jubilation' || choice === 'both';
-
-	const actorToken = actor.getActiveTokens?.(true, true)?.[0];
-	const gridSize = canvas?.dimensions?.distance ?? 1;
-
-	// Mirrors the Reach-based ally filter used elsewhere in this file (e.g.
-	// The Dwarf's Delight's Cheers! aura) — Chebyshev grid distance, gated by
-	// token disposition. `wantAllies` flips the disposition comparison so the
-	// same helper serves both Calamity (enemies) and Jubilation (allies).
-	const tokensInReach = (wantAllies) => {
-		if (!actorToken) return [];
-		return (canvas?.tokens?.placeables ?? []).filter((t) => {
-			const other = t.document;
-			if (!other?.actor || other.actorId === actorToken.actorId) return false;
-			const isAllied = other.disposition === actorToken.disposition;
-			if (isAllied !== wantAllies) return false;
-			const dx = Math.abs(other.x - actorToken.x) / (canvas.grid?.sizeX ?? canvas.grid?.size ?? 100);
-			const dy = Math.abs(other.y - actorToken.y) / (canvas.grid?.sizeY ?? canvas.grid?.size ?? 100);
-			return Math.max(dx, dy) * gridSize <= REACH * gridSize;
-		});
-	};
-
-	const sections = [];
-
-	if (doCalamity) {
-		const dazed = [];
-		const saved = [];
-		const manual = [];
-
-		for (const token of tokensInReach(false)) {
-			const enemy = token.actor;
-
-			// Bloodied detection: prefer the system's own derived tag (accounts
-			// for the "bloodied" status AND the HP<=50% failsafe, and excludes
-			// dying/last-stand edge cases — see populateDerivedTags in the
-			// Nimble system source). Fall back to a raw HP check only if the
-			// tag isn't present for some reason.
-			const hpMax = Number(enemy.system?.attributes?.hp?.max ?? 0);
-			const hpVal = Number(enemy.system?.attributes?.hp?.value ?? 0);
-			const isBloodied =
-				enemy.tags?.has?.('self:bloodied') ?? (hpMax > 0 && hpVal > 0 && hpVal <= hpMax / 2);
-
-			let failed = isBloodied;
-			if (!isBloodied) {
-				try {
-					const { roll } = (await enemy.rollSavingThrow?.('will', { skipRollDialog: true })) ?? {};
-					if (!roll) {
-						manual.push(enemy.name);
-						continue;
-					}
-					failed = Number(roll.total ?? 0) < dc;
-				} catch (error) {
-					console.error(`[${MODULE_ID}] Toll the Hour: failed to roll ${enemy.name}'s WIL save`, error);
-					manual.push(enemy.name);
-					continue;
-				}
-			}
-
-			if (failed) {
-				await Promise.resolve(enemy.toggleStatusEffect('dazed', { active: true })).catch((error) => {
-					console.error(`[${MODULE_ID}] Toll the Hour: failed to apply Dazed to ${enemy.name}`, error);
-				});
-				dazed.push(`${enemy.name}${isBloodied ? ' (Bloodied — auto-fail)' : ''}`);
-			} else {
-				saved.push(enemy.name);
-			}
-		}
-
-		const noEnemiesFound = dazed.length === 0 && saved.length === 0 && manual.length === 0;
-		sections.push(`<p><strong>Calamity</strong> — WIL save DC ${dc}, Reach ${REACH}:</p>
-			<ul>
-				${dazed.length ? `<li><strong>Dazed:</strong> ${dazed.map(escape).join(', ')}</li>` : ''}
-				${saved.length ? `<li>Saved: ${saved.map(escape).join(', ')}</li>` : ''}
-				${manual.length ? `<li><em>Could not auto-roll a save for:</em> ${manual.map(escape).join(', ')} — resolve manually.</li>` : ''}
-				${noEnemiesFound ? `<li><em>No enemy tokens found within Reach ${REACH} — resolve manually.</em></li>` : ''}
-			</ul>`);
+	const wantAllies = choice === 'jubilation';
+	const recipients = pickRecipients(actor, wantAllies, spread);
+	if (!recipients.length) {
+		ui.notifications?.warn(
+			`${item.name}: no ${wantAllies ? 'allied' : 'enemy'} token within Reach ${REACH}${spread ? '' : ' (target one first)'}.`,
+		);
+		return null;
 	}
 
-	if (doJubilation) {
-		const healed = [];
-		for (const token of tokensInReach(true)) {
-			const ally = token.actor;
-			const currentTemp = Number(ally.system?.attributes?.hp?.temp ?? 0);
-			if (wil > currentTemp) {
-				await ally.update({ 'system.attributes.hp.temp': wil });
-			}
-			healed.push(ally.name);
-		}
+	if (!(await vol4SpendCharge(item, 'toll-the-hour'))) return null;
 
-		sections.push(`<p><strong>Jubilation</strong> — Reach ${REACH}:</p>
-			<ul>
-				${
-					healed.length
-						? `<li>Gain <strong>${wil} Temp HP</strong>: ${healed.map(escape).join(', ')}</li>`
-						: `<li><em>No allied tokens found within Reach ${REACH} — apply ${wil} Temp HP manually.</em></li>`
-				}
-				<li><em>Each affected ally may also cleanse one harmful condition or effect (apply manually).</em></li>
-			</ul>`);
+	const roll = await new Roll(`${wil}d10`, actor.getRollData()).evaluate();
+	const amount = Math.max(0, Number(roll.total ?? 0));
+	const lines = [];
+
+	for (const target of recipients) {
+		if (wantAllies) {
+			if (typeof target.applyHealing === 'function') await target.applyHealing(amount);
+			lines.push(`<li><strong>${escape(target.name)}</strong> heals ${amount} HP and may cleanse one harmful non-Wound condition or effect.</li>`);
+		} else {
+			const eligible = isCalamityEligible(target);
+			if (typeof target.applyDamage === 'function') await target.applyDamage(amount, { damageType: 'radiant' });
+			await Promise.resolve(target.toggleStatusEffect('dazed', { active: true })).catch((error) => {
+				console.error(`[${MODULE_ID}] Toll the Hour: failed to apply Dazed to ${target.name}`, error);
+			});
+			lines.push(
+				`<li><strong>${escape(target.name)}</strong> takes ${amount} Radiant damage and is <strong>Dazed</strong>${
+					eligible ? '' : ' — <em>not Hampered, undead or Bloodied; GM call</em>'
+				}.</li>`,
+			);
+		}
 	}
 
-	const flavorLabel =
-		choice === 'both' ? "Calamity &amp; Jubilation (Crier's Vigilance)" : choice[0].toUpperCase() + choice.slice(1);
-
-	return ChatMessage.create({
+	return roll.toMessage({
 		speaker: ChatMessage.getSpeaker({ actor }),
-		flavor: `<strong>${escape(item.name)}</strong> — <em>${flavorLabel}</em>`,
-		content: sections.join(''),
+		flavor: `<strong>${escape(item.name)}</strong> — <em>${wantAllies ? 'Jubilation' : 'Calamity'}</em>${spread ? ' (Spread the News)' : ''}<ul>${lines.join('')}</ul>`,
 	});
 }
 
+/** Allied/enemy actors within Reach, from the user's targets or (Spread the News) every token in Reach. */
+function pickRecipients(actor, wantAllies, spread) {
+	const self = actor.getActiveTokens?.(true, true)?.[0];
+	if (!self) return [];
+	const cell = canvas.grid?.sizeX ?? canvas.grid?.size ?? 100;
+	const inReach = (doc) =>
+		Math.max(Math.abs(doc.x - self.x), Math.abs(doc.y - self.y)) / cell <= REACH;
+	const rightSide = (doc) => (doc.disposition === self.disposition) === wantAllies;
+
+	const candidates = (canvas.tokens?.placeables ?? [])
+		.map((t) => t.document)
+		.filter((doc) => doc?.actor && doc.actorId !== self.actorId && rightSide(doc) && inReach(doc));
+
+	if (spread) return candidates.map((doc) => doc.actor);
+
+	const targeted = [...(game.user?.targets ?? [])].map((t) => t.document).filter((doc) => candidates.includes(doc));
+	if (targeted.length) return [targeted[0].actor];
+	candidates.sort(
+		(a, b) => Math.hypot(a.x - self.x, a.y - self.y) - Math.hypot(b.x - self.x, b.y - self.y),
+	);
+	return candidates.length ? [candidates[0].actor] : [];
+}
+
+function isCalamityEligible(target) {
+	const statuses = target.statuses ?? new Set();
+	if (HAMPERING.some((s) => statuses.has(s))) return true;
+	if (/undead/i.test(String(target.system?.details?.creatureType ?? ''))) return true;
+	const hpMax = Number(target.system?.attributes?.hp?.max ?? 0);
+	const hpVal = Number(target.system?.attributes?.hp?.value ?? 0);
+	return target.tags?.has?.('self:bloodied') ?? (hpMax > 0 && hpVal > 0 && hpVal <= hpMax / 2);
+}

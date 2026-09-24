@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> Link two creatures within Range 6 with an ethereal web. Linked creatures are <strong>Slowed</strong>. When you deal damage to a Linked creature, other Linked creatures take <strong>KEY damage</strong> (ignoring armor). You can maintain one thread.</p>",
+		"description": "<p>Action: Link two creatures within Range 6 with an ethereal web. When a Linked creature is dealt damage, other Linked creatures are dealt half that amount as Psychic damage (ignoring armor). You can only maintain one web at time.</p>",
 		"featureType": "class",
 		"class": "the-cheat",
 		"group": "tools-of-the-spider",

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you use a Commander's Order, all allies within Reach 12 that can hear you gain <strong>advantage</strong> on their next attack (1/round).</p>",
+		"description": "<p>Whenever you use a Commander's Order, all allies within Reach 12 that can hear you gain advantage on their next attack (1/round).</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-stratagem",

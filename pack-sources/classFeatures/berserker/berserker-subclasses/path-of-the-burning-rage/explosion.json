@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Smoldering creatures suffer <strong>+LVL</strong> damage from <em>Overflowing Fury</em>, ending the condition. You may deal that much damage to ALL creatures adjacent to your target.</p>",
+		"description": "<p>When you attack a Smoldering creature, you may deal the same amount of damage to ALL other creatures adjacent to your target OR you can ignore armor of Smoldering creatures; ending the condition.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

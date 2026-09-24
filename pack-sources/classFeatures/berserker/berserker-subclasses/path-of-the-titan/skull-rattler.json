@@ -1,0 +1,57 @@
+{
+	"name": "Skull Rattler",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titan/skull-rattler.webp",
+	"system": {
+		"macro": "",
+		"identifier": "skull-rattler",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Action: Knock two Grappled creatures together dealing LVL Bludgeoning damage to both and inflicting Dazed.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titan",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "oFO4f5VklC2a9FT7",
+	"folder": "e6cbf4ebe28df477"
+}

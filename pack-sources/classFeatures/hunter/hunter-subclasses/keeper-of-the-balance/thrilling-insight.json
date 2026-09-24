@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "KEY/encounter",
+				"details": "1/encounter",
 				"quantity": 1,
-				"type": "none",
+				"type": "free",
 				"isReaction": false
 			},
 			"duration": {
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(KEY/encounter) Gain a <strong>Thrill of the Hunt</strong> charge when you successfully Assess your quarry.</p>",
+		"description": "<p>Double any Thrill of the Hunt charges you get this turn (1/encounter).</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-the-balance",

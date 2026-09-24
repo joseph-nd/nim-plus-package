@@ -1,0 +1,57 @@
+{
+	"name": "Radiant Potential",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shadowmancer/pact-of-the-celestial/radiant-potential.webp",
+	"system": {
+		"macro": "",
+		"identifier": "radiant-potential",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Patron is a being of light, and grants you knowledge of Radiant spells. Your Shadow Blast and shadow minions deal either Radiant or Necrotic damage.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-celestial",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "11DxO4Nhb8sir8R9",
+	"folder": "87c442cd4bd1cece"
+}

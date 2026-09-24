@@ -32,15 +32,13 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Level 3.</strong> Defensive spells you cast on yourself (Flame Barrier, Frost Shield, and Alacrity) are always cast as if you spent +1 mana on them (ignoring your usual upcasting limit).</p><p><strong>Level 7.</strong> Defensive spells you cast on yourself cost 1 less mana.</p><p><strong>Level 11.</strong> The 1st defensive spell you cast on yourself each encounter while Dying is free and does not require a save. The 1st ward you cast on a Dying ally each encounter also grants them +1 action.</p><p><strong>Level 15.</strong> Whenever you cast a defensive spell, you may select a 2nd creature within Reach to gain its benefits.</p>",
+		"description": "<p><strong>Level 3.</strong> Defensive spells you cast on yourself (Flame Barrier, Frost Shield, and Alacrity) are always cast as if you spent +1 mana on them (ignoring your usual upcasting limit).</p><p><strong>Level 11 (Abjurer 3).</strong> The 1st defensive spell you cast on yourself each encounter while Dying is free and does not require a save. The 1st Ward you cast on a Dying ally each encounter also grants them +1 action.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-wards",
 		"gainedAtLevels": [
 			3,
-			7,
-			11,
-			15
+			11
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

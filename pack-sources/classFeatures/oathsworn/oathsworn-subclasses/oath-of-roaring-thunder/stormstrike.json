@@ -9,10 +9,10 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/Safe Rest — when an ally would gain a Wound",
+				"details": "1/Encounter",
 				"quantity": 1,
-				"type": "reaction",
-				"isReaction": true
+				"type": "action",
+				"isReaction": false
 			},
 			"duration": {
 				"details": "",
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/Safe Rest) Reaction: When an ally you can see would gain a Wound. Exchange place with them, maximize your Judgment Dice and deal that much lightning damage to all enemies within your aura.</p>",
+		"description": "<p>(1/Encounter) <strong>Action:</strong> Exchange places with a willing creature within Reach 12, then deal lightning damage to enemies within your aura equal to a roll of your Judgment Dice.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-roaring-thunder",

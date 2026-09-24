@@ -1,0 +1,57 @@
+{
+	"name": "Mighty Grasp",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titan/mighty-grasp.webp",
+	"system": {
+		"macro": "",
+		"identifier": "mighty-grasp",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you attempt to Grapple an enemy, as part of the same action, you may also attempt to Grapple as many other enemies within Reach as you have free hands.</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titan",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "EGPBAVs7FvLvBAaR",
+	"folder": "e6cbf4ebe28df477"
+}

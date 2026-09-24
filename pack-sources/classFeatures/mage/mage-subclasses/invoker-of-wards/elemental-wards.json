@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1 mana",
+				"details": "1 Mana",
 				"quantity": 1,
 				"type": "reaction",
 				"isReaction": true
@@ -34,14 +34,13 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Level 3.</strong> <strong>Reaction</strong> (When an ally within Reach 6 Defends): you may spend 1 mana to cast an elemental ward on them:</p><ul><li><strong>Flame Ward.</strong> The attacker first suffers KEY damage (ignoring armor) and gains Smoldering.</li><li><strong>Frost Ward.</strong> Grant 2×KEY Temp HP for this round. (These melt away if unused at the beginning of their next turn.)</li><li><strong>Lightning Ward.</strong> Attacks miss them on 2 or less and they gain +KEY speed on this round.</li></ul><p><strong>Level 7.</strong> Your Elemental Ward spells gain +KEY effectiveness.</p><p><strong>Level 11 (Empowered Ward).</strong> Your Elemental Wards gain +WIL Reach and +INT effectiveness.</p>",
+		"description": "<p><strong>Level 3.</strong> <strong>Reaction</strong> (when an ally within Reach 6 Defends): You may spend 1 mana to cast an Elemental Ward on them:</p><ul><li><strong>Flame Ward.</strong> First deal KEY damage and Smoldering to all creatures adjacent to your ally.</li><li><strong>Frost Ward.</strong> Grant 2×KEY Temp HP (lasts until the beginning of their next turn).</li><li><strong>Lightning Ward.</strong> Attacks miss them on 2 or less. They can move KEY spaces for free on their next turn.</li></ul><p><strong>Level 7 (Elemental Wards 2).</strong> Your Elemental Wards gain +WIL effectiveness and +INT Reach.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-wards",
 		"gainedAtLevels": [
 			3,
-			7,
-			11
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

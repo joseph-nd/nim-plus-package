@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "Free Reaction",
 				"quantity": 1,
-				"type": "reaction",
+				"type": "free",
 				"isReaction": true
 			},
 			"duration": {
@@ -56,7 +56,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Reaction</strong> (When an enemy moves adjacent to you or your ally within 6 spaces): loose a critter to attack the enemy for WIL d6 damage. You must release all captured critters whenever you Safe Rest.</p>",
+		"description": "<p><strong>Free Reaction</strong> (when an enemy moves adjacent to you or an ally within Reach 6): loose a critter to attack the enemy for WIL d6 damage. You must release all captured critters whenever you Safe Rest.</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-traps",

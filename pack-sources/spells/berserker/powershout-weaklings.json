@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Muscle Spell — Requires 6 FD",
+				"details": "Muscle Spell — Requires 6 FD, 1/encounter",
 				"quantity": 2,
 				"type": "action",
 				"isReaction": false
@@ -35,7 +35,7 @@
 			}
 		},
 		"description": {
-			"baseEffect": "<p><strong>2 Actions · Reach 6.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 6 FD.</strong> Deal FD damage to enemies, Frightening them (Large+ creatures are Taunted instead) and decreasing their Armor by 1 step this round.</p>",
+			"baseEffect": "<p><strong>2 Actions · Reach 6, AoE · 1/encounter.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 6 FD.</strong> Deal FD damage to enemies, Frightening them (Large+ enemies are Taunted instead), and attacks deal +10 damage to Armored enemies this round.</p>",
 			"higherLevelEffect": "",
 			"upcastEffect": ""
 		},

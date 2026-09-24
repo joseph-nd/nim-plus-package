@@ -1,0 +1,57 @@
+{
+	"name": "Lead the Hunt",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-the-primal-pack/lead-the-hunt.webp",
+	"system": {
+		"macro": "",
+		"identifier": "lead-the-hunt",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>While leading your party, both you and your allies roll Stealth with advantage.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "keeper-of-the-primal-pack",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "I8KLbOp4ewwfNOUL",
+	"folder": "251279f32b62c52c"
+}

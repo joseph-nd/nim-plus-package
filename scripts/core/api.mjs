@@ -14,6 +14,7 @@
  * registered its hooks, so building the surface here can never reorder them.
  */
 import { MODULE_ID } from './constants.mjs';
+import { syncSubclasses } from './subclass-sync.mjs';
 
 import { pickDamage } from '../macros/pick-damage.mjs';
 import { seasonedJourneyman } from '../macros/seasoned-journeyman.mjs';
@@ -55,6 +56,7 @@ import { equipmentToggleGrip } from '../equipment/grip.mjs';
 
 export const api = {
 	pickDamage,
+	syncSubclasses,
 	summonSpiritCompanion,
 	tollTheHour,
 	seasonedJourneyman,

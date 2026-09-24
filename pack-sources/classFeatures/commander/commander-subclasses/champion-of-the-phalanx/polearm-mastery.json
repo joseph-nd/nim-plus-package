@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>+1 Reach with Polearms (Spears, Glaives, Pole Hammers, etc.). You may wield a Shield and a Polearm and still attack with it. If you do, reduce its damage die and Reach by 1 step.</p>",
+		"description": "<p>Weapons with Reach 2 gain +1 Reach; OR can be wielded one-handed with a Shield.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-phalanx",

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/encounter) <strong>Action:</strong> All enemies Taunted or Charmed by you attack their closest target, friend or foe. If there are no valid targets, they attack themselves.</p>",
+		"description": "<p>(1/encounter) Action: All enemies Taunted or Charmed by you attack their closest target, friend or foe. If there are no valid target, they attack themselves.</p>",
 		"featureType": "class",
 		"class": "zephyr",
 		"group": "way-of-the-dancer",

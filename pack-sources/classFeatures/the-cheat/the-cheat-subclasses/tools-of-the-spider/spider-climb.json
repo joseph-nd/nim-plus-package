@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain the ability to climb <strong>featureless walls and ceilings</strong>. You may attack while climbing, as long as you have at least one hand touching a surface.</p>",
+		"description": "<p>You gain the ability to climb featureless walls and ceilings. You may attack while climbing as long as you have at least one hand touching a surface.</p>",
 		"featureType": "class",
 		"class": "the-cheat",
 		"group": "tools-of-the-spider",
 		"gainedAtLevels": [
-			3
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

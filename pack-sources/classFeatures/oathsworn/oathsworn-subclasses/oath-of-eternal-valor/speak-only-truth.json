@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain <strong>WIL temporary Mana</strong> when you roll Initiative (expires at the end of the encounter if unused).</p>",
+		"description": "<p>Gain WIL temporary Mana when you roll Initiative (expires at the end of the encounter if unused).</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-eternal-valor",

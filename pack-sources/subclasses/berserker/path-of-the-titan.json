@@ -1,0 +1,25 @@
+{
+	"name": "Path of the Titan",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/berserker/path-of-the-titan.webp",
+	"system": {
+		"macro": "",
+		"identifier": "path-of-the-titan",
+		"rules": [],
+		"description": "<p><em>Show them what it means to mess with someone not their own size.</em></p><p>LEVEL 3</p><p><strong>Blood of the Titan.</strong> You grow one size category while Raging (up to Large). You can move freely through spaces with creatures smaller than you. You become able to Grapple creatures within Reach 2 while Raging.</p><p><strong>Crushing Grip.</strong> Enemies have disadvantage against avoiding and escaping your Grapple, and Grappled enemies suffer Bludgeoning damage equal to the value of your Fury Dice at the end of their turn.</p><p>LEVEL 7</p><p><strong>Titanic Toss.</strong> Action: Expend a Fury Die to throw a creature you are Grappling up to STR spaces, plus one space for each size category that creature is smaller than you.</p><p>LEVEL 11</p><p><strong>Mighty Grasp.</strong> When you attempt to Grapple an enemy, as part of the same action, you may also attempt to Grapple as many other enemies within Reach as you have free hands.</p><p><strong>Skull Rattler.</strong> Action: Knock two Grappled creatures together dealing LVL Bludgeoning damage to both and inflicting Dazed.</p><p>LEVEL 15</p><p><strong>Enormous Potential.</strong> You now grow two size categories while Raging (up to Huge), and your Fury Dice grow one step larger (d20 at level 17).</p>",
+		"parentClass": "berserker",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "tv4w9ItnCsFXdiyV",
+	"folder": "6ba952618a642848"
+}

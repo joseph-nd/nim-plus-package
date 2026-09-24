@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><em>(New Combat Tactic)</em> When you hit (before dealing damage), reduce the target's armor by 1 step for 1 round and deal extra damage equal to a roll of your Combat Die.</p>",
+		"description": "<p>(New Combat Tactic) Strike an armored foe and deal extra damage equal to a roll of your Combat Die. The next non-critical attack against them ignores armor.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-siege-breaker",

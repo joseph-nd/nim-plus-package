@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Muscle Spell — Requires 3 FD, Cone (Num of FD)",
+				"details": "Muscle Spell — Requires 3 FD, Cone FD (AoE)",
 				"quantity": 2,
 				"type": "action",
 				"isReaction": false
@@ -65,7 +65,7 @@
 			}
 		},
 		"description": {
-			"baseEffect": "<p><strong>2 Actions · Cone (Num of Fury Dice).</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 3 FD.</strong> 1d20+STR+FD damage to all creatures in the cone.</p>",
+			"baseEffect": "<p><strong>2 Actions · Reach: Cone FD, AoE.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 3 FD.</strong> 1d20+STR+FD damage to all creatures in the cone.</p>",
 			"higherLevelEffect": "",
 			"upcastEffect": ""
 		},

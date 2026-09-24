@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "When Frost Shield Temp HP is lost",
 				"quantity": 1,
-				"type": "none",
+				"type": "free",
 				"isReaction": false
 			},
 			"duration": {
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When your Frost Shield Temp HP is lost, cast Shatter for free on an adjacent enemy. Choose 1 additional Lightning or Fire spell and treat it as an Ice spell.</p>",
+		"description": "<p>When your Frost Shield Temp HP is lost, cast Shatter for free on an adjacent enemy.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-frost",

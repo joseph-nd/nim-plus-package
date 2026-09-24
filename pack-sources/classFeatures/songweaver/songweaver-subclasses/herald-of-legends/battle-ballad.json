@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When you Recite Legend, you and all allies within <strong>12 spaces</strong> who can hear you gain <strong>advantage</strong> on their next attack.</p>",
+		"description": "<p>You and your allies within Reach 12 that can hear you gain WIL Psychic damage while having temp HP.</p>",
 		"featureType": "class",
 		"class": "songweaver",
 		"group": "herald-of-legends",

@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "X Mana — Cone 3",
 				"quantity": 2,
 				"type": "action",
 				"isReaction": false
@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>2 actions: Deal <strong>KEY Affinity damage</strong> in either <strong>Cone 3</strong> or <strong>Line 6</strong>. You may spend mana (up to your highest unlocked spell tier) to add <strong>+KEY damage</strong> for each point of mana spent. Half damage on a DEX save (DC 10+KEY).</p>",
+		"description": "<p>(Draconic Power) Action: Spend <strong>X</strong> Mana to deal <strong>X</strong>d6 damage of your chosen type in Cone 3. Half damage on a DEX save (DC 10+KEY). Applies Dragonmarked (counts as any condition for empowering spells, like Smoldering).</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-majesty",
 		"gainedAtLevels": [
-			11
+			3
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

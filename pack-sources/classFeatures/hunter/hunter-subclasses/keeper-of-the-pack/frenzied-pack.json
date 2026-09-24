@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Allies within Reach 2 gain the benefits of your Hunter's Mark in melee.</p>",
+		"description": "<p>Allies within Reach 2 gain the benefits of your Hunter’s Mark in melee.</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-the-pack",
@@ -45,13 +45,13 @@
 	"effects": [],
 	"flags": {},
 	"_stats": {
-		"coreVersion": "13",
+		"coreVersion": "14",
 		"systemId": "nimble",
-		"systemVersion": "0.8.4",
+		"systemVersion": "0.9.0",
 		"createdTime": null,
 		"modifiedTime": null,
 		"lastModifiedBy": null
 	},
-	"_id": "sxc5EtB0n8un2rCo",
+	"_id": "tISdbStA5Jju3dXD",
 	"folder": "7493d1758756f31d"
 }

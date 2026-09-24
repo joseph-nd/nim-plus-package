@@ -1,0 +1,57 @@
+{
+	"name": "Enormous Potential",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/berserker/path-of-the-titan/enormous-potential.webp",
+	"system": {
+		"macro": "",
+		"identifier": "enormous-potential",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You now grow two size categories while Raging (up to Huge), and your Fury Dice grow one step larger (d20 at level 17).</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-titan",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "J7Y9pZa46Q6VS6mt",
+	"folder": "e6cbf4ebe28df477"
+}

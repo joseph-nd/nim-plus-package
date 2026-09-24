@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you shift Phases, you may deal <strong>KEY damage</strong> to all adjacent enemies, <strong>and</strong> grant <strong>KEY Temp HP</strong> to all adjacent allies.</p>",
+		"description": "<p>Whenever you shift Phases, you may deal KEY damage to all adjacent enemies, and grant KEY Temp HP to all adjacent allies.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-sun-and-moon",

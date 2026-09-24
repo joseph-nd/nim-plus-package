@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Gain an aura with a <strong>Reach of 4</strong>. Allies within your aura may use Condemning Strike and Blessed Aim on melee attacks if you spend Mana on their behalf.</p>",
+		"description": "<p>Gain an aura with a Reach of 4. Allies within your aura may use Condemning Strike and Blessed Aim on melee attacks if you spend Mana on their behalf.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-eternal-valor",

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever your damage dice sum on a melee attack is 8 or greater, you may select 1 additional target within your weapon's Reach.</p>",
+		"description": "<p>Whenever your damage dice on a melee attack sum to 8+, you may select 1 additional target within your weapon's Reach.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-siege-breaker",

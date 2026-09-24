@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/encounter — ally within range of your Thrown weapon",
+				"details": "1/round — ally within range of your Thrown weapon",
 				"quantity": 1,
 				"type": "reaction",
 				"isReaction": true
@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/encounter) Reaction (when an ally is the target of a ranged attack): Knock the projectile out of the air, causing it to miss. The ally must be within range of your Thrown weapon.</p>",
+		"description": "<p>(1/round) Reaction: Knock a projectile targeting an ally within range of your Thrown weapon out of the air, causing it to miss.</p>",
 		"featureType": "class",
 		"class": "the-cheat",
 		"group": "tools-of-the-trickshot",
 		"gainedAtLevels": [
-			11
+			7
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

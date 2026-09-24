@@ -9,8 +9,8 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/encounter — sacrifice all non-Temp HP",
-				"quantity": 2,
+				"details": "1/encounter — sacrifice all temp HP",
+				"quantity": 1,
 				"type": "action",
 				"isReaction": false
 			},
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>2 actions:</strong> (1/encounter) Sacrifice all non-Temp HP. Deal <strong>LVL psychic damage</strong> (ignoring armor) to all enemies within <strong>12 spaces</strong> who can hear you, then recite all four Legends.</p>",
+		"description": "<p>(1/encounter) Action: Sacrifice all of your temp HP. Deal Psychic damage (ignoring armor) to an adjacent enemy equal to 3 times the amount sacrificed.</p>",
 		"featureType": "class",
 		"class": "songweaver",
 		"group": "herald-of-legends",

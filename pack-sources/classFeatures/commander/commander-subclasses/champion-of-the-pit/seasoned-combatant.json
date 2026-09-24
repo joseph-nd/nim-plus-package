@@ -46,7 +46,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Choose a Combat Tactic and gain <strong>+1 max Combat Dice</strong>.</p>",
+		"description": "<p>Choose a Combat Tactic and gain +1 max Combat Dice.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-pit",

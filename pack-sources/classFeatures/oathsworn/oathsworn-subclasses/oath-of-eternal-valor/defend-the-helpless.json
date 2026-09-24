@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You can now Interpose from <strong>3 spaces away</strong>. You may make a melee attack for free immediately after Interposing.</p>",
+		"description": "<p>You can now Interpose from 3 spaces away. You may make a melee attack for free immediately after Interposing.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-eternal-valor",

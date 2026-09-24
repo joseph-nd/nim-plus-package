@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You can only cast fire spells from now on. Choose 1 Ice or Lightning spell and treat it as a fire spell.</p>",
+		"description": "<p>You can only cast fire spells from now on. You unlock fire spells 1 level earlier.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-flame",

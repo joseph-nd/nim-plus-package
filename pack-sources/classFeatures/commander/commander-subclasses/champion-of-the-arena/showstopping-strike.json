@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/Safe Rest) You and your ally crit with Coordinated Strike.</p>",
+		"description": "<p>(1/Safe Rest) When you use Coordinated Strike, you and your ally both automatically crit.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-arena",

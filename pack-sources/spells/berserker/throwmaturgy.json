@@ -67,7 +67,7 @@
 			}
 		},
 		"description": {
-			"baseEffect": "<p><strong>2 Actions · Reach 3/Fury Die.</strong></p><p><em>Muscle Spell.</em> Throw a Clobbered creature at an enemy; both suffer 1d6+STR+FD damage and land Prone (if Medium or smaller). <strong>OR:</strong> for 1 action throw a rock or similarly throwable object instead.</p>",
+			"baseEffect": "<p><strong>2 Actions · Reach 3/Fury Die.</strong></p><p><em>Muscle Spell.</em> Throw a Clobbered creature at another enemy; both suffer 1d6+STR+FD damage and land Prone (if Medium or smaller). <strong>OR:</strong> for 1 action throw a rock or similarly throwable object instead.</p><p><em>3/FD?</em> If you have 1 Fury Die, you can throw 3 spaces; 2 Fury Dice, 6 spaces; and so on.</p>",
 			"higherLevelEffect": "",
 			"upcastEffect": ""
 		},

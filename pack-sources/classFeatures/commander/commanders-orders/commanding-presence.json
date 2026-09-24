@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "",
+				"details": "1/encounter — Influence check",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -19,59 +19,7 @@
 				"quantity": 1,
 				"type": "none"
 			},
-			"effects": [
-				{
-					"id": "7PnCCAempcQf8NJd",
-					"type": "damage",
-					"damageType": "psychic",
-					"formula": "10+@strength",
-					"parentContext": null,
-					"parentNode": null,
-					"canCrit": false,
-					"canMiss": false,
-					"on": {
-						"hit": [
-							{
-								"id": "tQt7Kx8gVfpwCBjN",
-								"type": "note",
-								"noteType": "warning",
-								"text": "\n\nDC 10+STR (below)",
-								"parentContext": "hit",
-								"parentNode": "7PnCCAempcQf8NJd"
-							},
-							{
-								"id": "63I1XqUXoUQvy4GU",
-								"type": "damageOutcome",
-								"outcome": "fullDamage",
-								"parentContext": "hit",
-								"parentNode": "7PnCCAempcQf8NJd"
-							}
-						]
-					}
-				},
-				{
-					"id": "7JvhPSrNy39dL4jM",
-					"type": "damage",
-					"damageType": "acid",
-					"formula": "0",
-					"parentContext": null,
-					"parentNode": null,
-					"canCrit": true,
-					"canMiss": true,
-					"on": {
-						"hit": [
-							{
-								"id": "IsAy46e12s3J0Ao1",
-								"type": "note",
-								"noteType": "flavor",
-								"text": "Commander's Order.",
-								"parentContext": "hit",
-								"parentNode": "7JvhPSrNy39dL4jM"
-							}
-						]
-					}
-				}
-			],
+			"effects": [],
 			"showDescription": true,
 			"targets": {
 				"count": 1,
@@ -84,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> Shout a command up to 2 words long at an enemy. On a failed WIL save (DC 10+STR), they must spend their entire next turn obeying it to the best of their ability, provided it is not obviously harmful to themselves. They then become immune to this effect for 1 day.</p>",
+		"description": "<p><strong>Action (1/encounter):</strong> Make an Influence check, and Command an enemy to perform a single simple action; they spend their entire next turn obeying it:</p><ul><li><strong>1–9: Move!</strong> The creature moves to a place you choose.</li><li><strong>10–19: Kneel!</strong> Move them, then they are considered Prone.</li><li><strong>20+: Strike!</strong> They move and attack a target of your choice.</li></ul>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "commanders-orders",

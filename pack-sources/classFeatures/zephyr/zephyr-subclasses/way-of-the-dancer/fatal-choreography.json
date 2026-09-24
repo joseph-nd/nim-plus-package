@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When you attack a Taunted or Charmed enemy using Swiftstrike, your attack is an <strong>automatic crit</strong>, ends the condition and causes the target to fall <strong>Prone</strong>.</p>",
+		"description": "<p>When you attack a Taunted or Charmed enemy using Swiftstrike, your attack is an automatic crit, ends the condition and causes the target to fall Prone.</p>",
 		"featureType": "class",
 		"class": "zephyr",
 		"group": "way-of-the-dancer",

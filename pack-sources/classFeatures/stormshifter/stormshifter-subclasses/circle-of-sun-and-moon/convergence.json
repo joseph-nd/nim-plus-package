@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> Pull all enemies within Reach 3 adjacent to you and inflict <strong>Slowed</strong>.</p>",
+		"description": "<p>Action: Pull all enemies within Reach 3 adjacent to you and inflict Slowed.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-sun-and-moon",

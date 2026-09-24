@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You give up Spellshaper abilities and you can only cast lightning spells from now on. Choose 1 Ice or Fire spell and treat it as a Lightning spell.</p>",
+		"description": "<p>You can only cast lightning spells from now on. Choose 1 Fire spell and treat it as a Lightning spell.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-surges",

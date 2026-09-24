@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you use a Commander's Order, all adjacent enemies become <strong>Frightened</strong> of you until the end of their next turn (1/round).</p>",
+		"description": "<p>Whenever you use a Commander's Order, all adjacent enemies become Frightened of you until the end of their next turn (1/round).</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-stratagem",

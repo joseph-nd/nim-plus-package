@@ -31,7 +31,7 @@ The module currently ships **1,021 documents** across **9 compendium packs**:
 | Pack | Count | Contents |
 |---|---|---|
 | **Nim+ Classes** | 3 | Hexbinder, Artificer, Psion |
-| **Nim+ Subclasses** | 61 | new subclasses for every core class plus the new classes (see breakdown below) |
+| **Nim+ Subclasses** | 62 | new subclasses for every core class plus the new classes (see breakdown below) |
 | **Nim+ Class Features** | 448 | progression + subclass features for every class above |
 | **Nim+ Spells** | 27 | Hexbinder spells (tiers 1–5), plus subclass-specific spells for Stormshifter, Shepherd, and Berserker |
 | **Nim+ Items** | 349 | Hexbinder concoctions (8), Artificer inventions and prototypes (7), the full **Nim+ Volume IV magic-item catalogue** (220 — see **Magic Items** below), the **Nim+ Volume I variant starting equipment** (22 kits + 25 gear items — see **Character Creation** below), and the **Expanded Equipment** mundane gear set (67 — see **Expanded Equipment** below) |
@@ -90,8 +90,7 @@ Nothing here is a separate item you have to pick, and nothing is written to your
   - **Single-Minded Fighter actually foregoes the Orders.** The Commanders Orders group is removed from the level-up window and an Order can no longer be added to the character by any route; gaining the feature offers to clear the ones already on the sheet, since the extra dice are what replaces them.
   - **Seasoned Combatant's "choose a Combat Tactic" is offered at level-up**, in a *Combat Tactic (Choose one)* section alongside the class features — the level-up window can only build its own choices from core class levels, so a subclass asking for an extra tactic had nowhere to ask.
   - **Combat Dice are discarded when combat ends**, which the shipped feature never declared — no leftovers carried into the next fight. The sheet's Combat Dice row steps aside while you are out of combat, too, since there is no such thing as a Combat Die outside a fight.
-  - **Commanding Presence is a Commander's Order here, not a Combat Tactic.** It is published under Combat Tactics, but that section is *"1/attack, expend a Combat Die to add one of the following effects **to your attack**"* — and it is the only one of the five that is not an attack rider: a standalone Action with a WIL save. The module ships it as an Order instead, chosen alongside *Face Me!* and *Reposition!*. It still costs a Combat Die, and *Single-Minded Fighter* now gives it up with the rest of the Orders.
-  - **Commanding Presence** is a Combat Tactic but an Action rather than an attack rider, and nothing made it cost anything: it now refuses to fire with an empty pool and spends a die on use. Its die is never rolled, because the save DC is 10+STR and the value is never read.
+  - **Commanding Presence is a Commander's Order here, not a Combat Tactic.** The system's copy of the class (Commander playtest 0.1) files it under Combat Tactics, but the Commander 0.2 playtest (September 2026) moves it to Commander's Orders as a 1/encounter Influence check with three tiers (*Move!* / *Kneel!* / *Strike!*). The module ships that 0.2 version as an Order, chosen alongside *Face Me!* and *Reposition!*, and hides the core Combat Tactic card so it is not on offer twice. It no longer costs a Combat Die, and *Single-Minded Fighter* gives it up with the rest of the Orders.
   - The dialog's **Spend Pool Dice** stepper for Combat Dice is replaced rather than shared. A Combat Die is only ever spent *as* a tactic, so a free-floating "spend 2d6" control is an invitation to break the rule the dice exist for. Pick a tactic and that same row comes back read-only, showing what it will roll — `2 × 1d6` for Lunging Strike — against the dice you have left.
 
 - **Feature uses on the tracker rail.** Because Coordinated Strike! is a *free action* you take on someone else's turn, a counter you have to switch tabs to read is a counter you forget. Any class-feature use counter now also appears in the sheet's left-edge tracker rail — the same flyout the Oathsworn's Judgment Dice use — as the feature's icon followed by one pip per use. Click the last lit pip to **use** the feature — you get the same chat card, macro and out-of-uses refusal as clicking it on the Features tab, and the use is deducted once. Clicking any other pip just sets the count: a dim one restores up to it, a lit one further down spends down to it without announcing anything. The rail is there **during a fight only**, since that is when these are spent, and the Features tab still carries every counter. A fight counts from the moment it is on the combat tracker — you do not have to have clicked *Begin Combat* — until the encounter ends. Charged *items* stay on the inventory tab where they belong.
@@ -137,17 +136,19 @@ Many feats are **mechanically automated** rather than text-only. Always-on bonus
 
 | Class | Subclasses shipped by this module |
 |---|---|
-| Berserker | Muscle Mage, Path of the Burning Rage, Path of the Exile, Path of the Titan's Grip, Path of the Titans |
+| Berserker | Muscle Mage, Path of the Burning Rage, Path of the Exile, Path of the Titan, Path of the Titan's Grip |
 | Commander | Champion of the Arena / Battlefield / Phalanx / Pit / Siege Breaker / Stratagem |
-| Hunter | Keeper of the Balance, Keeper of the Pack, Keeper of Traps |
+| Hunter | Keeper of the Balance, Keeper of the Pack, Keeper of the Primal Pack, Keeper of Traps |
 | Mage | Invoker of Flame / Frost / Majesty / Perfection / Surges / Wards |
 | Oathsworn | Oath of Eternal Valor, Oath of Purification, Oath of Roaring Thunder, Oath of Valor |
-| Shadowmancer | Pact of the Ego / Endless Swarm / High Celestial / Void |
+| Shadowmancer | Pact of the Celestial, Pact of the Endless Swarm, Pact of the Id, Pact of the Void |
 | Shepherd | Luminary of Aegis / Darkness / Protection / The Forge / Tidings |
 | Songweaver | Herald of Doom, Herald of Legends, Herald of Singing Steel, Herald of Torment |
 | Stormshifter | Circle of Blaze & Bloom, Circle of Cinder & Ash, Circle of Spores, Circle of Sun & Moon, Circle of Venom & Web |
 | The Cheat | The Honorseeker, Tools of the Gambler / Serpent / Spider / Trickshot |
 | Zephyr | Way of Hurricanes / Iron / Shadows / The Dancer / The Drunken Fist |
+
+**Existing characters are kept in sync.** A character owns a *copy* of its subclass and features, so pack updates do not reach it by themselves. When the module version changes, the GM gets a preview on world load listing every character whose Nim+ subclass data is out of date (renamed subclass, reworded or renamed features, features removed or added by a rework) and can apply it or postpone. Matching is by compendium source, so a "Pact of the Ego" character becomes a "Pact of the Id" one with its item ids, flags and charge-pool state intact. Re-run at any time from a macro with `nimPlus.syncSubclasses()` (or `{ apply: true }` to skip the preview). Only world actors are covered; unlinked tokens keep their own copies.
 
 ## Contributing
 
@@ -171,7 +172,7 @@ Chris Lewis (HappyBunny) · Chthonic Duck · DamianRM · EmmaBelotti · Gerke Bo
 
 Proofreaders: Gary Verhaegen · Gerke Bouma (TDA) · LewisH · SanityWithIn · TwinSteel. Art and assets by MentalMicrowave, Chthonic Duck, Alderdoodle, and Sandra Donoso (the zine's art is not reproduced by this module; all 127 documents ship with original AI-generated icons in the module's house style).
 
-**Nim+ Volume III** — the community content supplement this module adapts for the additional core-class subclasses (submissions June 2025, published July 2025). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
+**Nim+ Volume III** — the community content supplement this module adapts for the additional core-class subclasses (submissions June 2025, published July 2025; this module follows the revised 2026 edition of the zine). Curated and edited by **Emil Andersen (Santuric)**, with rules content by:
 
 AJ · Blue · Can Opener · Charles and Jeannine Archibald · DanDraco · Kazok the Goblin · Khan Wick · Nathan Warkentin (Trex) · Rockergage · SanityWithIn · Santuric · Squeekie · Victor Constantinescu (MaleficMist) · Vinícius Conrado
 

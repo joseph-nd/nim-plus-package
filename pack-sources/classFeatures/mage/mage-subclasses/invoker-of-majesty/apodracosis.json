@@ -1,0 +1,57 @@
+{
+	"_id": "F1CmjReuilTHBT30",
+	"name": "Apodracosis",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-majesty/apodracosis.webp",
+	"system": {
+		"macro": "",
+		"identifier": "apodracosis",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Action: Unleash your draconic aspect, granting you 2×WIL+LVL temp HP and Draconic Powers. This transformation ends if you break Concentration or at the end of the encounter. Choose a damage type for your powers when you transform.</p><blockquote><p><strong>Purity of Form</strong></p><p>Other transformations automatically end Apodracosis, such as the Dragonform spell.</p></blockquote>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-majesty",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "4fd35ea7e7e7eee7"
+}

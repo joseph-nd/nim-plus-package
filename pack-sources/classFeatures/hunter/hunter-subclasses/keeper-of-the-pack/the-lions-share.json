@@ -1,5 +1,5 @@
 {
-	"name": "The Lion's Share",
+	"name": "The Lion’s Share",
 	"type": "feature",
 	"img": "modules/nim-plus-package/assets/features/hunter/keeper-of-the-pack/the-lions-share.webp",
 	"system": {
@@ -45,13 +45,13 @@
 	"effects": [],
 	"flags": {},
 	"_stats": {
-		"coreVersion": "13",
+		"coreVersion": "14",
 		"systemId": "nimble",
-		"systemVersion": "0.8.4",
+		"systemVersion": "0.9.0",
 		"createdTime": null,
 		"modifiedTime": null,
 		"lastModifiedBy": null
 	},
-	"_id": "OovCVlNrDRUJkaO9",
+	"_id": "5oLfk67YO7gjd5KN",
 	"folder": "7493d1758756f31d"
 }

@@ -26,6 +26,7 @@ import './compendium/entry-levels.mjs';
 
 // ── Document-class patches (feats groups, feat AC, spell riders, weapons) ───
 import './core/document-patches.mjs';
+import './core/subclass-sync.mjs';
 import './equipment/weapon-stacking.mjs';
 
 // ── Psion ───────────────────────────────────────────────────────────────────
@@ -64,7 +65,6 @@ import './classes/shared/activation-dialog.mjs';
 import './classes/commander/master-commander.mjs';
 import './classes/commander/tactic-levelup.mjs';
 import './classes/commander/superseded-features.mjs';
-import './classes/commander/commanding-presence.mjs';
 import './ui/combat-dice-tracker.mjs';
 import './classes/oathsworn/judgment.mjs';
 import './classes/shadowmancer/spell-tiers.mjs';

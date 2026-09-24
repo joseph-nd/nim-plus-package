@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action</strong> (after shifting Phases 4+ times): Enter <strong>Eclipse Phase</strong> until the end of the encounter. While in Eclipse Phase, you gain <strong>double the benefits</strong> of both Solar and Lunar Phase, and the ability to cast spells while in beastform.</p>",
+		"description": "<p>Action (after shifting Phases 4+ times): Enter Eclipse Phase until the end of the encounter. While in Eclipse Phase, you gain double the benefits of both Solar and Lunar Phase, and the ability to cast spells while in beastform.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-sun-and-moon",

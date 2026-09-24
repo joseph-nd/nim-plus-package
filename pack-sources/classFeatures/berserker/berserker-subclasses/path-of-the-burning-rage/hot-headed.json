@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you roll initiative, gain STR Fury Dice. Your <em>Overflowing Fury</em> deals the max value of the die.</p>",
+		"description": "<p>Gain STR Fury Dice when you roll Initiative instead. +2 to Overflowing Fury's Reach.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

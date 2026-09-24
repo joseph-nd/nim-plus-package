@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When you or your Lifebinding Spirit hit a <strong>Blinded</strong> creature, you may forcibly move that creature up to <strong>3 spaces</strong>.</p>",
+		"description": "<p>When you hit a Blinded enemy with Searing Light, they become Frightened of you until the end of their next turn and move 3 spaces in a random direction.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",

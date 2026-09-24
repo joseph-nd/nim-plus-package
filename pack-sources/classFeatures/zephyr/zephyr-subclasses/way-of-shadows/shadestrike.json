@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/round — On unarmed strike",
+				"details": "",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -32,12 +32,12 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/round) When you make an unarmed strike, you may dispel any number of Shades. You deal <strong>KEY×2 additional damage</strong> for each Shade dispelled this way.</p>",
+		"description": "<p>Your Shades may make unarmed strikes with advantage on your behalf.</p>",
 		"featureType": "class",
 		"class": "zephyr",
 		"group": "way-of-shadows",
 		"gainedAtLevels": [
-			15
+			3
 		],
 		"selectionCountByLevel": {},
 		"subclass": true

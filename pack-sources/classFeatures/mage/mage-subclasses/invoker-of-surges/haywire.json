@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "8 damage",
+				"details": "",
 				"quantity": 1,
-				"type": "free",
+				"type": "none",
 				"isReaction": false
 			},
 			"duration": {
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you use Power Surge, you may take 8 damage instead to become Supercharged.</p>",
+		"description": "<p>Whenever you are Dying, you gain the effects of Electrocharge.</p>",
 		"featureType": "class",
 		"class": "mage",
 		"group": "invoker-of-surges",

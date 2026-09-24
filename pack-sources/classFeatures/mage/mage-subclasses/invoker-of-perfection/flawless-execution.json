@@ -1,0 +1,57 @@
+{
+	"_id": "W7Rpg6R40bLJ5TEN",
+	"name": "Flawless Execution",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/mage/invoker-of-perfection/flawless-execution.webp",
+	"system": {
+		"macro": "",
+		"identifier": "flawless-execution",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>The first Signature cantrip you cast each encounter automatically rolls the highest possible result.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-perfection",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {},
+	"_stats": {
+		"coreVersion": "14",
+		"systemId": "nimble",
+		"systemVersion": "0.9.0",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "9ca63d12f2a45d46"
+}

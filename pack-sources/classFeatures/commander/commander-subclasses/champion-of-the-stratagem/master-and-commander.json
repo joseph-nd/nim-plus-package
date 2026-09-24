@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>All Commander's Orders with a usage limit may be used an <strong>additional time each encounter</strong>. You know all Commander's Orders.</p>",
+		"description": "<p>All Commander's Orders with a usage limit may be used an additional time each encounter. You know all Commander's Orders.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-stratagem",

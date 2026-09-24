@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/turn",
+				"details": "",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/turn) While Raging, after you crit or kill an enemy, gain 1 Fury Die.</p>",
+		"description": "<p>Whenever your Fury Die size would increase, instead roll 1 additional Fury Die.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

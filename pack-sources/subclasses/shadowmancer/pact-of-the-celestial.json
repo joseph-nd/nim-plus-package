@@ -1,0 +1,25 @@
+{
+	"name": "Pact of the Celestial",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shadowmancer/pact-of-the-celestial.webp",
+	"system": {
+		"macro": "",
+		"identifier": "pact-of-the-celestial",
+		"rules": [],
+		"description": "<p><em>Redemption cannot be given, only the opportunity to grasp it.</em></p><p>LEVEL 3</p><p><strong>Radiant Potential.</strong> Your Patron is a being of light, and grants you knowledge of Radiant spells. Your Shadow Blast and shadow minions deal either Radiant or Necrotic damage.</p><p><strong>Divine Intervention.</strong> Reaction: Interpose for an ally with a shadow minion (minion must be within 2 spaces of your ally).</p><p>LEVEL 7</p><p><strong>See the Light.</strong> When a shadow minion Interposes for an ally, the attacker becomes Blinded until the end of its next turn (after resolving the attack).</p><p><strong>Serve the Light.</strong> Choose 1 Radiant Utility Spell.</p><p>LEVEL 11</p><p><strong>Penance for your Sins.</strong> Your Shadow Blast and shadow minions grant allies temp HP instead of damaging them.</p><p>LEVEL 15</p><p><strong>Redemption Within Reach.</strong> (1/Safe Rest) Action/Reaction: Until the beginning of your next turn, you gain immunity to all damage and all healing you do is doubled.</p><p><strong>Blinding Sacrifice.</strong> The first time each encounter you drop to 0 HP, all enemies that can see you become Blinded and Dazed until the end of their next turn.</p>",
+		"parentClass": "shadowmancer",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "da30dcadcbdf5f46",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "bRS10riIBo4mNhcT"
+}

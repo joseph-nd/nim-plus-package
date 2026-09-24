@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/Encounter, on Condemning Strike",
+				"details": "On Zealot",
 				"quantity": 1,
-				"type": "free",
+				"type": "none",
 				"isReaction": false
 			},
 			"duration": {
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/Encounter) When you use Condemning Strike, knock your target Prone and push them (Large: STR spaces, Med or smaller: 2x STR spaces). Other creatures hit this way are knocked Prone and pushed as well.</p>",
+		"description": "<p>When you use Zealot, you can first teleport WIL spaces for each mana spent. If your target is a Medium or smaller creature, knock them Prone as well.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-roaring-thunder",

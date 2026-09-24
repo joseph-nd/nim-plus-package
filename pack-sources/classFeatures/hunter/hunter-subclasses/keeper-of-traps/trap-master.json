@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever you use a Trap, add your weapon damage to it. One of your Traps can be used an additional time each encounter.</p>",
+		"description": "<p>Whenever you use a Trap, add LVL damage to it. One of your Traps can be used an additional time each encounter.</p>",
 		"featureType": "class",
 		"class": "hunter",
 		"group": "keeper-of-traps",

@@ -34,7 +34,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/round) When an enemy within Reach 2 misses you with an attack, you may <strong>gain a Wound</strong> to <strong>Charm</strong> it. At the beginning of the Charmed enemy's turn, they make a <strong>WIL save (DC 10+KEY)</strong> to end the condition.</p>",
+		"description": "<p>(1/round) When an enemy within Reach 2 misses you with an attack, you may gain a Wound to Charm it. At the beginning of the Charmed enemy's turn, they make a WIL save (DC 10+KEY) to end the condition.</p>",
 		"featureType": "class",
 		"class": "zephyr",
 		"group": "way-of-the-dancer",

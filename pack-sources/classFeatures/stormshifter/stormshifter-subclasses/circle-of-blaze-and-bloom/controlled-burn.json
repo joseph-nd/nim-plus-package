@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You unlock Fire spells. After upcasting a spell or critting in beastform, you may inflict Smoldering on a creature within Range 6.</p>",
+		"description": "<p>Your attunement to the cycles of nature grants you knowledge of Fire spells. After upcasting a spell or critting in beastform, you may inflict Smoldering on any creature within Range 6.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-blaze-and-bloom",

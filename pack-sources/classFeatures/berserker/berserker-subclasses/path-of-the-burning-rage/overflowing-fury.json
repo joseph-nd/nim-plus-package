@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Reach 4",
+				"details": "Reach 2",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -24,7 +24,7 @@
 					"id": "overflowing-fury-dmg",
 					"type": "damage",
 					"damageType": "fire",
-					"formula": "1d6",
+					"formula": "5",
 					"parentContext": null,
 					"parentNode": null,
 					"on": {
@@ -38,7 +38,7 @@
 							}
 						]
 					},
-					"canCrit": true,
+					"canCrit": false,
 					"canMiss": false
 				}
 			],
@@ -47,7 +47,7 @@
 				"count": 1,
 				"restrictions": "",
 				"attackType": "reach",
-				"distance": 4
+				"distance": 2
 			},
 			"template": {
 				"length": 1,
@@ -56,7 +56,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(Reach 4) When discarding Fury Dice over your max, deal fire damage to a creature equal to the value of that die; they gain <strong>Smoldering</strong>.</p>",
+		"description": "<p>(Reach 2) When discarding Fury Dice over your max, deal 5 fire damage to an adjacent creature; they gain <strong>Smoldering</strong>.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

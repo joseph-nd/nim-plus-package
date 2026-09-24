@@ -9,9 +9,9 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/Safe Rest",
+				"details": "",
 				"quantity": 1,
-				"type": "free",
+				"type": "none",
 				"isReaction": false
 			},
 			"duration": {
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/Safe Rest) Until the end of combat, you and all allies within your aura gain <strong>+KEY Fire damage</strong>.</p>",
+		"description": "<p>You and your allies within your aura gain KEY Fire damage and inflict Smoldering on crit. +2 aura Reach.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-purification",

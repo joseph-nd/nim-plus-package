@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1 Mana",
+				"details": "1 Mana, Reach 12",
 				"quantity": 1,
 				"type": "free",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/Mana) Exchange places with an ally outside your aura that is being attacked (this counts as Interposing) and refresh your Harbinger of the Storm or Thunderous Strike.</p>",
+		"description": "<p>(1 Mana, Reach 12) Exchange places with an ally outside your aura that is being attacked (this counts as Interposing).</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oath-of-roaring-thunder",

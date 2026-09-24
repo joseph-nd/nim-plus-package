@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "1/Safe Rest",
+				"details": "1/encounter",
 				"quantity": 1,
 				"type": "action",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><strong>Action:</strong> (1/Safe Rest) Embody the spirit of a legendary hero. Gain <strong>LVL+WIL Temp HP</strong>. Your attacks deal <strong>+WIL psychic damage</strong> (ignoring armor). You may Recite Legend without spending Songweaver's Inspiration. Solo ends if you have no Temp HP.</p>",
+		"description": "<p>(1/encounter) Action: Embody the spirit of a legendary hero. Gain LVL+WIL temp HP. You cannot miss while Solo is active. Solo ends as soon as you run out of temp HP or at the end of the encounter.</p>",
 		"featureType": "class",
 		"class": "songweaver",
 		"group": "herald-of-legends",

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Double the Reach and damage of your <em>Overflowing Fury</em>.</p>",
+		"description": "<p>Treat each of your Fury Dice as if they were always 5s.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

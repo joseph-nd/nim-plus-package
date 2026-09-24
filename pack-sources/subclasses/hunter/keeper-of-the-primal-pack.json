@@ -1,0 +1,25 @@
+{
+	"name": "Keeper of the Primal Pack",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/hunter/keeper-of-the-primal-pack.webp",
+	"system": {
+		"macro": "",
+		"identifier": "keeper-of-the-primal-pack",
+		"rules": [],
+		"description": "<p><em>Even the fiercest of prey is weak in isolation, while the pack has strength in numbers.</em></p><p>LEVEL 3</p><p><strong>Prey for the Pack.</strong> (1/encounter) Designate your quarry as Prey. When you hit your Prey in melee, your allies gain advantage on attacks against it until the start of your next turn.</p><p><strong>Lead the Hunt.</strong> While leading your party, both you and your allies roll Stealth with advantage.</p><p>LEVEL 7</p><p><strong>The Lion's Share.</strong> When your Prey dies, gain WIL+LVL temp HP.</p><p>LEVEL 11</p><p><strong>Scent of Blood.</strong> Gain both benefits of Hunter's Mark against Bloodied Prey.</p><p>LEVEL 15</p><p><strong>Ferocious Takedown.</strong> The hunt never ends. If you kill your Prey with Final Takedown, gain another use of Prey for the Pack.</p>",
+		"parentClass": "hunter",
+		"resources": []
+	},
+	"effects": [],
+	"folder": "560a81691ffaf5a7",
+	"flags": {},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "uWSCO2Nx84o0fs90"
+}

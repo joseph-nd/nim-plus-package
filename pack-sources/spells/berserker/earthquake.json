@@ -57,17 +57,17 @@
 				"count": 1,
 				"restrictions": "",
 				"attackType": "reach",
-				"distance": 4
+				"distance": 3
 			},
 			"template": {
 				"length": 1,
-				"radius": 4,
+				"radius": 3,
 				"shape": "circle",
 				"width": 1
 			}
 		},
 		"description": {
-			"baseEffect": "<p><strong>2 Actions · Reach 4 · 1/encounter.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 7 FD.</strong> Leap into the air and land with seismic force. Creatures within Reach 4 take 3d20+FD damage and become Slowed. Clobbered creatures are knocked Prone as well.</p>",
+			"baseEffect": "<p><strong>2 Actions · Reach 3 · 1/encounter.</strong></p><p><em>Muscle Spell.</em> <strong>Requires: 7 FD.</strong> Leap into the air and land with seismic force up to 2× your Speed away. Creatures within Reach 3 take 3d20+FD damage and become Slowed. Clobbered creatures are knocked Prone.</p>",
 			"higherLevelEffect": "",
 			"upcastEffect": ""
 		},

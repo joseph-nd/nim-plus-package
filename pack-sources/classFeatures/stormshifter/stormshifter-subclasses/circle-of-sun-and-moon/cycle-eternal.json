@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>(1/encounter) <strong>Action:</strong> Spend a Beastshift charge to enter Cycle Eternal as either Solar or Lunar Phase. You shift Phases by spending an action or killing an enemy. If you end your turn without shifting Phases, Cycle Eternal ends.</p><ul><li><strong>Solar Phase.</strong> Your spells gain advantage.</li><li><strong>Lunar Phase.</strong> Gain KEY Defense and 2 Speed.</li></ul>",
+		"description": "<p>(1/encounter) Action: Spend a Beastshift charge to enter Cycle Eternal as either Solar or Lunar Phase. You shift Phases by spending an action or killing an enemy. If you end your turn without shifting Phases, Cycle Eternal ends.</p><ul><li><strong>Solar Phase.</strong> Your spells gain advantage.</li><li><strong>Lunar Phase.</strong> Gain KEY Defense and 2 Speed.</li></ul>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-sun-and-moon",
