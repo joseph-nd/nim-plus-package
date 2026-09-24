@@ -158,7 +158,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Whenever an enemy attacks you, roll and set aside 2d6 Judgment Dice (if you currently have none). They are expended on your next attack this encounter, dealing their total as extra radiant damage (they are lost on a miss).</p><hr><p>Level 3: Radiant Judgment (2). Your Judgment Dice are d8s.</p><p>Level 5: Radiant Judgment (3). Your Judgment Dice are d10s.</p><p>Level 8: Radiant Judgment (4). Your Judgment Dice are d12s.</p><p>Level 10: Radiant Judgment (5). Your Judgment Dice are d20s.</p><p>Level 14: Radiant Judgment (6). Whenever you roll Judgment Dice, roll 1 more.</p>",
+		"description": "<p>Whenever an enemy attacks you, roll and set aside 2d6 Judgment Dice (if you currently have none). They are expended on your next attack this encounter, dealing their total as extra radiant damage (they are lost on a miss).</p><p>Nim+ ruling: your next attack means your next weapon attack (melee or ranged) or unarmed strike, never a spell or another feature (weapon and unarmed attacks only). [A]</p><hr><p>Level 3: Radiant Judgment (2). Your Judgment Dice are d8s.</p><p>Level 5: Radiant Judgment (3). Your Judgment Dice are d10s.</p><p>Level 8: Radiant Judgment (4). Your Judgment Dice are d12s.</p><p>Level 10: Radiant Judgment (5). Your Judgment Dice are d20s.</p><p>Level 14: Radiant Judgment (6). Whenever you roll Judgment Dice, roll 1 more.</p>",
 		"featureType": "class",
 		"class": "oathsworn",
 		"group": "oathsworn-progression",

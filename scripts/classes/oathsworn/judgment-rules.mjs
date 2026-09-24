@@ -101,9 +101,10 @@ function judgmentPoolRule(item) {
 }
 
 /**
- * Whether this Judgment pool pays out on *any* attack rather than melee only.
+ * Whether this Judgment pool pays out on ranged attacks too, not melee only.
  * Nimble 0.2 reworded Radiant Judgment to "your next attack", and the Nim+ 0.2
- * copy ships its own `autoBonus` consumer with delivery `any` to say so; the
+ * copy ships its own `autoBonus` consumer with delivery `any` to say so (Nim+
+ * reads that as any *weapon or unarmed* attack — see `isWeaponItem`); the
  * 2.0.3 system copy has no consumer and gets the melee-only synthetic one below.
  * Read off the live rule, so the two rule sets never need to be told apart by
  * name or UUID.
@@ -120,6 +121,36 @@ export function judgmentAppliesToAnyAttack(entry) {
 			String(rule.poolIdentifier ?? '').trim().toLowerCase() === identifier &&
 			(rule.bonusOnAttackDelivery ?? 'any') === 'any',
 	);
+}
+
+/**
+ * Nim+ ruling: the Judgment Dice ride on *physical* attacks only — weapon
+ * attacks (melee or ranged) and unarmed strikes — never on a spell, and never on
+ * a feature or ability that is not a weapon or unarmed attack. This is the one
+ * test for "is this Item a weapon attack"; unarmed strikes are not Items at all
+ * (the system builds them on the fly) and are recognised by their card instead.
+ */
+export function isWeaponItem(item) {
+	return item?.type === 'object' && item.system?.objectType === 'weapon';
+}
+
+/**
+ * Every `autoBonus` consumer on the actor that feeds the Judgment pool — the
+ * rules whose delivery filter decides whether the system's activation dialog
+ * folds the dice into a roll.
+ */
+export function judgmentAutoBonusConsumers(actor, entry) {
+	if (!actor || !entry) return [];
+	const identifier = String(entry.pool?.identifier ?? entry.key).trim().toLowerCase();
+	const consumers = [];
+	for (const item of actor.items ?? []) {
+		for (const rule of itemRuleValues(item)) {
+			if (rule?.type !== 'diceConsumer' || rule.disabled || rule.mode !== 'autoBonus') continue;
+			if (String(rule.poolIdentifier ?? '').trim().toLowerCase() !== identifier) continue;
+			consumers.push(rule);
+		}
+	}
+	return consumers;
 }
 
 /**

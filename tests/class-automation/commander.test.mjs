@@ -319,9 +319,15 @@ describe('Inerrant Strike on a miss', () => {
 });
 
 describe('Master Commander (2.0.3): Initiative regain, lost if unspent', () => {
-	async function mc(env, { withMC = true, uses = 1, max = 3 } = {}) {
+	const REGAIN_RULE = 'master-commander-initiative-regain';
+	/** `systemRegain: false` models a Master Commander copy older than the system's own encounterStart refill. */
+	async function mc(env, { withMC = true, systemRegain = true, uses = 1, max = 3 } = {}) {
 		const actor = await buildCharacterAtLevel(env, 'commander', 5, { version: '2.0.3', picks: [] });
-		if (!withMC) await actor.deleteEmbeddedDocuments('Item', [itemNamed(actor, 'Master Commander').id]);
+		const master = itemNamed(actor, 'Master Commander');
+		if (!withMC) await actor.deleteEmbeddedDocuments('Item', [master.id]);
+		else if (!systemRegain) {
+			await actor.updateEmbeddedDocuments('Item', [{ _id: master.id, 'system.rules': master.system.rules.filter((r) => r.id !== REGAIN_RULE) }]);
+		}
 		setPool(env, itemNamed(actor, 'Coordinated Strike!'), 'chargePools', 'coordinated-strike-uses', { identifier: 'coordinated-strike-uses', label: 'Coordinated Strike uses', current: uses, max, hidden: false });
 		setPool(env, itemNamed(actor, 'Coordinated Strike!'), 'chargePools', 'coordinated-strike-round', { identifier: 'coordinated-strike-round', current: 1, max: 1, hidden: true });
 		return actor;
@@ -329,9 +335,38 @@ describe('Master Commander (2.0.3): Initiative regain, lost if unspent', () => {
 	const usesRule = (actor) => itemNamed(actor, 'Coordinated Strike!').rules.get('coordinated-strike-uses-pool');
 	const usesNow = (actor) => itemNamed(actor, 'Coordinated Strike!').flags.nimble.chargePools['coordinated-strike-uses'].current;
 
-	it('adds an onInitiativeRolled add-1 recovery to the visible uses pool only', async () => {
+	const perEncounterRegains = (actor) => usesRule(actor).recoveries.filter((r) => ['onInitiativeRolled', 'encounterStart'].includes(r.trigger) && r.mode === 'add');
+
+	it('the system copy already regains the use (encounterStart refill): nothing of ours is added', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await mc(env);
+		expect(itemNamed(actor, 'Master Commander').system.rules.some((r) => r.id === REGAIN_RULE)).toBe(true);
+		expect(perEncounterRegains(actor)).toEqual([]);
+	});
+
+	it('a disabled system refill does not count: our recovery is supplied', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await mc(env);
+		const master = itemNamed(actor, 'Master Commander');
+		const rules = master.system.rules.map((r) => (r.id === REGAIN_RULE ? { ...r, disabled: true } : r));
+		await actor.updateEmbeddedDocuments('Item', [{ _id: master.id, 'system.rules': rules }]);
+		expect(perEncounterRegains(actor)).toEqual([{ trigger: 'onInitiativeRolled', mode: 'add', value: '1' }]);
+	});
+
+	it('another feature\'s regain on the same pool (Survey the Battlefield) does not stand in for Master Commander\'s', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await mc(env, { systemRegain: false });
+		await actor.createEmbeddedDocuments('Item', [
+			rawItem('Survey the Battlefield', 'feature', {
+				rules: [{ type: 'modifyPool', id: 'survey-the-battlefield-initiative-regain', poolType: 'charge', poolIdentifier: 'coordinated-strike-uses', addRefills: [{ trigger: 'encounterStart', mode: 'add', value: '1', predicate: {} }] }],
+			}),
+		]);
+		expect(perEncounterRegains(actor)).toEqual([{ trigger: 'onInitiativeRolled', mode: 'add', value: '1' }]);
+	});
+
+	it('an older copy without the refill: adds an onInitiativeRolled add-1 recovery to the visible uses pool only', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await mc(env, { systemRegain: false });
 		const cs = itemNamed(actor, 'Coordinated Strike!');
 		expect(usesRule(actor).recoveries).toContainEqual({ trigger: 'onInitiativeRolled', mode: 'add', value: '1' });
 		for (const id of ['coordinated-strike-round-pool', 'coordinated-strike-encounter-pool']) {
@@ -345,7 +380,7 @@ describe('Master Commander (2.0.3): Initiative regain, lost if unspent', () => {
 		expect(usesRule(actor).recoveries.some((r) => r.trigger === 'onInitiativeRolled')).toBe(false);
 	});
 
-	it.fails('BUG-class-automation-2: the uses pool regains at most one use per encounter (the system Master Commander already ships an encounterStart add-1)', async () => {
+	it('fixed BUG-class-automation-2: the uses pool regains at most one use per encounter (the system Master Commander already ships an encounterStart add-1)', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await mc(env);
 		const PER_ENCOUNTER = new Set(['onInitiativeRolled', 'encounterStart']);
@@ -359,11 +394,36 @@ describe('Master Commander (2.0.3): Initiative regain, lost if unspent', () => {
 		expect(regains).toHaveLength(1);
 	});
 
-	it('a regained use is taken back at combat end when it was not spent', async () => {
+	it('the regain only counts on the trigger that actually delivers it', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await mc(env, { uses: 2 });
+		// System refill present: an onInitiativeRolled recovery is not Master Commander's.
 		env.Hooks.callAll('nimble.chargePool.recovered', {
 			trigger: 'onInitiativeRolled',
+			actor,
+			recovery: [{ poolId: 'coordinated-strike-uses', recoveredAmount: 1, newValue: 2 }],
+		});
+		await env.flush();
+		expect(actor.getFlag(MODULE_ID, 'coordinatedStrikeTempUse')).toBeUndefined();
+		// Older copy: an encounterStart recovery is not ours either.
+		const legacy = await mc(env, { systemRegain: false, uses: 2 });
+		env.Hooks.callAll('nimble.chargePool.recovered', {
+			trigger: 'encounterStart',
+			actor: legacy,
+			recovery: [{ poolId: 'coordinated-strike-uses', recoveredAmount: 1, newValue: 2 }],
+		});
+		await env.flush();
+		expect(legacy.getFlag(MODULE_ID, 'coordinatedStrikeTempUse')).toBeUndefined();
+	});
+
+	it.each([
+		[true, 'encounterStart'],
+		[false, 'onInitiativeRolled'],
+	])('system refill %s: a use regained on %s is taken back at combat end when it was not spent', async (systemRegain, trigger) => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await mc(env, { systemRegain, uses: 2 });
+		env.Hooks.callAll('nimble.chargePool.recovered', {
+			trigger,
 			actor,
 			recovery: [{ poolId: 'coordinated-strike-uses', recoveredAmount: 1, newValue: 2 }],
 		});
@@ -481,7 +541,7 @@ describe('Single-minded Fighter foregoes Commander\'s Orders', () => {
 		expect(actor.items.filter((i) => i.system.group === 'commanders-orders')).toHaveLength(left);
 	});
 
-	it.fails('BUG-class-automation-3: on a 2.0.3 Commander the removal offer leaves Coordinated Strike! (a granted feature, not a chosen Order) alone', async () => {
+	it('fixed BUG-class-automation-3: on a 2.0.3 Commander the removal offer leaves Coordinated Strike! (a granted feature, not a chosen Order) alone', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await buildCharacterAtLevel(env, 'commander', 2, { version: '2.0.3', picks: ['Face Me!', 'Reposition!'] });
 		expect(itemNamed(actor, 'Coordinated Strike!').system.group).toBe('commanders-orders');
@@ -489,6 +549,50 @@ describe('Single-minded Fighter foregoes Commander\'s Orders', () => {
 		await actor.createEmbeddedDocuments('Item', [rawItem('Single-minded Fighter', 'feature', { group: 'champion-of-the-arena' }, { flags: { [MODULE_ID]: { foregoesFeatureGroup: 'commanders-orders' } } })]);
 		await env.flush();
 		expect(actor.items.some((i) => i.name === 'Coordinated Strike!')).toBe(true);
+	});
+
+	const SMF = () => rawItem('Single-minded Fighter', 'feature', { group: 'champion-of-the-arena' }, { flags: { [MODULE_ID]: { foregoesFeatureGroup: 'commanders-orders' } } });
+
+	it('the granted feature is recognised from the grantItem rule even without grantedById (the system does not persist it); the chosen Orders still go', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await buildCharacterAtLevel(env, 'commander', 2, { version: '2.0.3', picks: ['Face Me!', 'Reposition!'] });
+		const cs = itemNamed(actor, 'Coordinated Strike!');
+		delete cs._source.system.grantedById;
+		cs.prepareData();
+		expect(cs.system.grantedById).toBeUndefined();
+		let content = '';
+		env.dialogs.answerWhen('Single-minded Fighter', (config) => {
+			content = config.content;
+			return true;
+		});
+		await actor.createEmbeddedDocuments('Item', [SMF()]);
+		await env.flush();
+		expect(content).not.toContain('Coordinated Strike');
+		expect(content).toContain('Remove the 2 already');
+		expect(actor.items.filter((i) => i.system.group === 'commanders-orders').map((i) => i.name)).toEqual(['Coordinated Strike!']);
+	});
+
+	it('a 2.0.3 Commander with no chosen Orders gets no removal offer at all', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await buildCharacterAtLevel(env, 'commander', 1, { version: '2.0.3', picks: [] });
+		await actor.createEmbeddedDocuments('Item', [SMF()]);
+		await env.flush();
+		expect(env.dialogs.log.filter((d) => d.title === 'Single-minded Fighter')).toHaveLength(0);
+	});
+
+	it('a granted Coordinated Strike! re-added (dragged back from the compendium) is not refused; a chosen Order still is', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await buildCharacterAtLevel(env, 'commander', 2, { version: '2.0.3', picks: [] });
+		const cs = itemNamed(actor, 'Coordinated Strike!');
+		const source = cs.toObject();
+		delete source.system.grantedById;
+		await actor.deleteEmbeddedDocuments('Item', [cs.id]);
+		await actor.createEmbeddedDocuments('Item', [SMF()]);
+		await env.flush();
+		const [back] = await actor.createEmbeddedDocuments('Item', [source]);
+		expect(back?.name).toBe('Coordinated Strike!');
+		const [order] = await actor.createEmbeddedDocuments('Item', [rawItem('Face Me!', 'feature', { group: 'commanders-orders' })]);
+		expect(order).toBeUndefined();
 	});
 });
 
@@ -542,13 +646,38 @@ describe('owed Combat Tactic prompt (Seasoned Combatant)', () => {
 });
 
 describe('Commanding Presence (2.0.3 Combat Tactic) costs a Combat Die', () => {
-	it.fails('BUG-class-automation-6: the 2.0.3 system copy is metered against the Combat Dice pool (blocked at 0, spends 1)', async () => {
+	it('fixed BUG-class-automation-6: the 2.0.3 system copy is metered against the Combat Dice pool (blocked at 0, spends 1)', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await commander(env, { version: '2.0.3', features: ['Commanding Presence'], current: 0 });
 		const cp = itemNamed(actor, 'Commanding Presence');
 		expect(cp.system.group).toBe('combat-tactics');
 		const consumers = [...cp.rules.values()].filter((r) => r.type === 'chargeConsumer' && r.poolIdentifier === 'combat-dice');
 		expect(consumers).toHaveLength(1);
+	});
+
+	it('the supplied consumer spends one die from the item-scoped pool, once, however often the item is prepared', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const actor = await commander(env, { version: '2.0.3', features: ['Commanding Presence'] });
+		const cp = itemNamed(actor, 'Commanding Presence');
+		cp.prepareData();
+		actor.prepareData();
+		const consumers = [...cp.rules.values()].filter((r) => r.type === 'chargeConsumer');
+		expect(consumers).toHaveLength(1);
+		expect(consumers[0]).toMatchObject({ poolIdentifier: 'combat-dice', poolScope: 'item', cost: '1' });
+	});
+
+	it('a copy whose content already spends Combat Dice is left as it is', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false });
+		const own = { type: 'chargeConsumer', id: 'content-consumer', poolIdentifier: 'combat-dice', poolScope: 'item', cost: '1' };
+		const actor = await commander(env, { version: '2.0.3', features: [], extra: [rawItem('Commanding Presence', 'feature', { group: 'combat-tactics', rules: [own] })] });
+		const ids = [...itemNamed(actor, 'Commanding Presence').rules.values()].filter((r) => r.type === 'chargeConsumer').map((r) => r.id);
+		expect(ids).toEqual(['content-consumer']);
+	});
+
+	it('with automation off, nothing is supplied', async () => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: false, automation: false });
+		const actor = await commander(env, { version: '2.0.3', features: ['Commanding Presence'] });
+		expect([...itemNamed(actor, 'Commanding Presence').rules.values()].some((r) => r.type === 'chargeConsumer')).toBe(false);
 	});
 
 	it('the 0.2 copy is an Order and needs no Combat Die', async () => {

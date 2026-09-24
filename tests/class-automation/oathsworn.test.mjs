@@ -1,7 +1,9 @@
 /**
- * Oathsworn — Radiant Judgement: which attacks spend the Judgment Dice (2.0.3
- * melee only, 0.2 any attack incl. ranged and spells), the "honest signal" tag
- * check, the announcement on a roll (GM only) and Reliable Justice.
+ * Oathsworn — Radiant Judgement: which attacks carry and spend the Judgment Dice
+ * (Nim+ ruling: weapon and unarmed attacks only — 2.0.3 melee weapons, 0.2 melee
+ * and ranged weapons, unarmed strikes in both; never spells or other features),
+ * the "honest signal" tag check, the announcement on a roll (GM only) and
+ * Reliable Justice.
  */
 import { describe, expect, it } from 'vitest';
 import { makeCharacter, MODULE_ID, setPool } from '../harness/index.mjs';
@@ -111,43 +113,223 @@ describe('snapshot / expend on weapon attacks', () => {
 	});
 });
 
-describe('0.2 "any attack": spell and feature cards (createChatMessage)', () => {
+const shieldBash = () => rawItem('Shield Bash', 'feature', { activation: { targets: { attackType: 'reach' }, effects: [{ type: 'damage', formula: '1d6' }] } });
+const layOnHands = () => rawItem('Lay on Hands', 'feature', { activation: { effects: [{ type: 'healing', formula: '2d6' }] } });
+const flameBolt = () => rawItem('Flame Bolt', 'spell', { activation: { targets: { attackType: 'range' }, effects: [{ type: 'damage', formula: '2d6' }] } });
+const potion = () => rawItem('Alchemist Fire', 'object', { objectType: 'consumable', activation: { targets: { attackType: 'range' }, effects: [{ type: 'damage', formula: '1d6' }] } });
+
+/**
+ * What the system's activation dialog does when its component mounts
+ * (`itemActivationConfigDialogState`): fold an autoBonus pool in when
+ * `matchesAttackDelivery(filter, delivery)` — `any`/null match everything.
+ */
+function systemFoldsJudgment(actor, item) {
+	const attackType = item?.system?.activation?.targets?.attackType;
+	const delivery = attackType === 'reach' ? 'melee' : attackType === 'range' ? 'ranged' : null;
+	return actor.items.some((i) =>
+		[...(i.rules?.values() ?? [])].some((rule) => {
+			if (rule.type !== 'diceConsumer' || rule.disabled || rule.mode !== 'autoBonus') return false;
+			if (rule.poolIdentifier !== 'judgment') return false;
+			const filter = rule.bonusOnAttackDelivery;
+			return filter == null || filter === 'any' || filter === delivery;
+		}),
+	);
+}
+
+const judgmentFilters = (actor) =>
+	[...actor.items].flatMap((i) => [...(i.rules?.values() ?? [])].filter((r) => r.type === 'diceConsumer' && r.poolIdentifier === 'judgment').map((r) => r.bonusOnAttackDelivery));
+
+/** Render a fake ItemActivationConfigDialog for `item`; returns whether the system would fold the dice in. */
+function openDialog(env, actor, item) {
+	let folded = null;
+	const app = {
+		actor,
+		item,
+		_replaceHTML() {
+			folded = systemFoldsJudgment(actor, item);
+		},
+	};
+	env.Hooks.callAll('preRenderItemActivationConfigDialog', app, {}, { isFirstRender: true });
+	app._replaceHTML({}, {}, { isFirstRender: true });
+	return folded;
+}
+
+/** A system unarmed-strike card (AttackActionPanel / heroic macro / opportunity attack shape). */
+function unarmedCard(env, actor, { author = env.game.user.id } = {}) {
+	const roll = {
+		class: 'DamageRoll',
+		formula: '1d4',
+		terms: [{ class: 'Die', number: 1, faces: 4, results: [{ result: 3, active: true }], evaluated: true, options: {} }],
+		total: 3,
+		evaluated: true,
+		isCritical: false,
+		isMiss: false,
+	};
+	const source = {
+		rolls: [JSON.stringify(roll)],
+		system: {
+			name: 'Unarmed Strike',
+			activation: {
+				effects: [
+					{
+						id: 'unarmed-damage',
+						type: 'damage',
+						formula: '1d4',
+						damageType: 'bludgeoning',
+						roll,
+						on: { hit: [{ id: 'unarmed-damage-hit', type: 'damageOutcome' }] },
+					},
+				],
+				targets: { count: 1, attackType: 'reach', distance: 1 },
+			},
+		},
+	};
+	return {
+		type: 'feature',
+		author: { id: author },
+		speaker: { actor: actor.id },
+		_source: source,
+		get system() {
+			return source.system;
+		},
+		// Foundry rebuilds the message's Roll objects from the stored JSON.
+		get rolls() {
+			return source.rolls.map((r) => JSON.parse(r));
+		},
+		updateSource(changes) {
+			if (changes.rolls) source.rolls = changes.rolls;
+			if (changes.system) source.system = { ...source.system, ...changes.system };
+		},
+	};
+}
+
+async function unarmedStrike(env, actor, opts) {
+	const card = unarmedCard(env, actor, opts);
+	env.Hooks.callAll('preCreateChatMessage', card, {}, {}, env.game.user.id);
+	env.Hooks.callAll('createChatMessage', card, {}, env.game.user.id);
+	await env.flush();
+	return card;
+}
+
+describe('Nim+ ruling: weapon and unarmed attacks only — the activation dialog', () => {
 	it.each([
-		['spell', true],
-		['feature', true],
-		['object', false],
-	])('0.2: a tagged %s card by this user spends the dice → %s', async (type, spent) => {
-		const { env } = await world({ scripts: SCRIPTS });
-		const actor = await oathsworn(env);
-		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { type }));
-		await env.flush();
-		expect(facesOf(actor)).toEqual(spent ? [] : [3, 4]);
+		['0.2', 'Mace', true],
+		['0.2', 'Javelin', true],
+		['0.2', 'Shield Bash', false],
+		['0.2', 'Lay on Hands', false],
+		['0.2', 'Flame Bolt', false],
+		['0.2', 'Alchemist Fire', false],
+		['2.0.3', 'Mace', true],
+		['2.0.3', 'Javelin', false],
+		['2.0.3', 'Shield Bash', false],
+	])('%s: the dialog for %s folds the Judgment Dice in → %s', async (version, name, folded) => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: version === '0.2' });
+		const actor = await oathsworn(env, { version, extra: [shieldBash(), layOnHands(), flameBolt(), potion()] });
+		const before = judgmentFilters(actor);
+		expect(openDialog(env, actor, itemNamed(actor, name))).toBe(folded);
+		// In-memory only, and put back the moment the dialog has mounted.
+		expect(judgmentFilters(actor)).toEqual(before);
 	});
 
-	it('2.0.3 (melee only): a spell card never spends them', async () => {
+	it('an unarmed strike (a plain object, not an Item) is left to the system', async () => {
+		const { env } = await world({ scripts: SCRIPTS });
+		const actor = await oathsworn(env);
+		const pseudo = { name: 'Unarmed Strike', img: 'icons/skills/melee/unarmed-punch-fist.webp', system: { activation: { effects: [{ type: 'damage', formula: '1d4' }] } } };
+		expect(openDialog(env, actor, pseudo)).toBe(true);
+	});
+
+	it('automation off: the dialog is untouched', async () => {
+		const { env } = await world({ scripts: SCRIPTS, automation: false });
+		const actor = await oathsworn(env, { extra: [shieldBash()] });
+		expect(openDialog(env, actor, itemNamed(actor, 'Shield Bash'))).toBe(true);
+	});
+});
+
+describe('Nim+ ruling: weapon and unarmed attacks only — spending', () => {
+	it('a non-weapon object (consumable) never spends them, even with a tagged card', async () => {
+		const { env } = await world({ scripts: SCRIPTS });
+		const actor = await oathsworn(env, { extra: [potion()] });
+		await swing(env, actor, 'Alchemist Fire');
+		expect(facesOf(actor)).toEqual([3, 4]);
+	});
+
+	it.each([
+		['a damage spell', 'spell', [{ type: 'damage', formula: '2d6' }]],
+		['a heal', 'spell', [{ type: 'healing', formula: '2d6' }]],
+		['a feature attack', 'feature', [{ type: 'damage', formula: '1d6' }]],
+		['a saving-throw spell with nested damage', 'spell', [{ type: 'savingThrow', on: { failedSave: [{ type: 'damage', formula: '2d6' }] } }]],
+	])('0.2: %s card never spends the dice, even tagged', async (_label, type, effects) => {
+		const { env } = await world({ scripts: SCRIPTS });
+		const actor = await oathsworn(env);
+		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { type, effects }));
+		await env.flush();
+		expect(facesOf(actor)).toEqual([3, 4]);
+		expect(env.ChatMessage.created).toHaveLength(0);
+	});
+
+	it('fixed NP-016 (BUG-class-automation-4): a healing spell does not spend the Judgment Dice', async () => {
+		const { env } = await world({ scripts: SCRIPTS });
+		const actor = await oathsworn(env);
+		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { effects: [{ type: 'healing', formula: '2d6' }] }));
+		await env.flush();
+		expect(facesOf(actor)).toEqual([3, 4]);
+	});
+
+	it('2.0.3: a spell card never spends them', async () => {
 		const { env } = await world({ scripts: SCRIPTS, playtest: false });
 		const actor = await oathsworn(env, { version: '2.0.3' });
 		env.Hooks.callAll('createChatMessage', chatCard(env, actor));
 		await env.flush();
 		expect(facesOf(actor)).toEqual([3, 4]);
 	});
+});
 
-	it('another user\'s card, or an untagged one, spends nothing', async () => {
+describe('Nim+ ruling: unarmed strikes carry and spend the Judgment Dice', () => {
+	it.each(['0.2', '2.0.3'])('%s: the dice are folded into the unarmed damage roll and expended', async (version) => {
+		const { env } = await world({ scripts: SCRIPTS, playtest: version === '0.2' });
+		const actor = await oathsworn(env, { version });
+		const card = await unarmedStrike(env, actor);
+
+		const [stored] = card._source.rolls.map((r) => JSON.parse(r));
+		const node = card.system.activation.effects[0].roll;
+		for (const roll of [stored, node]) {
+			expect(roll.total).toBe(10);
+			expect(roll.formula).toBe('1d4 + 3[Judgment Dice] + 4[Judgment Dice]');
+			expect(roll.terms.slice(1)).toEqual([
+				{ class: 'OperatorTerm', operator: '+', evaluated: true, options: {} },
+				{ class: 'NumericTerm', number: 3, evaluated: true, options: { flavor: 'Judgment Dice' } },
+				{ class: 'OperatorTerm', operator: '+', evaluated: true, options: {} },
+				{ class: 'NumericTerm', number: 4, evaluated: true, options: { flavor: 'Judgment Dice' } },
+			]);
+		}
+		expect(facesOf(actor)).toEqual([]);
+		const announced = env.ChatMessage.created.filter((c) => /Radiant Judgement/.test(c.flavor));
+		expect(announced).toHaveLength(1);
+		expect(announced[0].content).toContain('<strong>7 radiant damage</strong> (3 + 4)');
+	});
+
+	it('no dice rolled: the card is untouched and nothing is announced', async () => {
+		const { env } = await world({ scripts: SCRIPTS });
+		const actor = await oathsworn(env, { faces: [] });
+		const card = await unarmedStrike(env, actor);
+		expect(JSON.parse(card._source.rolls[0]).total).toBe(3);
+		expect(env.ChatMessage.created).toHaveLength(0);
+	});
+
+	it('another user\'s unarmed card spends nothing', async () => {
 		const { env } = await world({ scripts: SCRIPTS });
 		const actor = await oathsworn(env);
-		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { author: env.users.player.id }));
-		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { tagged: false }));
+		const card = unarmedCard(env, actor, { author: env.users.player.id });
+		env.Hooks.callAll('createChatMessage', card, {}, env.users.player.id);
 		await env.flush();
 		expect(facesOf(actor)).toEqual([3, 4]);
 	});
 
-	it.fails('BUG-class-automation-4: a healing spell (not an attack) does not spend the Judgment Dice', async () => {
-		const { env } = await world({ scripts: SCRIPTS });
+	it('automation off: no fold, no spend', async () => {
+		const { env } = await world({ scripts: SCRIPTS, automation: false });
 		const actor = await oathsworn(env);
-		// The system's "any" autoBonus filter matches activations with no attack
-		// delivery at all, so a healing roll carries the Judgment tag too.
-		env.Hooks.callAll('createChatMessage', chatCard(env, actor, { effects: [{ type: 'healing', formula: '2d6' }] }));
-		await env.flush();
+		const card = await unarmedStrike(env, actor);
+		expect(JSON.parse(card._source.rolls[0]).total).toBe(3);
 		expect(facesOf(actor)).toEqual([3, 4]);
 	});
 });
@@ -162,7 +344,7 @@ describe('Judgment Dice rolled: announcement and Reliable Justice (preUpdate)', 
 		await roll(actor, [2, 5]);
 		const [card] = env.ChatMessage.created;
 		expect(card.content).toContain('<strong>7</strong>');
-		expect(card.content).toContain(version === '0.2' ? 'next attack' : 'next melee attack');
+		expect(card.content).toContain(version === '0.2' ? 'next weapon or unarmed attack' : 'next melee attack');
 		expect(facesOf(actor)).toEqual([2, 5]);
 	});
 

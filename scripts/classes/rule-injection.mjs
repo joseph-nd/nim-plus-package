@@ -1,5 +1,5 @@
 import { MODULE_ID } from '../core/constants.mjs';
-import { ensureCombatDicePoolBonus } from './commander/combat-dice.mjs';
+import { ensureCombatDicePoolBonus, ensureCommandingPresenceConsumer } from './commander/combat-dice.mjs';
 import { ensureCombatDiceDiscard } from './commander/combat-dice-discard.mjs';
 import { ensureCoordinatedStrikeCounter } from './commander/coordinated-strike.mjs';
 import { ensureMasterCommanderRecovery } from './commander/master-commander.mjs';
@@ -39,6 +39,7 @@ function injectMissingRules(item) {
 	ensureMasterCommanderRecovery(item);
 	ensureCombatDiceDiscard(item);
 	ensureCombatDicePoolBonus(item);
+	ensureCommandingPresenceConsumer(item);
 	ensureSingleMindedOrderLevel(item);
 }
 

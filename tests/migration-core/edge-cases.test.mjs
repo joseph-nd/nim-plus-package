@@ -194,7 +194,7 @@ describe('partially migrated actors', () => {
 		expect(fingerprint(partial)).toEqual(fingerprint(fresh));
 	});
 
-	it.fails('BUG-migration-core-1: owning both the 2.0.3 and the 0.2 copy of a feature leaves a duplicate after to02', async () => {
+	it('fixed BUG-migration-core-1: owning both the 2.0.3 and the 0.2 copy of a feature leaves a duplicate after to02', async () => {
 		const actor = await buildCharacterAtLevel(env, 'commander', 5, {
 			picks: ['Face Me!', 'Hold the Line!', nimDoc('Face Me!').uuid],
 		});
@@ -203,7 +203,27 @@ describe('partially migrated actors', () => {
 		expect(itemsNamed(actor, 'Face Me!')).toHaveLength(1);
 	});
 
-	it.fails('BUG-migration-core-1: owning both copies leaves a duplicate after to203 too', async () => {
+	it('fixed BUG-migration-core-1: the old copy is removed as merged; the already-owned new copy is kept as it is', async () => {
+		const actor = await buildCharacterAtLevel(env, 'commander', 5, {
+			picks: ['Face Me!', 'Hold the Line!', nimDoc('Face Me!').uuid],
+		});
+		const [old, kept] = [...itemsNamed(actor, 'Face Me!')].sort((a, b) =>
+			sourceOf(a) === sysDoc('Face Me!').uuid ? -1 : sourceOf(b) === sysDoc('Face Me!').uuid ? 1 : 0,
+		);
+		expect(sourceOf(old)).toBe(sysDoc('Face Me!').uuid);
+		const [plan] = await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' });
+		expect(planSummary(plan).removals).toContain('Face Me! (merged into Face Me!)');
+		expect(plan.replacements.map((r) => r.item.id)).not.toContain(old.id);
+		await migration.applyCoreClassMigration([plan], 'to02');
+		expect(actor.items.has(old.id)).toBe(false);
+		expect(actor.items.get(kept.id)).toBeTruthy();
+		expect(sourceOf(actor.items.get(kept.id))).toBe(nimDoc('Face Me!').uuid);
+		// A second plan has nothing left to do with Face Me!.
+		const [again] = await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' });
+		expect([...(again?.replacements ?? []), ...(again?.removals ?? [])].map((r) => r.item.name)).not.toContain('Face Me!');
+	});
+
+	it('fixed BUG-migration-core-1: owning both copies leaves a duplicate after to203 too', async () => {
 		({ env, migration } = await world({ playtest: false }));
 		const actor = await buildCharacterAtLevel(env, 'commander', 5, {
 			version: '0.2',

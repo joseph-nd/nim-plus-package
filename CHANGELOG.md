@@ -2,6 +2,25 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.12.2] - 2026-09-24
+
+### Changed
+- **Oathsworn Judgment Dice: weapon and unarmed attacks only (Nim+ ruling).** 0.2 Radiant Judgement says the dice are expended on "your next attack". Nim+ now reads that as your next weapon attack (melee or ranged) or unarmed strike, never a spell or another feature. This replaces the 0.12.0 reading, "any attack, spells included". The 2.0.3 feature still pays out on melee attacks only, which now means melee weapons and unarmed strikes too.
+  - The activation dialog no longer adds the dice to a feature's or a consumable's damage or healing roll. The system's pool filter can only say melee, ranged or any, and "any" means every roll. Nim+ hides the Judgment pool from the dialog when the item is not a weapon. Nothing is stored, so existing characters get the change without any step.
+  - Unarmed strikes now carry the dice. The system rolls unarmed strikes without an item and never added pool bonuses to them. The dice are now added to the unarmed strike's damage, tagged like on a weapon, and expended hit or miss.
+  - A spell or feature card never spends the dice.
+  - The 0.2 Radiant Judgement description has a new line with the ruling, marked [A].
+
+### Fixed
+- **2.0.3 Master Commander regained two Coordinated Strike uses per encounter.** The system's Master Commander now carries its own regain (a `modifyPool` refill at encounter start), and Nim+ still added its Initiative recovery on top. Nim+ now adds its recovery only to older copies that lack the refill, and the "lost if not spent" clean-up follows whichever regain the character actually has.
+- **Single-minded Fighter could remove a 2.0.3 Commander's Coordinated Strike!.** 2.0.3 files Coordinated Strike! under Commander's Orders, so the "Remove them" offer listed it with the chosen Orders and deleted it, and the feature was then refused if added back. A feature that another feature on the sheet grants (Commander's Orders grants Coordinated Strike! at level 1) is now left out of the offer and is no longer refused.
+- **A 0.2 Oathsworn healing spell spent the Judgment Dice.** The system folds the dice into any activation, heals included, so the card carried the Judgment tag and Nim+ expended the dice. Spell and feature cards no longer spend them at all (see Changed).
+- **2.0.3 Commanding Presence did not cost a Combat Die.** The system's copy ships no rules, so nothing metered it. Nim+ now adds a charge consumer on the Combat Dice pool: with no dice left it cannot be used, and each use spends one die. The 0.2 copy is an Order and stays free.
+- **Class migration: Commanding Presence changing group left one Combat Ability too many.** From level 4, 2.0.3 and 0.2 grant the same number of Combat Abilities, but Commanding Presence is a Tactic in 2.0.3 and an Order in 0.2. The migration topped up the group it left (a Combat Tactic going to 0.2, an Order going to 2.0.3) and never checked the level's total, so the character ended with 4 abilities at level 4. It now also asks which ability to drop, from a group that has more than its minimum. The report lists that step, cancelling it keeps them all, and the startup pass leaves it for the sheet along with the pick.
+- **Class migration offered a Spellblade Commander a Combat Tactic.** A Spellblade takes another Order instead of a Combat Tactic, in both versions. Migrating to 0.2 no longer offers it one.
+- **Class migration left a duplicate when a character owned both the old and the new copy of a feature.** For example, a 2.0.3 Face Me! next to a 0.2 Face Me! became two 0.2 copies. The old copy is now removed ("merged into Face Me!"), and the copy the character already had is kept as it is, pools included.
+- **Subclass sync deleted unchanged system features of official 0.2 subclasses.** An official 0.2 subclass keeps its unchanged features, such as Path of the Red Mist's Onslaught, in the system's own feature pack. A copy that had lost its compendium source matched no Nim+ entry, so the sync removed it and nothing added it back. The sync now leaves such a copy alone when the system pack has that feature for the subclass.
+
 ## [0.12.1] - 2026-09-24
 
 ### Changed

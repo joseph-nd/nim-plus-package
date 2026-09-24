@@ -85,6 +85,8 @@ const IMPORT_REGISTRATIONS = {
 	'on:deleteCombatant': 2,
 	'on:preUpdateItem': 1,
 	'on:createChatMessage': 1,
+	'on:preRenderItemActivationConfigDialog': 1,
+	'on:preCreateChatMessage': 1,
 };
 
 const shape = (o) =>

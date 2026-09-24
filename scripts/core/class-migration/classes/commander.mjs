@@ -31,6 +31,13 @@
  *   to203 — a level 2–3 character owns a Combat Tactic it does not get until
  *           level 4: list it and, confirmed, remove it. A level 2+ character
  *           with fewer than 2 Orders is offered the missing ones.
+ *   both  — from level 4 both sides grant the same number of Combat Abilities
+ *           (Orders + Tactics), so a pick offered only because Commanding
+ *           Presence changed group leaves one too many: the character is asked
+ *           which ability to drop, from a group above its minimum.
+ *
+ * A Spellblade (official, both versions) forgoes Combat Tactics — it takes
+ * another Order instead — so it is never offered one, and needs none.
  *
  * Every step asks: a cancelled prompt changes nothing, and anything skipped can
  * be done by hand from the compendium. The startup pass (non-interactive) asks
@@ -52,6 +59,7 @@ const KEYS = {
 	removeTactics: 'tactics-early',
 	pickTactic: 'combat-tactic',
 	pickOrders: 'commanders-orders',
+	dropSurplus: 'combat-abilities-surplus',
 };
 
 // The level each group is first chosen at, on the side being migrated to.
@@ -59,6 +67,43 @@ const LEVELS = {
 	to02: { orders: 4, tactic: 2 },
 	to203: { orders: 2, tactic: 4 },
 };
+
+// From level 4 both versions grant 3 Combat Abilities (Orders + Tactics), +1 at each of these levels.
+const EXTRA_ABILITY_LEVELS = [6, 8, 10, 12, 16];
+const SPELLBLADE_MATCH = /^spellblade$/i;
+
+/** Spellblades forgo Combat Tactics (an Order or a spell instead), in both versions. */
+function forgoesTactics(ctx) {
+	const subclass = ctx.subclass;
+	if (!subclass) return false;
+	return SPELLBLADE_MATCH.test(String(subclass.system?.identifier || subclass.name || '').trim());
+}
+
+/** Combat Abilities (Orders + Tactics) the target side grants at `ctx.level` — from level 4 only. */
+function abilityAllowance(ctx) {
+	return 3 + EXTRA_ABILITY_LEVELS.filter((level) => level <= ctx.level).length;
+}
+
+/** The fewest picks each group must keep on the target side at `ctx.level`. */
+function groupMinimums(ctx) {
+	const levels = LEVELS[ctx.direction];
+	return {
+		[ORDERS_GROUP]: ctx.level >= levels.orders ? 2 : 0,
+		[TACTICS_GROUP]: ctx.level >= levels.tactic && !forgoesTactics(ctx) ? 1 : 0,
+	};
+}
+
+/**
+ * How many Combat Abilities over the level's allowance the top-up picks would
+ * leave, given `total` owned (after the generic pass) and `added` more. Only
+ * from level 4, where both versions grant the same total: below it, the
+ * re-levelled group's early picks are what is over, and that step asks already.
+ * A character already over the allowance is never asked to go below what it had.
+ */
+function surplusAfter(ctx, total, added) {
+	if (ctx.level < 4 || added <= 0) return 0;
+	return Math.max(0, total + added - Math.max(abilityAllowance(ctx), total));
+}
 
 function isPick(item) {
 	return (
@@ -122,7 +167,11 @@ async function candidates(ctx, group) {
 		.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Offer `count` picks from a group, leaving out what the actor already owns. */
+/**
+ * Offer `count` picks from a group, leaving out what the actor already owns.
+ * @returns {Promise<{added: Item[], deferred: number}>} what was added, and how
+ *          many picks a non-interactive run left for the sheet
+ */
 async function offerPicks(actor, ctx, { key, group, count, title, content }) {
 	const { promptChoice, loadDoc, addFeature } = ctx.helpers;
 	const ownedNames = new Set(
@@ -131,16 +180,69 @@ async function offerPicks(actor, ctx, { key, group, count, title, content }) {
 	const options = (await candidates(ctx, group))
 		.filter((entry) => !ownedNames.has(entry.name.trim().toLowerCase()))
 		.map((entry) => ({ value: entry.uuid, label: entry.name }));
-	if (!options.length) return [];
+	if (!options.length) return { added: [], deferred: 0 };
 
-	const picked = await promptChoice(actor, { key, title, content, options, count: Math.min(count, options.length) });
-	if (ctx.helpers.isDeferred(picked) || !picked?.length) return [];
+	const n = Math.min(count, options.length);
+	const picked = await promptChoice(actor, { key, title, content, options, count: n });
+	if (ctx.helpers.isDeferred(picked)) return { added: [], deferred: n };
+	if (!picked?.length) return { added: [], deferred: 0 };
 	const docs = [];
 	for (const uuid of picked) {
 		const doc = await loadDoc(uuid);
 		if (doc) docs.push(doc);
 	}
-	return addFeature(actor, docs);
+	return { added: (await addFeature(actor, docs)) ?? [], deferred: 0 };
+}
+
+/** Owned Combat Abilities (Orders + Tactics). */
+function ownedAbilities(actor) {
+	return actor.items.filter((item) => isPick(item) && [ORDERS_GROUP, TACTICS_GROUP].includes(item.system?.group));
+}
+
+function surplusLine(ctx, surplus) {
+	return ctx.helpers.choiceLine(
+		`Combat Abilities: that is ${surplus} more than the ${abilityAllowance(ctx)} a level ${ctx.level} Commander has ` +
+			`(Commanding Presence changed group): you will be asked which ${surplus} to drop`,
+		KEYS.dropSurplus,
+	);
+}
+
+/**
+ * After a top-up pick, ask which Combat Ability to drop when the level's total
+ * is now exceeded — only from groups above their minimum, never the new pick.
+ * When the top-up was deferred, this step is deferred with it.
+ */
+async function dropSurplus(actor, ctx, total, offered) {
+	const { promptChoice, removeItems, escape, isDeferred } = ctx.helpers;
+	const added = (offered?.added?.length ?? 0) + (offered?.deferred ?? 0);
+	const surplus = surplusAfter(ctx, total, added);
+	if (!surplus) return [];
+	const newIds = new Set((offered?.added ?? []).map((item) => item.id));
+	const minimums = groupMinimums(ctx);
+	const owned = ownedAbilities(actor);
+	const options = owned
+		.filter((item) => !newIds.has(item.id))
+		.filter((item) => owned.filter((o) => o.system.group === item.system.group).length > (minimums[item.system.group] ?? 0))
+		.sort((a, b) => a.name.localeCompare(b.name))
+		.map((item) => ({ value: item.id, label: item.name, hint: groupLabelOf(item.system.group) }));
+	if (!options.length) return [];
+	const count = Math.min(surplus, options.length);
+	const picked = await promptChoice(actor, {
+		key: KEYS.dropSurplus,
+		title: 'Drop a Combat Ability',
+		content:
+			`<p>A level ${ctx.level} Commander has ${abilityAllowance(ctx)} Combat Abilities (Orders and Tactics). ` +
+			`Commanding Presence changed group, so ${escape(actor.name)} now has ${surplus} too many.</p>` +
+			'<p>Choose which to remove. <em>Cancelling keeps them all — you can remove one by hand later.</em></p>',
+		options,
+		count,
+	});
+	if (isDeferred(picked) || !picked?.length) return [];
+	return removeItems(actor, picked);
+}
+
+function groupLabelOf(group) {
+	return group === ORDERS_GROUP ? "Commander's Order" : 'Combat Tactic';
 }
 
 async function confirmRemoval(actor, ctx, key, items, why) {
@@ -183,10 +285,14 @@ export default {
 					);
 				}
 			}
-			if (!projectedInGroup(actor, ctx, TACTICS_GROUP).length) {
+			const orders = projectedInGroup(actor, ctx, ORDERS_GROUP).length;
+			const tactics = projectedInGroup(actor, ctx, TACTICS_GROUP).length;
+			if (!tactics && !forgoesTactics(ctx)) {
 				lines.push(
 					choiceLine('Fit for Any Battlefield (level 2) brings a Combat Tactic: you will be asked to choose one', KEYS.pickTactic),
 				);
+				const surplus = surplusAfter(ctx, orders + tactics, 1);
+				if (surplus) lines.push(surplusLine(ctx, surplus));
 			}
 			return lines;
 		}
@@ -207,6 +313,9 @@ export default {
 			lines.push(
 				choiceLine(`Commander's Orders are chosen at level 2 in 2.0.3: you will be asked to choose ${2 - orders}`, KEYS.pickOrders),
 			);
+			const tactics = projectedInGroup(actor, ctx, TACTICS_GROUP).length;
+			const surplus = surplusAfter(ctx, orders + tactics, 2 - orders);
+			if (surplus) lines.push(surplusLine(ctx, surplus));
 		}
 		return lines;
 	},
@@ -225,8 +334,9 @@ export default {
 					`In Nimble 0.2, Commander's Orders are chosen at level ${levels.orders} (this Commander is level ${ctx.level}).`,
 				);
 			}
-			if (!ownedInGroup(actor, TACTICS_GROUP).length) {
-				await offerPicks(actor, ctx, {
+			if (!ownedInGroup(actor, TACTICS_GROUP).length && !forgoesTactics(ctx)) {
+				const total = ownedAbilities(actor).length;
+				const offered = await offerPicks(actor, ctx, {
 					key: KEYS.pickTactic,
 					group: TACTICS_GROUP,
 					count: 1,
@@ -234,6 +344,7 @@ export default {
 					content:
 						'<p>In Nimble 0.2, Fit for Any Battlefield brings a Combat Tactic at level 2, and Commanding Presence is an Order.</p>',
 				});
+				await dropSurplus(actor, ctx, total, offered);
 			}
 			return;
 		}
@@ -249,13 +360,15 @@ export default {
 		}
 		const orders = ownedInGroup(actor, ORDERS_GROUP).length;
 		if (orders < 2) {
-			await offerPicks(actor, ctx, {
+			const total = ownedAbilities(actor).length;
+			const offered = await offerPicks(actor, ctx, {
 				key: KEYS.pickOrders,
 				group: ORDERS_GROUP,
 				count: 2 - orders,
 				title: "Choose Commander's Orders",
 				content: "<p>In Heroes 2.0.3, Commander's Orders are chosen at level 2.</p>",
 			});
+			await dropSurplus(actor, ctx, total, offered);
 		}
 	},
 };

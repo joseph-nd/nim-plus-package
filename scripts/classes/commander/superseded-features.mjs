@@ -37,6 +37,40 @@ function foregoneFeatureGroups(actor) {
 	return groups;
 }
 
+/** The compendium document a feature (or a feature's source data) was made from. */
+function sourceUuidOf(data) {
+	return data?._stats?.compendiumSource ?? data?.flags?.core?.sourceId ?? null;
+}
+
+/**
+ * True when the feature is one another feature on the sheet grants outright,
+ * rather than a pick from its group. 2.0.3 files Coordinated Strike! under
+ * Commander's Orders, but it is given at level 1 by the "Commander's Orders"
+ * progression feature's `grantItem` rule, so foregoing the Orders does not take
+ * it away.
+ *
+ * The system's `grantItem` does not persist `grantedById` on the granted item,
+ * so the grant is recognised from the granting side: an owned feature whose
+ * `grantItem` rule targets this feature's source document. `grantedById` is
+ * honoured too, for documents that do carry it.
+ */
+function isGrantedFeature(actor, data) {
+	if (data?.system?.grantedById) return true;
+	const uuid = sourceUuidOf(data);
+	if (typeof uuid !== 'string' || uuid.length < 1) return false;
+	const docId = uuid.split('.').at(-1);
+	for (const owner of actor?.items ?? []) {
+		if (owner?.id && owner.id === data?._id) continue;
+		const rules = Array.isArray(owner?.system?.rules) ? owner.system.rules : [];
+		for (const rule of rules) {
+			if (rule?.type !== 'grantItem' || rule.disabled) continue;
+			const target = String(rule.uuid ?? '');
+			if (target === uuid || (docId && target.split('.').at(-1) === docId)) return true;
+		}
+	}
+	return false;
+}
+
 Hooks.on('preCreateItem', (item, source) => {
 	try {
 		if (!classQoLEnabled()) return true;
@@ -47,6 +81,9 @@ Hooks.on('preCreateItem', (item, source) => {
 		const group = String(source?.system?.group ?? '');
 		if (group.length < 1) return true;
 		if (!foregoneFeatureGroups(actor).has(group)) return true;
+		// A feature the class grants outright (2.0.3 Coordinated Strike!) was never
+		// one of the choices given up.
+		if (isGrantedFeature(actor, source)) return true;
 
 		ui.notifications?.info(
 			`${actor.name} has foregone ${group.replace(/-/g, ' ')} — ${source.name} was not added.`,
@@ -150,7 +187,10 @@ Hooks.on('createItem', (item) => {
 		if (!(actor instanceof Actor) || !actor.isOwner) return;
 
 		const owned = actor.items.filter(
-			(entry) => entry.type === 'feature' && entry.system?.group === group,
+			(entry) =>
+				entry.type === 'feature' &&
+				entry.system?.group === group &&
+				!isGrantedFeature(actor, entry),
 		);
 		if (owned.length < 1) return;
 

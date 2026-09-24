@@ -28,6 +28,8 @@ async function planOf(migration, actor, direction) {
 }
 
 const lines = (plan) => plan.classes.flatMap((c) => c.lines);
+// A choice prompt's option labels (its first <strong> is the actor's name).
+const optionLabels = (o) => o.labels.slice(-o.values.length);
 
 describe('commander to02', () => {
 	it.each([2, 3])('L%i: Orders listed, removed on confirm; one Nim+ Combat Tactic offered (subset pick)', async (level) => {
@@ -130,34 +132,85 @@ describe('commander to02', () => {
 		});
 	});
 
-	it('L4: Commanding Presence (a 2.0.3 Tactic) moves to Orders and a Tactic is offered', async () => {
+	it('L4: Commanding Presence (a 2.0.3 Tactic) moves to Orders, a Tactic is offered and the surplus Order dropped', async () => {
 		const { env, migration } = await world('to02');
 		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
 		const [cp] = itemsNamed(actor, 'Commanding Presence');
 		const plan = await planOf(migration, actor, 'to02');
-		// A choice step: marked so the startup pass defers it and the report says so.
+		// Choice steps: marked so the startup pass defers them and the report says so.
 		expect(lines(plan)).toEqual([
 			expect.stringMatching(
 				/^<i [^>]*data-nim-plus-choice="combat-tactic"[^>]*><\/i> Fit for Any Battlefield \(level 2\) brings a Combat Tactic: you will be asked to choose one$/,
 			),
+			expect.stringMatching(
+				/^<i [^>]*data-nim-plus-choice="combat-abilities-surplus"[^>]*><\/i> Combat Abilities: that is 1 more than the 3 a level 4 Commander has .*you will be asked which 1 to drop$/,
+			),
 		]);
+		expect(expectedFromPlan(plan).askKeep).toBe(1);
 		expect(plan.pendingChoice).toBe(true);
-		await runMigration(env, migration, actor, 'to02');
+		let dropOffered;
+		const r = await runMigration(env, migration, actor, 'to02', {
+			pick: (o) => {
+				if (/Drop/.test(o.title)) {
+					dropOffered = o;
+					return [o.values[optionLabels(o).indexOf('Hold the Line!')]];
+				}
+				return o.values.slice(0, o.count);
+			},
+		});
+		// Only the Orders (above their minimum of 2) can go; the new Tactic is not offered.
+		expect(optionLabels(dropOffered)).toEqual(['Commanding Presence', 'Face Me!', 'Hold the Line!']);
+		expect(dropOffered.count).toBe(1);
 		const after = actor.items.get(cp.id);
 		expect(sourceOf(after)).toBe(nim('Commanding Presence'));
 		expect(after.system.group).toBe('commanders-orders');
 		expect(picksByGroup(actor)['combat-tactics']).toHaveLength(1);
+		expect(picksByGroup(actor)['commanders-orders']).toEqual(['Commanding Presence', 'Face Me!']);
+		expect(r.migrationDiff.removed.map((x) => x.name)).toEqual(['Hold the Line!']);
 	});
 
-	it.fails(
-		'BUG-migration-classes-a-3: to02 L4 with Commanding Presence as the Tactic ends with 3 Orders + 1 Tactic (0.2 grants 3 abilities); no Order is dropped',
-		async () => {
-			const { env, migration } = await world('to02');
-			const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
-			await runMigration(env, migration, actor, 'to02');
-			expect(pickCounts(actor, 'commander')).toEqual(LEGAL.commander('0.2', 4));
-		},
-	);
+	it('fixed BUG-migration-classes-a-3: to02 L4 with Commanding Presence as the Tactic ends with 3 Orders + 1 Tactic (0.2 grants 3 abilities); no Order is dropped', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
+		await runMigration(env, migration, actor, 'to02');
+		expect(pickCounts(actor, 'commander')).toEqual(LEGAL.commander('0.2', 4));
+	});
+
+	it('fixed BUG-migration-classes-a-3: cancelling the drop prompt keeps every ability (nothing removed unasked)', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
+		const r = await runMigration(env, migration, actor, 'to02', {
+			pick: (o) => (/Drop/.test(o.title) ? null : o.values.slice(0, o.count)),
+		});
+		expect(r.migrationDiff.removed).toEqual([]);
+		expect(picksByGroup(actor)['commanders-orders']).toHaveLength(3);
+		expect(picksByGroup(actor)['combat-tactics']).toHaveLength(1);
+	});
+
+	it('fixed BUG-migration-classes-a-3: the startup pass defers the drop together with the Tactic; the sheet run finishes both', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
+		env.dialogs.fallback = 'throw';
+		const r = await runMigration(env, migration, actor, 'to02', { interactive: false });
+		expect(env.dialogs.log).toEqual([]);
+		expect(r.migrationDiff.removed).toEqual([]);
+		expect(Object.keys(migration.pendingChoices(actor, 'to02').commander ?? {}).sort()).toEqual(
+			['combat-abilities-surplus', 'combat-tactic'],
+		);
+		env.dialogs.fallback = 'close';
+		env.dialogs.reset();
+		await runMigration(env, migration, actor, 'to02');
+		expect(pickCounts(actor, 'commander')).toEqual(LEGAL.commander('0.2', 4));
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
+		expect(await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' })).toEqual([]);
+	});
+
+	it('L6: a legal 2.0.3 Commander without Commanding Presence is not asked to drop anything', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await build(env, 'commander', 6, '2.0.3');
+		const plan = await planOf(migration, actor, 'to02');
+		expect(lines(plan).join('\n')).not.toMatch(/Combat Abilities/);
+	});
 
 	it('L2: a 2.0.3 character is offered exactly one tactic even when the tactic prompt answer is a wrong count first', async () => {
 		const { env, migration } = await world('to02');
@@ -248,33 +301,40 @@ describe('commander to203', () => {
 		expect(picksByGroup(actor)['commanders-orders']).toBeUndefined();
 	});
 
-	it('L4: Commanding Presence (a 0.2 Order) moves back to Tactics and the missing Order is offered', async () => {
+	it('L4: Commanding Presence (a 0.2 Order) moves back to Tactics, the missing Order is offered and a surplus Tactic dropped', async () => {
 		const { env, migration } = await world('to203');
 		const actor = await build(env, 'commander', 4, '0.2', { picks: ['Heavy Strike', 'Face Me!', 'Commanding Presence'] });
 		const plan = await planOf(migration, actor, 'to203');
-		expect(expectedFromPlan(plan).askPick).toEqual([{ group: 'commanders-orders', count: 1 }]);
+		const exp = expectedFromPlan(plan);
+		expect(exp.askPick).toEqual([{ group: 'commanders-orders', count: 1 }]);
+		expect(exp.askKeep).toBe(1);
+		expect(exp.unparsed).toEqual([]);
 		let offered;
+		let dropOffered;
 		await runMigration(env, migration, actor, 'to203', {
 			pick: (o) => {
+				if (/Drop/.test(o.title)) {
+					dropOffered = o;
+					return [o.values[optionLabels(o).indexOf('Heavy Strike')]];
+				}
 				offered = o;
 				return o.values.slice(0, 1);
 			},
 		});
 		// Face Me! already owned → not offered.
 		expect(offered.values).not.toContain(sys('Face Me!'));
+		// Only the Tactics (above their minimum of 1) can go.
+		expect(optionLabels(dropOffered)).toEqual(['Commanding Presence', 'Heavy Strike']);
 		expect(picksByGroup(actor)['commanders-orders']).toHaveLength(2);
-		expect(picksByGroup(actor)['combat-tactics']).toEqual(['Commanding Presence', 'Heavy Strike']);
+		expect(picksByGroup(actor)['combat-tactics']).toEqual(['Commanding Presence']);
 	});
 
-	it.fails(
-		'BUG-migration-classes-a-3: to203 L4 with Commanding Presence as an Order ends with 2 Orders + 2 Tactics (2.0.3 grants 3 abilities)',
-		async () => {
-			const { env, migration } = await world('to203');
-			const actor = await build(env, 'commander', 4, '0.2', { picks: ['Heavy Strike', 'Face Me!', 'Commanding Presence'] });
-			await runMigration(env, migration, actor, 'to203');
-			expect(pickCounts(actor, 'commander')).toEqual(LEGAL.commander('2.0.3', 4));
-		},
-	);
+	it('fixed BUG-migration-classes-a-3: to203 L4 with Commanding Presence as an Order ends with 2 Orders + 2 Tactics (2.0.3 grants 3 abilities)', async () => {
+		const { env, migration } = await world('to203');
+		const actor = await build(env, 'commander', 4, '0.2', { picks: ['Heavy Strike', 'Face Me!', 'Commanding Presence'] });
+		await runMigration(env, migration, actor, 'to203');
+		expect(pickCounts(actor, 'commander')).toEqual(LEGAL.commander('2.0.3', 4));
+	});
 });
 
 describe('commander round trips and edge cases', () => {
@@ -338,23 +398,41 @@ describe('commander round trips and edge cases', () => {
 describe('commander subclasses that change the pick rules (subclasses/commander.mjs is a no-op)', () => {
 	// Spellblade (official, both versions): "lose access to Weapon Mastery and Combat Tactics …
 	// whenever you could choose a Combat Tactic … instead choose another Commander's Order".
-	it.fails(
-		'BUG-migration-classes-a-7: to02 offers a Spellblade Commander a Combat Tactic, which Spellblades cannot take',
-		async () => {
+	it('fixed BUG-migration-classes-a-7: to02 offers a Spellblade Commander a Combat Tactic, which Spellblades cannot take', async () => {
+		const { env, migration } = await world('to02');
+		const { buildCharacterAtLevel } = await import('../harness/index.mjs');
+		const sb = await buildCharacterAtLevel(env, 'commander', 4, {
+			version: '2.0.3',
+			subclass: 'Spellblade',
+			picks: ['Face Me!', 'Hold the Line!', 'Reposition!'],
+		});
+		const [plan] = await migration.planCoreClassMigration({ actors: [sb], direction: 'to02' });
+		expect(plan.classes.flatMap((c) => c.lines).join('\n')).not.toMatch(/Combat Tactic/);
+		await runMigration(env, migration, sb, 'to02');
+		expect(classPrompts(env).filter((p) => /Combat Tactic/.test(p.title))).toEqual([]);
+		expect(picksByGroup(sb)['combat-tactics']).toBeUndefined();
+	});
+
+	it('fixed BUG-migration-classes-a-7: a Spellblade at any level 3-20 is never offered a Combat Tactic by to02', async () => {
+		const { buildCharacterAtLevel } = await import('../harness/index.mjs');
+		for (const level of [3, 5, 9, 20]) {
 			const { env, migration } = await world('to02');
-			const { buildCharacterAtLevel } = await import('../harness/index.mjs');
-			const sb = await buildCharacterAtLevel(env, 'commander', 4, {
-				version: '2.0.3',
-				subclass: 'Spellblade',
-				picks: ['Face Me!', 'Hold the Line!', 'Reposition!'],
-			});
+			const sb = await buildCharacterAtLevel(env, 'commander', level, { version: '2.0.3', subclass: 'Spellblade' });
 			const [plan] = await migration.planCoreClassMigration({ actors: [sb], direction: 'to02' });
-			expect(plan.classes.flatMap((c) => c.lines).join('\n')).not.toMatch(/Combat Tactic/);
+			const described = plan?.classes.flatMap((c) => c.lines).join('\n') ?? '';
+			expect(described, `L${level}`).not.toMatch(/Combat Tactic|Combat Abilities/);
 			await runMigration(env, migration, sb, 'to02');
-			expect(classPrompts(env).filter((p) => /Combat Tactic/.test(p.title))).toEqual([]);
-			expect(picksByGroup(sb)['combat-tactics']).toBeUndefined();
-		},
-	);
+			expect(classPrompts(env).filter((p) => /Combat Tactic/.test(p.title)), `L${level}`).toEqual([]);
+		}
+	});
+
+	it('a non-Spellblade subclass at L4 is still offered a Combat Tactic when it has none (Commanding Presence moved)', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
+		expect(actor.items.find((i) => i.type === 'subclass')?.name).toBe('Champion of the Vanguard');
+		const plan = await planOf(migration, actor, 'to02');
+		expect(expectedFromPlan(plan).askPick).toEqual([{ group: 'combat-tactics', count: 1 }]);
+	});
 
 	// Champion of the Arena (Nim+): "Single-minded Fighter. You forego all Commander's Orders."
 	it.fails(

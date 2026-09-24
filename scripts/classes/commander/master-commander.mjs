@@ -11,7 +11,11 @@ import { COORDINATED_STRIKE_IDENTIFIER } from './coordinated-strike.mjs';
  *  of Coordinated Strike (it is lost if not spent during that encounter).
  *  Attacks made from your Coordinated Strikes also now ignore disadvantage."
  *
- * The feature ships with `rules: []`, so every clause is prose.
+ * The system's copy now carries the regain itself — a `modifyPool` refill on the
+ * uses pool (`encounterStart`, add 1). When it does, the recovery below is not
+ * added (two would regain two uses) and the "lost if unspent" tracking follows
+ * the content's trigger instead. Older copies shipped `rules: []`, and for those
+ * the module still supplies the regain.
  *
  * **This feature grants no extra uses.** The copy the system ships carries a
  * trailing block the published feature does not — "Levels 5, 9, 13, 17: Gain
@@ -57,6 +61,44 @@ function actorHasMasterCommander(actor) {
 		if (MASTER_COMMANDER_MATCH.test(String(item.name ?? ''))) return true;
 	}
 	return false;
+}
+
+/** Recovery triggers that each fire once as an encounter opens. */
+const PER_ENCOUNTER_TRIGGERS = new Set(['onInitiativeRolled', 'encounterStart']);
+
+/**
+ * The per-encounter `add` refill Master Commander's own content declares on the
+ * uses pool, if any — the system's copy has shipped one since its Migration041
+ * (`master-commander-initiative-regain`, an `encounterStart` add-1 as a
+ * `modifyPool` refill). Read from the persisted source rather than the live
+ * rules map, so the answer does not depend on which of the two items the actor
+ * happened to prepare first. Only Master Commander's own rules count: another
+ * feature's regain (Champion of the Vanguard's Survey the Battlefield) is a
+ * separate grant that stacks with this one.
+ */
+function masterCommanderDeclaredRegain(actor) {
+	for (const item of actor?.items ?? []) {
+		if (item?.type !== 'feature') continue;
+		if (!MASTER_COMMANDER_MATCH.test(String(item.name ?? ''))) continue;
+		const rules = Array.isArray(item.system?.rules) ? item.system.rules : itemRuleValues(item);
+		for (const rule of rules) {
+			if (rule?.type !== 'modifyPool' || rule.disabled) continue;
+			if (rule.poolIdentifier !== COORD_STRIKE_USES_IDENTIFIER) continue;
+			const refill = (Array.isArray(rule.addRefills) ? rule.addRefills : []).find(
+				(entry) => PER_ENCOUNTER_TRIGGERS.has(entry?.trigger) && entry?.mode === 'add',
+			);
+			if (refill) return refill;
+		}
+	}
+	return null;
+}
+
+/**
+ * The trigger Master Commander's regain arrives on: the content's own refill when
+ * it declares one, otherwise the `onInitiativeRolled` recovery supplied below.
+ */
+function masterCommanderRegainTrigger(actor) {
+	return masterCommanderDeclaredRegain(actor)?.trigger ?? 'onInitiativeRolled';
 }
 
 /**
@@ -108,6 +150,9 @@ export function ensureMasterCommanderRecovery(item) {
 	if (item?.system?.identifier !== COORDINATED_STRIKE_IDENTIFIER) return;
 	if (isPlaytest02(item)) return;
 	if (!actorHasMasterCommander(item.parent)) return;
+	// The content already regains the use itself; a second recovery here would
+	// hand back two per encounter.
+	if (masterCommanderDeclaredRegain(item.parent)) return;
 
 	for (const rule of itemRuleValues(item)) {
 		if (rule?.type !== 'chargePool' || rule.disabled || rule.hidden) continue;
@@ -115,7 +160,7 @@ export function ensureMasterCommanderRecovery(item) {
 		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
 
 		const recoveries = Array.isArray(rule.recoveries) ? rule.recoveries : [];
-		if (recoveries.some((entry) => entry?.trigger === 'onInitiativeRolled')) continue;
+		if (recoveries.some((entry) => PER_ENCOUNTER_TRIGGERS.has(entry?.trigger) && entry?.mode === 'add')) continue;
 		try {
 			rule.recoveries = [
 				...recoveries,
@@ -140,11 +185,10 @@ export function ensureMasterCommanderRecovery(item) {
  */
 function noteCoordinatedStrikeRecovery(payload) {
 	if (!classQoLEnabled()) return;
-	if (payload?.trigger !== 'onInitiativeRolled') return;
-
-	const actor = payload.actor;
+	const actor = payload?.actor;
 	if (actor?.type !== 'character' || !actor.isOwner) return;
 	if (!actorHasMasterCommander(actor)) return;
+	if (payload.trigger !== masterCommanderRegainTrigger(actor)) return;
 
 	const pool = findCoordinatedStrikePool(actor);
 	if (!pool) return;

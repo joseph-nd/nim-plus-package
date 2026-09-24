@@ -431,6 +431,10 @@ async function planActor(actor, base, classFilter) {
 	const claimed = new Set();
 	const manualGroups = new Map(); // class → Set<group>
 	const pending = pendingChoices(actor, direction);
+	// Sources the actor already owns: an item whose replacement is one of them
+	// (both the old and the new copy owned) merges into that copy instead of
+	// becoming a second one.
+	const ownedSources = new Set(actor.items.map((item) => itemSourceUuid(item)).filter(Boolean));
 
 	// Steps 1 and 2 — every owned item whose source the other side replaces or drops.
 	for (const item of actor.items) {
@@ -470,7 +474,7 @@ async function planActor(actor, base, classFilter) {
 		}
 		if (!targetUuid) continue;
 
-		if (claimed.has(targetUuid)) {
+		if (claimed.has(targetUuid) || (canonicalUuid(targetUuid) !== src && ownedSources.has(canonicalUuid(targetUuid)))) {
 			const merged = await cachedDoc(base, targetUuid);
 			plan.removals.push({ item, reason: `merged into ${merged?.name ?? 'another feature'}` });
 			continue;

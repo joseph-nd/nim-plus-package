@@ -209,7 +209,7 @@ const unescape = (s) =>
  *   added:   names that WILL be added (generic additions + "Added:" lines)
  *   askRemove: names the GM will be asked whether to remove (commander confirm)
  *   askPick: [{group, count}] prompts to pick new items
- *   askKeep: {drop} shepherd "keep which" prompts (drop count)
+ *   askKeep: {drop} shepherd "keep which" / commander "which to drop" prompts (drop count)
  *   dropAll: shepherd "all N removed" (unprompted)
  */
 export function expectedFromPlan(plan) {
@@ -226,6 +226,7 @@ export function expectedFromPlan(plan) {
 		else if (/brings a Combat Tactic: you will be asked to choose one/.test(line)) out.askPick.push({ group: 'combat-tactics', count: 1 });
 		else if ((m = /Commander's Orders are chosen at level 2 in 2\.0\.3: you will be asked to choose (\d+)/.exec(line)))
 			out.askPick.push({ group: 'commanders-orders', count: Number(m[1]) });
+		else if ((m = /Combat Abilities: .* you will be asked which (\d+) to drop$/.exec(line))) out.askKeep += Number(m[1]);
 		else if ((m = /Sacred Graces: .* grants none before level \d+ — all (\d+) removed/.exec(line))) out.dropAll += Number(m[1]);
 		else if ((m = /Sacred Graces: (\d+) owned, .* you choose which (\d+) to keep; the other (\d+)/.exec(line))) out.askKeep += Number(m[3]);
 		else if ((m = /Sacred Graces: (\d+) owned, .* you pick (\d+) new grace/.exec(line)))

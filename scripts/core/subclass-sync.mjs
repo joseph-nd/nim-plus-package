@@ -52,10 +52,14 @@
  *     feature group: the identifier fallback for source-less items never lands
  *     on a subclass that supersedes something (that would convert a subclass
  *     the migration cannot see), and source-less features resolve to the entry
- *     the setting shows before a hidden one of the same identifier.
+ *     the setting shows before a hidden one of the same identifier;
+ *   - an official 0.2 subclass keeps its unchanged features in the system's
+ *     own feature pack: a source-less owned copy of one of those has no Nim+
+ *     entry, and is left alone rather than treated as deleted from the pack.
  */
 import { MODULE_ID } from './constants.mjs';
 import { escape } from './html.mjs';
+import { sysId } from './system.mjs';
 import { plural, whisperReport } from './migration-report.mjs';
 import {
 	hasPendingClassMigration,
@@ -68,6 +72,7 @@ import {
 
 const SUBCLASS_PACK = `${MODULE_ID}.nim-plus-subclasses`;
 const FEATURE_PACK = `${MODULE_ID}.nim-plus-class-features`;
+const SYSTEM_FEATURE_PACK = 'nimble-class-features';
 const SYNC_SETTING = 'subclassSyncVersion';
 
 /**
@@ -166,7 +171,33 @@ async function loadPacks() {
 		return ids.map((id) => loaded.get(id)).filter(Boolean);
 	};
 
-	return { subclassesById, subclassesByIdentifier, featureIndex, hiddenIds, loadFeatures };
+	// The system's subclass features, by class and group: a source-less owned
+	// copy of one has no Nim+ entry, but is not a deleted one either.
+	const systemFeatures = new Map(); // `${class}|${group}` → Set of identifiers and lowercased names
+	const systemPack = game.packs.get(`${sysId()}.${SYSTEM_FEATURE_PACK}`);
+	if (systemPack) {
+		const entries = await readUnfilteredIndex(systemPack, FEATURE_INDEX_FIELDS);
+		for (const e of entries) {
+			if (!e.system?.subclass || !e.system?.group) continue;
+			const key = `${e.system.class}|${e.system.group}`;
+			if (!systemFeatures.has(key)) systemFeatures.set(key, new Set());
+			const keys = systemFeatures.get(key);
+			if (e.system.identifier) keys.add(e.system.identifier);
+			if (e.name) keys.add(e.name.trim().toLowerCase());
+		}
+	}
+
+	return { subclassesById, subclassesByIdentifier, featureIndex, hiddenIds, loadFeatures, systemFeatures };
+}
+
+/** Whether a source-less owned feature is a copy of a system-pack subclass feature of `cls` in one of `groups`. */
+function isSystemFeatureCopy(feature, packs, cls, groups) {
+	const ident = feature.system?.identifier;
+	const name = String(feature.name ?? '').trim().toLowerCase();
+	return groups.some((group) => {
+		const keys = packs.systemFeatures?.get(`${cls}|${group}`);
+		return !!keys && ((ident && keys.has(ident)) || (name && keys.has(name)));
+	});
 }
 
 /* ───────────────────────────── planning ───────────────────────────── */
@@ -231,8 +262,10 @@ async function planActor(actor, packs) {
 			if (!id && !src) id = packByIdentifier.get(feature.system.identifier) ?? null;
 			if (id && packs.hiddenIds.has(id)) continue; // the class migration's to handle
 			if (id && !matched.has(id)) matched.set(id, feature);
-			else if (src?.pack === FEATURE_PACK || !src) featureRemovals.push(feature);
-			// Features sourced from another pack are left alone.
+			else if (src?.pack === FEATURE_PACK) featureRemovals.push(feature);
+			else if (!src && (id || !isSystemFeatureCopy(feature, packs, cls, [oldIdent, newIdent]))) featureRemovals.push(feature);
+			// Features sourced from another pack, and source-less copies of a
+			// system-pack feature, are left alone.
 		}
 
 		const wantedIds = packEntries

@@ -42,10 +42,12 @@ import { iterateChargePools, setChargePoolCurrent } from '../../core/pools.mjs';
  *   - **Combat Dice are lost when combat ends** — the pool ships with no
  *     `encounterEnd` recovery, so a Commander walks out of a fight still holding
  *     the dice they did not use. One recovery entry, added in memory, fixes it.
- *   - **Commanding Presence** is a Combat Tactic but an Action rather than an
- *     attack rider, and nothing makes it cost anything. It is blocked with an
- *     empty pool and spends a die on use; its die is never rolled, because the
- *     save DC is 10+STR and the value is never read.
+ *   - **Commanding Presence** (2.0.3) is a Combat Tactic but an Action rather
+ *     than an attack rider, and nothing makes it cost anything. A synthetic
+ *     `chargeConsumer` (`ensureCommandingPresenceConsumer`, wired in
+ *     `rule-injection.mjs`) blocks it with an empty pool and spends a die on use;
+ *     its die is never rolled, because the save DC is 10+STR and the value is
+ *     never read. The 0.2 copy is an Order and stays free.
  *
  * The system's own charge stepper for this pool stays in the dialog and keeps
  * working — it is the escape hatch for spending a die on anything this section
@@ -131,6 +133,49 @@ export function ensureCombatDicePoolBonus(item) {
 			dieSize: null,
 			maxDelta,
 		});
+	});
+}
+
+const COMMANDING_PRESENCE_MATCH = /commanding\s*presence/i;
+
+/**
+ * Commanding Presence as a 2.0.3 Combat Tactic: "expend a Combat Die" — but the
+ * system's copy ships `rules: []`, so nothing meters it. A `chargeConsumer` on the
+ * `combat-dice` pool makes the system itself block the use with an empty pool and
+ * spend one die when it resolves. The pool is item-scoped on Fit for Any
+ * Battlefield, and item-scoped pools are keyed by identifier across the actor, so
+ * a consumer on this item reaches it.
+ *
+ * The Nim+ 0.2 copy is an Order, not a tactic, and costs nothing — it is left
+ * alone, as is any copy whose content already spends Combat Dice.
+ */
+export function ensureCommandingPresenceConsumer(item) {
+	const name = String(item?.name ?? '');
+	const identifier = String(item?.system?.identifier ?? '');
+	if (!COMMANDING_PRESENCE_MATCH.test(name) && identifier !== 'commanding-presence') return;
+	if (item.getFlag?.(MODULE_ID, 'playtest02') === true) return;
+	if (item.system?.group === 'commanders-orders') return;
+
+	const alreadyConsumes = hasActiveRule(
+		item,
+		(rule) =>
+			rule.type === 'chargeConsumer' &&
+			String(rule.poolIdentifier ?? '')
+				.toLowerCase()
+				.includes(COMBAT_DICE_IDENTIFIER),
+	);
+	if (alreadyConsumes) return;
+
+	addSyntheticRule(item, {
+		id: 'nimPlusCommandingPresenceCombatDie',
+		type: 'chargeConsumer',
+		identifier: '',
+		label: 'Commanding Presence → 1 Combat Die',
+		predicate: {},
+		priority: 2,
+		poolIdentifier: COMBAT_DICE_IDENTIFIER,
+		poolScope: 'item',
+		cost: '1',
 	});
 }
 

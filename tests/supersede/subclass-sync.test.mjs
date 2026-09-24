@@ -254,7 +254,7 @@ describe('subclass sync — LEGACY_IDENTIFIERS and source-less items', () => {
 		expect(report).toEqual([]);
 	});
 
-	it.fails('BUG-supersede-6: a source-less unchanged system feature of an official 0.2 subclass is not deleted by the sync', async () => {
+	it('fixed BUG-supersede-6: a source-less unchanged system feature of an official 0.2 subclass is not deleted by the sync', async () => {
 		// An official 0.2 subclass keeps its unchanged system features in the system pack. A
 		// source-less copy of one of those has no Nim+ counterpart, so the sync removes it
 		// ("owned copy of a deleted pack entry") and nothing ever re-adds it.
@@ -281,6 +281,41 @@ describe('subclass sync — LEGACY_IDENTIFIERS and source-less items', () => {
 		const report = await sync.planSubclassSync([actor]);
 		const removals = report.flatMap((r) => r.plans).flatMap((p) => p.featureRemovals).map((f) => f.name);
 		expect(removals).not.toContain(found.sys.doc.name);
+	});
+
+	it('fixed BUG-supersede-6: after applying, the source-less system copy is still owned; a source-less feature in no pack is still removed', async () => {
+		const oracle = await supersedeOracle();
+		const nimSubs = findDocs({ pack: NIM_SUBCLASSES, where: (d) => d.flags?.[MODULE_ID]?.supersedes?.length });
+		let found = null;
+		for (const { doc } of nimSubs) {
+			const group = doc.name.toLowerCase().replace(/&/g, 'and').replace(/[\s-]+/g, '-').replace(/[^a-z0-9-]/g, '');
+			const sys = findDocs({ pack: 'nimble.nimble-class-features', class: doc.system.parentClass, group, subclass: true }).filter(
+				(h) => !oracle.supersededBy.has(h.uuid) && !oracle.retired.has(h.uuid),
+			);
+			if (sys.length) {
+				found = { doc, group, sys: sys[0] };
+				break;
+			}
+		}
+		expect(found, 'an official 0.2 subclass with an unchanged system feature').toBeTruthy();
+		const { env, sync } = await world({ playtest: true });
+		const level = Math.max(3, ...(found.sys.doc.system.gainedAtLevels ?? [3]));
+		const actor = await buildCharacterAtLevel(env, found.doc.system.parentClass, level, { version: '0.2', subclass: found.doc.name });
+		const [owned] = itemsNamed(actor, found.sys.doc.name);
+		editSource(owned, (s) => delete s._stats.compendiumSource);
+		await actor.createEmbeddedDocuments('Item', [
+			{
+				name: 'Nowhere Feature',
+				type: 'feature',
+				system: { subclass: true, class: found.doc.system.parentClass, group: found.group, gainedAtLevels: [3] },
+			},
+		]);
+		const report = await sync.planSubclassSync([actor]);
+		const removals = report.flatMap((r) => r.plans).flatMap((p) => p.featureRemovals).map((f) => f.name);
+		expect(removals).toEqual(['Nowhere Feature']);
+		await sync.applySubclassSync(report);
+		expect(actor.items.has(owned.id)).toBe(true);
+		expect(itemNames(actor)).not.toContain('Nowhere Feature');
 	});
 });
 
