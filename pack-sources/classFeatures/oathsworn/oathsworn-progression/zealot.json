@@ -1,0 +1,64 @@
+{
+	"folder": "36a5ca4e92865838",
+	"name": "Zealot",
+	"type": "feature",
+	"img": "icons/skills/melee/strike-sword-dagger-runes-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you hit with a melee weapon, you may spend mana to deal +5 damage for each mana spent (up to the spell tier you've unlocked).</p><p>[M] Spend the mana from the sheet and add the damage to the hit.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oathsworn-progression",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.LWMKXWTmnX3uHNol"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761624904612,
+		"modifiedTime": 1761625002701,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "3CtqkKWcZow15Dxd"
+}

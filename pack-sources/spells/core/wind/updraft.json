@@ -1,0 +1,143 @@
+{
+	"name": "Updraft",
+	"type": "spell",
+	"img": "icons/magic/air/wind-tornado-wall-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": true,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "bv9dQDoYrnkRHcIG",
+					"type": "savingThrow",
+					"savingThrowType": "dexterity",
+					"parentContext": null,
+					"parentNode": null,
+					"saveType": "dexterity",
+					"on": {},
+					"sharedRolls": []
+				},
+				{
+					"id": "ey0B4luISPeoCNIK",
+					"type": "damage",
+					"damageType": "bludgeoning",
+					"formula": "20",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": false,
+					"canMiss": false,
+					"on": {
+						"hit": [
+							{
+								"id": "vKt7ObSf8Qf67RmN",
+								"type": "note",
+								"noteType": "reminder",
+								"text": "Subtract each target's DEX save total from this damage. On 10+ damage: Prone and Dazed.",
+								"parentContext": "hit",
+								"parentNode": "ey0B4luISPeoCNIK"
+							},
+							{
+								"id": "fTVZrJMMxckCUEno",
+								"type": "condition",
+								"condition": "prone",
+								"parentContext": "hit",
+								"parentNode": "ey0B4luISPeoCNIK"
+							},
+							{
+								"id": "DeMe3bB8fWRmLqPC",
+								"type": "condition",
+								"condition": "dazed",
+								"parentContext": "hit",
+								"parentNode": "ey0B4luISPeoCNIK"
+							},
+							{
+								"id": "9nmGxmjQdGCo6EG4",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "ey0B4luISPeoCNIK"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "square",
+				"width": 5
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions, AoE</strong></p><p><strong>Reach</strong>: 12, 5×5 AoE. <strong>Damage</strong>: 20 minus a DEX save. On 10+ damage, they land Prone and Dazed.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+2 damage.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": 12
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "wind",
+		"tier": 5,
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [
+				{
+					"operation": "addFlatDamage",
+					"value": 2,
+					"dice": null,
+					"condition": null,
+					"targetEffectId": "ey0B4luISPeoCNIK",
+					"durationType": null
+				}
+			],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.rxzdEK621oVYuWQ8"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "b3180e4a97f8d5e9",
+	"_id": "Obr6jIpHQaRaMlWd"
+}

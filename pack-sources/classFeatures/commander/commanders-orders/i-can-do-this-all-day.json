@@ -1,0 +1,115 @@
+{
+	"name": "I Can Do This ALL DAY!",
+	"type": "feature",
+	"img": "icons/magic/earth/strike-body-stone-crumble.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "i-can-do-this-all-day-use-pool",
+				"identifier": "i-can-do-this-all-day-use",
+				"label": "I Can Do This ALL DAY! use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "i-can-do-this-all-day-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "i-can-do-this-all-day-use",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "when you would drop to 0 HP",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "O0SxGYEXguqDORKt",
+					"type": "note",
+					"noteType": "reminder",
+					"text": "set HP = sum rolled Hit dice",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/encounter)</em> <strong>Reaction</strong> (when you would drop to 0 HP): You may expend any number of Hit Dice and set your HP to the sum rolled instead (do not add your STR). </p><p></p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commanders-orders",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.sYJ4IREnwdrhzp8E"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "kJgEVgUVT9QyZl75",
+	"folder": "742371f96f880db9"
+}

@@ -1,0 +1,115 @@
+{
+	"name": "Hold the Line!",
+	"type": "feature",
+	"img": "icons/environment/people/infantry-army.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "hold-the-line-use-pool",
+				"identifier": "hold-the-line-use",
+				"label": "Hold the Line! use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "hold-the-line-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "hold-the-line-use",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "when an ally drops to 0 HP",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "uC0AteQ0SifbYMh7",
+					"type": "note",
+					"noteType": "warning",
+					"text": "Set their HP to 3× your LVL.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/encounter)</em> <strong>Reaction</strong> (when an ally drops to 0 HP): Command them to continue the fight! Set their HP to 3× your LVL. (M)</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commanders-orders",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.9BEzKcYWuIcKtmie"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "J9rIBDWZGG821elC",
+	"folder": "742371f96f880db9"
+}

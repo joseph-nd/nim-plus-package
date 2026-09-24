@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>When you hit a Blinded enemy with Searing Light, they become Frightened of you until the end of their next turn and move 3 spaces in a random direction.</p>",
+		"description": "<p>When you hit a Blinded enemy with Searing Light, they become Frightened of you until the end of their next turn and move 3 spaces in a random direction.</p><p><strong>Nimble 0.2 playtest rules</strong> (world setting on): the core Searing Light feature no longer exists, so this feature has no trigger until this subclass is revised; agree a ruling with your GM.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",

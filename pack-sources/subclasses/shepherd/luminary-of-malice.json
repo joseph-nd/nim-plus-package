@@ -1,0 +1,32 @@
+{
+	"name": "Luminary of Malice",
+	"type": "subclass",
+	"img": "icons/magic/death/hand-withered-gray.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Soul Reaper</strong>. <em>(1/round)</em> Your companion's attacks can target a 2nd adjacent enemy.</p><p><strong>Harbinger of Decay</strong>. Vibrant colors and lovely smells are suppressed near you. Foods spoil more rapidly in your presence, and you frequently awaken to flies wherever you lodge. You may have your Lifebinding Spirit shift into a deathly version of itself (a zombie dog, a devious imp, etc.) and have its damage type become necrotic.</p><p>LEVEL 7 </p><p><strong>Veilwalker's Blessing</strong>. <em>(1/Safe Rest)</em> <strong>Reaction</strong> (when you would drop to 0 HP): Drop to 1 HP instead and your Lifebinding Spirit crits the attacker back.</p><p>LEVEL 11 </p><p><strong>Deathbringer's Touch</strong>. Your Lifebinding Spirit and Withering Touch crit on 1 as well.</p><p>LEVEL 15 </p><p><strong>Conduit of Death</strong>. Your Veilwalker's Blessing ability recharges when you roll Initiative.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.q31xGnq04YCpwvGN"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761713849315,
+		"modifiedTime": 1761714023578,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "KYRxcn9t32JWGTWb",
+	"folder": "342ecdf0f6b5830f"
+}

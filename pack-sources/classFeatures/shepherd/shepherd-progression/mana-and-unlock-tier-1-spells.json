@@ -1,0 +1,226 @@
+{
+	"folder": "627db1dc8c7dba5f",
+	"name": "Mana and Unlock Tier 1 Spells",
+	"type": "feature",
+	"img": "icons/magic/light/explosion-star-glow-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "shepherd-tier1-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					1
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 2
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier2-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					2
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 4
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier3-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					3
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier4-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					4
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier5-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					5
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier6-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					6
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 12
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier7-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					7
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 14
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier8-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					8
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 16
+					}
+				}
+			},
+			{
+				"id": "shepherd-tier9-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant",
+					"necrotic"
+				],
+				"tiers": [
+					9
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 18
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You unlock tier 1 Radiant &amp; Necrotic spells and gain a mana pool to cast them. This mana pool's max is always equal to (WIL×3)+LVL and recharges on a Safe Rest.</p><hr><p>Level 4: Tier 2 Spells. You may now cast spells up to tier 2.</p><p>Level 6: Tier 3 Spells. You may now cast spells up to tier 3.</p><p>Level 8: Tier 4 Spells. You may now cast spells up to tier 4.</p><p>Level 10: Tier 5 Spells. You may now cast spells up to tier 5.</p><p>Level 12: Tier 6 Spells. You may now cast spells up to tier 6.</p><p>Level 14: Tier 7 Spells. You may now cast spells up to tier 7.</p><p>Level 16: Tier 8 Spells. You may now cast spells up to tier 8.</p><p>Level 18: Tier 9 Spells. You may now cast spells up to tier 9.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "shepherd-progression",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.keNIkcRhQZju0G7O"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761714239369,
+		"modifiedTime": 1761714718845,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "hY0NkYYjUzNjtEgj"
+}

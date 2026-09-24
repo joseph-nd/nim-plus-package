@@ -1,0 +1,265 @@
+{
+	"name": "Coordinated Strike!",
+	"type": "feature",
+	"img": "icons/skills/melee/unarmed-punch-fist-white.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "coordinated-strike-encounter-pool",
+				"identifier": "coordinated-strike-encounter",
+				"label": "Coordinated Strike (1/encounter)",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					},
+					{
+						"trigger": "encounterEnd",
+						"mode": "refresh",
+						"value": "1"
+					}
+				],
+				"hidden": false
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "coordinated-strike-uses-pool",
+				"identifier": "coordinated-strike-uses",
+				"label": "Coordinated Strike uses (Master Commander)",
+				"predicate": {
+					"level": {
+						"min": 5
+					}
+				},
+				"priority": 1,
+				"scope": "item",
+				"max": "max(@intelligence, 0)",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "1"
+					}
+				],
+				"hidden": false
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "coordinated-strike-round-pool",
+				"identifier": "coordinated-strike-round",
+				"label": "Coordinated Strike (once per round)",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "onTurnStart",
+						"mode": "refresh",
+						"value": "1"
+					},
+					{
+						"trigger": "encounterEnd",
+						"mode": "refresh",
+						"value": "1"
+					}
+				],
+				"hidden": true
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "coordinated-strike-encounter-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {
+					"$or": [
+						{
+							"level": {
+								"max": 4
+							}
+						},
+						{
+							"self:coordinated-strike-encounterChargePool": {
+								"min": 1
+							}
+						}
+					]
+				},
+				"priority": 2,
+				"poolIdentifier": "coordinated-strike-encounter",
+				"poolScope": "item",
+				"cost": "1"
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "coordinated-strike-uses-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {
+					"level": {
+						"min": 5
+					},
+					"self:coordinated-strike-encounterChargePool": {
+						"max": 0
+					}
+				},
+				"priority": 2,
+				"poolIdentifier": "coordinated-strike-uses",
+				"poolScope": "item",
+				"cost": "1"
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "coordinated-strike-round-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "coordinated-strike-round",
+				"poolScope": "item",
+				"cost": "1"
+			},
+			{
+				"type": "grantActivation",
+				"disabled": false,
+				"id": "coordinated-strike-ally-attack",
+				"identifier": "",
+				"label": "Coordinated Strike",
+				"predicate": {},
+				"priority": 3,
+				"activationType": "weaponAttack"
+			},
+			{
+				"type": "actionDelta",
+				"disabled": false,
+				"id": "coordinated-strike-self-free-attack",
+				"identifier": "",
+				"label": "Coordinated Strike (your attack is free)",
+				"predicate": {},
+				"priority": 3,
+				"value": "1",
+				"timing": "now",
+				"target": "self",
+				"borrowFromNextTurn": false
+			},
+			{
+				"type": "actionDelta",
+				"disabled": false,
+				"id": "coordinated-strike-ally-free-attack",
+				"identifier": "",
+				"label": "Coordinated Strike (ally attack is free)",
+				"predicate": {},
+				"priority": 3,
+				"value": "1",
+				"timing": "now",
+				"target": "targeted",
+				"borrowFromNextTurn": false
+			},
+			{
+				"type": "actionDelta",
+				"disabled": false,
+				"id": "coordinated-strike-unparalleled-tactics",
+				"identifier": "",
+				"label": "Unparalleled Tactics / Captain of Legions (ally gains an action next turn)",
+				"predicate": {
+					"level": {
+						"min": 18
+					},
+					"self:coordinated-strike-encounterChargePool": {
+						"min": 1
+					}
+				},
+				"priority": 4,
+				"value": "1",
+				"timing": "nextTurn",
+				"target": "targeted",
+				"borrowFromNextTurn": false
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 0,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "0gbDXjqJDZcUxjNB",
+					"type": "note",
+					"noteType": "reminder",
+					"text": "You and the targeted ally each attack for free (a weapon/unarmed attack). The ally may cast a cantrip instead; only the weapon attack is offered on this card.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/encounter)</em> <strong>Free action:</strong> You and an ally within Reach 6 both immediately make a weapon/unarmed attack or cast a cantrip for free.</p><hr><p>Level 5 (Master Commander): gain an additional pool of INT uses of Coordinated Strike per Safe Rest (you may still use it only 1/round).</p><p>Levels 9, 13, 17: +1 use of Coordinated Strike.</p><p><em>[A] The encounter use is spent first; from level 5 the Safe Rest pool pays for any further use. Both counters can be corrected on the sheet.</em></p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commander-progression",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1
+		],
+		"selectionCountByLevel": {}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.6xpILHYt5KTSnTtd"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "WJVD0580YbFcR68b",
+	"folder": "742371f96f880db9"
+}

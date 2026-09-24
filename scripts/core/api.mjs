@@ -15,6 +15,8 @@
  */
 import { MODULE_ID } from './constants.mjs';
 import { syncSubclasses } from './subclass-sync.mjs';
+import { migrateCoreClasses } from './class-migration/index.mjs';
+import { isHiddenUuid, supersedeData } from './supersede.mjs';
 
 import { pickDamage } from '../macros/pick-damage.mjs';
 import { seasonedJourneyman } from '../macros/seasoned-journeyman.mjs';
@@ -57,6 +59,13 @@ import { equipmentToggleGrip } from '../equipment/grip.mjs';
 export const api = {
 	pickDamage,
 	syncSubclasses,
+	// Nimble 0.2 playtest core classes (see `core/class-migration/index.mjs`).
+	migrateCoreClasses,
+	syncCoreClasses: migrateCoreClasses,
+	supersede: {
+		data: supersedeData,
+		isHidden: isHiddenUuid,
+	},
 	summonSpiritCompanion,
 	tollTheHour,
 	seasonedJourneyman,

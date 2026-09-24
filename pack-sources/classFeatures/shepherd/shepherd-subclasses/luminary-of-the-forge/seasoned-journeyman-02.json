@@ -1,0 +1,64 @@
+{
+	"name": "Seasoned Journeyman",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/seasoned-journeyman.webp",
+	"system": {
+		"macro": "return nimPlus.seasonedJourneyman(actor, item, '0.2');",
+		"identifier": "seasoned-journeyman",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "on Safe Rest",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until next Safe Rest",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Self"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Safe Rest, choose one:</p><ul><li><strong>Weaponsmith.</strong> Your weapons gain +STR damage until your next Safe Rest.</li><li><strong>Armorsmith.</strong> Your armor gains +STR Armor until your next Safe Rest.</li></ul><hr><p>[A] Click the action to pick Weaponsmith or Armorsmith. The choice is recorded on your sheet (<code>flags.nim-plus-package.journeymanChoice</code>) and cleared on your next Safe Rest. With Masterwork (L11) the bonus is <strong>STR + WIL</strong> and you may take both.</p><p>[M] Add the damage or Armor bonus by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.Wzylxwzb3SMCzmgx"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Urbvr9ckwmIxz59E",
+	"folder": "03aebd749374affa"
+}

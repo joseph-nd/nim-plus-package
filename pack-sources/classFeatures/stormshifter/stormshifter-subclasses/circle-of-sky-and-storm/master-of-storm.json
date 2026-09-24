@@ -1,0 +1,97 @@
+{
+	"name": "Master of Storm",
+	"type": "feature",
+	"img": "icons/magic/lightning/bolts-forked-large-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "master-of-storm-use-pool",
+				"identifier": "masterOfStormUse",
+				"label": "Master of Storm use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "master-of-storm-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "masterOfStormUse",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can concentrate on 1 lightning spell and 1 wind spell at the same time. <em>(1/encounter)</em> When you would cast a tiered spell, it costs 1 fewer action and 3 fewer mana.</p><hr><p>The discount use is tracked on this feature (refreshed each encounter); click it to spend it, then reduce the spell's cost by hand. [M]</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-sky-and-storm",
+		"gainedAtLevel": 15,
+		"subclass": true,
+		"gainedAtLevels": [
+			15
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.8gTUauVQdm1Se1X6"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762038298341,
+		"modifiedTime": 1762038567432,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "Wm918jAJlCdAv5Vc",
+	"folder": "b4548cc7a58ccb93"
+}

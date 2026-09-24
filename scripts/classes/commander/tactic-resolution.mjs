@@ -15,6 +15,7 @@ import {
 	tacticArm,
 	setTacticArm,
 	ownsCombatTactic,
+	resolveCombatTactic,
 	weaponAttackDelivery,
 } from './tactics.mjs';
 
@@ -25,8 +26,9 @@ import {
  * the activation has actually produced that card.
  */
 async function resolveDeclaredTactic(roll, activation, armed) {
-	const tactic = COMBAT_TACTICS.find((entry) => entry.key === armed.key);
-	if (!tactic) return null;
+	const declared = COMBAT_TACTICS.find((entry) => entry.key === armed.key);
+	if (!declared) return null;
+	const tactic = resolveCombatTactic(activation.actor, declared);
 
 	// Re-read the pool rather than trusting the dialog's snapshot: the die may
 	// have been spent elsewhere while the dialog was open.
@@ -35,6 +37,11 @@ async function resolveDeclaredTactic(roll, activation, armed) {
 
 	if (tactic.cannotMiss && roll.isMiss === true) {
 		roll.isMiss = false;
+	}
+
+	// 0.2 Sweeping Strike is an AoE attack, which never crits on the max.
+	if (tactic.cannotCrit && roll.isCritical === true) {
+		revokeCritical(roll);
 	}
 
 	// "When you hit, …" — nothing landed, so nothing is rolled and nothing spent.
@@ -59,6 +66,40 @@ async function resolveDeclaredTactic(roll, activation, armed) {
 		face: bonus?.faces?.[0] ?? null,
 		amount: bonus?.total ?? 0,
 	};
+}
+
+/**
+ * Undo a crit the dice rolled on an attack that cannot crit: every explosion
+ * result after the kept Primary Die face is dropped from the total. Only the
+ * standard explosion chain is unpicked — a `vicious` weapon rolls its extra dice
+ * through the system's own chain, which is left untouched rather than guessed at
+ * (the rider on the chat card still says the attack cannot crit).
+ */
+function revokeCritical(roll) {
+	if (roll.options?.explosionStyle === 'vicious') return false;
+	const primary = roll.primaryDie;
+	const results = primary?.results;
+	if (!Array.isArray(results)) return false;
+
+	const keptIndex = results.findIndex((result) => result.active && !result.discarded);
+	if (keptIndex < 0) return false;
+	for (let i = keptIndex + 1; i < results.length; i += 1) {
+		if (!results[i].active || results[i].discarded) continue;
+		results[i].active = false;
+		results[i].discarded = true;
+	}
+	results[keptIndex].exploded = false;
+
+	roll._recalculateTotal();
+	if (roll.options?.primaryDieAsDamage === false) {
+		const kept = results[keptIndex].result;
+		roll.excludedPrimaryDieValue = kept;
+		roll._total = (roll._total ?? 0) - kept;
+	}
+	roll.isCritical = false;
+	roll.critCount = 0;
+	roll.resetFormula();
+	return true;
 }
 
 /** The kept (active, undiscarded) result of a die term. */

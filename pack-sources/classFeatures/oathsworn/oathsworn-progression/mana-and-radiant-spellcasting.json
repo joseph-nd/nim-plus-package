@@ -1,0 +1,199 @@
+{
+	"folder": "36a5ca4e92865838",
+	"name": "Mana and Radiant Spellcasting",
+	"type": "feature",
+	"img": "icons/magic/light/beam-rays-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "oathsworn-tier0-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					0
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 2
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier1-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					1
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 2
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier2-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					2
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 4
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier3-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					3
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier4-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					4
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier5-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					5
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier6-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					6
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 13
+					}
+				}
+			},
+			{
+				"id": "oathsworn-tier7-spells",
+				"type": "grantSpells",
+				"schools": [
+					"radiant"
+				],
+				"tiers": [
+					7
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 17
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You know Radiant cantrips and tier 1 spells, and gain a mana pool. Your mana pool is equal to WIL + LVL and recharges on a Safe Rest.</p><hr><p>Level 4: Tier 2 Spells. You may now cast spells up to tier 2.</p><p>Level 6: Tier 3 Spells. You may now cast spells up to tier 3.</p><p>Level 8: Tier 4 Spells. You may now cast spells up to tier 4.</p><p>Level 10: Tier 5 Spells. You may now cast spells up to tier 5.</p><p>Level 13: Tier 6 Spells. You may now cast spells up to tier 6.</p><p>Level 17: Tier 7 Spells. You may now cast spells up to tier 7.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oathsworn-progression",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			10,
+			13,
+			17
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.vKAZDMlGXA9eOFIr"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761624520933,
+		"modifiedTime": 1761624861918,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "CNo2fVrvqFMdBWeo"
+}

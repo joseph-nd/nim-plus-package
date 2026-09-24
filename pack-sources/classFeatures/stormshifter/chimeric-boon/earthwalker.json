@@ -1,0 +1,70 @@
+{
+	"name": "Earthwalker",
+	"type": "feature",
+	"img": "icons/environment/wilderness/terrain-rocky-ground.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+STR Armor. Can burrow through the ground (as long as you do not end your turn underground). Can stand from Prone for free on your turn.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "chimeric-boon",
+		"gainedAtLevel": 6,
+		"subclass": false,
+		"gainedAtLevels": [
+			6,
+			9,
+			12,
+			17
+		],
+		"selectionCountByLevel": {
+			"6": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.eRLfdfYqRFM1hJGt"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "lFfuvJJ39SCti8Hr"
+}

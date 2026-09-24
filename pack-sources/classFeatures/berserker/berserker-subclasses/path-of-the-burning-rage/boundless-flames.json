@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p><em>Replaces Boundless Rage.</em> +1 to any 2 of your stats. (1/round) When attacked, deal your Fury Dice damage to an adjacent creature.</p>",
+		"description": "<p><em>Replaces Boundless Rage.</em> +1 to any 2 of your stats. (1/round) When attacked, deal your Fury Dice damage to an adjacent creature.</p><hr><p>[A] When this feature is added to a character who has Boundless Rage, you are asked whether to remove Boundless Rage (nothing is removed without your yes; drag it back from the compendium if needed).</p><p>[M] Apply the two +1 stat increases on your sheet, and deal the Fury Dice damage when attacked by hand.</p>",
 		"featureType": "class",
 		"class": "berserker",
 		"group": "path-of-the-burning-rage",

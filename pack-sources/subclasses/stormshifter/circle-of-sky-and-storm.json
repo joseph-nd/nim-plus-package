@@ -1,0 +1,32 @@
+{
+	"name": "Circle of Sky & Storm",
+	"type": "subclass",
+	"img": "icons/magic/lightning/bolt-strike-clouds-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Deepening Study</strong>. Choose the Ice or Radiant school to learn.</p><p><strong>Creature of the Fey</strong>. You may cast spells while Beastshifted.</p><p><strong>Attuned to Nature</strong>. (WIL/Safe Rest) Add LVL to any skill check related to nature or weather.</p><p>LEVEL 7 </p><p><strong>Raging Tempest</strong>. Whenever you crit with a spell, you may cast a cantrip for free from a school you haven't cast any spells from this turn.</p><p>LEVEL 11 </p><p><strong>Primordial Force</strong>. (1/round) Your tiered spells grant an additional effect:</p><p>• <strong>Ice</strong>. Gain WIL temp HP.</p><p>• <strong>Lightning</strong>. Deal additional WIL damage.</p><p>• <strong>Radiant</strong>. (Reach 6) Heal a creature WIL HP.</p><p>• <strong>Wind</strong>. Fly up to 6 spaces for free.</p><p>LEVEL 15 </p><p><strong>Master of Storm</strong>. You can concentrate on 1 lightning spell and 1 wind spell at the same time. (1/encounter) When you would cast a tiered spell, it costs 1 fewer action and 3 fewer mana.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.jx8crUzyWgeUkxUr"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762037361954,
+		"modifiedTime": 1762037521818,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "GWJHRnOysC4B3bPZ",
+	"folder": "bbdbcfedb2a0daf6"
+}

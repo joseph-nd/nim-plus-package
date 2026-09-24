@@ -1,0 +1,70 @@
+{
+	"name": "Death Blow",
+	"type": "feature",
+	"img": "icons/weapons/axes/axe-double-short-orange.webp",
+	"system": {
+		"group": "savage-arsenal",
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you crit, double the damage from your Fury Dice.</p><p><em>[A] On a critical hit, the Fury Dice already added to the attack are added a second time, on the same card. No dice are spent.</em></p>",
+		"featureType": "class",
+		"class": "berserker",
+		"gainedAtLevel": 4,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16
+		],
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.Dh6d5Ck3AAiRwQLB"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "x844MDLxavKx3INe",
+	"folder": "608bc2767e72d9f9"
+}

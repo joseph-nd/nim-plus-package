@@ -1,0 +1,95 @@
+{
+	"name": "Direbeast Form",
+	"type": "feature",
+	"img": "icons/magic/nature/wolf-paw-glow-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "direbeast-form-pool",
+				"identifier": "direbeast-form",
+				"label": "Direbeast Form",
+				"predicate": {},
+				"priority": 1,
+				"scope": "actor",
+				"max": "max(@dexterity, 0)",
+				"dieSize": null,
+				"initial": "max",
+				"hidden": false,
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "max(@dexterity, 0)"
+					},
+					{
+						"trigger": "encounterEnd",
+						"mode": "refresh",
+						"value": "max(@dexterity, 0)"
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can Beastshift into a Direbeast form DEX times/encounter (for up to 1 minute). You know the Fearsome Beast form.</p><hr><p>Level 2: You can Beastshift into a Beast of the Pack.</p><p>Level 5: You can Beastshift into a Beast of Nightmares.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "stormshifter-progression",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1,
+			2,
+			5
+		],
+		"levelUpOptions": [],
+		"selectionCountByLevel": {}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.17oeqF1srUpTPYKr"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "7KIkTFfnqTjFSU5S"
+}

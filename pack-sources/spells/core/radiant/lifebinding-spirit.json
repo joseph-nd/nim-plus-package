@@ -1,0 +1,123 @@
+{
+	"name": "Lifebinding Spirit",
+	"type": "spell",
+	"img": "icons/creatures/mammals/rabbit-movement-glowing-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "lifebinding-spirit",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Summon (max 1), or Harm",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "LifebindingHarmDmg1",
+					"type": "damage",
+					"damageType": "radiant",
+					"formula": "1d8 + @strength + floor(@level / 5) * @strength",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"ignoreArmor": true,
+					"on": {
+						"hit": [
+							{
+								"id": "LifebindingHarmOut1",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "LifebindingHarmDmg1"
+							}
+						],
+						"miss": [
+							{
+								"id": "LifebindingHarmMis1",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "LifebindingHarmDmg1"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "LifebindingHarmCri1",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "LifebindingHarmDmg1"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Shepherd Only</strong></p><p>Summon a spirit companion (max 1) that follows you and is immune to harm. It can travel up to 4 spaces away from you in order to:</p><p><strong>Harm.</strong> 1 Action: (Reach 4) It attacks for 1d8+STR (ignoring Armor).</p><p><strong>Mend.</strong> 1 Action: (WIL/Safe Rest, Reach 4) It restores WIL d20 HP to a Dying creature.</p><p>[A] Casting this rolls Harm. Mend is the <em>My Buddy!</em> feature, which spends a Mend charge.</p><p><em>Rushed Attacks and My Companion?</em> You and your companion use the same action pool, but count as different creatures. So you can each attack once without the Rushed Attack penalty every round.</p>",
+			"higherLevelEffect": "<p>+STR damage every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": 4
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "radiant",
+		"tier": 0,
+		"classes": [
+			"shepherd"
+		]
+	},
+	"effects": [],
+	"folder": "ae077c91b92c20f8",
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.KICmDNpyNoMuZ20E"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.350",
+		"systemId": "nimble",
+		"systemVersion": "0.2.0",
+		"createdTime": 1757106811491,
+		"modifiedTime": 1762392386966,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "SAEd6Nk8SfgJ2Ff7"
+}

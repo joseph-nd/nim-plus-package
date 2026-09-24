@@ -1,0 +1,72 @@
+{
+	"name": "Quench the Blaze",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/quench-the-blaze.webp",
+	"system": {
+		"macro": "",
+		"identifier": "quench-the-blaze",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/encounter — a Smoldering enemy loses the condition",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until the end of their next turn",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [
+				{
+					"id": "quench-the-blaze-restrain",
+					"type": "condition",
+					"condition": "restrained",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "Smoldering enemy"
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) When a Smoldering enemy loses the condition, you may Restrain them until the end of their next turn.</p><hr><p>[M] Track the 1/encounter use by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			15
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.nsPIwaTZzrFDhDKU"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "EEQ7bAitlV2YDzNF",
+	"folder": "03aebd749374affa"
+}

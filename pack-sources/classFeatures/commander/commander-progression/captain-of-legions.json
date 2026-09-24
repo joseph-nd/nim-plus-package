@@ -1,0 +1,64 @@
+{
+	"name": "Captain of Legions",
+	"type": "feature",
+	"img": "icons/commodities/treasure/medal-ribbon-gold-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+1 to any 2 of your stats.</p><p>The first time each encounter you use Coordinated Strike, INT allies gain +1 action (replaces Unparalleled Tactics).</p><p><em>[A] Your targeted Coordinated Strike ally gains the action automatically. [M] Give the action to the remaining allies (INT in total) by hand, and apply the two +1 stat increases on your sheet.</em></p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commander-progression",
+		"gainedAtLevel": 20,
+		"subclass": false,
+		"gainedAtLevels": [
+			20
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.6AU1FinuUY8l1JKj"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "ODufTriQJk1ucGlu",
+	"folder": "742371f96f880db9"
+}

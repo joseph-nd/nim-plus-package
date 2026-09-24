@@ -1,0 +1,83 @@
+{
+	"name": "Sacred Graces",
+	"type": "feature",
+	"img": "icons/creatures/abilities/wolf-heads-swirl-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 Sacred Grace.</p><hr><p>Level 9: Sacred Grace (2). Choose a 2nd Sacred Grace.</p><p>Level 13: Sacred Grace (3). Choose a 3rd Sacred Grace.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "shepherd-progression",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			9,
+			13
+		],
+		"selectionCountByLevel": {},
+		"levelUpOptions": [
+			{
+				"id": "sacred-grace",
+				"label": "Choose a Sacred Grace",
+				"applyAtLevels": [
+					4,
+					9,
+					13
+				],
+				"rules": [],
+				"selectionGroups": [
+					"sacred-grace"
+				],
+				"selectionCount": 1
+			}
+		]
+	},
+	"effects": [],
+	"folder": "627db1dc8c7dba5f",
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.Bb4zZPJ2xwEgUUcN"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1761500000000,
+		"modifiedTime": 1761500000000,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "2XCNYXSZfJQFnkSv"
+}

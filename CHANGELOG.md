@@ -2,6 +2,47 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.12.0] - 2026-09-24
+
+**Nimble 0.2 playtest core classes.** The September 2026 playtest sheets now apply to the classes themselves, not just to Nim+'s subclasses. Covered: Berserker, Commander, Hunter, Mage, Oathsworn, Shadowmancer, Shepherd, Songweaver, Stormshifter and The Cheat, plus the system's official subclasses and the class spells. Zephyr only has a 0.1 sheet, which matches 2.0.3, so it is unchanged. A new world setting, **Use Nimble 0.2 playtest core classes** (on by default, needs a reload), switches between the 0.2 rules and the plain 2.0.3 system. Where 0.2 says "Defense", the module keeps the system's term "Armor".
+
+### Added
+- **0.2 class content.** 0.2 copies of every changed system card replace their 2.0.3 originals in the character creator, level-up window, spell lists and compendium browser. The system's own cards are hidden, not deleted, so turning the setting off brings 2.0.3 back.
+  - Each class gets its 0.2 class features, choice pools and class-item headers.
+  - The official subclasses (Red Mist, Bulwark, Vanguard, Spellblade, Shadowpath, Wildheart, Beastmaster, Chaos, Control, Refuge, Red Dragon, Abyssal Depths, Reaver, Malice, Mercy, Snark, Courage, Sky & Storm, Fang & Claw, Silent Blade, Scoundrel) get their 0.2 versions.
+  - Spells: the Shadowmancer cantrips (Summon Shadow and Shadow Blast, plus the new **Command Shadows**), Lifebinding Spirit as a Shepherd cantrip, Vicious Mockery, and the Lightning and Wind spells reprinted on the Stormshifter sheet.
+  - Cards 0.2 removes are retired: Searing Light (core Shepherd), Expert Shifter, Vengeful Blast, the Commander die-size card, Pack Hunter, Martyr Spawn, Unfailing Courage, Friend of Beasts and Venomous Gaze.
+- **Headline changes.**
+  - Commander: Coordinated Strike! becomes a level-1 feature (1/encounter, plus INT uses per Safe Rest from level 5). Combat Dice arrive at level 2, and you choose 2 Commander's Orders at level 4 (Commanding Presence is one of them).
+  - Shepherd: the **My Buddy!** feature grants the Lifebinding Spirit cantrip, with Harm, and Mend charges tracked as a visible pool. Sacred Graces come at levels 4, 9 and 13. **Assist Me, My Friend!** is a core level-5 feature, and **Dark Benediction** is a new grace.
+  - Stormshifter: Direbeast Form at level 1 (DEX uses per encounter, tracked as a visible pool), Beast of the Pack at level 2, and rewritten forms and boons.
+  - Songweaver: the level-1 **Windbag**. The old Windbag becomes *I Know Just the Song*, and the extra school moves to level 2.
+  - The Cheat: one **Sunder Armor** replaces the Medium and Heavy versions, and **Tangling Wire** and **The Setup** are new.
+  - Berserker: the Boundless Rage floor is 5, and Savage Arsenal is rewritten.
+  - Oathsworn: Judgment Dice apply to any attack, including ranged attacks and spells.
+- **Class migration.** Existing characters convert between 2.0.3 and 0.2 at any level, in either direction.
+  - How to run it: a GM preview on load, the character sheet's header control *Migrate class to 0.2 rules* (or *to 2.0.3 rules*), or the macro `nimPlus.migrateCoreClasses({ actors, classes, direction, apply })`.
+  - Items are updated in place, and their ids, flags and pool values are kept.
+  - Each class has its own migration module (`scripts/core/class-migration/classes/<class>.mjs`) for choice-count changes: the player picks which graces or orders to keep, or chooses replacements.
+  - Nothing destructive happens without a preview and a confirmation.
+- **Luminary of Protection and Luminary of the Forge** have 0.2 versions: Mend-based features, **Masterwork** (replacing Master of the Hammer), Quench the Blaze as a Restrain, and Seasoned Journeyman with +STR plus a **Both** option.
+- **Compendium folder.** All Nim+ compendiums are grouped in a "Nim+" sidebar folder.
+- **Boundless Flames** offers to remove Boundless Rage when it is granted (with a confirmation).
+- **Test suite.** `pnpm test` runs about 4,500 vitest tests on a Foundry/Nimble harness. They cover every migration at every level in both directions, the 0.2 card hiding, pack data and the class automation.
+
+### Fixed
+- **Hexbinder** spell grants used an invalid spell school, so the tier grants failed to build. They now grant the Hexbinder spells by uuid.
+- **Dialogs on Foundry v14.** The v14 dialogs dropped the module's own form, so several dialogs ignored what you entered. Cancel also counted as confirming in some of them. All module dialogs now go through a shared helper. Affected:
+  - Mirage (2), Summon Spirit Companion, Battlemage Gloves, Cloak of the Fold, rune melding, Bloodseeker, Elemental Weapon and Seasoned Journeyman;
+  - the Academic and Elemental Specialist feats, and Sporesphere's Decay panel;
+  - Second Wind, where Cancel still spent a Hit Die.
+- **Circle of Spores** spends Direbeast Form uses under 0.2, because Beastshift charges no longer exist.
+- Luminary of Mercy's Searing Light and the Lifebinder's Embrace and Light Bearer refunds use the new Mend pool.
+
+### Known issues
+- The playtest sheets are drafts. Several 0.2 effects stay manual (`[M]`), because no Nimble rule type can express them.
+- Test findings not yet fixed are tracked for the next release.
+
 ## [0.11.0] - 2026-09-24
 
 **Nim+ Volume III, revised edition — all eleven core classes.** The zine's revised edition rewrites most of its subclasses, and this release brings every Nim+ core-class subclass in line with it. Alongside it, the official **Berserker 0.2**, **Commander 0.2**, **Hunter 0.2**, **Mage 0.2** and **Oathsworn 0.2** playtest sheets (September 2026) are applied to the module's copies of those subclasses, and the two official subclasses the base system does not ship — **Keeper of the Pack** and **Oath of Valor** — are added. Where 0.2 says "Defense" the module keeps the system's own term, "Armor".

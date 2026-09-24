@@ -33,9 +33,22 @@ import { COORDINATED_STRIKE_IDENTIFIER } from './coordinated-strike.mjs';
  * "Attacks ignore disadvantage" is left to the table: the attacks Coordinated
  * Strike grants are made separately, each with its own dialog, and nothing
  * connects them back to the order that prompted them.
+ *
+ * ── Nimble 0.2 ────────────────────────────────────────────────────────────────
+ * The 0.2 Master Commander has no Initiative regain at all: it adds a Safe Rest
+ * pool of INT uses on top of Coordinated Strike's own 1/encounter use, and the
+ * die sizes. Both live in the module's 0.2 copies as native rules, so this file
+ * only acts on the 2.0.3 feature — a Coordinated Strike! carrying the module's
+ * `playtest02` flag is left exactly as its content declares it.
  */
 
 const MASTER_COMMANDER_MATCH = /master\s*commander/i;
+const COORD_STRIKE_USES_IDENTIFIER = 'coordinated-strike-uses';
+
+/** The module's Nimble 0.2 copy, which declares its own pools and recoveries. */
+function isPlaytest02(item) {
+	return item?.getFlag?.(MODULE_ID, 'playtest02') === true;
+}
 const COORD_STRIKE_TEMP_USE_FLAG = 'coordinatedStrikeTempUse';
 
 function actorHasMasterCommander(actor) {
@@ -55,11 +68,21 @@ function actorHasMasterCommander(actor) {
  * iteration order.
  */
 export function findCoordinatedStrikePool(actor) {
+	const candidates = [];
 	for (const entry of iterateChargePools(actor)) {
 		if (entry.pool.hidden) continue;
 		const identifier = String(entry.pool.identifier ?? entry.key).toLowerCase();
 		if (!identifier.includes(COORDINATED_STRIKE_IDENTIFIER)) continue;
-
+		candidates.push({ entry, identifier });
+	}
+	// The 0.2 copy shows two counters (the encounter use and the Safe Rest uses);
+	// the Safe Rest one is the counter the rest of this file means.
+	candidates.sort(
+		(a, b) =>
+			Number(b.identifier === COORD_STRIKE_USES_IDENTIFIER) -
+			Number(a.identifier === COORD_STRIKE_USES_IDENTIFIER),
+	);
+	for (const { entry } of candidates) {
 		const max = Math.max(0, Math.floor(Number(entry.pool.max) || 0));
 		return {
 			...entry,
@@ -83,6 +106,7 @@ export function findCoordinatedStrikePool(actor) {
  */
 export function ensureMasterCommanderRecovery(item) {
 	if (item?.system?.identifier !== COORDINATED_STRIKE_IDENTIFIER) return;
+	if (isPlaytest02(item)) return;
 	if (!actorHasMasterCommander(item.parent)) return;
 
 	for (const rule of itemRuleValues(item)) {

@@ -89,7 +89,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You create floating spores around you with Reach 2. <strong>1 Action:</strong> you may attack a target for 1d4 necrotic damage, and the target is Dazed until the beginning of your next turn.</p><p><em>Foundry tip — click the action to pop a Sporesphere dialog. Owned upgrades (Germination L7, Mycelium Growth L11, Sporulation L15) automatically scale damage and reach. With Decay (L7), you may spend Beastshift charges per attack to bump the die size or apply Blinded / Poisoned alongside Dazed.</em></p>",
+		"description": "<p>You create floating spores around you with Reach 2. <strong>1 Action:</strong> you may attack a target for 1d4 necrotic damage, and the target is Dazed until the beginning of your next turn.</p><p><em>Foundry tip — click the action to pop a Sporesphere dialog. Owned upgrades (Germination L7, Mycelium Growth L11, Sporulation L15) automatically scale damage and reach. With Decay (L7), you may spend charges per attack to bump the die size or apply Blinded / Poisoned alongside Dazed: Direbeast Form uses with the Nimble 0.2 playtest rules on (spent automatically, correctable with the pool's +/-), Beastshift charges tracked by hand with them off.</em></p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-spores",

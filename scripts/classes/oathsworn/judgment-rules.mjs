@@ -101,6 +101,28 @@ function judgmentPoolRule(item) {
 }
 
 /**
+ * Whether this Judgment pool pays out on *any* attack rather than melee only.
+ * Nimble 0.2 reworded Radiant Judgment to "your next attack", and the Nim+ 0.2
+ * copy ships its own `autoBonus` consumer with delivery `any` to say so; the
+ * 2.0.3 system copy has no consumer and gets the melee-only synthetic one below.
+ * Read off the live rule, so the two rule sets never need to be told apart by
+ * name or UUID.
+ */
+export function judgmentAppliesToAnyAttack(entry) {
+	const item = entry?.document;
+	if (!item || entry.scope !== 'item') return false;
+	const identifier = String(entry.pool?.identifier ?? entry.key).toLowerCase();
+	return itemRuleValues(item).some(
+		(rule) =>
+			rule?.type === 'diceConsumer' &&
+			!rule.disabled &&
+			rule.mode === 'autoBonus' &&
+			String(rule.poolIdentifier ?? '').trim().toLowerCase() === identifier &&
+			(rule.bonusOnAttackDelivery ?? 'any') === 'any',
+	);
+}
+
+/**
  * Give the Judgment pool the `diceConsumer` the system's content omits: every
  * face, automatically, on melee attacks only. Skipped entirely if some consumer
  * already targets the pool, so a future system-side fix wins over ours.

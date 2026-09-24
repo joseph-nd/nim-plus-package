@@ -1,0 +1,82 @@
+{
+	"name": "Move it! Move it!",
+	"type": "feature",
+	"img": "icons/skills/movement/feet-winged-boots-glowing-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "When you roll Initiative",
+				"quantity": 1,
+				"type": "special",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "round"
+			},
+			"effects": [
+				{
+					"id": "JyS0bPpvH6ttPAoG",
+					"type": "note",
+					"noteType": "reminder",
+					"text": "Roll Initiative with advantage, and give one ally advantage on theirs. Both of you gain +3 speed for 1 round.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you roll Initiative you may give yourself and an ally advantage on the roll and +3 speed for 1 round. </p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commanders-orders",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.x9VscDoB05eIwoL0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "koODIiTKj7wJMQn4",
+	"folder": "742371f96f880db9"
+}

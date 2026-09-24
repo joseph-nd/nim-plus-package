@@ -131,7 +131,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You forego all Commander's Orders. Whenever you would choose one, you gain +1 max Combat Die instead.</p>",
+		"description": "<p>You forego all Commander's Orders. Whenever you would choose one, you gain +1 max Combat Die instead.</p><hr><p>[A] Commander's Orders are taken out of your level-up choices, and your Combat Dice maximum grows in their place: +2 for the two Orders of Heroes 2.0.3's level 2 (level 4 with the Nimble 0.2 playtest rules on), then +1 at levels 6, 8, 10, 12 and 16.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-arena",

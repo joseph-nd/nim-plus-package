@@ -1,0 +1,69 @@
+{
+	"folder": "92accb42c699560b",
+	"name": "Echo Casting",
+	"type": "feature",
+	"img": "icons/magic/sonic/projectile-sound-rings-wave.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(2×mana, min. 1 mana) When you cast a tiered, single-target spell, cast a copy of it on a 2nd target.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "spellshaper",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			9,
+			13
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.GG1Y3gliH3DQ9UZS"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761538956665,
+		"modifiedTime": 1761539138633,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "df6T78wYkWL3XH0E"
+}

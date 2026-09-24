@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../core/dialog.mjs';
 import { vol4ItemFlag } from './dawnmark.mjs';
 
 /** Decrement quantity, deleting the item at 0. */
@@ -50,30 +51,26 @@ export async function vol4ApplyRune(actor, item) {
 			return `<option value="${i.id}"${full}>${escape(i.name)} (${used}/${cap} runes)</option>`;
 		})
 		.join('');
-	const targetId = await foundry.applications.api.DialogV2.wait({
+	const targetId = await waitDialog({
 		window: { title: `Meld ${item.name}` },
 		content: `
-			<form class="nim-plus-rune">
+			<div class="nim-plus-rune">
 				<p>Melding is permanent and consumes the rune. Capacity: Common/Uncommon 1 &middot; Rare/Very Rare 2 &middot; Legendary 3.</p>
 				<div class="form-group"><label>Meld into</label><select name="target">${rows}</select></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Meld',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-rune');
-					return form?.elements?.target?.value ?? null;
-				},
+				callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'target') || null,
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
-	if (!targetId) return null;
+	});
+	if (typeof targetId !== 'string' || !targetId) return null;
 
 	const target = actor.items.get(targetId);
 	if (!target) return null;
@@ -96,25 +93,23 @@ export async function vol4ApplyRune(actor, item) {
 			const opts = choices
 				.map((t) => `<option value="${t}">${t === 'cold' ? 'Ice' : t[0].toUpperCase() + t.slice(1)}</option>`)
 				.join('');
-			damageType = await foundry.applications.api.DialogV2.wait({
+			damageType = await waitDialog({
 				window: { title: `${item.name} — Damage Type` },
-				content: `<form class="nim-plus-rune-type"><div class="form-group"><label>Damage type</label><select name="dtype">${opts}</select></div></form>`,
+				content: `<div class="nim-plus-rune-type"><div class="form-group"><label>Damage type</label><select name="dtype">${opts}</select></div></div>`,
 				buttons: [
 					{
 						action: 'ok',
 						label: 'Choose',
 						default: true,
-						callback: (_event, button, dialog) => {
-							const root = dialog?.element ?? button;
-							return root?.querySelector?.('form.nim-plus-rune-type')?.elements?.dtype?.value ?? null;
-						},
+						callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'dtype') || null,
 					},
 					{ action: 'cancel', label: 'Cancel', callback: () => null },
 				],
 				rejectClose: false,
 				modal: false,
-			}).catch(() => null);
-			if (!damageType) return null;
+			});
+			// Only a listed damage type may be written into the weapon's damage node.
+			if (!choices.includes(damageType)) return null;
 		}
 	}
 

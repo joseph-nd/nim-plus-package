@@ -1,0 +1,194 @@
+{
+	"folder": "36a5ca4e92865838",
+	"name": "Radiant Judgement",
+	"type": "feature",
+	"img": "icons/skills/melee/strike-sword-slashing-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "dicePool",
+				"disabled": false,
+				"id": "judgment-pool-base",
+				"identifier": "judgment",
+				"label": "Judgment Dice",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"dieSize": "d6",
+				"max": "2",
+				"initial": "zero",
+				"refills": [
+					{
+						"trigger": "onAttacked",
+						"mode": "setIfEmpty",
+						"value": "@poolMax"
+					},
+					{
+						"trigger": "encounterEnd",
+						"mode": "clear",
+						"value": "0"
+					}
+				]
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "judgment-d8-l3",
+				"identifier": "",
+				"label": "Judgment Dice → d8",
+				"predicate": {
+					"level": {
+						"min": 3
+					}
+				},
+				"priority": 2,
+				"poolType": "dice",
+				"poolIdentifier": "judgment",
+				"dieSize": "d8",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "judgment-d10-l5",
+				"identifier": "",
+				"label": "Judgment Dice → d10",
+				"predicate": {
+					"level": {
+						"min": 5
+					}
+				},
+				"priority": 3,
+				"poolType": "dice",
+				"poolIdentifier": "judgment",
+				"dieSize": "d10",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "judgment-d12-l8",
+				"identifier": "",
+				"label": "Judgment Dice → d12",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				},
+				"priority": 4,
+				"poolType": "dice",
+				"poolIdentifier": "judgment",
+				"dieSize": "d12",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "judgment-d20-l10",
+				"identifier": "",
+				"label": "Judgment Dice → d20",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				},
+				"priority": 5,
+				"poolType": "dice",
+				"poolIdentifier": "judgment",
+				"dieSize": "d20",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "judgment-plus1-l14",
+				"identifier": "",
+				"label": "Judgment Dice: roll 1 more",
+				"predicate": {
+					"level": {
+						"min": 14
+					}
+				},
+				"priority": 6,
+				"poolType": "dice",
+				"poolIdentifier": "judgment",
+				"dieSize": null,
+				"maxDelta": "+1"
+			},
+			{
+				"type": "diceConsumer",
+				"disabled": false,
+				"id": "judgment-consumer-any",
+				"identifier": "",
+				"label": "Radiant Judgment",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "judgment",
+				"poolScope": "item",
+				"mode": "autoBonus",
+				"bonusOnAttackDelivery": "any",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever an enemy attacks you, roll and set aside 2d6 Judgment Dice (if you currently have none). They are expended on your next attack this encounter, dealing their total as extra radiant damage (they are lost on a miss).</p><hr><p>Level 3: Radiant Judgment (2). Your Judgment Dice are d8s.</p><p>Level 5: Radiant Judgment (3). Your Judgment Dice are d10s.</p><p>Level 8: Radiant Judgment (4). Your Judgment Dice are d12s.</p><p>Level 10: Radiant Judgment (5). Your Judgment Dice are d20s.</p><p>Level 14: Radiant Judgment (6). Whenever you roll Judgment Dice, roll 1 more.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "oathsworn-progression",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1,
+			3,
+			5,
+			8,
+			10,
+			14
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.qiQeJrIxla9y6XY0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761624053545,
+		"modifiedTime": 1761624279636,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "zrTZXBYG8Fet26V0"
+}

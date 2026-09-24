@@ -1,3 +1,4 @@
+import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
 import { COMBAT_TACTIC_FIELD_CLASS, findCombatDicePool } from './combat-dice.mjs';
@@ -25,6 +26,10 @@ export const COMBAT_TACTICS = [
 		short: 'push + a Combat Die of damage',
 		rider:
 			'Push a Medium creature <strong>STR spaces</strong> — a Small creature twice as far, a Large creature half as far (round down).',
+		playtest02: {
+			short: 'knockback STR + a Combat Die of damage',
+			rider: 'Knock the target back <strong>STR spaces</strong>.',
+		},
 	},
 	{
 		key: 'lunging-strike',
@@ -47,6 +52,12 @@ export const COMBAT_TACTICS = [
 		short: 'area attack, cannot miss on a 1 (2 actions, no bonus damage)',
 		rider:
 			'Damage <strong>every target</strong> in a contiguous area within your weapon’s Reach. Costs <strong>2 actions</strong> — deduct the second one by hand.',
+		playtest02: {
+			short: 'area attack, cannot miss on a 1 nor crit (no bonus damage)',
+			rider:
+				'Damage <strong>every target</strong> in a contiguous area within your weapon’s Reach. An AoE attack neither misses on a 1 nor crits on the max.',
+			cannotCrit: true,
+		},
 	},
 ];
 
@@ -76,14 +87,32 @@ export function setTacticOutcome(value) {
 	tacticOutcome = value;
 }
 
-/** True when this Commander has taken the given tactic. */
-export function ownsCombatTactic(actor, tactic) {
+/** The feature through which this Commander has taken the given tactic, if any. */
+function ownedCombatTacticItem(actor, tactic) {
 	for (const item of actor?.items ?? []) {
 		if (item.type !== 'feature') continue;
-		if (tactic.match.test(String(item.system?.identifier ?? ''))) return true;
-		if (tactic.match.test(String(item.name ?? ''))) return true;
+		if (tactic.match.test(String(item.system?.identifier ?? ''))) return item;
+		if (tactic.match.test(String(item.name ?? ''))) return item;
 	}
-	return false;
+	return null;
+}
+
+/** True when this Commander has taken the given tactic. */
+export function ownsCombatTactic(actor, tactic) {
+	return ownedCombatTacticItem(actor, tactic) !== null;
+}
+
+/**
+ * The tactic as this Commander has it. The Nimble 0.2 copies (flagged
+ * `playtest02` by the module) reword some riders — Heavy Strike's knockback no
+ * longer scales with size, Sweeping Strike is one action and cannot crit — so
+ * the owned feature decides which text and behaviour apply.
+ */
+export function resolveCombatTactic(actor, tactic) {
+	if (!tactic?.playtest02) return tactic;
+	const item = ownedCombatTacticItem(actor, tactic);
+	if (item?.getFlag?.(MODULE_ID, 'playtest02') !== true) return tactic;
+	return { ...tactic, ...tactic.playtest02 };
 }
 
 /**
@@ -108,7 +137,7 @@ export function availableCombatTactics(actor, item) {
 		(tactic) =>
 			(tactic.delivery === 'any' || tactic.delivery === delivery) &&
 			ownsCombatTactic(actor, tactic),
-	);
+	).map((tactic) => resolveCombatTactic(actor, tactic));
 }
 
 /**

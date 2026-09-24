@@ -1,0 +1,128 @@
+{
+	"name": "Vicious Mockery",
+	"type": "spell",
+	"img": "icons/magic/control/mouth-smile-deception-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "6pEXpZ8znbQP6LiP",
+					"type": "damage",
+					"damageType": "psychic",
+					"formula": "1d4 +@intelligence + floor(@level / 5) * 2",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"hit": [
+							{
+								"id": "IU4d6Xdpr2nATt3g",
+								"type": "condition",
+								"condition": "taunted",
+								"parentContext": "hit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							},
+							{
+								"id": "ODalIwchGK1gVvib",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "enoNfbb3InpTsMUg",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"miss": [
+							{
+								"id": "Ez4BB3Ntj11plTuN",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						]
+					},
+					"ignoreArmor": true
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Single Target</strong></p><p><strong>Range</strong>: 12. <strong>Damage</strong>: 1d4+INT psychic (ignoring Armor). On hit: target is Taunted until the end of their next turn.</p>",
+			"higherLevelEffect": "<p>+2 damage every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "wind",
+		"tier": 0,
+		"classes": [
+			"songweaver"
+		]
+	},
+	"effects": [],
+	"folder": "b3180e4a97f8d5e9",
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.kTJSEElZSzeOMXBO"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.350",
+		"systemId": "nimble",
+		"systemVersion": "0.2.0",
+		"createdTime": 1757106811491,
+		"modifiedTime": 1762395259465,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "Vtree36ux8igg8qB"
+}

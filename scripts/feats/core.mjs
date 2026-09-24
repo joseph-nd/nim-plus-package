@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../core/dialog.mjs';
 import { FEATS_GROUP, FEATS_PACK, FEAT_MILESTONE_LEVELS } from './settings.mjs';
 
 /**
@@ -131,7 +132,7 @@ export async function chooseFeat(actor) {
 		})
 		.join('');
 
-	const choiceId = await foundry.applications.api.DialogV2.wait({
+	const choiceId = await waitDialog({
 		window: { title: `Choose a Feat — ${actor.name}` },
 		content: `
 			<div class="nim-plus-feat-pick">
@@ -144,20 +145,15 @@ export async function chooseFeat(actor) {
 				action: 'grant',
 				label: 'Gain Feat',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('.nim-plus-feat-pick');
-					const checked = form?.querySelector?.('input[name="feat"]:checked');
-					return checked?.value ?? null;
-				},
+				callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'feat') || null,
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
-	if (!choiceId) return null;
+	if (typeof choiceId !== 'string' || !choiceId) return null;
 	return grantFeatByIdentifier(actor, choiceId);
 }
 

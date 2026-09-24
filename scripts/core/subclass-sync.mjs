@@ -30,9 +30,38 @@
  *   await nimPlus.syncSubclasses({ actors: [actor] });
  *
  * Only world actors are covered — unlinked tokens keep their own copies.
+ *
+ * ── Nimble 0.2 playtest core classes ─────────────────────────────────────
+ * The subclass sync runs *after* the core class migration
+ * (`./class-migration/index.mjs`), which both starts it on `ready` and runs it
+ * for the characters it just migrated. It stays out of the migration's way:
+ *
+ *   - a character that still owns documents from the side the playtest setting
+ *     turned away from (a pending or postponed migration) is skipped whole, so
+ *     0.2 subclass features are never added next to the 2.0.3 copies they
+ *     supersede;
+ *   - Nim+ documents the supersede layer currently hides (0.2 docs while the
+ *     setting is off; Nim+ originals a 0.2 copy supersedes — Luminary of
+ *     Protection / of the Forge — while it is on) are never added, updated to,
+ *     or synced to — and an owned copy of one is left alone rather than treated
+ *     as deleted from the pack. Moving a character between an original and its
+ *     0.2 copy is the class migration's job, never the sync's;
+ *   - a 0.2 copy shares its original's name, so it shares its identifier and
+ *     feature group: the identifier fallback for source-less items never lands
+ *     on a subclass that supersedes something (that would convert a subclass
+ *     the migration cannot see), and source-less features resolve to the entry
+ *     the setting shows before a hidden one of the same identifier.
  */
 import { MODULE_ID } from './constants.mjs';
 import { escape } from './html.mjs';
+import {
+	hasPendingClassMigration,
+	canonicalUuid,
+	isHiddenUuid,
+	readUnfilteredIndex,
+	supersedeData,
+	supersedeDataSync,
+} from './supersede.mjs';
 
 const SUBCLASS_PACK = `${MODULE_ID}.nim-plus-subclasses`;
 const FEATURE_PACK = `${MODULE_ID}.nim-plus-class-features`;
@@ -115,12 +144,14 @@ async function loadPacks() {
 	const featurePack = game.packs.get(FEATURE_PACK);
 	if (!subclassPack || !featurePack) return null;
 
-	const subclasses = await subclassPack.getDocuments();
+	const subclasses = (await subclassPack.getDocuments()).filter((d) => !isHiddenUuid(d.uuid));
 	const subclassesById = new Map(subclasses.map((d) => [d.id, d]));
 	const subclassesByIdentifier = new Map(subclasses.map((d) => [d.system.identifier, d]));
 
-	const index = await featurePack.getIndex({ fields: FEATURE_INDEX_FIELDS });
+	// Unfiltered: an owned copy of a hidden entry must not look like a deletion.
+	const index = await readUnfilteredIndex(featurePack, FEATURE_INDEX_FIELDS);
 	const featureIndex = index.filter((e) => e.system?.subclass && e.system?.group);
+	const hiddenIds = new Set(featureIndex.filter((e) => isHiddenUuid(e.uuid)).map((e) => e._id));
 
 	const loaded = new Map();
 	const loadFeatures = async (ids) => {
@@ -132,7 +163,7 @@ async function loadPacks() {
 		return ids.map((id) => loaded.get(id)).filter(Boolean);
 	};
 
-	return { subclassesById, subclassesByIdentifier, featureIndex, loadFeatures };
+	return { subclassesById, subclassesByIdentifier, featureIndex, hiddenIds, loadFeatures };
 }
 
 /* ───────────────────────────── planning ───────────────────────────── */
@@ -160,7 +191,8 @@ async function planActor(actor, packs) {
 		if (!target && !source) {
 			const ident = LEGACY_IDENTIFIERS[item.system.identifier] ?? item.system.identifier;
 			const byIdent = packs.subclassesByIdentifier.get(ident);
-			if (byIdent && byIdent.system.parentClass === item.system.parentClass) target = byIdent;
+			const replaces = byIdent && supersedeDataSync()?.supersedes.has(canonicalUuid(byIdent.uuid));
+			if (byIdent && !replaces && byIdent.system.parentClass === item.system.parentClass) target = byIdent;
 		}
 		if (!target) continue; // not one of ours (base system, homebrew, or a deleted subclass)
 
@@ -173,7 +205,11 @@ async function planActor(actor, packs) {
 			(e) => e.system.group === newIdent && e.system.class === cls,
 		);
 		const packIds = new Set(packEntries.map((e) => e._id));
-		const packByIdentifier = new Map(packEntries.map((e) => [e.system.identifier, e._id]));
+		// Visible entries win over hidden ones sharing an identifier (a 0.2 copy and its original).
+		const packByIdentifier = new Map();
+		for (const e of [...packEntries].sort((a, b) => packs.hiddenIds.has(b._id) - packs.hiddenIds.has(a._id))) {
+			packByIdentifier.set(e.system.identifier, e._id);
+		}
 
 		const owned = actor.items.filter(
 			(i) =>
@@ -190,12 +226,15 @@ async function planActor(actor, packs) {
 			const src = parseSource(feature);
 			let id = src?.pack === FEATURE_PACK && packIds.has(src.id) ? src.id : null;
 			if (!id && !src) id = packByIdentifier.get(feature.system.identifier) ?? null;
+			if (id && packs.hiddenIds.has(id)) continue; // the class migration's to handle
 			if (id && !matched.has(id)) matched.set(id, feature);
 			else if (src?.pack === FEATURE_PACK || !src) featureRemovals.push(feature);
 			// Features sourced from another pack are left alone.
 		}
 
-		const wantedIds = packEntries.filter((e) => minLevel(e) <= level).map((e) => e._id);
+		const wantedIds = packEntries
+			.filter((e) => minLevel(e) <= level && !packs.hiddenIds.has(e._id))
+			.map((e) => e._id);
 		const docs = await packs.loadFeatures([...new Set([...matched.keys(), ...wantedIds])]);
 		const docById = new Map(docs.map((d) => [d.id, d]));
 
@@ -228,12 +267,17 @@ async function planActor(actor, packs) {
 
 /** @returns {Promise<{actor: Actor, plans: SubclassPlan[]}[]>} */
 export async function planSubclassSync(actors) {
+	await supersedeData();
 	const packs = await loadPacks();
 	if (!packs) return [];
 	const list = actors ?? game.actors.filter((a) => a.type === 'character');
 	const out = [];
 	for (const actor of list) {
 		if (actor.type !== 'character') continue;
+		if (hasPendingClassMigration(actor)) {
+			console.log(`${MODULE_ID} | subclass sync: skipping ${actor.name} until its class migration is applied`);
+			continue;
+		}
 		const plans = await planActor(actor, packs);
 		if (plans.length) out.push({ actor, plans });
 	}
@@ -355,7 +399,12 @@ Hooks.once('init', () => {
 	});
 });
 
-Hooks.once('ready', async () => {
+/**
+ * The version-gated startup preview. Not a `ready` hook of its own: the class
+ * migration's `ready` handler calls it once the migration preview has closed,
+ * so the two never run out of order (see the header).
+ */
+export async function runSubclassSyncStartup() {
 	if (!game.user?.isGM) return;
 	const version = game.modules.get(MODULE_ID)?.version ?? '';
 	if (game.settings.get(MODULE_ID, SYNC_SETTING) === version) return;
@@ -365,4 +414,20 @@ Hooks.once('ready', async () => {
 	} catch (error) {
 		console.error(`${MODULE_ID} | subclass sync failed`, error);
 	}
-});
+}
+
+/**
+ * Forget that this version's startup sync ran, so the next `ready` offers it
+ * again. The startup sync skips characters whose class migration is pending and
+ * still stamps the version; when such a character's migration is applied later
+ * and its follow-up sync is postponed ("Later"), the class migration calls this
+ * so the outstanding subclass features are not lost. GM only (world setting).
+ */
+export async function resetSubclassSyncStamp() {
+	if (!game.user?.isGM) return;
+	try {
+		if (game.settings.get(MODULE_ID, SYNC_SETTING) !== '') await game.settings.set(MODULE_ID, SYNC_SETTING, '');
+	} catch (error) {
+		console.error(`${MODULE_ID} | could not reset the subclass sync version`, error);
+	}
+}

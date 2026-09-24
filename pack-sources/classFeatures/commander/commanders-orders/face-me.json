@@ -1,0 +1,81 @@
+{
+	"name": "Face Me!",
+	"type": "feature",
+	"img": "icons/magic/control/fear-fright-mask-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "after an enemy crits or attacks a dying ally",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "until you drop to 0 HP",
+				"quantity": 1,
+				"type": "special"
+			},
+			"effects": [
+				{
+					"id": "mgQHszIXhFjne2XK",
+					"type": "condition",
+					"condition": "taunted",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>After an enemy crits or attacks a dying ally, you may Taunt them. Lasts until you drop to 0 HP.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commanders-orders",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.iNq4GHvFeLz45fl1"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Ii6hQhlMfqp7J7Ls",
+	"folder": "742371f96f880db9"
+}

@@ -1,0 +1,235 @@
+{
+	"folder": "92accb42c699560b",
+	"name": "Mana and Unlock Tier 1 Spells",
+	"type": "feature",
+	"img": "icons/magic/lightning/bolt-strike-explosion-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "mage-tier1-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					1
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 2
+					}
+				}
+			},
+			{
+				"id": "mage-tier2-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					2
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 4
+					}
+				}
+			},
+			{
+				"id": "mage-tier3-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					3
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 6
+					}
+				}
+			},
+			{
+				"id": "mage-tier4-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					4
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 8
+					}
+				}
+			},
+			{
+				"id": "mage-tier5-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					5
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				}
+			},
+			{
+				"id": "mage-tier6-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					6
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 12
+					}
+				}
+			},
+			{
+				"id": "mage-tier7-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					7
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 14
+					}
+				}
+			},
+			{
+				"id": "mage-tier8-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					8
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 16
+					}
+				}
+			},
+			{
+				"id": "mage-tier9-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					9
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 18
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You may now cast tier 1 spells and gain a mana pool to cast them. This mana pool's max is always equal to (INT×3)+LVL and recharges on a Safe Rest.</p><hr><p>Level 4: Tier 2 Spells. You may now cast spells up to tier 2.</p><p>Level 6: Tier 3 Spells. You may now cast spells up to tier 3.</p><p>Level 8: Tier 4 Spells. You may now cast spells up to tier 4.</p><p>Level 10: Tier 5 Spells. You may now cast spells up to tier 5.</p><p>Level 12: Tier 6 Spells. You may now cast spells up to tier 6.</p><p>Level 14: Tier 7 Spells. You may now cast spells up to tier 7.</p><p>Level 16: Tier 8 Spells. You may now cast spells up to tier 8.</p><p>Level 18: Tier 9 Spells. You may now cast spells up to tier 9.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "mage-progression",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.vwK2lSHq2xi7woIU"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761530005693,
+		"modifiedTime": 1761538656813,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "dgzpBhh2OKV64cyy"
+}

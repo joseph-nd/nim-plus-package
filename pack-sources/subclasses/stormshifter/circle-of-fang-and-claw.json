@@ -1,0 +1,32 @@
+{
+	"name": "Circle of Fang & Claw",
+	"type": "subclass",
+	"img": "icons/magic/nature/wolf-paw-glow-large-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Swiftshift</strong>. Whenever you roll Initiative, you may Beastshift for free. <em>(1/turn)</em> You can Beastshift between Direbeast Forms for 0 actions (this still costs a Direbeast Form charge).</p><p><strong>Unleash the Beast</strong>. Gore also Taunts until the end of the target's next turn. Frenzy increases to 1d8+LVL damage.</p><p>LEVEL 7 </p><p><strong>Windborne Protector</strong>. Double the WIL armor and Temp HP bonuses from Fearsome Beast form. <em>(1/encounter)</em> You may Interpose from Reach 12.</p><p><strong>Stormstrider</strong>. Double the DEX movement and Speed bonuses from Beast of the Pack. When you move as a Beast of the Pack, you may teleport instead.</p><p>LEVEL 11 </p><p><strong>Master of Forms</strong>. <em>(1/encounter)</em> When you would miss or crit while in a Direbeast form, you may increase or decrease the Primary Die by 1 instead.</p><p>LEVEL 15 </p><p><strong>Chimeric Sovereign</strong>. You know all Chimeric Boons, your Direbeast forms can have 2 at a time.</p>",
+		"parentClass": "stormshifter",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.myK1IWFNGeqUFfF4"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762037543590,
+		"modifiedTime": 1762037779978,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "hKMofiTSF5EJzuCn",
+	"folder": "bbdbcfedb2a0daf6"
+}

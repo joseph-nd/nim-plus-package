@@ -1,0 +1,67 @@
+{
+	"folder": "45629599e634de64",
+	"name": "Not My Beautiful Faaace!",
+	"type": "feature",
+	"img": "icons/skills/wounds/injury-face-impact-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/encounter)</em> When you Defend, force the attacker to choose another target within range on a failed WIL save (if there is none, the attack fails). If they fail by 5 or more, they attack themselves! On save, reroll the attack and choose either result.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "lyrical-weaponry",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			9,
+			13,
+			17
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.LOKmP43TJEDltnnO"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761891173655,
+		"modifiedTime": 1761891784728,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "w6wEqoERgOIBFAbr"
+}

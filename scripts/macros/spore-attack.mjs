@@ -1,5 +1,11 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readChecked, readNumber, waitDialog } from '../core/dialog.mjs';
+import { playtestCoreClassesEnabled } from '../core/playtest-settings.mjs';
+import { iterateChargePools, setChargePoolCurrent } from '../core/pools.mjs';
+
+/** The 0.2 Stormshifter's actor pool (Direbeast Form uses, DEX/encounter). */
+const DIREBEAST_POOL_IDENTIFIER = 'direbeast-form';
 
 /**
  * Sporesphere (Stormshifter / Circle of Spores) — pop a dialog letting the
@@ -12,17 +18,40 @@ import { escape } from '../core/html.mjs';
  *   - Germination (L7)         1d6 / Reach 3
  *   - Sporesphere (L3, base)   1d4 / Reach 2
  *
- * With Decay (L7), the player may spend Beastshift charges to either bump
- * the die size by one step (d4→d6→d8→d10→d12→d20) or stack Blinded /
- * Poisoned conditions on top of the always-applied Dazed.
+ * With Decay (L7), the player may spend charges to either bump the die size
+ * by one step (d4→d6→d8→d10→d12→d20) or stack Blinded / Poisoned conditions
+ * on top of the always-applied Dazed. Which charges depends on the rules the
+ * world plays:
  *
- * Resource consumption (Beastshift charges) is the player's responsibility
- * — the macro records the spend in the chat card flavor only.
+ *   - Nimble 0.2 playtest (setting on): Direbeast Form uses, the actor-scoped
+ *     `direbeast-form` pool. The macro spends them itself; the pool is the
+ *     visible counter on the sheet, so a wrong spend is corrected with its +/-.
+ *   - Heroes 2.0.3 (setting off), or no Direbeast Form pool on the actor:
+ *     Beastshift charges, tracked by the player — the macro records the spend
+ *     in the chat card only.
  *
  * Optional conditions (Blinded / Poisoned) are stashed on an actor flag and
  * re-applied by the `nimble.useItem` hook below if the activation lands
  * (i.e. is not a miss).
  */
+/** The actor's Direbeast Form pool, when the 0.2 rules are on and it exists. */
+function findDirebeastPool(actor) {
+	if (!playtestCoreClassesEnabled()) return null;
+	for (const entry of iterateChargePools(actor)) {
+		if (entry.scope !== 'actor') continue;
+		const identifier = String(entry.pool.identifier ?? entry.key.replace(/^actor:/, ''));
+		if (identifier !== DIREBEAST_POOL_IDENTIFIER) continue;
+		const max = Math.max(0, Math.floor(Number(entry.pool.max) || 0));
+		return {
+			...entry,
+			max,
+			current: Math.max(0, Math.min(Math.floor(Number(entry.pool.current) || 0), max)),
+			label: String(entry.pool.label || 'Direbeast Form'),
+		};
+	}
+	return null;
+}
+
 export async function sporeAttack(actor, item) {
 	if (!actor || !item) {
 		ui.notifications?.error(`[${MODULE_ID}] sporeAttack: missing actor or item.`);
@@ -57,22 +86,28 @@ export async function sporeAttack(actor, item) {
 		stage = 'Germination';
 	}
 
-	let dialogContent = `<form class="nim-plus-spore-dialog">
+	let dialogContent = `<div class="nim-plus-spore-dialog">
 		<p><strong>${escape(stage)}</strong> — base damage <code>${baseDieCount}d${baseDieSize}</code> necrotic, Reach ${reach}. Target is Dazed on hit.</p>`;
 
+	const direbeastPool = hasDecay ? findDirebeastPool(actor) : null;
+	const chargeName = direbeastPool ? 'Direbeast Form use' : 'Beastshift charge';
+
 	if (hasDecay) {
+		const note = direbeastPool
+			? `Spent from <strong>${escape(direbeastPool.label)}</strong> (${direbeastPool.current}/${direbeastPool.max} left). Correct a wrong spend with the counter's +/- on your sheet.`
+			: 'Beastshift consumption is tracked manually — the chat card will note the spend.';
 		dialogContent += `
 		<hr>
-		<p><strong>Decay (L7).</strong> Spend Beastshift charges. Each charge bumps the die size or applies a condition:</p>
+		<p><strong>Decay (L7).</strong> Spend ${chargeName}s. Each one bumps the die size or applies a condition:</p>
 		<div class="form-group"><label>Die-size bumps</label><input type="number" name="dieBumps" value="0" min="0" max="${dieSizes.length - 1}" /></div>
-		<div class="form-group"><label><input type="checkbox" name="blinded"> Apply <strong>Blinded</strong> (1 charge)</label></div>
-		<div class="form-group"><label><input type="checkbox" name="poisoned"> Apply <strong>Poisoned</strong> (1 charge)</label></div>
-		<p style="opacity:0.75;font-size:0.85em;">Beastshift consumption is tracked manually — the chat card will note the spend.</p>`;
+		<div class="form-group"><label><input type="checkbox" name="blinded"> Apply <strong>Blinded</strong> (1 ${chargeName})</label></div>
+		<div class="form-group"><label><input type="checkbox" name="poisoned"> Apply <strong>Poisoned</strong> (1 ${chargeName})</label></div>
+		<p style="opacity:0.75;font-size:0.85em;">${note}</p>`;
 	}
 
-	dialogContent += `</form>`;
+	dialogContent += `</div>`;
 
-	const choice = await foundry.applications.api.DialogV2.wait({
+	const choice = await waitDialog({
 		window: { title: `${item.name} — Cast Sporesphere` },
 		content: dialogContent,
 		buttons: [
@@ -81,12 +116,11 @@ export async function sporeAttack(actor, item) {
 				label: 'Cast',
 				default: true,
 				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-spore-dialog');
+					const form = getDialogForm(button, dialog);
 					if (!form) return { cast: true };
-					const dieBumps = Number(form.elements.dieBumps?.value ?? 0) || 0;
-					const blinded = !!form.elements.blinded?.checked;
-					const poisoned = !!form.elements.poisoned?.checked;
+					const dieBumps = Math.floor(readNumber(form, 'dieBumps', 0));
+					const blinded = readChecked(form, 'blinded');
+					const poisoned = readChecked(form, 'poisoned');
 					return { cast: true, dieBumps, blinded, poisoned };
 				},
 			},
@@ -94,7 +128,7 @@ export async function sporeAttack(actor, item) {
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
 	if (!choice?.cast) return null;
 
@@ -108,6 +142,14 @@ export async function sporeAttack(actor, item) {
 
 	const finalFormula = `${baseDieCount}d${dieSize}`;
 	const charges = dieBumps + (choice.blinded ? 1 : 0) + (choice.poisoned ? 1 : 0);
+
+	// 0.2: the pool must cover the whole spend, or nothing is cast.
+	if (direbeastPool && charges > direbeastPool.current) {
+		ui.notifications?.warn(
+			`${actor.name} has only ${direbeastPool.current} ${direbeastPool.label} use${direbeastPool.current === 1 ? '' : 's'} left; Decay needs ${charges}.`,
+		);
+		return null;
+	}
 
 	const pendingConditions = [];
 	if (choice.blinded) pendingConditions.push('blinded');
@@ -123,10 +165,16 @@ export async function sporeAttack(actor, item) {
 	}
 
 	if (charges > 0) {
+		let spendNote = '';
+		if (direbeastPool) {
+			const remaining = direbeastPool.current - charges;
+			await setChargePoolCurrent(direbeastPool, remaining);
+			spendNote = `<p><em>${escape(direbeastPool.label)}: ${direbeastPool.current} → ${remaining}. Wrong? Correct it with the counter's +/- on the sheet.</em></p>`;
+		}
 		ChatMessage.create({
 			speaker: ChatMessage.getSpeaker({ actor }),
 			flavor: `<strong>${escape(item.name)}</strong> — ${escape(stage)} (Decay)`,
-			content: `<p>${escape(actor.name)} expends <strong>${charges}</strong> Beastshift charge${charges === 1 ? '' : 's'} on Sporesphere — final damage <code>${escape(finalFormula)}</code>${pendingConditions.length > 0 ? `, +${pendingConditions.map((c) => c[0].toUpperCase() + c.slice(1)).join(', ')} on hit` : ''}.</p>`,
+			content: `<p>${escape(actor.name)} expends <strong>${charges}</strong> ${chargeName}${charges === 1 ? '' : 's'} on Sporesphere — final damage <code>${escape(finalFormula)}</code>${pendingConditions.length > 0 ? `, +${pendingConditions.map((c) => c[0].toUpperCase() + c.slice(1)).join(', ')} on hit` : ''}.</p>${spendNote}`,
 		});
 	}
 

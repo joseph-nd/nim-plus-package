@@ -1,0 +1,78 @@
+{
+	"folder": "135882f6de864d11",
+	"name": "Summon Shadow",
+	"type": "spell",
+	"img": "icons/creatures/unholy/demons-horned-glowing-pink.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action</strong></p><p>Summon 1 adjacent Shadow (a d12 minion).</p><p><strong>Minions.</strong> They follow the minion rules and abandon you immediately outside of combat.</p><p><strong>Shadow Limit.</strong> You can have up to INT Shadows.</p>",
+			"higherLevelEffect": "<p>+1 Shadow every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "necrotic",
+		"tier": 0,
+		"classes": [
+			"shadowmancer"
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.ho2KADcmQWWTeYR0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.350",
+		"systemId": "nimble",
+		"systemVersion": "0.2.0",
+		"createdTime": 1757106811491,
+		"modifiedTime": 1762391420641,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "9nxiMH8Ow6mZPiKk"
+}

@@ -1,0 +1,64 @@
+{
+	"name": "Merciful Healing",
+	"type": "feature",
+	"img": "icons/magic/life/crosses-trio-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You can use Mend on non-Dying creatures. While you are Dying, your Lifebinding Spirit can act 1/round without spending an action.</p><hr><p>[M] Mend still spends its charge from the <em>Mend</em> pool; target a non-Dying creature as needed. The free action while Dying is tracked by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-mercy",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.ajMbFn2hPIQHR8mR"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761719795479,
+		"modifiedTime": 1761884604448,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "aGscSv2bDoo8S2lv",
+	"folder": "3a779450e9e48db8"
+}

@@ -3,6 +3,7 @@ import { ensureCombatDicePoolBonus } from './commander/combat-dice.mjs';
 import { ensureCombatDiceDiscard } from './commander/combat-dice-discard.mjs';
 import { ensureCoordinatedStrikeCounter } from './commander/coordinated-strike.mjs';
 import { ensureMasterCommanderRecovery } from './commander/master-commander.mjs';
+import { ensureSingleMindedOrderLevel } from './commander/single-minded-fighter.mjs';
 import { ensureJudgmentConsumer, ensureJudgmentPoolModifier } from './oathsworn/judgment-rules.mjs';
 import { iterateChargePools } from '../core/pools.mjs';
 import { ensureAncestryUseCounters } from '../ancestry/use-counters.mjs';
@@ -17,6 +18,15 @@ const INJECTED_RULE_TYPES = new Set(['feature', 'ancestry']);
  * Every rule this module supplies on the system's behalf, applied to one item.
  * Called from item data preparation, so it runs on load, on every update, and
  * on every level-up — there is no "install" step to miss and nothing to undo.
+ *
+ * Every `ensure*` below matches the item by `system.identifier` (which the
+ * system re-derives from the item's *name* in `prepareBaseData`), by name, or by
+ * pool/rule identifier — never by compendium UUID. So the Nim+ 0.2 playtest
+ * copies of the core features (see `core/supersede.mjs`), which keep the
+ * system's names but have ids of their own, are injected into exactly like the
+ * system documents they replace. Where 0.2 changes what a rule should do, the
+ * `ensure*` itself decides (they step aside when the content already carries the
+ * rule); nothing here needs to know which side of the setting an item is from.
  */
 function injectMissingRules(item) {
 	if (!classQoLEnabled()) return;
@@ -29,6 +39,7 @@ function injectMissingRules(item) {
 	ensureMasterCommanderRecovery(item);
 	ensureCombatDiceDiscard(item);
 	ensureCombatDicePoolBonus(item);
+	ensureSingleMindedOrderLevel(item);
 }
 
 /**

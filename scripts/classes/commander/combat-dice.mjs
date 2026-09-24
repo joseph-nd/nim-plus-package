@@ -141,7 +141,7 @@ export function ensureCombatDicePoolBonus(item) {
  * but a homebrew copy or a rename should still resolve — and only accepted when
  * it carries a `dieSize`, which is what marks a charge pool as the roll-on-spend
  * kind rather than a plain counter. Returns null for anyone who has not reached
- * level 4.
+ * Fit for Any Battlefield (level 4 in 2.0.3, level 2 in Nimble 0.2).
  */
 export function findCombatDicePool(actor) {
 	if (!actor) return null;

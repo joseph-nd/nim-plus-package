@@ -1,0 +1,66 @@
+{
+	"name": "Piercing",
+	"type": "feature",
+	"img": "icons/weapons/swords/sword-broad-crystal-paired.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/turn)</em> Your attacks with piercing weapons can strike another creature behind your target within Reach.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "weapon-mastery",
+		"gainedAtLevel": 6,
+		"subclass": false,
+		"gainedAtLevels": [
+			6,
+			10,
+			14
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.FpAasHdqW9jG2C8V"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "hSNzVvz0UhfJydPj",
+	"folder": "742371f96f880db9"
+}

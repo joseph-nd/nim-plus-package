@@ -1,0 +1,193 @@
+{
+	"name": "Draconic Crimson Rite",
+	"type": "feature",
+	"img": "icons/magic/fire/blast-jet-stream-embers-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "crimson-rite-tier0-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					0
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 3
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier1-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					1
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 3
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier2-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					2
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 5
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier3-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					3
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 7
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier4-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					4
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 10
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier5-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					5
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 13
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier6-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					6
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 16
+					}
+				}
+			},
+			{
+				"id": "crimson-rite-tier7-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire"
+				],
+				"tiers": [
+					7
+				],
+				"mode": "auto",
+				"predicate": {
+					"level": {
+						"min": 19
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Patron grants you knowledge of Fire spells. Your Shadows become flaming dragon wyrmling shadows. Your Shadow Blast and Shadows can deal fire or necrotic damage and inflict Smoldering whenever they roll the max.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "pact-of-the-red-dragon",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.Xex0SxZfXo5CxeD8"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632948194,
+		"modifiedTime": 1761884466653,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "PtVnvw26UbVVuyr5",
+	"folder": "e34a24adbce891e2"
+}

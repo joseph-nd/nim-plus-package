@@ -1,0 +1,131 @@
+{
+	"name": "Zap",
+	"type": "spell",
+	"img": "icons/magic/lightning/bolt-strike-blue-white.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "6pEXpZ8znbQP6LiP",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "2d8 + floor(@level / 5) * 4",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"miss": [
+							{
+								"id": "RBnZJN23UZWHUxoR",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "miss",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							},
+							{
+								"id": "b4uLkFLDWt2uKTUP",
+								"type": "condition",
+								"condition": "charged",
+								"parentContext": "miss",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							},
+							{
+								"id": "Ez4BB3Ntj11plTuN",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS - You take the damage instead!",
+								"parentContext": "miss",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"hit": [
+							{
+								"id": "ODalIwchGK1gVvib",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "enoNfbb3InpTsMUg",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Single Target</strong></p><p><strong>Range</strong>: 12. <strong>Damage</strong>: 2d8. On miss: the lightning fails to find ground, and strikes you instead.</p>",
+			"higherLevelEffect": "<p>On hit: +4 damage every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "lightning",
+		"tier": 0
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.r434oYTu9Y2MoMXg"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "0041f3ec884b9a1e",
+	"_id": "67ZmbSLwDwnipaqo"
+}

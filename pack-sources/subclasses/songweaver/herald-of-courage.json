@@ -1,0 +1,32 @@
+{
+	"name": "Herald of Courage",
+	"type": "subclass",
+	"img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Inspiring Presence</strong>. Whichever ally is nearest to you has advantage (if multiple are equally close, choose your favorite).</p><p>LEVEL 7 </p><p><strong>Fire in my Bones</strong>. Your Songweaver's Inspiration also grants your target 1 additional action.</p><p>LEVEL 11 </p><p><strong>Unfailing Resolve</strong>. Your Songweaver's Inspiration allows your target to reroll with advantage or increases a die face by +2.</p><p>LEVEL 15 </p><p><strong>Chorus of Champions</strong>. <em>(1/encounter)</em> <strong>Free Reaction</strong>: Give all party members 1 action.</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.mZ7v0aIsV0fO8RP9"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761886301006,
+		"modifiedTime": 1761887345963,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "hF8s8LyIkeyTnUVL",
+	"folder": "3b74d88613071789"
+}

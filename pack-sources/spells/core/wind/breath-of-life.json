@@ -1,0 +1,84 @@
+{
+	"name": "Breath of Life",
+	"type": "spell",
+	"img": "icons/magic/life/heart-cross-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "L52BCGBAZIDNnK0J",
+					"type": "healing",
+					"healingType": "healing",
+					"formula": "1d4 + floor(@level / 5) * 2",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Single Target</strong></p><p><strong>Range</strong>: 6. Restore 1d4 HP to a Dying creature. If healed for 4+: they also regain 1 action.</p>",
+			"higherLevelEffect": "<p>+2 Range and healing every 5 levels.</p>",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "wind",
+		"tier": 0
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.LZT7jCwyeSBzGyyP"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "b3180e4a97f8d5e9",
+	"_id": "FmFL6kke3ijhGXgD"
+}

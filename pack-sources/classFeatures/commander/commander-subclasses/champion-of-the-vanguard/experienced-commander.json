@@ -1,0 +1,64 @@
+{
+	"name": "Experienced Commander.",
+	"type": "feature",
+	"img": "icons/equipment/head/helm-barbute-reinforced.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Coordinated Strike may target 1 additional ally.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-vanguard",
+		"gainedAtLevel": 7,
+		"subclass": true,
+		"gainedAtLevels": [
+			7
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.UOx9MGeTyXGK9iEh"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1760400066843,
+		"modifiedTime": 1760400625532,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "GjFScp3QZnanwF4q",
+	"folder": "dc011b8fa8d1b3ac"
+}

@@ -1,0 +1,64 @@
+{
+	"name": "Grim Harrow",
+	"type": "feature",
+	"img": "icons/magic/acid/projectile-stream-bubbles.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you strike with your Bonescythe, treat each die as Primary. You may divide the dice as you choose amongst any number of adjacent targets within Reach.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "reaver",
+		"gainedAtLevel": 7,
+		"subclass": true,
+		"gainedAtLevels": [
+			7
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.fFrCgIQX8mfmHKUB"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762152972139,
+		"modifiedTime": 1762153027297,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "Sh0kSZPFGLSwgeqq",
+	"folder": "66f34cf98dc6ae4f"
+}

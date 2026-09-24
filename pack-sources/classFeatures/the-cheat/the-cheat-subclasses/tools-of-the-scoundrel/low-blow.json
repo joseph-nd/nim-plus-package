@@ -1,0 +1,64 @@
+{
+	"name": "Low Blow",
+	"type": "feature",
+	"img": "icons/skills/melee/strike-sword-stabbed-brown.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you Sneak Attack, spend 1 additional action to roll [[/r 1d4]], they are:</p><ol><li>Taunted by you for the rest of this encounter.</li><li>Knocked Prone, then Taunted by you for the rest of this encounter.</li><li>Dazed, then Taunted by you for the rest of this encounter.</li><li>Incapacitated until the end of next hero's turn.</li></ol><hr><p>Apply the rolled condition by hand. [M]</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "tools-of-the-scoundrel",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.b2rb39bzuYTi3kj6"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1759473005844,
+		"modifiedTime": 1761884749259,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "5C6GZmztxRBYNF4l",
+	"folder": "99d1002d9732dff3"
+}

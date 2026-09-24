@@ -1,0 +1,70 @@
+{
+	"name": "Fleet Footed",
+	"type": "feature",
+	"img": "icons/commodities/claws/claw-lizard-white-black.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Can move 2 spaces for free each turn. Advantage on Stealth checks and against the Grappled condition.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "chimeric-boon",
+		"gainedAtLevel": 6,
+		"subclass": false,
+		"gainedAtLevels": [
+			6,
+			9,
+			12,
+			17
+		],
+		"selectionCountByLevel": {
+			"6": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.sBkJM9PbEaS2JDXy"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "WOh1A6SxVRfV9BX1"
+}

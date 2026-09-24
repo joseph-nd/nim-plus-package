@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../../core/dialog.mjs';
 import { featsEnabled } from '../settings.mjs';
 import { actorKeyMod } from './helpers.mjs';
 import { allocateAcademic } from './academic.mjs';
@@ -69,27 +70,23 @@ export async function secondWind(actor, item) {
 		const opts = available
 			.map((s) => `<option value="${s}">d${s} (${pool[String(s)].current} available)</option>`)
 			.join('');
-		const picked = await foundry.applications.api.DialogV2.wait({
+		const picked = await waitDialog({
 			window: { title: `${item.name} — Spend a Hit Die` },
-			content: `<form class="nim-plus-second-wind"><div class="form-group"><label>Hit Die to spend</label><select name="size">${opts}</select></div></form>`,
+			content: `<div class="nim-plus-second-wind"><div class="form-group"><label>Hit Die to spend</label><select name="size">${opts}</select></div></div>`,
 			buttons: [
 				{
 					action: 'ok',
 					label: 'Spend',
 					default: true,
-					callback: (_event, button, dialog) => {
-						const root = dialog?.element ?? button;
-						const form = root?.querySelector?.('form.nim-plus-second-wind');
-						return form?.elements?.size?.value ?? null;
-					},
+					callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'size') ?? null,
 				},
 				{ action: 'cancel', label: 'Cancel', callback: () => null },
 			],
 			rejectClose: false,
 			modal: false,
-		}).catch(() => null);
-		if (picked === null) return null;
-		size = Number(picked) || size;
+		});
+		if (!available.includes(Number(picked))) return null;
+		size = Number(picked);
 	}
 
 	const current = Number(pool[String(size)]?.current ?? 0);

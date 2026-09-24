@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Your Lifebinding Spirit chimes like a bell, and your words carry an aura of importance when speaking in public. Searing Light becomes Toll the Hour.</p>",
+		"description": "<p>Your Lifebinding Spirit chimes like a bell, and your words carry an aura of importance when speaking in public. Searing Light becomes Toll the Hour.</p><p><strong>Nimble 0.2 playtest rules</strong> (world setting on): the core Searing Light feature no longer exists, so there is nothing to replace: you simply gain Toll the Hour.</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-tidings",

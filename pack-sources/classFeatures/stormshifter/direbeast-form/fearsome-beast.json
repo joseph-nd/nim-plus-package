@@ -1,0 +1,77 @@
+{
+	"name": "Fearsome Beast",
+	"type": "feature",
+	"img": "icons/creatures/abilities/bear-roar-bite-brown.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "direbeast-form-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "direbeast-form",
+				"poolScope": "actor",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(Large)</strong>. Transform into a Large beast. Gain +WIL Armor, WIL+LVL temp HP, advantage on STR saves, Fearsome, and the Gore attack.</p><p><strong>Fearsome</strong>. Whenever you Interpose or Defend, you may spend 1 mana to force the attacker to reroll the attack (you must choose either result).</p><p><strong>Gore</strong>. 1 Action: 1d8+LVL damage, on hit: gain LVL temp HP.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "direbeast-form",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.tZkAluN0peHdleIx"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "f3DmKKkUjO2MeNuJ"
+}

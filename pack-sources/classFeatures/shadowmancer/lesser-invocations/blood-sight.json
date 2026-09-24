@@ -1,0 +1,88 @@
+{
+	"folder": "fcb4da68281eecee",
+	"name": "Blood Sight",
+	"type": "feature",
+	"img": "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "blood-sight-pool",
+				"identifier": "blood-sight",
+				"label": "Blood Sight",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"hidden": false,
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/Safe Rest)</em> You may reroll an Examination check. Additionally, you can detect traces of blood on a surface, even after it has been cleaned.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "lesser-invocations",
+		"gainedAtLevel": 3,
+		"subclass": false,
+		"gainedAtLevels": [
+			3,
+			8,
+			11
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.4GAsAnTYpOC6EIUK"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632837434,
+		"modifiedTime": 1761710042324,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "LcIxtCFqdVl21ysb"
+}

@@ -1,0 +1,64 @@
+{
+	"name": "Deny Fate",
+	"type": "feature",
+	"img": "icons/commodities/currency/coin-engraved-skull-gold.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you miss with a spell (or if one or more creatures save vs a spell you cast), you MUST Demand Control.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-control",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.vm04u7ZkH2tUbkoc"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761542317806,
+		"modifiedTime": 1761884001581,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "klsTeFVyXgludEHc",
+	"folder": "6e17529c5e0476b7"
+}

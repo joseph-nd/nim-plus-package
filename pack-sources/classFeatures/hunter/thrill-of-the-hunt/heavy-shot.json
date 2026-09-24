@@ -1,0 +1,72 @@
+{
+	"name": "Heavy Shot",
+	"type": "feature",
+	"img": "icons/skills/ranged/arrow-flying-white-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(Half range)</em> Action: Attack with a ranged weapon and knock your target back 2 spaces.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "thrill-of-the-hunt",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			4,
+			6,
+			8,
+			12,
+			14
+		],
+		"selectionCountByLevel": {
+			"2": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.7rZG0gw3fUgYjRAA"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "yl2Ul3ZAVY259sb6",
+	"folder": "2cb2b96ad55f60c9"
+}

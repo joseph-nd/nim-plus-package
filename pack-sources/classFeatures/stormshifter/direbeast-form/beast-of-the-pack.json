@@ -1,0 +1,77 @@
+{
+	"name": "Beast of the Pack",
+	"type": "feature",
+	"img": "icons/creatures/abilities/wolf-howl-moon-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "direbeast-form-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "direbeast-form",
+				"poolScope": "actor",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(Medium)</strong>. Transform into a Medium beast. Gain +DEX Speed, you can move DEX spaces for free each turn, advantage on DEX saves, Lightning Step, and the Frenzy attack.</p><p><strong>Lightning Step</strong>. (1/turn) Spend 1 mana to teleport DEX spaces for free.</p><p><strong>Frenzy</strong>. 1 Action: 1d6+LVL damage. Your next attack gains increasing advantage instead of disadvantage. This bonus resets whenever you crit, or after you use a different attack.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "direbeast-form",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.bQW0Iy4BSeXNRD2x"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "VSJF1DJmMlGFmOqm"
+}

@@ -1,0 +1,97 @@
+{
+	"name": "Master of Forms",
+	"type": "feature",
+	"img": "icons/creatures/abilities/dragon-breath-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "master-of-forms-use-pool",
+				"identifier": "masterOfFormsUse",
+				"label": "Master of Forms use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "master-of-forms-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "masterOfFormsUse",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/encounter)</em> When you would miss or crit while in a Direbeast form, you may increase or decrease the Primary Die by 1 instead.</p><hr><p>The use is tracked on this feature (refreshed each encounter); click it to spend it, then adjust the Primary Die by hand. [M]</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-fang-and-claw",
+		"gainedAtLevel": 11,
+		"subclass": true,
+		"gainedAtLevels": [
+			11
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.vx5GzoAq1L5Xl5fL"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762039515821,
+		"modifiedTime": 1762039703734,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "4am6zFpU1GvRPXX1",
+	"folder": "9e5f48b242606c6d"
+}

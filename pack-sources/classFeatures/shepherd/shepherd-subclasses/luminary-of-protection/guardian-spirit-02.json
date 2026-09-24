@@ -1,0 +1,77 @@
+{
+	"name": "Guardian Spirit",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-protection/guardian-spirit.webp",
+	"system": {
+		"macro": "",
+		"identifier": "guardian-spirit",
+		"rules": [
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "guardian-spirit-mend-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "lifebindingMend",
+				"poolScope": "actor",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "when you Interpose",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Interpose, you may have your Lifebinding Spirit do so instead by spending one of its Mend charges.</p><hr><p>[A] Using this feature spends 1 charge from the <em>Mend</em> pool (the actor-wide pool from My Buddy!, adjustable with the sheet's +/-).</p><p>[M] Resolve the Interpose by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-protection",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.SYXUMb1hV8uXg3Cs"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "j7qNOAkwa4AN4J1w",
+	"folder": "6abdfe1dd7775185"
+}

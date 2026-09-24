@@ -1,0 +1,65 @@
+{
+	"name": "Large - Go for the Throat!",
+	"type": "feature",
+	"img": "icons/creatures/abilities/lion-roar-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/encounter) Costs 1 TotH charge, 2 actions: Your companion attacks your quarry for 1d12+(4×LVL) damage (ignoring armor). If that creature dies, you may deal half as much to another creature within Reach 4. </p><hr><p>Level 11: 2/encounter.</p>",
+		"featureType": "class",
+		"class": "hunter",
+		"group": "beastmaster",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3,
+			11
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.78hq89TxTwpW7H17"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762156106469,
+		"modifiedTime": 1762156181309,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "pPF3YcvIMKEDmK2O",
+	"folder": "42f27a37139bf46b"
+}

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>Add Watch Out!, Hit The Weak Spot! and Shake It Off! to the list of available Commander's Orders. Choose another Commander's Order.</p><p><strong>Watch Out!</strong> 1 action. (1/encounter) Reaction (when an ally within Reach 12 is attacked): Cause the attack targeting your ally to miss.</p><p><strong>Hit The Weak Spot!</strong> 1 action. Reaction (as an ally within Reach 12 attacks an enemy): Your ally's attack ignores Armor.</p><p><strong>Shake It Off!</strong> 1 action. Action/Reaction (on an ally's turn): Target ally within Reach 12 is cured of either Charmed, Dazed, Frightened or Taunted.</p>",
+		"description": "<p>Add Watch Out!, Hit The Weak Spot! and Shake It Off! to the list of available Commander's Orders. Choose another Commander's Order.</p><p><strong>Watch Out!</strong> 1 action. (1/encounter) Reaction (when an ally within Reach 12 is attacked): Cause the attack targeting your ally to miss.</p><p><strong>Hit The Weak Spot!</strong> 1 action. Reaction (as an ally within Reach 12 attacks an enemy): Your ally's attack ignores Armor.</p><p><strong>Shake It Off!</strong> 1 action. Action/Reaction (on an ally's turn): Target ally within Reach 12 is cured of either Charmed, Dazed, Frightened or Taunted.</p><p><strong>Nimble 0.2 playtest rules</strong> (world setting on): Commander's Orders are chosen at level 4, not level 2, so until then the extra Order chosen here is your only one.</p><p>[M] Add the extra Order by hand: drag it from the Commander's Orders compendium folder onto your sheet.</p>",
 		"featureType": "class",
 		"class": "commander",
 		"group": "champion-of-the-stratagem",

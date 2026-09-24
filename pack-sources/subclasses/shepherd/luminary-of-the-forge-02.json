@@ -1,0 +1,32 @@
+{
+	"name": "Luminary of the Forge",
+	"type": "subclass",
+	"img": "modules/nim-plus-package/assets/subclassImages/shepherd/luminary-of-the-forge.webp",
+	"system": {
+		"macro": "",
+		"identifier": "luminary-of-the-forge",
+		"rules": [],
+		"description": "<p><em>\"Your Lifebinding Spirit is the furnace's flame incarnate.\"</em></p><p>LEVEL 3</p><p><strong>Flameworker.</strong> Exchange knowledge of the Necrotic spell school for Fire. Your Lifebinding Spirit inflicts Smoldering on crit.</p><p><strong>Seasoned Journeyman.</strong> Whenever you Safe Rest, choose one:</p><ul><li><strong>Weaponsmith.</strong> Your weapons gain +STR damage until your next Safe Rest.</li><li><strong>Armorsmith.</strong> Your armor gains +STR Armor until your next Safe Rest.</li></ul><p>LEVEL 7</p><p><strong>Lightforged.</strong> Mend also grants WIL+STR Temp HP and 1 action.</p><p><strong>Living Ember.</strong> Your Lifebinding Spirit deals 2× damage to Smoldering targets, ending the condition.</p><p>LEVEL 11</p><p><strong>Masterwork.</strong> +WIL to Weaponsmith and Armorsmith; you may choose twice.</p><p>LEVEL 15</p><p><strong>Quench the Blaze.</strong> (1/encounter) When a Smoldering enemy loses the condition, you may Restrain them until the end of their next turn.</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-subclasses.Item.hLu25XJYbnyC4RS8"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "KYPt7hS1Kv3nt48w",
+	"folder": "342ecdf0f6b5830f"
+}

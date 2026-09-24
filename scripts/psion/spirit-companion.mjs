@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readNumber, readText, waitDialog } from '../core/dialog.mjs';
 
 // Spirit Companion template lookup — imported once per world from the
 // `nim-plus-companions` compendium and identified by a stable flag so
@@ -37,7 +38,7 @@ export async function summonSpiritCompanion(actor, item) {
 	const savedName = actor.getFlag(MODULE_ID, 'spiritName') || `${actor.name}'s Spirit`;
 
 	const choice = await openSpiritDialog({ actor, savedDie, savedImage, savedName, wil });
-	if (!choice) return null;
+	if (choice?.action !== 'summon' && choice?.action !== 'dismiss') return null;
 
 	if (choice.action === 'dismiss') {
 		const removed = await dismissSpiritToken(actor);
@@ -231,7 +232,7 @@ async function openSpiritDialog({ actor, savedDie, savedImage, savedName, wil })
 	const previewSrc = savedImage || 'icons/svg/mystery-man.svg';
 
 	const content = `
-		<form class="nim-plus-spirit-dialog">
+		<div class="nim-plus-spirit-dialog">
 			<div class="form-group">
 				<label>Companion Name</label>
 				<input type="text" name="name" value="${escape(savedName)}" />
@@ -249,12 +250,10 @@ async function openSpiritDialog({ actor, savedDie, savedImage, savedName, wil })
 				</div>
 			</div>
 			<p style="opacity:0.7;font-size:0.85em;">WIL bonus: <strong>${wil >= 0 ? `+${wil}` : wil}</strong> (auto). Final formula: <code>1d{die} + ${wil}</code>.</p>
-		</form>
+		</div>
 	`;
 
-	const DialogV2 = foundry.applications.api.DialogV2;
-
-	return DialogV2.wait({
+	return waitDialog({
 		window: { title: 'Summon Spirit Companion' },
 		content,
 		buttons: [
@@ -262,7 +261,7 @@ async function openSpiritDialog({ actor, savedDie, savedImage, savedName, wil })
 				action: 'summon',
 				label: 'Summon',
 				default: true,
-				callback: (_event, button, dialog) => readForm(dialog ?? button, 'summon'),
+				callback: (_event, button, dialog) => readForm(getDialogForm(button, dialog), 'summon'),
 			},
 			{
 				action: 'dismiss',
@@ -278,30 +277,26 @@ async function openSpiritDialog({ actor, savedDie, savedImage, savedName, wil })
 		render: (_event, dialog) => wireDialogPicker(dialog, actor),
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 }
 
-function readForm(host, action) {
-	const root = host?.element ?? host;
-	const form = root?.querySelector?.('form.nim-plus-spirit-dialog');
+// Fields live in DialogV2's own <form> (a nested <form> would be dropped by
+// the HTML parser), so both helpers read that form.
+function readForm(form, action) {
 	if (!form) return null;
-
-	const name = form.elements.name?.value?.trim() || 'Spirit';
-	const die = Number(form.elements.die?.value) || 6;
-	const image = form.elements.image?.value?.trim() || '';
-
+	const name = readText(form, 'name', 'Spirit');
+	const die = SPIRIT_DIE_FACES.includes(readNumber(form, 'die')) ? readNumber(form, 'die') : 6;
+	const image = readText(form, 'image');
 	return { action, name, die, image };
 }
 
 function wireDialogPicker(dialog, _actor) {
-	const root = dialog?.element ?? dialog;
-	if (!root) return;
-	const form = root.querySelector('form.nim-plus-spirit-dialog');
-	if (!form) return;
+	const form = getDialogForm(null, dialog);
+	if (!form?.querySelector) return;
 
 	const pickBtn = form.querySelector('[data-spirit-pick]');
 	const preview = form.querySelector('[data-spirit-preview]');
-	const input = form.elements.image;
+	const input = form.elements?.image ?? form.querySelector('input[name="image"]');
 
 	const sync = () => {
 		if (!preview) return;

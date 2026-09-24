@@ -1,0 +1,77 @@
+{
+	"name": "Beast of Nightmares",
+	"type": "feature",
+	"img": "icons/creatures/invertebrates/spider-skull-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "direbeast-form-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 2,
+				"poolIdentifier": "direbeast-form",
+				"poolScope": "actor",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>(Tiny)</strong>. Transform into any Tiny beast or insect (provided it is horrible). Gain Silent But Deadly and the Sting attack.</p><p><strong>Silent But Deadly</strong>. Speed: 2. Attackers cannot target you until you become conspicuous (e.g., attacking or being seen transforming). Attacks against you have disadvantage. You cannot Defend or Interpose, and any damage ends this form.</p><p><strong>Sting</strong>. 1 Action: (1/round, Reach 0) 1d4+3×LVL acid damage (ignoring Armor), on crit: Dazed.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "direbeast-form",
+		"gainedAtLevel": 5,
+		"subclass": false,
+		"gainedAtLevels": [
+			5
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.qFGSdrw0ZItRK00x"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "vEFcEzVIltLXIw94"
+}

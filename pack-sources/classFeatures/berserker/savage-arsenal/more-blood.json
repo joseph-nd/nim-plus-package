@@ -1,0 +1,106 @@
+{
+	"name": "MORE BLOOD!",
+	"type": "feature",
+	"img": "icons/weapons/axes/axe-double-short-orange.webp",
+	"system": {
+		"group": "savage-arsenal",
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "more-blood-crit-refill",
+				"identifier": "",
+				"label": "MORE BLOOD! (gain a Fury Die when crit)",
+				"predicate": {},
+				"priority": 1,
+				"poolType": "dice",
+				"poolIdentifier": "fury",
+				"dieSize": null,
+				"maxDelta": null,
+				"addRefills": [
+					{
+						"trigger": "onCritReceived",
+						"mode": "add",
+						"value": "1",
+						"predicate": {}
+					}
+				]
+			},
+			{
+				"type": "modifyToggle",
+				"disabled": false,
+				"id": "more-blood-auto-rage",
+				"identifier": "",
+				"label": "MORE BLOOD! (Rage for free at 0 HP)",
+				"predicate": {},
+				"priority": 1,
+				"toggleIdentifier": "rage",
+				"suppressTurnOff": [],
+				"turnOn": [
+					"onActorDying"
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever an enemy crits you, gain 1 Fury Die. Whenever you drop to 0 HP, Rage for free.</p><p><em>[A] The Fury Die on a crit is automated, and the Raging state is restored automatically when you drop to 0 HP (roll your free Fury Die by clicking Rage).</em></p>",
+		"featureType": "class",
+		"class": "berserker",
+		"gainedAtLevel": 4,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16
+		],
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.yUO65iWvr1NuJoQH"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "quogyGuFUYY1UdmW",
+	"folder": "608bc2767e72d9f9"
+}

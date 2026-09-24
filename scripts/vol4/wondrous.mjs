@@ -1,4 +1,5 @@
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readNumber, waitDialog } from '../core/dialog.mjs';
 import { actorKeyMod } from '../feats/mechanics/helpers.mjs';
 import { vol4SpendCharge } from './charges.mjs';
 import { vol4ConsumeOne } from './runes.mjs';
@@ -11,31 +12,27 @@ export async function vol4BattlemageInfusion(actor, item) {
 	const maxSpend = Math.max(0, Math.min(mana, highestTier));
 	const key = actorKeyMod(actor);
 
-	const spend = await foundry.applications.api.DialogV2.wait({
+	const spend = await waitDialog({
 		window: { title: `${item.name} — Infusion` },
 		content: `
-			<form class="nim-plus-infusion">
+			<div class="nim-plus-infusion">
 				<p>Spend up to <strong>${maxSpend}</strong> mana (current ${mana}, highest tier ${highestTier}). Each point: +KEY (${key}) damage and one die step (1d4 &gt; 1d6 &gt; &hellip; &gt; 1d20).</p>
 				<div class="form-group"><label>Mana to spend</label>
 				<input type="number" name="mana" value="0" min="0" max="${maxSpend}" step="1"></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Strike',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-infusion');
-					return Number(form?.elements?.mana?.value ?? 0);
-				},
+				callback: (_event, button, dialog) => readNumber(getDialogForm(button, dialog), 'mana', 0),
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
-	if (spend === null) return null;
+	});
+	if (typeof spend !== 'number' || !Number.isFinite(spend)) return null;
 
 	const spent = Math.max(0, Math.min(maxSpend, Math.floor(spend)));
 	if (spent > 0) {
@@ -59,31 +56,27 @@ export async function vol4RealityFold(actor, item) {
 	const hp = Number(actor.system?.attributes?.hp?.value ?? 0);
 	const maxSpaces = Math.max(0, hp - 1);
 
-	const spaces = await foundry.applications.api.DialogV2.wait({
+	const spaces = await waitDialog({
 		window: { title: `${item.name} — Reality Fold` },
 		content: `
-			<form class="nim-plus-fold">
+			<div class="nim-plus-fold">
 				<p>Teleport to a space you can see, paying <strong>1 HP per space</strong> (up to ${maxSpaces}).</p>
 				<div class="form-group"><label>Spaces</label>
 				<input type="number" name="spaces" value="1" min="1" max="${maxSpaces}" step="1"></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Fold',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-fold');
-					return Number(form?.elements?.spaces?.value ?? 0);
-				},
+				callback: (_event, button, dialog) => readNumber(getDialogForm(button, dialog), 'spaces', 0),
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
-	if (!spaces || spaces < 1) return null;
+	});
+	if (typeof spaces !== 'number' || !Number.isFinite(spaces) || spaces < 1) return null;
 
 	const cost = Math.min(maxSpaces, Math.floor(spaces));
 	if (typeof actor.applyDamage === 'function') await actor.applyDamage(cost);

@@ -1,0 +1,123 @@
+{
+	"folder": "627db1dc8c7dba5f",
+	"name": "My Buddy!",
+	"type": "feature",
+	"img": "icons/magic/light/hand-sparks-glow-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "my-buddy",
+		"rules": [
+			{
+				"id": "my-buddy-lifebinding-spirit",
+				"type": "grantSpells",
+				"schools": [],
+				"tiers": [
+					0
+				],
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.SAEd6Nk8SfgJ2Ff7"
+				],
+				"mode": "auto",
+				"label": "My Buddy!: Lifebinding Spirit"
+			},
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "lifebinding-mend-pool",
+				"identifier": "lifebindingMend",
+				"label": "Mend (Lifebinding Spirit)",
+				"predicate": {},
+				"priority": 1,
+				"scope": "actor",
+				"max": "max(@will, 0)",
+				"dieSize": null,
+				"initial": "max",
+				"hidden": false,
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "max(@will, 0)"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "lifebinding-mend-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "lifebindingMend",
+				"poolScope": "actor",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Mend (spirit acts, Reach 4)",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "LifebindingMendHeal1",
+					"type": "healing",
+					"healingType": "healing",
+					"formula": "(@will)d20",
+					"targetDisposition": "friendly",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": "A Dying creature within Reach 4 of your spirit",
+				"attackType": "reach",
+				"distance": 4
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Learn the <strong>Lifebinding Spirit</strong> cantrip.</p><p><strong>Mend.</strong> 1 Action: (WIL/Safe Rest, Reach 4) Your Lifebinding Spirit restores WIL d20 HP to a Dying creature.</p><p>[A] Using this feature Mends: it spends 1 charge from the <em>Mend</em> pool (WIL/Safe Rest, adjustable with the sheet's +/-) and rolls the healing.</p><p>[M] Your Lifebinding Spirit rolls twice as many dice at level 20 (Twilight Sage).</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "shepherd-progression",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.n6Df3QpL8sV1xR2M"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761714066553,
+		"modifiedTime": 1761714165315,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "exBBa4zjz3X50xd7"
+}

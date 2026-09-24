@@ -3,6 +3,7 @@ import { getDamageRollClass } from '../../core/system.mjs';
 import { applyViciousOpportunist } from '../cheat/vicious-opportunist.mjs';
 import { offerSneakAttack } from '../cheat/sneak-attack.mjs';
 import { applyCombatTactic, explodeRaisedPrimaryDie } from '../commander/tactic-resolution.mjs';
+import { applyDeathBlow } from '../berserker/death-blow.mjs';
 
 /**
  * Raise an evaluated DamageRoll's kept primary die to its maximum face, roll the
@@ -72,8 +73,8 @@ export function patchDamageRollForClassQoL() {
 		const result = await originalEvaluate.call(this, options);
 
 		// Order matters: Vicious Opportunist can turn a hit into a crit, an Inerrant
-		// Strike reroll can produce one out of a miss, and a crit is what Sneak
-		// Attack triggers on.
+		// Strike reroll can produce one out of a miss, and a crit is what Death Blow
+		// and Sneak Attack trigger on.
 		try {
 			await applyViciousOpportunist(this);
 		} catch (error) {
@@ -84,6 +85,12 @@ export function patchDamageRollForClassQoL() {
 			await applyCombatTactic(this);
 		} catch (error) {
 			console.error(`[${MODULE_ID}] The Combat Tactic could not modify the roll`, error);
+		}
+
+		try {
+			await applyDeathBlow(this);
+		} catch (error) {
+			console.error(`[${MODULE_ID}] Death Blow could not modify the roll`, error);
 		}
 
 		try {

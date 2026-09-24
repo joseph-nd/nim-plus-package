@@ -1,0 +1,100 @@
+{
+	"name": "Electrickery",
+	"type": "spell",
+	"img": "icons/magic/lightning/bolts-strike-salvo-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "When an ally is attacked.",
+				"quantity": 3,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "prv0LubBM4zhJV4X",
+					"type": "savingThrow",
+					"savingThrowType": "strength",
+					"sharedRolls": [],
+					"on": {},
+					"parentContext": null,
+					"parentNode": null,
+					"saveType": "will"
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>3 Actions, 2 Targets</strong></p><p><strong>Range</strong>: 8. <strong>Reaction</strong>: When an ally is attacked. They teleport away. Teleport another creature there on a failed WIL save (making them the new target). Costs 1 Action if Charged, ending the condition.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+2 Range.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 2
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "lightning",
+		"tier": 4,
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [
+				{
+					"operation": "addRange",
+					"value": 2,
+					"dice": null,
+					"condition": null,
+					"targetEffectId": null,
+					"durationType": null
+				}
+			],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.Fg36f576R4CRtxWV"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "0041f3ec884b9a1e",
+	"_id": "nnbg7nsiiFEUK4v0"
+}

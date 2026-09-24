@@ -1,0 +1,68 @@
+{
+	"folder": "fcb4da68281eecee",
+	"name": "Swarming Shadows",
+	"type": "feature",
+	"img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever a Shadow rolls the max, summon another Shadow adjacent to the target (ignoring your Shadow Limit).</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "greater-invocations",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			14,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.dcby9Vc0Qqn3xSlP"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632783894,
+		"modifiedTime": 1761711101308,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "dXqHowJez1j7fY5u"
+}

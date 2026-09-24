@@ -1,0 +1,70 @@
+{
+	"name": "Beast of the Sea",
+	"type": "feature",
+	"img": "icons/creatures/fish/fish-marlin-swordfight-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Defend vs a melee attack, you can Blind the attacker until the beginning of their next turn. Can move, breathe, and fight underwater without penalty.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "chimeric-boon",
+		"gainedAtLevel": 6,
+		"subclass": false,
+		"gainedAtLevels": [
+			6,
+			9,
+			12,
+			17
+		],
+		"selectionCountByLevel": {
+			"6": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.0AOfYzkPdS9fS8E0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "622493ed71a2e362",
+	"_id": "JQOeHYdusSuqa7XI"
+}

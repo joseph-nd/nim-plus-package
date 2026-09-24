@@ -9,7 +9,7 @@
 		"activation": {
 			"acquireTargetsFromTemplate": false,
 			"cost": {
-				"details": "Expend Beastshift charges to upcast Sporesphere",
+				"details": "Expend Beastshift charges (0.2: Direbeast Form uses) to upcast Sporesphere",
 				"quantity": 1,
 				"type": "none",
 				"isReaction": false
@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You can expend Beastshift charges to upcast your spores. Each charge expended can either increase the damage die size or add the Blinded or Poisoned condition.</p><p><em>Foundry tip — while you own this feature, the Sporesphere dialog automatically offers a Decay panel: enter the number of die-size bumps and tick Blinded / Poisoned. Beastshift charges are tracked manually; the chat card flavor records the spend.</em></p>",
+		"description": "<p>You can expend Beastshift charges to upcast your spores. Each charge expended can either increase the damage die size or add the Blinded or Poisoned condition.</p><p><strong>Nimble 0.2 playtest rules</strong> (world setting on): the Stormshifter has no Beastshift charges; spend <strong>Direbeast Form</strong> uses (DEX/encounter) instead.</p><hr><p>[A] While you own this feature, the Sporesphere dialog offers a Decay panel: enter the number of die-size bumps and tick Blinded / Poisoned. With the 0.2 rules on, the macro spends that many uses from the <em>Direbeast Form</em> pool and blocks the cast if too few are left; correct a wrong spend with the counter's +/- on the sheet.</p><p>[M] With the 0.2 rules off (Heroes 2.0.3), Beastshift charges are tracked by hand; the chat card records the spend.</p>",
 		"featureType": "class",
 		"class": "stormshifter",
 		"group": "circle-of-spores",

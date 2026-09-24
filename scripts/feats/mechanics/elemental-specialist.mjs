@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../../core/dialog.mjs';
 import { findFirstDamageNode } from '../../core/damage.mjs';
 import { featsEnabled } from '../settings.mjs';
 import { resyncFeatsForActor } from '../sheet-section.mjs';
@@ -51,31 +52,29 @@ export async function chooseElementalSpecialist(actor, item) {
 		([k, l]) => `<option value="${k}"${k === 'key' ? ' selected' : ''}>${l}</option>`,
 	).join('');
 
-	const choice = await foundry.applications.api.DialogV2.wait({
+	const choice = await waitDialog({
 		window: { title: `Elemental Specialist — ${actor.name}` },
 		content: `
-			<form class="nim-plus-elemental">
+			<div class="nim-plus-elemental">
 				<p>Choose <strong>one spell school you know</strong>. Its <em>tiered</em> spells gain bonus damage equal to the selected key stat.</p>
 				<div class="form-group"><label>Spell School</label><select name="school">${schoolOpts}</select></div>
 				<div class="form-group"><label>Damage Key Stat</label><select name="ability">${keyOpts}</select></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Confirm',
 				default: true,
 				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-elemental');
-					if (!form) return null;
-					return { school: form.elements.school?.value, ability: form.elements.ability?.value };
+					const form = getDialogForm(button, dialog);
+					return { school: readField(form, 'school'), ability: readField(form, 'ability') };
 				},
 			},
 			{ action: 'cancel', label: 'Later', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
 	if (!choice?.school) {
 		ui.notifications?.info('Elemental Specialist can be configured later from the Feats panel.');

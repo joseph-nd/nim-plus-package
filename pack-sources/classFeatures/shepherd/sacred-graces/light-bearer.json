@@ -1,0 +1,93 @@
+{
+	"folder": "627db1dc8c7dba5f",
+	"name": "Light Bearer",
+	"type": "feature",
+	"img": "icons/magic/light/hand-sparks-glow-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "light-bearer-initiative-mend",
+				"identifier": "",
+				"label": "Light Bearer: regain 1 Mend on Initiative",
+				"predicate": {},
+				"priority": 2,
+				"poolType": "charge",
+				"poolIdentifier": "lifebindingMend",
+				"dieSize": null,
+				"maxDelta": null,
+				"addRefills": [
+					{
+						"trigger": "encounterStart",
+						"mode": "add",
+						"value": "1",
+						"predicate": {}
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Lifebinding Spirit can cast Heal. Whenever you roll Initiative, regain 1 use of Mend (it expires when combat ends if unused).</p><p>[A] The <em>Mend</em> pool regains 1 charge (up to its max) at the start of each encounter.</p><p>[M] If the regained charge is still unspent when combat ends, remove it: click the counter to correct it.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "sacred-grace",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			9,
+			13
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"9": 1,
+			"13": 1
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.veDJxoUwUkaRqok1"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761718457716,
+		"modifiedTime": 1761718667560,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "D60WfYZfHs6Z22A6"
+}

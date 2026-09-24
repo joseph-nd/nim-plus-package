@@ -1,0 +1,64 @@
+{
+	"name": "Inspiring Presence",
+	"type": "feature",
+	"img": "icons/magic/control/buff-flight-wings-runes-blue-white.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whichever ally is nearest to you has advantage (if multiple are equally close, choose your favorite).</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-courage",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.QYesl098hs8tr7oS"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761948852900,
+		"modifiedTime": 1761948996866,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "ciNQNsoF1kr7UMpl",
+	"folder": "696ecc63b84c4cad"
+}

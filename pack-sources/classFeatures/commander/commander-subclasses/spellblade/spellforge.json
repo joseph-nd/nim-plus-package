@@ -1,0 +1,64 @@
+{
+	"name": "Spellforge",
+	"type": "feature",
+	"img": "icons/magic/fire/dagger-rune-enchant-flame-strong-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you roll Initiative you may cast Enchant Weapon for free (can be upcast as normal by spending additional mana).</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "spellblade",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.k8CKWZXbSRAa0yO4"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762150299373,
+		"modifiedTime": 1762150347433,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "VBjm2FWx4Yfy7NUG",
+	"folder": "df7370fe95537a41"
+}

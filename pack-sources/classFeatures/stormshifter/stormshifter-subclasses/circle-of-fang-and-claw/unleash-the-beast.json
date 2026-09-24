@@ -1,0 +1,64 @@
+{
+	"name": "Unleash the Beast",
+	"type": "feature",
+	"img": "icons/creatures/abilities/lion-roar-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gore also Taunts until the end of the target's next turn. Frenzy increases to 1d8+LVL damage.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-fang-and-claw",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.Vrg9rgHC5wCVSBB5"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762039179775,
+		"modifiedTime": 1762039221167,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "UWAWzq4Kg7oDDMA3",
+	"folder": "9e5f48b242606c6d"
+}

@@ -32,7 +32,7 @@
 				"width": 1
 			}
 		},
-		"description": "<p>You gain the Light Bearer Sacred Grace. Searing Light can now target Blinded creatures. You also gain Darkvision 6.</p><p>Light Bearer now regains 2 uses of Searing Light. Searing Light now uses d12s.</p>",
+		"description": "<p>You gain the Light Bearer Sacred Grace. Searing Light can now target Blinded creatures. You also gain Darkvision 6.</p><p>Light Bearer now regains 2 uses of Searing Light. Searing Light now uses d12s.</p><p><strong>Nimble 0.2 playtest rules</strong> (world setting on): the core Searing Light feature no longer exists, and Light Bearer regains Mend instead. The Searing Light clauses have no counterpart until this subclass is revised; agree a ruling with your GM (e.g. Light Bearer regains 2 uses of Mend).</p>",
 		"featureType": "class",
 		"class": "shepherd",
 		"group": "luminary-of-darkness",

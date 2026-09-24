@@ -1,0 +1,73 @@
+{
+	"folder": "135882f6de864d11",
+	"name": "Command Shadows",
+	"type": "spell",
+	"img": "icons/magic/unholy/hand-claw-fog-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action</strong></p><p><em>(1/turn)</em> ALL your Shadows move 6 then attack.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": ""
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": []
+		},
+		"school": "necrotic",
+		"tier": 0,
+		"classes": [
+			"shadowmancer"
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.350",
+		"systemId": "nimble",
+		"systemVersion": "0.2.0",
+		"createdTime": 1757106811491,
+		"modifiedTime": 1762391420641,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "uHirzuVSdqt7jVPU"
+}

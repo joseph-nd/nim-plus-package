@@ -1,0 +1,80 @@
+{
+	"name": "BOUNDLESS RAGE",
+	"type": "feature",
+	"img": "icons/skills/wounds/blood-cells-vessel-red-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "boundless-rage-fury-floor",
+				"identifier": "",
+				"label": "Boundless Rage: Fury Dice floor of 5",
+				"predicate": {},
+				"priority": 6,
+				"poolType": "dice",
+				"poolIdentifier": "fury",
+				"dieSize": null,
+				"maxDelta": null,
+				"minFace": 5,
+				"addRefills": []
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+1 to any 2 of your stats. Anytime you roll less than 5 on a Fury Die, change it to 5 instead.</p><p><em>Apply the two +1 stat increases manually on your sheet. The Fury Die floor is automated.</em></p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "berserker-progression",
+		"gainedAtLevel": 20,
+		"subclass": false,
+		"gainedAtLevels": [
+			20
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.A6kBal1K8wU3o7jP"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "lVMOMpNNV7OQCSvZ",
+	"folder": "608bc2767e72d9f9"
+}

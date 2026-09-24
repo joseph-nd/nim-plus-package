@@ -1,0 +1,86 @@
+{
+	"name": "Lifebinder's Embrace",
+	"type": "feature",
+	"img": "icons/magic/light/beam-rays-teal-purple-large.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "lifebinders-embrace-initiative-mend",
+				"identifier": "",
+				"label": "Lifebinder's Embrace: regain 1 Mend on Initiative",
+				"predicate": {},
+				"priority": 2,
+				"poolType": "charge",
+				"poolIdentifier": "lifebindingMend",
+				"dieSize": null,
+				"maxDelta": null,
+				"addRefills": [
+					{
+						"trigger": "encounterStart",
+						"mode": "add",
+						"value": "1",
+						"predicate": {}
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Mend may heal 1 additional creature. Regain 1 charge of Mend when you roll Initiative (this expires if unspent at the end of combat).</p><hr><p>[A] The <em>Mend</em> pool regains 1 charge (up to its max) at the start of each encounter.</p><p>[M] Heal the additional creature by hand. If the regained charge is still unspent when combat ends, remove it: click the counter to correct it.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-mercy",
+		"gainedAtLevel": 15,
+		"subclass": true,
+		"gainedAtLevels": [
+			15
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.jE4ehCQp1pkASqaa"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761720198690,
+		"modifiedTime": 1761884613780,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "ZtwWjJKhvQxlk3QL",
+	"folder": "3a779450e9e48db8"
+}

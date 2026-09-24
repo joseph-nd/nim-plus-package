@@ -1,0 +1,64 @@
+{
+	"name": "Opportunistic Snark",
+	"type": "feature",
+	"img": "icons/magic/control/mouth-smile-deception-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "Reach 12, when an enemy's attack deals 0 damage",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reaction</strong> (Reach 12, when an enemy's attack deals 0 damage): You may cast Vicious Mockery at them; it deals double damage when cast this way and can't miss.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "herald-of-snark",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.6MKHrimUWBWolZaX"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761948164300,
+		"modifiedTime": 1761948287459,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "KfcttmLCHF9pu4wg",
+	"folder": "d143d1765775dc59"
+}

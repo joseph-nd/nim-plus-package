@@ -1,0 +1,64 @@
+{
+	"name": "Withering Presence",
+	"type": "feature",
+	"img": "icons/magic/unholy/beam-impact-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Replaces: Commanding Presence)</p><p>Creatures you Command suffer necrotic damage equal to the max value of your Combat Die (ignoring armor) and are considered undead for 1 round.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "spellblade",
+		"gainedAtLevel": 1,
+		"subclass": true,
+		"gainedAtLevels": [
+			1
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.tBBwkxBjmHarCgPU"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762150160508,
+		"modifiedTime": 1762150273071,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "EOiGfLb47Ae02cJI",
+	"folder": "df7370fe95537a41"
+}

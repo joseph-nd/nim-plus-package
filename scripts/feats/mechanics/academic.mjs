@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../../core/dialog.mjs';
 import { resyncFeatsForActor } from '../sheet-section.mjs';
 import { NIM_SKILLS } from './helpers.mjs';
 
@@ -27,30 +28,28 @@ export async function allocateAcademic(actor, item) {
 	const selectRow = (n) =>
 		`<div class="form-group"><label>Point ${n}</label><select name="s${n}">${options}</select></div>`;
 
-	const picks = await foundry.applications.api.DialogV2.wait({
+	const picks = await waitDialog({
 		window: { title: `Academic — Allocate 3 Skill Points — ${actor.name}` },
 		content: `
-			<form class="nim-plus-academic">
+			<div class="nim-plus-academic">
 				<p>Academic grants <strong>3 skill points</strong> to distribute (stack them on one skill or spread them out) plus <strong>3 extra languages</strong> (track those on your sheet notes).</p>
 				${selectRow(1)}${selectRow(2)}${selectRow(3)}
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Allocate',
 				default: true,
 				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-academic');
-					if (!form) return null;
-					return [form.elements.s1?.value, form.elements.s2?.value, form.elements.s3?.value];
+					const form = getDialogForm(button, dialog);
+					return ['s1', 's2', 's3'].map((name) => readField(form, name));
 				},
 			},
 			{ action: 'cancel', label: 'Later', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
 	if (!Array.isArray(picks) || picks.some((p) => !p)) {
 		ui.notifications?.info('Academic points can be allocated later from the Feats panel.');

@@ -1,0 +1,91 @@
+{
+	"name": "Alacrity",
+	"type": "spell",
+	"img": "icons/magic/lightning/bolt-cloud-sky-white.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "1/turn. Can be cast while Defending, after damage.",
+				"quantity": 0,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "9490msZtn2ek0CHQ",
+					"type": "condition",
+					"condition": "charged",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>0 Actions, Self</strong></p><p>(1/turn) Teleport up to your Speed, gain Charged (can be cast while Defending, after damage).</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+4 spaces.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 4
+			},
+			"reach": {
+				"min": 1,
+				"max": 2
+			},
+			"selected": []
+		},
+		"school": "lightning",
+		"tier": 2,
+		"scaling": {
+			"mode": "upcastChoice",
+			"deltas": [],
+			"choices": [
+				{
+					"label": "+4 teleport spaces",
+					"deltas": []
+				}
+			]
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.3I0ZyYA1IphjlLOO"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "0041f3ec884b9a1e",
+	"_id": "Szd1L7Qs4kVa07IM"
+}

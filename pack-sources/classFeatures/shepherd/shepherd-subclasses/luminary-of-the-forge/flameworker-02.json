@@ -1,0 +1,64 @@
+{
+	"name": "Flameworker",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/flameworker.webp",
+	"system": {
+		"macro": "",
+		"identifier": "flameworker",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Exchange knowledge of the Necrotic spell school for Fire. Your Lifebinding Spirit inflicts Smoldering on crit.</p><hr><p>[M] Apply Smoldering on your Lifebinding Spirit's crits by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			3
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.Pq7kdeIJr3Wt5jl2"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "D4ADFdR91jlhzMhg",
+	"folder": "03aebd749374affa"
+}

@@ -1,0 +1,64 @@
+{
+	"name": "Stormstrider",
+	"type": "feature",
+	"img": "icons/magic/lightning/explosion-stone-smoke-teal.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Double the DEX movement and Speed bonuses from Beast of the Pack. When you move as a Beast of the Pack, you may teleport instead.</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-fang-and-claw",
+		"gainedAtLevel": 7,
+		"subclass": true,
+		"gainedAtLevels": [
+			7
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.zkVpSIg1YMBM8yWN"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762039227818,
+		"modifiedTime": 1762039399377,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "LyuXsyVFiXkbyrGv",
+	"folder": "9e5f48b242606c6d"
+}

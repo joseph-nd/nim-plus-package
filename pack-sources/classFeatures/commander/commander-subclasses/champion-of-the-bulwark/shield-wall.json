@@ -1,0 +1,78 @@
+{
+	"name": "Shield Wall",
+	"type": "feature",
+	"img": "icons/environment/people/infantry.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "armorClass",
+				"disabled": false,
+				"id": "shield-wall-shield-armor",
+				"identifier": "",
+				"label": "Shield Wall (+2 shield armor)",
+				"predicate": {
+					"self": "shield"
+				},
+				"priority": 1,
+				"formula": "2",
+				"mode": "add"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Reach 2) Your shields gain +2 armor. Your allies can also use your shield's armor when they Defend.</p><hr><p>+2 armor while you have a shield equipped. [A]</p><p>Allies within Reach 2 using your shield's armor when they Defend. [M]</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-bulwark",
+		"gainedAtLevel": 15,
+		"subclass": true,
+		"gainedAtLevels": [
+			15
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.RyjuRfo5qRR8GFml"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1760400818103,
+		"modifiedTime": 1760400951517,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "ankcLaH8As97Yxxy",
+	"folder": "1c5f1dd7fd5c16fc"
+}

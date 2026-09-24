@@ -1,0 +1,71 @@
+{
+	"folder": "db26ee50517a7f26",
+	"name": "How'd YOU get here?!",
+	"type": "feature",
+	"img": "icons/magic/air/air-smoke-casting.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>2 actions</strong>: (Reach 12) “Teleport” adjacent to a Distracted target, and make a melee attack against them. If you crit, you may \"teleport\" again.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "underhanded-abilities",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.bgmLWfuqmytGV3k3"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1759472840774,
+		"modifiedTime": 1759472945773,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "vOaKBq8v4N3HDi1u"
+}

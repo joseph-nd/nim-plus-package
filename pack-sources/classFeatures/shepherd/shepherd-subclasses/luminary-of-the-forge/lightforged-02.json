@@ -1,0 +1,64 @@
+{
+	"name": "Lightforged",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/lightforged.webp",
+	"system": {
+		"macro": "",
+		"identifier": "lightforged",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Mend also grants WIL+STR Temp HP and 1 action.</p><hr><p>[M] Grant the Temp HP and the action by hand.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			7
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.intWHDDd1ABemSEl"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "PilBL6AZYODJnaq0",
+	"folder": "03aebd749374affa"
+}

@@ -1,0 +1,71 @@
+{
+	"folder": "627db1dc8c7dba5f",
+	"name": "Empowered Companion",
+	"type": "feature",
+	"img": "icons/creatures/abilities/lion-roar-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Lifebinding Spirit gains +STR damage vs Undead and +WIL healing.</p><p>[M] Add STR to Harm against Undead and WIL to the spirit's healing.</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "sacred-grace",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			9,
+			13
+		],
+		"selectionCountByLevel": {
+			"4": 1,
+			"9": 1,
+			"13": 1
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.ctYWB2VwKYlIulzi"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761715492096,
+		"modifiedTime": 1761715543760,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "BQcuDqke034p5XXK"
+}

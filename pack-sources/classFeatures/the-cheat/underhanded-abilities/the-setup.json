@@ -1,0 +1,68 @@
+{
+	"folder": "db26ee50517a7f26",
+	"name": "The Setup",
+	"type": "feature",
+	"img": "icons/skills/melee/maneuver-daggers-paired-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "the-setup",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "An ally misses a creature adjacent to you",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Reaction</strong> (when an ally misses a creature adjacent to you): You can make an Opportunity Attack against them, treating them as Distracted.</p>",
+		"featureType": "class",
+		"class": "the-cheat",
+		"group": "underhanded-abilities",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1759472840774,
+		"modifiedTime": 1759472949356,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "I0bwYRtroyePlVsX"
+}

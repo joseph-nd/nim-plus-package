@@ -1,0 +1,129 @@
+{
+	"name": "Ride the Lightning",
+	"type": "spell",
+	"img": "icons/magic/lightning/bolt-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 3,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "Z0pDW8XaeZPeKJyR",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "(1d8*10)+1d8",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": false,
+					"canMiss": false,
+					"on": {
+						"hit": [
+							{
+								"id": "LDFDknoBkLBNhPnk",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "Z0pDW8XaeZPeKJyR"
+							},
+							{
+								"id": "WhQNFWzZLdFxn0ij",
+								"type": "note",
+								"noteType": "reminder",
+								"text": "Knocked back 2 spaces. Moved 2+ spaces: Prone, Dazed, and deafened for 1 day.",
+								"parentContext": "hit",
+								"parentNode": "Z0pDW8XaeZPeKJyR"
+							},
+							{
+								"id": "5fgWELjBF30e4MiQ",
+								"type": "condition",
+								"condition": "prone",
+								"parentContext": "hit",
+								"parentNode": "Z0pDW8XaeZPeKJyR"
+							},
+							{
+								"id": "dnUvLrWcPkbkib1n",
+								"type": "condition",
+								"condition": "dazed",
+								"parentContext": "hit",
+								"parentNode": "Z0pDW8XaeZPeKJyR"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>3 Actions, AoE</strong></p><p><strong>Reach</strong>: 12. Teleport to a spot you can see (if a willing creature is there, swap places with them). Adjacent creatures take d88 damage and are knocked back 2 spaces. Creatures moved 2+ spaces are also knocked Prone, Dazed, and deafened for 1 day.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+1 Knockback.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 8
+			},
+			"reach": {
+				"min": 1,
+				"max": 12
+			},
+			"selected": [
+				"reach"
+			]
+		},
+		"school": "lightning",
+		"tier": 6,
+		"scaling": {
+			"mode": "upcastChoice",
+			"deltas": [],
+			"choices": [
+				{
+					"label": "+1 Knockback",
+					"deltas": []
+				}
+			]
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.OXPmekuZjcR10E7i"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "0041f3ec884b9a1e",
+	"_id": "JkUtZe1zlNuesONY"
+}

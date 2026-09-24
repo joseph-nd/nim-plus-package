@@ -1,0 +1,86 @@
+{
+	"folder": "45629599e634de64",
+	"name": "Songweaver's Inspiration",
+	"type": "feature",
+	"img": "icons/tools/instruments/lute-gold-brown.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "songweavers-inspiration-pool",
+				"identifier": "songweavers-inspiration",
+				"label": "Songweaver's Inspiration",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "max(0, 2 * @will)",
+				"dieSize": null,
+				"initial": "max",
+				"hidden": false,
+				"recoveries": [
+					{
+						"trigger": "safeRest",
+						"mode": "refresh",
+						"value": "max(0, 2 * @will)"
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "An ally makes a roll",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(2×WIL times/Safe Rest)</em> <strong>Free Reaction</strong>: Allow an ally to reroll any single die or increase the result rolled by 1.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "songweaver-progression",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.1FeFOFKQevbpIHhu"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761887549510,
+		"modifiedTime": 1761887683971,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "h594oh7yHGX28AU8"
+}

@@ -1,0 +1,78 @@
+{
+	"name": "Lunging Strike",
+	"type": "feature",
+	"img": "icons/skills/melee/spear-tips-three-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "NXsbvppkgMQJxeDe",
+					"type": "note",
+					"noteType": "flavor",
+					"text": "Combat Tactics: whenever you attack, you may expend a Combat Die to add a special effect (max 1/attack).",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Gain +1 Reach on an attack and deal extra damage equal to 2× a roll of your Combat Die.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "combat-tactics",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			6,
+			8,
+			10,
+			12,
+			16
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.5I3ulG74pLtLRBut"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "QXdeYnoS6lzYCtcT",
+	"folder": "742371f96f880db9"
+}

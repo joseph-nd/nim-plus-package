@@ -1,7 +1,6 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
-import { SUPERSEDED_CORE_FEATURES } from './superseded-list.mjs';
 
 /* ── Commander — foregoing a whole feature group ─────────────────────────────
  *
@@ -21,26 +20,12 @@ import { SUPERSEDED_CORE_FEATURES } from './superseded-list.mjs';
  *
  * Driven by a `foregoesFeatureGroup` module flag naming the group, so this is
  * not specific to Orders or to this subclass.
+ *
+ * (This file used to also hide the core Commanding Presence card from Combat
+ * Tactics, since Nim+ republishes it as an Order. That is now the generic
+ * supersede layer's job — `core/supersede.mjs` takes superseded system entries
+ * out of the pack index, so the level-up window never receives the card.)
  */
-
-/** Take the superseded core cards out of the group they were published in. */
-function hideSupersededLevelUpCards(root) {
-	for (const superseded of SUPERSEDED_CORE_FEATURES) {
-		const wantedGroup = superseded.group.replace(/[^a-z0-9]/gi, '').toLowerCase();
-		const wantedName = superseded.name.trim().toLowerCase();
-
-		for (const section of root.querySelectorAll('.feature-group')) {
-			const heading = section.querySelector('h4')?.textContent ?? '';
-			if (heading.replace(/[^a-z0-9]/gi, '').toLowerCase() !== wantedGroup) continue;
-
-			for (const card of section.querySelectorAll('.feature-item')) {
-				const name = card.querySelector('.feature-row__name')?.textContent?.trim().toLowerCase();
-				if (name !== wantedName) continue;
-				card.style.display = 'none';
-			}
-		}
-	}
-}
 
 /** The feature groups this character has given up, from their own features. */
 function foregoneFeatureGroups(actor) {
@@ -123,7 +108,6 @@ Hooks.on('renderGenericDialog', (app) => {
 	// makes every pass after the first a no-op.
 	const run = () => {
 		try {
-			hideSupersededLevelUpCards(root);
 			stripForegoneLevelUpGroups(app);
 		} catch (error) {
 			console.error(`[${MODULE_ID}] Failed to adjust the level-up window's feature groups`, error);

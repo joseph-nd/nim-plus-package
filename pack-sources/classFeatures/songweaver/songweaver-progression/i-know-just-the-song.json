@@ -1,0 +1,83 @@
+{
+	"folder": "45629599e634de64",
+	"name": "I Know Just the Song",
+	"type": "feature",
+	"img": "icons/magic/air/air-smoke-casting.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "i-know-just-the-song-l14-all-utility",
+				"type": "grantSpells",
+				"schools": [
+					"known"
+				],
+				"tiers": [
+					0
+				],
+				"mode": "auto",
+				"utilityOnly": true,
+				"label": "I Know Just the Song (3): All Utility Spells from Known Schools",
+				"predicate": {
+					"level": {
+						"min": 14
+					}
+				}
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose 1 Utility Spell from each spell school you know.</p><hr><p>Level 6: Choose a 2nd Utility Spell from each spell school you know.</p><p>Level 14: You know all Utility Spells from the spell schools you know.</p>",
+		"featureType": "class",
+		"class": "songweaver",
+		"group": "songweaver-progression",
+		"gainedAtLevel": 3,
+		"subclass": false,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.fg1cWHw1YLF2Mcc0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761888982208,
+		"modifiedTime": 1761889276925,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "js6ZLzOvBkXUvPmh"
+}

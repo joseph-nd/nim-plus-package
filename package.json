@@ -1,11 +1,13 @@
 {
 	"name": "nim-plus-package",
-	"version": "0.11.0",
+	"version": "0.12.0",
 	"description": "Foundry VTT module that adds Nim+ content to the Nimble system.",
 	"type": "module",
 	"private": true,
 	"scripts": {
 		"check": "node ./build/smoke.mjs",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"build": "node ./build/buildCompendia.mjs",
 		"build:compendia": "node ./build/buildCompendia.mjs",
 		"release": "node ./build/release.mjs",
@@ -20,9 +22,12 @@
 	"packageManager": "pnpm@10.11.0",
 	"devDependencies": {
 		"classic-level": "^1.4.1",
-		"glob": "^11.0.3"
+		"glob": "^11.0.3",
+		"vitest": "^4.1.11"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["classic-level"]
+		"onlyBuiltDependencies": [
+			"classic-level"
+		]
 	}
 }

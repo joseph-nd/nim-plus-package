@@ -1,0 +1,112 @@
+{
+	"name": "Deathless Rage",
+	"type": "feature",
+	"img": "icons/weapons/axes/axe-double-short-orange.webp",
+	"system": {
+		"group": "savage-arsenal",
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "deathless-rage-use-pool",
+				"identifier": "deathlessRageUse",
+				"label": "Deathless Rage use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "onTurnStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "deathless-rage-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "deathlessRageUse",
+				"poolScope": "item",
+				"cost": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "dlReminderNote0001",
+					"type": "note",
+					"noteType": "reminder",
+					"text": "While Dying: mark 1 Wound on your sheet and gain 1 action.",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/turn) While Dying, you may suffer 1 Wound to gain 1 action and 1 Fury Die.</p><p><em>Click this feature to use it (limited to once per turn). [M] Mark the Wound, the extra action and the Fury Die manually.</em></p>",
+		"featureType": "class",
+		"class": "berserker",
+		"gainedAtLevel": 4,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			14,
+			16
+		],
+		"subclass": false
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.TlypDcFgcmWK8Vpu"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "Alb9KK48hEsTBeSh",
+	"folder": "608bc2767e72d9f9"
+}

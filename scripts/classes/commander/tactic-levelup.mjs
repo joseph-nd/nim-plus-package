@@ -1,10 +1,10 @@
 import { MODULE_ID } from '../../core/constants.mjs';
 import { escape } from '../../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../../core/dialog.mjs';
 import { classQoLEnabled } from '../shared/settings.mjs';
 import { getCharacterLevel } from '../../feats/core.mjs';
 import { ensureFeatStyles } from '../../feats/styles.mjs';
 import { levelUpDialogActor, waitForLevelUpAnchors } from '../../core/level-up.mjs';
-import { SUPERSEDED_CORE_FEATURES } from './superseded-list.mjs';
 
 /* ── Commander — an extra Combat Tactic at a subclass level ──────────────────
  *
@@ -67,9 +67,9 @@ async function loadCombatTacticDocs() {
 		for (const entry of index) {
 			if (entry.type !== 'feature') continue;
 			if (entry.system?.group !== TACTIC_GROUP) continue;
-			// Republished elsewhere — offering it here would put the same feature in
-			// two groups at once.
-			if (SUPERSEDED_CORE_FEATURES.some((sup) => sup.name === entry.name)) continue;
+			// Superseded system copies (Commanding Presence, now an Order; the 2.0.3
+			// tactics) never reach this loop: the supersede layer takes them out of
+			// the pack index itself, and puts them back when 0.2 is turned off.
 			const doc = await pack.getDocument(entry._id).catch(() => null);
 			if (doc) docs.push(doc);
 		}
@@ -213,7 +213,7 @@ async function chooseCombatTactic(actor) {
 		.join('');
 
 	const source = tacticGrantingFeatures(actor)[0];
-	const choice = await foundry.applications.api.DialogV2.wait({
+	const choice = await waitDialog({
 		window: { title: `Choose a Combat Tactic — ${actor.name}` },
 		content: `
 			<div class="nim-plus-feat-pick">
@@ -226,19 +226,15 @@ async function chooseCombatTactic(actor) {
 				action: 'grant',
 				label: 'Gain Combat Tactic',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const checked = root?.querySelector?.('input[name="tactic"]:checked');
-					return checked?.value ?? null;
-				},
+				callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'tactic') || null,
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
-	if (!choice) return null;
+	if (typeof choice !== 'string' || !choice) return null;
 	return grantCombatTactic(actor, choice);
 }
 

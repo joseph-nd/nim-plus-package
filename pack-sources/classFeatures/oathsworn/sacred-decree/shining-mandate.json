@@ -1,0 +1,69 @@
+{
+	"folder": "36a5ca4e92865838",
+	"name": "Shining Mandate",
+	"type": "feature",
+	"img": "icons/skills/melee/strike-hammer-destructive-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Round) When you are attacked while you already have Judgment Dice, an ally within your aura gains a Judgment Die (roll a new one, they add it to their next attack). Gain advantage on checks to see through illusions.</p><p>[M] Roll the ally's Judgment Die by hand.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "sacred-decree",
+		"gainedAtLevel": 3,
+		"subclass": false,
+		"gainedAtLevels": [
+			3,
+			6,
+			9,
+			12,
+			14,
+			16
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.KqEsj4GVzZOPzEgu"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761626927792,
+		"modifiedTime": 1761627042501,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "WAIQqw1e3VzjLrEm"
+}

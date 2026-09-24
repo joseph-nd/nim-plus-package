@@ -1,0 +1,64 @@
+{
+	"name": "Swiftshift",
+	"type": "feature",
+	"img": "icons/creatures/abilities/paw-print-pair-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you roll Initiative, you may Beastshift for free. <em>(1/turn)</em> You can Beastshift between Direbeast Forms for 0 actions (this still costs a Direbeast Form charge).</p>",
+		"featureType": "class",
+		"class": "stormshifter",
+		"group": "circle-of-fang-and-claw",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.CM5up52Yg2TLDZKa"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1762038649411,
+		"modifiedTime": 1762038921213,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "1WrfPLtO9D22KyGs",
+	"folder": "9e5f48b242606c6d"
+}

@@ -1,0 +1,73 @@
+{
+	"name": "Reposition!",
+	"type": "feature",
+	"img": "icons/skills/movement/arrow-upward-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "on an ally's turn",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": true
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "action"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action/Reaction</strong> (on an ally's turn): Command 1 ally to move up to their speed (or 2 allies up to half their speed) for free.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commanders-orders",
+		"groupLabel": "Commander's Orders",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"selectionCountByLevel": {
+			"4": 2
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.hWrYsftBYW68IXzv"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "MVF6LxrWYNBGkWeY",
+	"folder": "742371f96f880db9"
+}

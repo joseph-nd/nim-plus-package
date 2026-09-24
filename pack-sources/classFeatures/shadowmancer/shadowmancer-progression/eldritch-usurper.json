@@ -1,0 +1,86 @@
+{
+	"folder": "fcb4da68281eecee",
+	"name": "Eldritch Usurper",
+	"type": "feature",
+	"img": "icons/magic/nature/plant-undersea-orb-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "eldritch-usurper-pool",
+				"identifier": "eldritch-usurper",
+				"label": "Eldritch Usurper: Greater Shadow",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"hidden": false,
+				"recoveries": [
+					{
+						"trigger": "encounterStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+1 to any 2 of your stats.</p><p><em>(1/encounter)</em> When you cast Summon Shadow you may summon a Greater Shadow instead.</p><p><strong>Greater Shadow.</strong> A 5d12 minion. When it dies, it explodes into 5 Shadows (ignoring your Shadow Limit). Place them anywhere within Reach 6.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "shadowmancer-progression",
+		"gainedAtLevel": 20,
+		"subclass": false,
+		"gainedAtLevels": [
+			20
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.Twcpy8q42pjXZNDI"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632619594,
+		"modifiedTime": 1761632737185,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "DSdhdOT2Kq1trFUn"
+}

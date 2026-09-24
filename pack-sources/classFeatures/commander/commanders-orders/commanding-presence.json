@@ -36,10 +36,10 @@
 		"featureType": "class",
 		"class": "commander",
 		"group": "commanders-orders",
-		"gainedAtLevel": 2,
+		"gainedAtLevel": 4,
 		"subclass": false,
 		"gainedAtLevels": [
-			2,
+			4,
 			6,
 			8,
 			10,
@@ -47,16 +47,16 @@
 			16
 		],
 		"selectionCountByLevel": {
-			"2": 2
+			"4": 2
 		}
 	},
 	"effects": [],
 	"flags": {
 		"nim-plus-package": {
-			"supersedesCoreFeature": {
-				"name": "Commanding Presence",
-				"group": "combat-tactics"
-			}
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.cmrCy26QPZrZ0eFN"
+			],
+			"playtest02": true
 		}
 	},
 	"_stats": {

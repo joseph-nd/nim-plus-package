@@ -1,0 +1,131 @@
+{
+	"name": "Arc Lightning",
+	"type": "spell",
+	"img": "icons/magic/lightning/bolt-strike-sparks-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "6pEXpZ8znbQP6LiP",
+					"type": "damage",
+					"damageType": "lightning",
+					"formula": "3d8",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": true,
+					"canMiss": true,
+					"on": {
+						"miss": [
+							{
+								"id": "Ez4BB3Ntj11plTuN",
+								"type": "note",
+								"noteType": "warning",
+								"text": "MISS",
+								"parentContext": "miss",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"hit": [
+							{
+								"id": "ODalIwchGK1gVvib",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						],
+						"criticalHit": [
+							{
+								"id": "enoNfbb3InpTsMUg",
+								"type": "note",
+								"noteType": "warning",
+								"text": "CRIT",
+								"parentContext": "criticalHit",
+								"parentNode": "6pEXpZ8znbQP6LiP"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 2,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>2 Actions, 1+ Target</strong></p><p><strong>Range</strong>: 12. <strong>Damage</strong>: 3d8. Also hits the next closest creature to your target.</p><p><em>Next Closest Creature. If you are the closest, you are hit! If 2 creatures are equally close, the GM can select randomly, the taller one, or whoever has the most metal.</em></p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+4 damage.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 1,
+				"max": 12
+			},
+			"reach": {
+				"min": 1,
+				"max": null
+			},
+			"selected": [
+				"range"
+			]
+		},
+		"school": "lightning",
+		"tier": 1,
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [
+				{
+					"operation": "addFlatDamage",
+					"value": 4,
+					"dice": null,
+					"condition": null,
+					"targetEffectId": null,
+					"durationType": null
+				}
+			],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.pLUyI3NQBJ6FV1mq"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "0041f3ec884b9a1e",
+	"_id": "WQgjwyPyFyrQ8pJY"
+}

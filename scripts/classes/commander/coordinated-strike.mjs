@@ -11,6 +11,11 @@ import { hasActiveRule, addSyntheticRule } from '../../core/rules.mjs';
  * this shape exactly, so supplying the pair of rules it expects is the whole
  * job: the sheet draws the counter on the feature card, activating the order
  * spends a charge, the order is blocked at zero, and a Safe Rest refills it.
+ *
+ * Nimble 0.2 makes it a level 1 feature of its own, 1/encounter, with the INT
+ * Safe Rest pool arriving at level 5 through Master Commander. The module's 0.2
+ * copy declares all of that as native pools, so the fallback below never fires
+ * for it.
  */
 
 export const COORDINATED_STRIKE_IDENTIFIER = 'coordinated-strike';

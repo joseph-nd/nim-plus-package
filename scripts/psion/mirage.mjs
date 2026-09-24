@@ -1,5 +1,8 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readField, waitDialog } from '../core/dialog.mjs';
+
+const MIRAGE_EFFECTS = ['blinded', 'taunted', 'prone', 'cover', 'invisible', 'fear'];
 
 /**
  * Mirage (2) dispatcher — Adept of Illusions L11. Pop a dialog letting the
@@ -17,10 +20,10 @@ export async function mirageDispatch(actor, item) {
 		return null;
 	}
 
-	const choice = await foundry.applications.api.DialogV2.wait({
+	const choice = await waitDialog({
 		window: { title: `${item.name} — Choose an Effect` },
 		content: `
-			<form class="nim-plus-mirage-dialog">
+			<div class="nim-plus-mirage-dialog">
 				<p>Mirage (2): choose one effect to apply to your selected targets.</p>
 				<fieldset>
 					<legend><strong>Disguise</strong> (lower-level enemy; same/higher level WIL save)</legend>
@@ -34,28 +37,22 @@ export async function mirageDispatch(actor, item) {
 					<label><input type="radio" name="effect" value="invisible"> Invisible</label>
 					<label><input type="radio" name="effect" value="fear"> Source of Fear</label>
 				</fieldset>
-			</form>
+			</div>
 		`,
 		buttons: [
 			{
 				action: 'apply',
 				label: 'Apply',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-mirage-dialog');
-					if (!form) return null;
-					const checked = form.querySelector('input[name="effect"]:checked');
-					return checked?.value ?? null;
-				},
+				callback: (_event, button, dialog) => readField(getDialogForm(button, dialog), 'effect') ?? null,
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
+	});
 
-	if (!choice) return null;
+	if (!MIRAGE_EFFECTS.includes(choice)) return null;
 
 	const targets = Array.from(game.user?.targets ?? []);
 	const statusForEffect = { blinded: 'blinded', taunted: 'taunted', prone: 'prone', invisible: 'invisible' };

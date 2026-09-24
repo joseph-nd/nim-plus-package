@@ -1,0 +1,212 @@
+{
+	"name": "Fit for Any Battlefield",
+	"type": "feature",
+	"img": "icons/equipment/head/greathelm-banded-steel.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "combat-dice-pool",
+				"identifier": "combat-dice",
+				"label": "Combat Dice",
+				"predicate": {},
+				"priority": 2,
+				"scope": "item",
+				"max": "@strength + @combatDiceBonus",
+				"dieSize": "d6",
+				"initial": "zero",
+				"recoveries": [
+					{
+						"trigger": "onInitiativeRolled",
+						"mode": "refresh",
+						"value": "1"
+					},
+					{
+						"trigger": "encounterEnd",
+						"mode": "set",
+						"value": "0"
+					}
+				]
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "combat-dice-d8-l5",
+				"identifier": "",
+				"label": "Combat Dice → d8",
+				"predicate": {
+					"level": {
+						"min": 5
+					}
+				},
+				"priority": 3,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": "d8",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "combat-dice-d10-l9",
+				"identifier": "",
+				"label": "Combat Dice → d10",
+				"predicate": {
+					"level": {
+						"min": 9
+					}
+				},
+				"priority": 4,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": "d10",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "combat-dice-d12-l13",
+				"identifier": "",
+				"label": "Combat Dice → d12",
+				"predicate": {
+					"level": {
+						"min": 13
+					}
+				},
+				"priority": 5,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": "d12",
+				"maxDelta": null
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "combat-dice-d20-l17",
+				"identifier": "",
+				"label": "Combat Dice → d20",
+				"predicate": {
+					"level": {
+						"min": 17
+					}
+				},
+				"priority": 6,
+				"poolType": "charge",
+				"poolIdentifier": "combat-dice",
+				"dieSize": "d20",
+				"maxDelta": null
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Choose a Combat Tactic. When you roll Initiative, gain STR Combat Dice (each a d6); they are lost when combat ends if unspent. Whenever you attack, you may expend a Combat Die to add a special effect <em>(max 1/attack)</em>.</p><hr><p>Levels 6, 8, 10, 12, 16:</p><p>Choose another Combat Ability (a Combat Tactic or a Commander's Order) or gain +1 max Combat Dice.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commander-progression",
+		"gainedAtLevel": 2,
+		"subclass": false,
+		"gainedAtLevels": [
+			2,
+			6,
+			8,
+			10,
+			12,
+			16
+		],
+		"levelUpOptions": [
+			{
+				"id": "combat-tactic",
+				"label": "Choose a Combat Tactic",
+				"applyAtLevels": [
+					2
+				],
+				"rules": [],
+				"selectionGroups": [
+					"combat-tactics"
+				]
+			},
+			{
+				"id": "max-combat-die",
+				"label": "+1 Max Combat Die",
+				"applyAtLevels": [
+					6,
+					8,
+					10,
+					12,
+					16
+				],
+				"rules": [
+					{
+						"type": "poolMaxBonus",
+						"poolIdentifier": "combat-dice",
+						"amount": 1,
+						"grantItemUuid": "Compendium.nimble.nimble-class-features.Item.WnKpJ8RvCb4mX2Qt"
+					}
+				],
+				"selectionGroups": []
+			},
+			{
+				"id": "combat-ability",
+				"label": "Choose a Combat Ability",
+				"applyAtLevels": [
+					6,
+					8,
+					10,
+					12,
+					16
+				],
+				"rules": [],
+				"selectionGroups": [
+					"combat-tactics",
+					"commanders-orders"
+				]
+			}
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.JiNcaklfRjgJ7e5W"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "wafJPQzCRqAX83Mw",
+	"folder": "742371f96f880db9"
+}

@@ -1,0 +1,32 @@
+{
+	"name": "Champion of the Bulwark",
+	"type": "subclass",
+	"img": "icons/equipment/shield/heater-steel-gold.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Armor Master.</strong> You are proficient with plate armor.</p><p><strong>Shield Expert.</strong> While equipped with a shield you can Defend for free; when you do, you may deal damage to an adjacent enemy equal to your shield's armor.</p><p>LEVEL 7 </p><p><strong>Juggernaut.</strong> When you use Coordinated Strike, you can spend an additional action to add 1 to your Primary Die and deal extra damage equal to your armor.</p><p>LEVEL 11 </p><p><strong>Taunting Strike.</strong> (1/turn) You may Taunt a creature you attack until the end of their next turn.</p><p>LEVEL 15 </p><p><strong>Shield Wall.</strong> (Reach 2) Your shields gain +2 armor. Your allies can also use your shield's armor when they Defend.</p>",
+		"parentClass": "commander",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.eukyWZcda4I6dDpV"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1760382176039,
+		"modifiedTime": 1761527865065,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "THBaF8iU7OV8Sqac",
+	"folder": "54c3de6e51604292"
+}

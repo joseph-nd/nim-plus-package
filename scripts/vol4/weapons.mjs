@@ -1,4 +1,5 @@
 import { escape } from '../core/html.mjs';
+import { getDialogForm, readField, readNumber, waitDialog } from '../core/dialog.mjs';
 import { actorKeyMod } from '../feats/mechanics/helpers.mjs';
 import { vol4ConsumeOne } from './runes.mjs';
 
@@ -10,31 +11,27 @@ export async function vol4Bloodseeker(actor, item) {
 	const key = Math.max(1, actorKeyMod(actor) || 1);
 	const maxSacrifice = Math.min(key, Math.max(0, Number(actor.system?.attributes?.hp?.value ?? 0) - 1));
 
-	const sacrifice = await foundry.applications.api.DialogV2.wait({
+	const sacrifice = await waitDialog({
 		window: { title: `${item.name} — Blood Price` },
 		content: `
-			<form class="nim-plus-bloodseeker">
+			<div class="nim-plus-bloodseeker">
 				<p>Sacrifice up to <strong>${maxSacrifice}</strong> HP (KEY ${key}) to add that much damage.</p>
 				<div class="form-group"><label>HP to sacrifice</label>
 				<input type="number" name="hp" value="0" min="0" max="${maxSacrifice}" step="1"></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Strike',
 				default: true,
-				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-bloodseeker');
-					return Number(form?.elements?.hp?.value ?? 0);
-				},
+				callback: (_event, button, dialog) => readNumber(getDialogForm(button, dialog), 'hp', 0),
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
-	if (sacrifice === null) return null;
+	});
+	if (typeof sacrifice !== 'number' || !Number.isFinite(sacrifice)) return null;
 
 	const bonus = Math.max(0, Math.min(maxSacrifice, Math.floor(sacrifice)));
 	if (bonus > 0 && typeof actor.applyDamage === 'function') await actor.applyDamage(bonus);
@@ -46,6 +43,8 @@ export async function vol4Bloodseeker(actor, item) {
 		flavor: `<strong>${escape(item.name)}</strong> — Slashing${bonus > 0 ? ` <em>(sacrificed ${bonus} HP)</em>` : ''}`,
 	});
 }
+
+const ELEMENTAL_WEAPON_TYPES = ['fire', 'lightning', 'cold'];
 
 /** Elemental Weapon — rewrite an owned weapon's damage type; consume the enchantment. */
 export async function vol4ElementalWeapon(actor, item) {
@@ -59,35 +58,33 @@ export async function vol4ElementalWeapon(actor, item) {
 	}
 
 	const weaponOpts = weapons.map((w) => `<option value="${w.id}">${escape(w.name)}</option>`).join('');
-	const choice = await foundry.applications.api.DialogV2.wait({
+	const choice = await waitDialog({
 		window: { title: `${item.name}` },
 		content: `
-			<form class="nim-plus-elemental-weapon">
+			<div class="nim-plus-elemental-weapon">
 				<div class="form-group"><label>Weapon</label><select name="weapon">${weaponOpts}</select></div>
 				<div class="form-group"><label>Element</label><select name="element">
 					<option value="fire">Fire</option>
 					<option value="lightning">Lightning</option>
 					<option value="cold">Ice</option>
 				</select></div>
-			</form>`,
+			</div>`,
 		buttons: [
 			{
 				action: 'ok',
 				label: 'Enchant',
 				default: true,
 				callback: (_event, button, dialog) => {
-					const root = dialog?.element ?? button;
-					const form = root?.querySelector?.('form.nim-plus-elemental-weapon');
-					if (!form) return null;
-					return { weaponId: form.elements.weapon?.value, element: form.elements.element?.value };
+					const form = getDialogForm(button, dialog);
+					return { weaponId: readField(form, 'weapon'), element: readField(form, 'element') };
 				},
 			},
 			{ action: 'cancel', label: 'Cancel', callback: () => null },
 		],
 		rejectClose: false,
 		modal: false,
-	}).catch(() => null);
-	if (!choice?.weaponId) return null;
+	});
+	if (!choice?.weaponId || !ELEMENTAL_WEAPON_TYPES.includes(choice.element)) return null;
 
 	const weapon = actor.items.get(choice.weaponId);
 	if (!weapon) return null;

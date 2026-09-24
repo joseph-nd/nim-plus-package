@@ -1,0 +1,119 @@
+{
+	"name": "Master Commander",
+	"type": "feature",
+	"img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "master-commander-uses-l9",
+				"identifier": "",
+				"label": "Master Commander (2): +1 use of Coordinated Strike",
+				"predicate": {
+					"level": {
+						"min": 9
+					}
+				},
+				"priority": 1,
+				"poolType": "charge",
+				"poolIdentifier": "coordinated-strike-uses",
+				"dieSize": null,
+				"maxDelta": "1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "master-commander-uses-l13",
+				"identifier": "",
+				"label": "Master Commander (3): +1 use of Coordinated Strike",
+				"predicate": {
+					"level": {
+						"min": 13
+					}
+				},
+				"priority": 2,
+				"poolType": "charge",
+				"poolIdentifier": "coordinated-strike-uses",
+				"dieSize": null,
+				"maxDelta": "1"
+			},
+			{
+				"type": "modifyPool",
+				"disabled": false,
+				"id": "master-commander-uses-l17",
+				"identifier": "",
+				"label": "Master Commander (4): +1 use of Coordinated Strike",
+				"predicate": {
+					"level": {
+						"min": 17
+					}
+				},
+				"priority": 3,
+				"poolType": "charge",
+				"poolIdentifier": "coordinated-strike-uses",
+				"dieSize": null,
+				"maxDelta": "1"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Combat Dice are now d8s. You gain an additional pool of INT uses of Coordinated Strike to use per Safe Rest (you may use Coordinated Strike only 1/round). Attacks made from your Coordinated Strikes also now ignore disadvantage.</p><hr><p>Level 9: Your Combat Dice are now d10s. +1 use of Coordinated Strike.</p><p>Level 13: Your Combat Dice are now d12s. +1 use of Coordinated Strike.</p><p>Level 17: Your Combat Dice are now d20s. +1 use of Coordinated Strike.</p><p><em>[A] The die sizes and the extra uses are automated; the uses pool appears on Coordinated Strike!. [M] Ignoring disadvantage on the Coordinated Strike attacks is up to you.</em></p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "commander-progression",
+		"gainedAtLevel": 5,
+		"subclass": false,
+		"gainedAtLevels": [
+			5,
+			9,
+			13,
+			17
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.qbrHOGpSY2thczfu"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "q1JbLI081K76lAnx",
+	"folder": "742371f96f880db9"
+}

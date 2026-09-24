@@ -9,8 +9,9 @@
 			{
 				"id": "hexbinder-tier1-spells",
 				"type": "grantSpells",
-				"schools": [
-					"hexbinder"
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.57SBKVr4zz9dqiuY",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.ZwSHG6Tg40o3CoET"
 				],
 				"tiers": [
 					1
@@ -25,8 +26,9 @@
 			{
 				"id": "hexbinder-tier2-spells",
 				"type": "grantSpells",
-				"schools": [
-					"hexbinder"
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.8LT6fWtimFDfVq1Q",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.SoRs7KpyDen8LQIN"
 				],
 				"tiers": [
 					2
@@ -41,8 +43,9 @@
 			{
 				"id": "hexbinder-tier3-spells",
 				"type": "grantSpells",
-				"schools": [
-					"hexbinder"
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.aIOHZQSmoXDiO9CU",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.SLMZECdl6ICDPbsI"
 				],
 				"tiers": [
 					3
@@ -57,8 +60,9 @@
 			{
 				"id": "hexbinder-tier4-spells",
 				"type": "grantSpells",
-				"schools": [
-					"hexbinder"
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.3M58K9x3rAZSs67O",
+					"Compendium.nim-plus-package.nim-plus-spells.Item.WTciIbSlEKit3NEV"
 				],
 				"tiers": [
 					4
@@ -73,8 +77,8 @@
 			{
 				"id": "hexbinder-tier5-spells",
 				"type": "grantSpells",
-				"schools": [
-					"hexbinder"
+				"uuids": [
+					"Compendium.nim-plus-package.nim-plus-spells.Item.dv3LUdMTIjcLUXe9"
 				],
 				"tiers": [
 					5

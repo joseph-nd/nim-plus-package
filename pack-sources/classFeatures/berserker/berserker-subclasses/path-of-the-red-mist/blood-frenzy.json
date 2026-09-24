@@ -1,0 +1,114 @@
+{
+	"name": "Blood Frenzy",
+	"type": "feature",
+	"img": "icons/skills/melee/blood-slash-foam-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"type": "chargePool",
+				"disabled": false,
+				"id": "blood-frenzy-use-pool",
+				"identifier": "bloodFrenzyUse",
+				"label": "Blood Frenzy use",
+				"predicate": {},
+				"priority": 1,
+				"scope": "item",
+				"max": "1",
+				"dieSize": null,
+				"initial": "max",
+				"recoveries": [
+					{
+						"trigger": "onTurnStart",
+						"mode": "refresh",
+						"value": "1"
+					}
+				]
+			},
+			{
+				"type": "chargeConsumer",
+				"disabled": false,
+				"id": "blood-frenzy-use-consumer",
+				"identifier": "",
+				"label": "",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "bloodFrenzyUse",
+				"poolScope": "item",
+				"cost": "1"
+			},
+			{
+				"type": "diceConsumer",
+				"disabled": false,
+				"id": "blood-frenzy-fury-maximize",
+				"identifier": "",
+				"label": "Blood Frenzy: change a Fury Die to its maximum",
+				"predicate": {},
+				"priority": 1,
+				"poolIdentifier": "fury",
+				"poolScope": "item",
+				"mode": "manual",
+				"cost": "1",
+				"bonusOnAttackDelivery": null,
+				"effectFormula": null,
+				"effectType": "generic",
+				"selectionOutcome": "maximize"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><em>(1/turn)</em> While Raging, whenever you crit or kill an enemy, gain 1 Fury Die or change 1 Fury Die to the max.</p><hr><p>Change a Fury Die to its max: click this feature after a qualifying crit or kill, then pick the die (limited to once per turn). [A]</p><p>Gain a Fury Die instead: add it to your Fury Dice by hand (the pool’s +/-), and spend this feature’s use with its +/-. [M]</p>",
+		"featureType": "class",
+		"class": "berserker",
+		"group": "path-of-the-red-mist",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.m2UtBsxfiXhKRLYD"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1759470801821,
+		"modifiedTime": 1759471228641,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "RV7yzO0SehCos5Lo",
+	"folder": "0eda07873ab61fed"
+}

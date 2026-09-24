@@ -1,0 +1,106 @@
+{
+	"name": "Fly",
+	"type": "spell",
+	"img": "icons/magic/control/debuff-energy-hold-levitate-blue-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 10,
+				"type": "minute"
+			},
+			"effects": [
+				{
+					"id": "B7rec2cRfIdgOFVb",
+					"type": "condition",
+					"condition": "concentration",
+					"parentContext": null,
+					"parentNode": null
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": {
+			"baseEffect": "<p><strong>1 Action, Single Target+</strong></p><p><strong>Reach</strong>: 1. <strong>Concentration</strong>: Up to 10 minutes. Grant a creature a flying Speed. They can move KEY spaces for free on their turn.</p>",
+			"higherLevelEffect": "",
+			"upcastEffect": "<p>+1 target, +4 Reach.</p>"
+		},
+		"properties": {
+			"range": {
+				"min": 2,
+				"max": 6
+			},
+			"reach": {
+				"min": 1,
+				"max": 1
+			},
+			"selected": [
+				"concentration",
+				"reach"
+			]
+		},
+		"school": "wind",
+		"tier": 3,
+		"scaling": {
+			"mode": "upcast",
+			"deltas": [
+				{
+					"operation": "addTargets",
+					"value": 1,
+					"dice": null,
+					"condition": null,
+					"targetEffectId": null,
+					"durationType": null
+				},
+				{
+					"operation": "addReach",
+					"value": 4,
+					"dice": null,
+					"condition": null,
+					"targetEffectId": null,
+					"durationType": null
+				}
+			],
+			"choices": null
+		}
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-spells.Item.DHEl4NDcNMu2ZAj0"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.8",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"folder": "b3180e4a97f8d5e9",
+	"_id": "622RStlP0GuOPSSN"
+}

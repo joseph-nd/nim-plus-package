@@ -1,0 +1,69 @@
+{
+	"folder": "36a5ca4e92865838",
+	"name": "Explosive Judgment",
+	"type": "feature",
+	"img": "icons/magic/fire/explosion-fireball-large-orange.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 2,
+				"type": "action",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(1/Encounter) 2 Actions: Expend your Judgment Dice, deal that much radiant damage to all enemies within Reach 2.</p><p>[M] Clear the Judgment Dice with the pool controls after using this.</p>",
+		"featureType": "class",
+		"class": "oathsworn",
+		"group": "sacred-decree",
+		"gainedAtLevel": 3,
+		"subclass": false,
+		"gainedAtLevels": [
+			3,
+			6,
+			9,
+			12,
+			14,
+			16
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.8TlDAeJ5nIZbJk3E"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761626237386,
+		"modifiedTime": 1761626329879,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "Y5ynTuipoqdKDccz"
+}

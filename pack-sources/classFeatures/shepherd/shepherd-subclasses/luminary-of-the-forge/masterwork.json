@@ -1,0 +1,64 @@
+{
+	"name": "Masterwork",
+	"type": "feature",
+	"img": "modules/nim-plus-package/assets/features/shepherd/luminary-of-the-forge/master-of-the-hammer.webp",
+	"system": {
+		"macro": "",
+		"identifier": "masterwork",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>+WIL to Weaponsmith and Armorsmith; you may choose twice.</p><hr><p>[A] While you own this feature, the Seasoned Journeyman dialog grants <strong>STR + WIL</strong> and offers <strong>Both</strong> (Weaponsmith and Armorsmith).</p>",
+		"featureType": "class",
+		"class": "shepherd",
+		"group": "luminary-of-the-forge",
+		"gainedAtLevels": [
+			11
+		],
+		"selectionCountByLevel": {},
+		"subclass": true
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nim-plus-package.nim-plus-class-features.Item.25HXbH82xGnYLjU2"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13",
+		"systemId": "nimble",
+		"systemVersion": "0.8.4",
+		"createdTime": null,
+		"modifiedTime": null,
+		"lastModifiedBy": null
+	},
+	"_id": "aphzCT2XeYlhMtSE",
+	"folder": "03aebd749374affa"
+}

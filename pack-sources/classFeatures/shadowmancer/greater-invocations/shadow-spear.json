@@ -1,0 +1,68 @@
+{
+	"folder": "fcb4da68281eecee",
+	"name": "Shadow Spear",
+	"type": "feature",
+	"img": "icons/magic/light/beam-rays-magenta.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Your Shadow Blast gains +8 Range, ignores cover, and advantage vs Prone targets (instead of disadvantage).</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "greater-invocations",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			14,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.gUfm5mjG8RCtHCym"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632783894,
+		"modifiedTime": 1761710892825,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "JpM7nWLi6osAOj6M"
+}

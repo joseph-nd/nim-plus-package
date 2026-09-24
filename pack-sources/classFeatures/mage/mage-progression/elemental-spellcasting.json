@@ -1,0 +1,78 @@
+{
+	"folder": "92accb42c699560b",
+	"name": "Elemental Spellcasting",
+	"type": "feature",
+	"img": "icons/magic/symbols/elements-air-earth-fire-water.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [
+			{
+				"id": "mage-elemental-spells",
+				"type": "grantSpells",
+				"schools": [
+					"fire",
+					"ice",
+					"lightning"
+				],
+				"tiers": [
+					0
+				],
+				"mode": "auto"
+			}
+		],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>You know the Fire, Ice, and Lightning spell schools and can cast cantrips from them.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "mage-progression",
+		"gainedAtLevel": 1,
+		"subclass": false,
+		"gainedAtLevels": [
+			1
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.OjTkXa6W6xFvNYHr"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761529878823,
+		"modifiedTime": 1761529952069,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "VVsWovrLWqWEM1q3"
+}

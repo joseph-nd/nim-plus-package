@@ -1,0 +1,64 @@
+{
+	"name": "Supreme Control",
+	"type": "feature",
+	"img": "icons/magic/nature/beam-hand-leaves-green.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>Whenever you Demand Control, you may choose to trigger the selected option twice. You may now use Force of Will as a Reaction.</p>",
+		"featureType": "class",
+		"class": "mage",
+		"group": "invoker-of-control",
+		"gainedAtLevel": 15,
+		"subclass": true,
+		"gainedAtLevels": [
+			15
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.cCqrZ6XZBRiMhwdh"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761544686125,
+		"modifiedTime": 1761883961953,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "nrSPbVl4gjP7Mkd6",
+	"folder": "6e17529c5e0476b7"
+}

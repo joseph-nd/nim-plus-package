@@ -1,0 +1,64 @@
+{
+	"name": "Advance!",
+	"type": "feature",
+	"img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>(Reach 12) Whenever you use your Coordinated Strike, you and all allies can first move up to half their speed for free. Gain advantage on the first melee attack you make against enemies you moved toward this turn.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-vanguard",
+		"gainedAtLevel": 3,
+		"subclass": true,
+		"gainedAtLevels": [
+			3
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.fht1hR5rcOu25b9a"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1760400066843,
+		"modifiedTime": 1760400435364,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "g1kU23oVAtmTxmOr",
+	"folder": "dc011b8fa8d1b3ac"
+}

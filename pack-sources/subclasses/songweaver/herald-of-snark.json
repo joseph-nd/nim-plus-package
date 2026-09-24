@@ -1,0 +1,32 @@
+{
+	"name": "Herald of Snark",
+	"type": "subclass",
+	"img": "icons/magic/sonic/scream-wail-shout-teal.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Opportunistic Snark</strong>. <strong>Reaction</strong> (Reach 12, when an enemy's attack deals 0 damage): You may cast Vicious Mockery at them; it deals double damage when cast this way and can't miss.</p><p>LEVEL 7 </p><p><strong>Fight Picker</strong>. (1/turn) When an enemy is damaged by your Vicious Mockery, you may have one of your allies Taunt them until the end of the enemy's turn instead.</p><p>LEVEL 11 </p><p><strong>Chord of Chaos</strong>. (1/encounter) Action: You may move ALL creatures within hearing of your song up to 3 spaces as long as they do not move into an obviously dangerous place.</p><p>LEVEL 15 </p><p><strong>Words Like Swords</strong>. Your Vicious Mockery damage die becomes 1d12.</p>",
+		"parentClass": "songweaver",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.pqYq1whqhBDdYxTa"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761885526378,
+		"modifiedTime": 1761886243128,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "XHfEs7bTqdD4JyYk",
+	"folder": "3b74d88613071789"
+}

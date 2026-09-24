@@ -1,0 +1,32 @@
+{
+	"name": "Luminary of Mercy",
+	"type": "subclass",
+	"img": "icons/magic/holy/barrier-shield-winged-blue.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"description": "<p>LEVEL 3 </p><p><strong>Merciful Healing</strong>. You can use Mend on non-Dying creatures. While you are Dying, your Lifebinding Spirit can act 1/round without spending an action.</p><p><strong>Life is Beautiful</strong>. Harmless and lovely creatures such as butterflies and humming birds are attracted to your presence and often follow you. Flowers bloom more vibrantly in your presence.</p><p>LEVEL 7 </p><p><strong>Searing Light</strong>. 1 Action: (Reach 6) Whenever you heal HP, you may expend 1 use of Mend to damage another target for the amount of HP recovered.</p><p>LEVEL 11 </p><p><strong>Powerful Healer</strong>. (WIL/Safe Rest) Whenever you would heal HP, you may instead give that many temp HP, OR heal the max amount you could roll.</p><p>LEVEL 15 </p><p><strong>Lifebinder's Embrace</strong>. Your Mend may heal 1 additional creature. Regain 1 charge of Mend when you roll Initiative (this expires if unspent at the end of combat).</p>",
+		"parentClass": "shepherd",
+		"resources": []
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-subclasses.Item.7L90YX8TTOrK1yVm"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761713631783,
+		"modifiedTime": 1761713844455,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "zI2sKFsZzjHNQh4Z",
+	"folder": "342ecdf0f6b5830f"
+}

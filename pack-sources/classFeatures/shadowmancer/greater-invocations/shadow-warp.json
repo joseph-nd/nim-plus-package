@@ -1,0 +1,68 @@
+{
+	"folder": "fcb4da68281eecee",
+	"name": "Shadow Warp",
+	"type": "feature",
+	"img": "icons/magic/movement/trail-streak-pink.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p><strong>Action</strong>: (Reach 12) Switch places with a creature that has been dealt necrotic damage this turn.</p>",
+		"featureType": "class",
+		"class": "shadowmancer",
+		"group": "greater-invocations",
+		"gainedAtLevel": 4,
+		"subclass": false,
+		"gainedAtLevels": [
+			4,
+			6,
+			9,
+			14,
+			18
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.OIs1RgDx8O5bv8OU"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.9",
+		"createdTime": 1761632783894,
+		"modifiedTime": 1761711089457,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "x8FbNltmfdio9buY"
+}

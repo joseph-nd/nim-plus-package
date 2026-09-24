@@ -1,0 +1,94 @@
+{
+	"name": "Juggernaut",
+	"type": "feature",
+	"img": "icons/skills/melee/shield-block-bash-yellow.webp",
+	"system": {
+		"macro": "",
+		"identifier": "",
+		"rules": [],
+		"activation": {
+			"acquireTargetsFromTemplate": false,
+			"cost": {
+				"details": "",
+				"quantity": 1,
+				"type": "none",
+				"isReaction": false
+			},
+			"duration": {
+				"details": "",
+				"quantity": 1,
+				"type": "none"
+			},
+			"effects": [
+				{
+					"id": "IqEVFq6bKyOspDba",
+					"type": "damage",
+					"damageType": "psychic",
+					"formula": "@attributes.armor.value",
+					"parentContext": null,
+					"parentNode": null,
+					"canCrit": false,
+					"canMiss": false,
+					"on": {
+						"hit": [
+							{
+								"id": "J1jF8o8v0mlvw5Ob",
+								"type": "note",
+								"noteType": "warning",
+								"text": "damage equal to your armor",
+								"parentContext": "hit",
+								"parentNode": "IqEVFq6bKyOspDba"
+							},
+							{
+								"id": "ZMCkbXGT55MPKSsT",
+								"type": "damageOutcome",
+								"outcome": "fullDamage",
+								"parentContext": "hit",
+								"parentNode": "IqEVFq6bKyOspDba"
+							}
+						]
+					}
+				}
+			],
+			"showDescription": true,
+			"targets": {
+				"count": 1,
+				"restrictions": ""
+			},
+			"template": {
+				"length": 1,
+				"radius": 1,
+				"shape": "",
+				"width": 1
+			}
+		},
+		"description": "<p>When you use Coordinated Strike, you can spend an additional action to <strong>add 1 to your Primary Die</strong> and deal extra damage equal to your armor.</p>",
+		"featureType": "class",
+		"class": "commander",
+		"group": "champion-of-the-bulwark",
+		"gainedAtLevel": 7,
+		"subclass": true,
+		"gainedAtLevels": [
+			7
+		]
+	},
+	"effects": [],
+	"flags": {
+		"nim-plus-package": {
+			"supersedes": [
+				"Compendium.nimble.nimble-class-features.Item.V66ATYkNUXDrrCf3"
+			],
+			"playtest02": true
+		}
+	},
+	"_stats": {
+		"coreVersion": "13.347",
+		"systemId": "nimble",
+		"systemVersion": "0.1.8",
+		"createdTime": 1760400818103,
+		"modifiedTime": 1760401098102,
+		"lastModifiedBy": "zvcmZ9cAKxekqF5X"
+	},
+	"_id": "cwLKVSfsgfTpUVF2",
+	"folder": "1c5f1dd7fd5c16fc"
+}

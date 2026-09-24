@@ -9,6 +9,7 @@ import {
 	RELIABLE_JUSTICE_IDENTIFIER,
 	clearJudgmentPool,
 	findJudgmentPool,
+	judgmentAppliesToAnyAttack,
 	judgmentFaces,
 	poolRefillsOn,
 } from './judgment-rules.mjs';
@@ -23,14 +24,17 @@ function judgmentPoolLabel(entry) {
 	return label.length > 0 ? label : null;
 }
 
-/** Snapshot the live Judgment Dice before a melee swing that may consume them. */
+/**
+ * Snapshot the live Judgment Dice before a swing that may consume them. The
+ * 2.0.3 feature pays out on melee attacks only; the 0.2 copy on any attack.
+ */
 export function snapshotJudgment(weapon) {
 	if (!classQoLEnabled()) return null;
 	const actor = weapon?.actor;
 	if (!actor || actor.type !== 'character') return null;
-	if (!isMeleeWeapon(weapon)) return null;
 
 	const entry = findJudgmentPool(actor);
+	if (!isMeleeWeapon(weapon) && !judgmentAppliesToAnyAttack(entry)) return null;
 	const faces = judgmentFaces(entry);
 	if (faces.length === 0) return null;
 
@@ -56,7 +60,7 @@ function cardCarriesJudgment(card, label) {
 	return false;
 }
 
-/** "The dice are expended whether you hit or miss." */
+/** "The dice are expended whether you hit or miss" (0.2: "they are lost on a miss"). */
 export async function expendJudgment(actor, card, snapshot) {
 	if (!snapshot) return;
 	if (!cardCarriesJudgment(card, snapshot.label)) return;
@@ -170,6 +174,7 @@ function announceJudgmentRoll(document, changed) {
 
 		const total = faces.reduce((sum, face) => sum + face, 0);
 		const label = judgmentPoolLabel(live) ?? 'Judgment Dice';
+		const target = judgmentAppliesToAnyAttack(live) ? 'next attack' : 'next melee attack';
 		const advantageNote = advantage
 			? `<p><em>Reliable Justice — rolled an extra ${escape(live.pool.dieSize ?? 'die')} (${advantage.extra}) and dropped the lowest (${advantage.dropped}).</em></p>`
 			: '';
@@ -178,7 +183,7 @@ function announceJudgmentRoll(document, changed) {
 			speaker: ChatMessage.getSpeaker({ actor }),
 			flavor: `<strong>${escape(label)}</strong>`,
 			content:
-				`<p>Rolled <strong>${faces.join(', ')}</strong> — <strong>${total}</strong> extra radiant damage on the next melee attack this encounter.</p>` +
+				`<p>Rolled <strong>${faces.join(', ')}</strong> — <strong>${total}</strong> extra radiant damage on the ${target} this encounter.</p>` +
 				advantageNote,
 		});
 	}
@@ -196,3 +201,36 @@ for (const hook of ['preUpdateItem', 'preUpdateActor']) {
 	});
 }
 
+
+/**
+ * Nimble 0.2 — the dice ride on *any* attack, spells included. Weapon swings are
+ * spent by the object-activation wrapper (`activation-lifecycle.mjs`); a spell
+ * or feature card never passes through it, so spend those here. The same
+ * honest signal applies: only a card whose roll carries the pool's
+ * `[label]` tag — i.e. the system really folded the dice in — expends them.
+ * Runs on the author's client only, so one card clears the pool once.
+ */
+Hooks.on('createChatMessage', (message) => {
+	try {
+		if (!classQoLEnabled()) return;
+		if (message?.type !== 'spell' && message?.type !== 'feature') return;
+		const authorId = message.author?.id ?? message.user?.id ?? message.author;
+		if (authorId !== game.user?.id) return;
+
+		const actor = ChatMessage.getSpeakerActor?.(message.speaker) ?? null;
+		if (!actor || actor.type !== 'character' || !actor.isOwner) return;
+
+		const entry = findJudgmentPool(actor);
+		if (!judgmentAppliesToAnyAttack(entry)) return;
+		const faces = judgmentFaces(entry);
+		const label = judgmentPoolLabel(entry);
+		if (faces.length === 0 || !label) return;
+
+		const snapshot = { entry, faces, label, total: faces.reduce((sum, face) => sum + face, 0) };
+		expendJudgment(actor, message, snapshot).catch((error) =>
+			console.error(`[${MODULE_ID}] Failed to expend the Judgment Dice`, error),
+		);
+	} catch (error) {
+		console.error(`[${MODULE_ID}] Failed to resolve Judgment Dice on a spell card`, error);
+	}
+});
