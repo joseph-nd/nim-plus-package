@@ -134,21 +134,46 @@ export function title(re) {
 }
 
 /**
- * Run the orchestrator with scripted answers. `answers` are extra
- * [titleRegExp, answer] pairs queued BEFORE the default preview/sync answers.
+ * Run the orchestrator with scripted answers (the class-module prompts; the
+ * migration and the subclass sync no longer show a preview dialog). `answers`
+ * are [titleRegExp, answer] pairs. `interactive: false` is the startup pass;
+ * `apply: false` a dry run.
+ *
+ * Returns the class migration's chat card as `card` (and as `preview`, whose
+ * `content` the preview checks read), the item snapshot taken when that card
+ * was posted — after the class migration, before the follow-up subclass sync —
+ * as `preSync`, and the dialog log of the run.
  */
-export async function runMigration(env, migration, actor, direction, { answers = [], preview = 'apply', sync = 'apply', classes } = {}) {
+export async function runMigration(env, migration, actor, direction, { answers = [], classes, interactive, apply } = {}) {
 	for (const [m, a] of answers) env.dialogs.answerWhen(m instanceof RegExp ? title(m) : m, a);
-	const extra = env.dialogs.queue.slice(-answers.length || env.dialogs.queue.length);
-	const mine = answers.length ? extra : [];
-	env.dialogs.answerWhen(title(/Migrate classes/), preview);
-	env.dialogs.answerWhen(title(/Subclass update/), sync);
+	const mine = answers.length ? env.dialogs.queue.slice(-answers.length) : [];
 	const logFrom = env.dialogs.log.length;
-	const result = await migration.migrateCoreClasses({ actors: [actor], direction, classes });
+	let card = null;
+	let preSync = null;
+	const original = env.ChatMessage.create;
+	env.ChatMessage.create = async (data) => {
+		if (!card && /Class migration/.test(String(data?.content))) {
+			card = data;
+			preSync = snapshotItems(actor);
+		}
+		return original.call(env.ChatMessage, data);
+	};
+	let result;
+	try {
+		result = await migration.migrateCoreClasses({
+			actors: [actor],
+			direction,
+			classes,
+			...(interactive === undefined ? {} : { interactive }),
+			...(apply === undefined ? {} : { apply }),
+		});
+	} finally {
+		env.ChatMessage.create = original;
+	}
 	const log = env.dialogs.log.slice(logFrom);
 	const unused = mine.filter((e) => env.dialogs.queue.includes(e)).length;
 	env.dialogs.queue.splice(0);
-	return { result, log, unused, preview: log.find((d) => /Migrate classes/.test(d.title)) ?? null };
+	return { result, log, unused, card, preview: card, preSync };
 }
 
 /** Sorted list of "type|source-or-name" for every owned item. */
@@ -195,14 +220,14 @@ export function decode(html) {
 		.trim();
 }
 
-/** The `<li>` lines of a preview dialog's content (raw HTML). */
+/** The `<li>` lines of a report card's (or preview's) content (raw HTML). */
 export function previewLines(content) {
 	return [...String(content ?? '').matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
 }
 
-/** What a run did to an actor's items, by id. */
+/** What a run did to an actor's items, by id (`actor` may be an actor or a `snapshotItems` map). */
 export function effects(before, actor) {
-	const after = Object.fromEntries(actor.items.map((i) => [i.id, i.toObject()]));
+	const after = actor?.items ? Object.fromEntries(actor.items.map((i) => [i.id, i.toObject()])) : actor;
 	const src = (o) => o?._stats?.compendiumSource ?? o?.flags?.core?.sourceId ?? null;
 	const added = [];
 	const removed = [];

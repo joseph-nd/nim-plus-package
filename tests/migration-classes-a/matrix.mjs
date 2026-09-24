@@ -3,19 +3,25 @@
  * orchestrator (`migrateCoreClasses`), with scripted dialogs.
  *
  * For every (level, direction):
- *   - dry plan writes nothing;
- *   - preview "Later"/closed → 'postponed', nothing written;
- *   - preview accepted, every class prompt cancelled → only the unprompted preview
- *     lines happen (generic plan + unprompted class lines);
- *   - preview + prompts accepted → the diff is exactly what the preview listed,
- *     every prompt shown was announced, the non-pick item set equals a fresh
- *     build of the target version, picks are at the target's legal count, and
- *     pool state (item + actor flags) is untouched.
+ *   - dry plan writes nothing; a dry run (`apply: false`) writes nothing, opens
+ *     no dialog and whispers a card listing exactly the planned lines;
+ *   - every class prompt cancelled → only the unprompted report lines happen
+ *     (generic plan + unprompted class lines);
+ *   - non-interactive (the startup pass) → no dialog at all; exactly what the
+ *     cancelled run does, every would-be prompt deferred (stored on the actor,
+ *     marked skipped in the card, the character listed in the card and toast);
+ *     the sheet's interactive run afterwards finishes the job;
+ *   - prompts accepted → the diff is exactly what the report listed (the chat
+ *     card carries the plan's lines), every prompt shown was announced, the
+ *     non-pick item set equals a fresh build of the target version, picks are
+ *     at the target's legal count, and pool state (item + actor flags) is
+ *     untouched.
  */
 import { describe, expect, it } from 'vitest';
 import { setupWorld, sourceOf } from '../harness/index.mjs';
 import {
 	build,
+	cardLines,
 	CLASSES,
 	classPrompts,
 	expectedFromPlan,
@@ -110,22 +116,85 @@ export function defineMatrix(classId, { levels = LEVELS, extra, knownBugs = [] }
 	describe.each(DIRECTIONS)(`${classId} $direction matrix`, ({ direction, from, to, playtest }) => {
 		const bugs = knownBugs.filter((b) => b.direction === direction);
 		const bugOf = (level) => bugs.find((b) => b.levels.includes(level));
-		it.each(levels)(`L%i: dry plan writes nothing; preview Later/closed changes nothing`, async (level) => {
+		it.each(levels)(`L%i: dry plan and dry run write nothing; the dry-run card lists the plan`, async (level) => {
 			const { env, mods } = await setupWorld({ playtest });
 			const migration = mods[3];
 			const actor = await build(env, classId, level, from);
 			const before = snapshot(actor);
-			await migration.planCoreClassMigration({ actors: [actor], direction });
+			const [plan] = await migration.planCoreClassMigration({ actors: [actor], direction });
 			expect(actor.calls).toEqual([]);
 
-			for (const preview of ['later', null]) {
-				env.dialogs.reset();
-				const r = await runMigration(env, migration, actor, direction, { preview });
-				expect(['postponed', 'nothing']).toContain(r.result);
-				expect(actor.calls).toEqual([]);
-				expect(snapshot(actor)).toEqual(before);
-				expect(classPrompts(env)).toEqual([]);
+			env.dialogs.reset();
+			env.dialogs.fallback = 'throw';
+			const cards = env.ChatMessage.created.length;
+			const result = await migration.migrateCoreClasses({ actors: [actor], direction, apply: false });
+			expect(result).toBe(plan ? 'previewed' : 'nothing');
+			expect(actor.calls).toEqual([]);
+			expect(snapshot(actor)).toEqual(before);
+			expect(env.dialogs.log).toEqual([]);
+			const posted = env.ChatMessage.created.slice(cards);
+			if (!plan) {
+				expect(posted).toEqual([]);
+				return;
 			}
+			expect(posted).toHaveLength(1);
+			expect(posted[0].content).toMatch(/dry run/i);
+			expect(cardLines(posted[0])).toEqual(migration.planLines(plan));
+		});
+
+		it.each(levels)(`L%i: non-interactive (startup) → no dialog, choice steps skipped and reported; the sheet run finishes them`, async (level) => {
+			const { env, mods } = await setupWorld({ playtest });
+			const migration = mods[3];
+			const actor = await build(env, classId, level, from);
+			const pools = poolState(env, actor);
+			const [plan] = await migration.planCoreClassMigration({ actors: [actor], direction });
+			const exp = plan ? expectedFromPlan(plan) : null;
+
+			env.dialogs.fallback = 'throw';
+			const r = await runMigration(env, migration, actor, direction, { interactive: false });
+			expect(env.dialogs.log).toEqual([]);
+			expect(r.result).toBe(plan ? 'applied' : 'nothing');
+			if (!plan) return;
+
+			// Exactly the unprompted lines happened; the choice steps left the items as they were.
+			checkAgainstPreview(exp, r.migrationDiff, { accepted: false });
+			// Every step that would have asked is deferred — no more, no fewer.
+			const pending = migration.pendingChoices(actor, direction);
+			const deferred = Object.values(pending).flatMap((rec) => Object.keys(rec));
+			const prompts = (exp.askRemove.length ? 1 : 0) + exp.askPick.length + (exp.askKeep ? 1 : 0);
+			expect(deferred, JSON.stringify(exp)).toHaveLength(prompts);
+			expect(new Set(deferred).size).toBe(deferred.length);
+			const skipped = cardLines(r.card).filter((l) => /skipped: needs a choice/.test(l));
+			expect(skipped).toHaveLength(prompts);
+			const replan = await migration.planCoreClassMigration({ actors: [actor], direction });
+			if (prompts) {
+				expect(r.card.content).toMatch(/1 character needs a choice/);
+				expect(r.card.content).toContain(actor.name);
+				expect(env.notifications.messages('warn').some((m) => m.includes('needs a choice') && m.includes(actor.name))).toBe(true);
+				// The planner still reports it, so the sheet control has work to do.
+				expect(replan).toHaveLength(1);
+				expect(replan[0].pendingChoice).toBe(true);
+			} else {
+				expect(r.card.content).not.toMatch(/needs a choice/);
+				expect(env.notifications.messages('warn')).toEqual([]);
+			}
+
+			// The sheet's "Migrate class" (interactive) completes it.
+			env.dialogs.fallback = 'close';
+			env.dialogs.reset();
+			const sheet = await runMigration(env, migration, actor, direction);
+			expect(sheet.result).toBe(prompts ? 'applied' : replan.length ? 'applied' : 'nothing');
+			expect(classPrompts(env)).toHaveLength(prompts);
+			const fresh = await build(env, classId, level, to, { world: false, pools: false });
+			expect(nonPickSources(actor)).toEqual(nonPickSources(fresh));
+			expect(pickCounts(actor, classId)).toEqual(LEGAL[classId](to, level));
+			expect(migration.pendingChoices(actor, direction)).toEqual({});
+			expect(await migration.planCoreClassMigration({ actors: [actor], direction })).toEqual([]);
+			const now = poolState(env, actor);
+			for (const [id, flags] of Object.entries(pools.items)) {
+				if (actor.items.has(id)) expect(now.items[id], `pools of ${actor.items.get(id).name}`).toEqual(flags);
+			}
+			expect(now.actor).toEqual(pools.actor);
 		});
 
 		it.each(levels)(`L%i: prompts cancelled → only the unprompted preview lines happen`, async (level) => {
@@ -154,6 +223,8 @@ export function defineMatrix(classId, { levels = LEVELS, extra, knownBugs = [] }
 			expect(r.result).toBe(plan ? 'applied' : 'nothing');
 			if (exp) {
 				checkAgainstPreview(exp, r.migrationDiff, { accepted: true });
+				// The chat card is the report: exactly the plan's lines.
+				expect(cardLines(r.card)).toEqual(migration.planLines(plan));
 				// Every class prompt shown was announced (and vice versa).
 				const prompts = classPrompts(env);
 				const confirms = prompts.filter((p) => p.kind === 'confirm').length;

@@ -33,7 +33,9 @@
  *           with fewer than 2 Orders is offered the missing ones.
  *
  * Every step asks: a cancelled prompt changes nothing, and anything skipped can
- * be done by hand from the compendium.
+ * be done by hand from the compendium. The startup pass (non-interactive) asks
+ * nothing: all four steps are deferred to the sheet's "Migrate class" control,
+ * where they are re-derived from what the character owns.
  */
 import { MODULE_ID } from '../../constants.mjs';
 import { sysId } from '../../system.mjs';
@@ -43,6 +45,14 @@ const TACTICS_GROUP = 'combat-tactics';
 const COORDINATED_STRIKE_MATCH = /coordinated\s*strike/i;
 const NIM_FEATURE_PACK = `${MODULE_ID}.nim-plus-class-features`;
 const SYSTEM_FEATURE_PACK = 'nimble-class-features';
+
+/** Choice-step keys (see `../generic.mjs` `choiceLine`). */
+const KEYS = {
+	removeOrders: 'orders-early',
+	removeTactics: 'tactics-early',
+	pickTactic: 'combat-tactic',
+	pickOrders: 'commanders-orders',
+};
 
 // The level each group is first chosen at, on the side being migrated to.
 const LEVELS = {
@@ -113,7 +123,7 @@ async function candidates(ctx, group) {
 }
 
 /** Offer `count` picks from a group, leaving out what the actor already owns. */
-async function offerPicks(actor, ctx, { group, count, title, content }) {
+async function offerPicks(actor, ctx, { key, group, count, title, content }) {
 	const { promptChoice, loadDoc, addFeature } = ctx.helpers;
 	const ownedNames = new Set(
 		actor.items.filter((item) => item.type === 'feature').map((item) => item.name.trim().toLowerCase()),
@@ -123,8 +133,8 @@ async function offerPicks(actor, ctx, { group, count, title, content }) {
 		.map((entry) => ({ value: entry.uuid, label: entry.name }));
 	if (!options.length) return [];
 
-	const picked = await promptChoice(actor, { title, content, options, count: Math.min(count, options.length) });
-	if (!picked?.length) return [];
+	const picked = await promptChoice(actor, { key, title, content, options, count: Math.min(count, options.length) });
+	if (ctx.helpers.isDeferred(picked) || !picked?.length) return [];
 	const docs = [];
 	for (const uuid of picked) {
 		const doc = await loadDoc(uuid);
@@ -133,21 +143,21 @@ async function offerPicks(actor, ctx, { group, count, title, content }) {
 	return addFeature(actor, docs);
 }
 
-async function confirmRemoval(actor, ctx, items, why) {
-	const { escape, removeItems } = ctx.helpers;
+async function confirmRemoval(actor, ctx, key, items, why) {
+	const { escape, removeItems, confirmChoice, isDeferred } = ctx.helpers;
 	const live = items.filter((item) => actor.items.has(item.id));
 	if (!live.length) return [];
-	const confirmed = await foundry.applications.api.DialogV2.confirm({
-		window: { title: `Nim+ | ${actor.name}` },
+	const confirmed = await confirmChoice(actor, {
+		key,
+		title: actor.name,
 		content:
 			`<p>${why}</p><p>Remove ${names(live, escape)}?</p>` +
 			'<p><em>Keeping them is fine too — they stay on the sheet as they are.</em></p>',
-		yes: { label: 'Remove', icon: 'fa-solid fa-trash' },
-		no: { label: 'Keep' },
-		rejectClose: false,
-		modal: true,
-	}).catch(() => false);
-	if (!confirmed) return [];
+		yes: 'Remove',
+		yesIcon: 'fa-solid fa-trash',
+		no: 'Keep',
+	});
+	if (isDeferred(confirmed) || !confirmed) return [];
 	return removeItems(actor, live);
 }
 
@@ -156,7 +166,7 @@ export default {
 
 	/** @returns {string[]|Promise<string[]>} preview lines (HTML) */
 	describe(actor, ctx) {
-		const { escape } = ctx.helpers;
+		const { escape, choiceLine } = ctx.helpers;
 		const levels = LEVELS[ctx.direction];
 		if (!levels || ctx.level < 2) return [];
 		const lines = [];
@@ -166,12 +176,17 @@ export default {
 				const early = projectedInGroup(actor, ctx, ORDERS_GROUP);
 				if (early.length) {
 					lines.push(
-						`Commander's Orders now come at level ${levels.orders}: you will be asked whether to remove ${names(early, escape)}`,
+						choiceLine(
+							`Commander's Orders now come at level ${levels.orders}: you will be asked whether to remove ${names(early, escape)}`,
+							KEYS.removeOrders,
+						),
 					);
 				}
 			}
 			if (!projectedInGroup(actor, ctx, TACTICS_GROUP).length) {
-				lines.push('Fit for Any Battlefield (level 2) brings a Combat Tactic: you will be asked to choose one');
+				lines.push(
+					choiceLine('Fit for Any Battlefield (level 2) brings a Combat Tactic: you will be asked to choose one', KEYS.pickTactic),
+				);
 			}
 			return lines;
 		}
@@ -180,13 +195,18 @@ export default {
 			const early = projectedInGroup(actor, ctx, TACTICS_GROUP);
 			if (early.length) {
 				lines.push(
-					`Combat Tactics come at level ${levels.tactic} in 2.0.3: you will be asked whether to remove ${names(early, escape)}`,
+					choiceLine(
+						`Combat Tactics come at level ${levels.tactic} in 2.0.3: you will be asked whether to remove ${names(early, escape)}`,
+						KEYS.removeTactics,
+					),
 				);
 			}
 		}
 		const orders = projectedInGroup(actor, ctx, ORDERS_GROUP).length;
 		if (orders < 2) {
-			lines.push(`Commander's Orders are chosen at level 2 in 2.0.3: you will be asked to choose ${2 - orders}`);
+			lines.push(
+				choiceLine(`Commander's Orders are chosen at level 2 in 2.0.3: you will be asked to choose ${2 - orders}`, KEYS.pickOrders),
+			);
 		}
 		return lines;
 	},
@@ -200,12 +220,14 @@ export default {
 				await confirmRemoval(
 					actor,
 					ctx,
+					KEYS.removeOrders,
 					ownedInGroup(actor, ORDERS_GROUP),
 					`In Nimble 0.2, Commander's Orders are chosen at level ${levels.orders} (this Commander is level ${ctx.level}).`,
 				);
 			}
 			if (!ownedInGroup(actor, TACTICS_GROUP).length) {
 				await offerPicks(actor, ctx, {
+					key: KEYS.pickTactic,
 					group: TACTICS_GROUP,
 					count: 1,
 					title: 'Choose a Combat Tactic',
@@ -220,6 +242,7 @@ export default {
 			await confirmRemoval(
 				actor,
 				ctx,
+				KEYS.removeTactics,
 				ownedInGroup(actor, TACTICS_GROUP),
 				`In Heroes 2.0.3, Combat Tactics are chosen at level ${levels.tactic} (this Commander is level ${ctx.level}).`,
 			);
@@ -227,6 +250,7 @@ export default {
 		const orders = ownedInGroup(actor, ORDERS_GROUP).length;
 		if (orders < 2) {
 			await offerPicks(actor, ctx, {
+				key: KEYS.pickOrders,
 				group: ORDERS_GROUP,
 				count: 2 - orders,
 				title: "Choose Commander's Orders",

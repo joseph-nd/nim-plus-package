@@ -4,8 +4,12 @@
  * Everything the orchestrator (`./index.mjs`) does for every class, exported so
  * the per-class modules (`./classes/<class>.mjs`, `./subclasses/<class>.mjs`)
  * can do the same things for the cases the generic pass leaves to them. Nothing
- * here registers a hook, and nothing here asks for confirmation: callers only
- * reach these after the GM/owner confirmed the preview that listed the change.
+ * here registers a hook. The writers never ask: the migration applies its
+ * deterministic steps without a confirmation and reports them afterwards (a
+ * toast and a GM-whispered chat card). Only `promptChoice`/`confirmChoice` ask,
+ * for steps that need a player's decision — and the orchestrator hands class
+ * modules a wrapped copy of them (`ctx.helpers`) that defers such a step
+ * instead of asking when the run is non-interactive (see `../index.mjs`).
  *
  * Owned state is sacred. A replacement rewrites what the pack owns (name, img,
  * `system`) and keeps what the actor owns:
@@ -211,6 +215,64 @@ export async function removeItems(actor, items) {
 /* ───────────────────────────── asking ───────────────────────────── */
 
 /**
+ * What `ctx.helpers.promptChoice`/`confirmChoice` return in a non-interactive
+ * run (the startup migration) instead of asking: the step is skipped, left for
+ * the character's sheet ("Migrate class …"), and reported as a pending choice.
+ * Test it with `isDeferred`.
+ */
+export const CHOICE_DEFERRED = Symbol.for('nim-plus-package.classMigration.choiceDeferred');
+
+export function isDeferred(value) {
+	return value === CHOICE_DEFERRED;
+}
+
+/** The attribute marking a preview line as a step that needs a player's choice. */
+export const CHOICE_ATTR = 'data-nim-plus-choice';
+
+/**
+ * A preview line for a step that asks the player (`key` as passed to
+ * `promptChoice`/`confirmChoice`). The orchestrator reads the marker to report
+ * the plan as "pending choice" and, when the step was deferred, marks the line
+ * as skipped in the chat card.
+ */
+export function choiceLine(html, key) {
+	return `<i class="fa-solid fa-list-check" ${CHOICE_ATTR}="${escape(key ?? '')}"></i> ${html}`;
+}
+
+/** The choice key of a preview line, or null when the line is not a choice step. */
+export function choiceKeyOf(line) {
+	const m = new RegExp(`${CHOICE_ATTR}="([^"]*)"`).exec(String(line ?? ''));
+	return m ? m[1] : null;
+}
+
+/**
+ * Whether a choice resolves without asking: nothing to pick, or every option is
+ * taken. `promptChoice` returns without a dialog then, interactive or not.
+ */
+export function choiceIsForced(options = [], count = 1) {
+	return !options.length || count < 1 || count >= options.length;
+}
+
+/**
+ * Ask the current user a yes/no question for a step that needs their decision
+ * (remove the picks a re-levelled group no longer grants, …). Closing the
+ * dialog is "no".
+ *
+ * @returns {Promise<boolean>}
+ */
+export async function confirmChoice(actor, { title, content = '', yes = 'Yes', no = 'No', icon, yesIcon } = {}) {
+	const confirmed = await foundry.applications.api.DialogV2.confirm({
+		window: { title: `Nim+ | ${title ?? actor?.name ?? ''}`, ...(icon ? { icon } : {}) },
+		content: `<p><strong>${escape(actor?.name ?? '')}</strong></p>${content}`,
+		yes: { label: yes, icon: yesIcon ?? 'fa-solid fa-check' },
+		no: { label: no },
+		rejectClose: false,
+		modal: true,
+	}).catch(() => false);
+	return confirmed === true;
+}
+
+/**
  * Ask the current user to pick `count` of `options` — for re-levelled choice
  * groups (which grace to drop, which Orders to keep). Loops until exactly
  * `count` are picked or the dialog is cancelled.
@@ -221,11 +283,11 @@ export async function removeItems(actor, items) {
  * @param {string} [spec.content]                HTML shown above the options
  * @param {{value: string, label: string, hint?: string, checked?: boolean}[]} spec.options
  * @param {number} [spec.count=1]
+ * @param {string} [spec.key]                   the step's key (see `choiceLine`); used by the orchestrator's wrapper
  * @returns {Promise<string[]|null>} the picked values, or null if cancelled
  */
 export async function promptChoice(actor, { title, content = '', options = [], count = 1 } = {}) {
-	if (!options.length || count < 1) return [];
-	if (count >= options.length) return options.map((o) => o.value);
+	if (choiceIsForced(options, count)) return count < 1 ? [] : options.map((o) => o.value);
 
 	const type = count === 1 ? 'radio' : 'checkbox';
 	const rows = options

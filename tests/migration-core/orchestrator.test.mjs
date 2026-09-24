@@ -21,6 +21,11 @@ beforeEach(async () => {
 });
 
 const titles = () => env.dialogs.log.map((d) => d.title);
+/** Chat cards posted so far whose content matches `re`. */
+const cards = (re = /./) => env.ChatMessage.created.filter((c) => re.test(String(c.content)));
+const CLASS_CARD = /Class migration/;
+const SYNC_CARD = /Subclass sync/;
+const GM_ID = () => env.users.gm.id;
 
 describe('migrateCoreClasses — options and results', () => {
 	it('rejects an unknown direction with an error and does nothing', async () => {
@@ -38,9 +43,9 @@ describe('migrateCoreClasses — options and results', () => {
 		({ env, migration } = await world({ playtest }));
 		expect(migration.defaultDirection()).toBe(direction);
 		const actor = await buildCharacterAtLevel(env, 'commander', 5, { version });
-		env.dialogs.answerWhen(MIGRATE, 'later');
-		expect(await migration.migrateCoreClasses({ actors: [actor] })).toBe('postponed');
-		expect(titles()).toEqual([`Nim+ | Migrate classes to ${label}`]);
+		expect(await migration.migrateCoreClasses({ actors: [actor], apply: false })).toBe('previewed');
+		expect(titles()).toEqual([]);
+		expect(cards(CLASS_CARD).map((c) => c.content)).toEqual([expect.stringContaining(`Class migration → ${label} (dry run)`)]);
 	});
 
 	it('the default direction follows a setting change made after startup', async () => {
@@ -63,50 +68,85 @@ describe('migrateCoreClasses — options and results', () => {
 		expect(planned).not.toContain(npc);
 	});
 
-	it('apply: true skips the preview and applies; returns "applied" with an info notification', async () => {
+	it('applies without a confirmation popup; returns "applied" with a toast summing up the changes', async () => {
 		const actor = await buildCharacterAtLevel(env, 'shepherd', 3);
-		const result = await migration.migrateCoreClasses({ actors: [actor], direction: 'to02', apply: true });
+		const before = snapshotItems(actor);
+		const result = await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' });
 		expect(result).toBe('applied');
-		expect(titles().some((t) => MIGRATE.test(t))).toBe(false);
+		expect(titles()).toEqual([]);
 		expect(itemNames(actor)).toContain('My Buddy!');
-		expect(env.notifications.messages('info').join()).toMatch(/Classes migrated to Nimble 0.2 playtest on 1 character\./);
+		const [toast] = env.notifications.messages('info');
+		expect(toast).toMatch(/^Nim\+ migrated 1 character to the 0\.2 rules \(\d+ items? updated, \d+ added, \d+ removed\)\.$/);
+		// The counts are what happened to the actor's items.
+		const [updated, added, removed] = /\((\d+) items? updated, (\d+) added, (\d+) removed\)/.exec(toast).slice(1).map(Number);
+		const after = snapshotItems(actor);
+		expect(added).toBe(Object.keys(after).filter((id) => !before[id]).length);
+		expect(removed).toBe(Object.keys(before).filter((id) => !after[id]).length);
+		expect(updated).toBe(Object.keys(after).filter((id) => before[id] && JSON.stringify(before[id]) !== JSON.stringify(after[id])).length);
 	});
 
-	it('the preview confirmed → applied; plural notification for several characters', async () => {
+	it('apply: false is a dry run — the card lists the plan, nothing is written, no subclass sync', async () => {
+		const actor = await buildCharacterAtLevel(env, 'commander', 5, { subclass: 'Champion of the Arena' });
+		const before = snapshotItems(actor);
+		expect(await migration.migrateCoreClasses({ actors: [actor], direction: 'to02', apply: false })).toBe('previewed');
+		expect(actor.calls).toEqual([]);
+		expect(snapshotItems(actor)).toEqual(before);
+		expect(titles()).toEqual([]);
+		expect(cards(CLASS_CARD)).toHaveLength(1);
+		expect(cards(SYNC_CARD)).toEqual([]);
+		expect(env.notifications.messages('info').join()).toMatch(/dry run: 1 character would change/);
+	});
+
+	it('several characters → plural toast and one chat card, whispered to the GMs', async () => {
 		const a = await buildCharacterAtLevel(env, 'shepherd', 3);
 		const b = await buildCharacterAtLevel(env, 'stormshifter', 20);
 		acceptEverything(env);
 		expect(await migration.migrateCoreClasses({ actors: [a, b], direction: 'to02' })).toBe('applied');
-		expect(titles()[0]).toBe('Nim+ | Migrate classes to Nimble 0.2 playtest');
-		expect(env.notifications.messages('info').join()).toMatch(/on 2 characters\./);
+		expect(titles().some((t) => MIGRATE.test(t))).toBe(false);
+		expect(env.notifications.messages('info').join()).toMatch(/Nim\+ migrated 2 characters to the 0\.2 rules/);
 		expect(itemNames(b)).not.toContain('Expert Shifter');
+		const [card] = cards(CLASS_CARD);
+		expect(card.whisper).toEqual([GM_ID()]);
+		expect(card.content).toContain(a.name);
+		expect(card.content).toContain(b.name);
 	});
 
-	it('the preview lists every actor, its class/level heading, and every change', async () => {
+	it('the chat card lists every actor, its class/level heading, and every change', async () => {
 		const actor = await buildCharacterAtLevel(env, 'commander', 3, { name: 'Ada <x>' });
-		env.dialogs.answerWhen(MIGRATE, 'later');
+		acceptEverything(env);
 		await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' });
-		const html = env.dialogs.log[0].content;
+		const html = cards(CLASS_CARD)[0].content;
 		expect(html).toContain('Ada &lt;x&gt; — Commander 3');
 		expect(html).toMatch(/Removed: <s>Commander&#39;s Orders<\/s> <em>\(now gained at level 4\)<\/em>/);
 		expect(html).toMatch(/Added: <strong>Fit for Any Battlefield<\/strong>/);
-		// The class module's line and the "check by hand" line are part of the preview.
-		expect(html).toContain('<li>Fit for Any Battlefield (level 2) brings a Combat Tactic: you will be asked to choose one</li>');
+		// The class module's (choice) line and the "check by hand" line are part of the report.
+		expect(html).toMatch(/data-nim-plus-choice="combat-tactic"><\/i> Fit for Any Battlefield \(level 2\) brings a Combat Tactic: you will be asked to choose one<\/li>/);
 		expect(html).toMatch(/<i class="fa-solid fa-hand"><\/i> Commander: 0.2 changed <em>combat tactics<\/em>/);
+		expect(html).not.toMatch(/skipped|needs a choice/);
 	});
 
-	it.each([
-		['later', 'postponed'],
-		[null, 'postponed'],
-	])('preview answered %s → %s, nothing written, no subclass sync', async (answer, expected) => {
-		const actor = await buildCharacterAtLevel(env, 'commander', 5, { subclass: 'Champion of the Arena' });
-		const before = snapshotItems(actor);
-		env.dialogs.answerWhen(MIGRATE, answer);
-		expect(await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' })).toBe(expected);
-		expect(actor.calls).toEqual([]);
-		expect(snapshotItems(actor)).toEqual(before);
-		expect(titles()).toHaveLength(1);
-		expect(env.notifications.messages('info')).toEqual([]);
+	it('interactive: false → no dialog; the choice step is skipped and reported, the rest applied, the subclass sync still runs', async () => {
+		const actor = await buildCharacterAtLevel(env, 'commander', 5, { subclass: 'Champion of the Arena', name: 'Cora' });
+		const [glory] = itemsNamed(actor, 'Glory Seeker');
+		await actor.deleteEmbeddedDocuments('Item', [glory.id]);
+		env.dialogs.fallback = 'throw';
+		expect(await migration.migrateCoreClasses({ actors: [actor], direction: 'to02', interactive: false })).toBe('applied');
+		expect(env.dialogs.log).toEqual([]);
+		// Deterministic steps applied…
+		expect(itemNames(actor)).toContain('Fit for Any Battlefield');
+		expect(itemNames(actor)).toContain('Glory Seeker');
+		// …the Combat Tactic pick left for the sheet.
+		expect(actor.items.filter((i) => i.system?.group === 'combat-tactics')).toEqual([]);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({ commander: { 'combat-tactic': { title: 'Choose a Combat Tactic', count: 1 } } });
+		const html = cards(CLASS_CARD)[0].content;
+		expect(html).toMatch(/brings a Combat Tactic: you will be asked to choose one <em>— skipped: needs a choice<\/em>/);
+		expect(html).toMatch(/1 character needs a choice<\/strong> \(Cora\): open their sheet → <em>Migrate class to 0\.2 rules<\/em>/);
+		expect(env.notifications.messages('info').join()).toMatch(/Nim\+ migrated 1 character to the 0\.2 rules/);
+		expect(env.notifications.messages('warn')).toEqual(['Nim+ | 1 character needs a choice (Cora): open their sheet → Migrate class to 0.2 rules.']);
+		// The planner keeps reporting it.
+		const [plan] = await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' });
+		expect(plan.pendingChoice).toBe(true);
+		expect(plan.pendingStored).toEqual([{ classId: 'commander', key: 'combat-tactic', title: 'Choose a Combat Tactic' }]);
 	});
 
 	it('nothing to do → "nothing" with an info message, or silently with silent: true', async () => {
@@ -131,16 +171,32 @@ describe('migrateCoreClasses — options and results', () => {
 		expect(actor.calls).toEqual([]);
 	});
 
-	it('after applying, the GM gets the subclass sync for the migrated characters (after the class-module prompts)', async () => {
+	it('after applying, the GM gets the subclass sync for the migrated characters (after the class-module prompts), with its own card', async () => {
 		const actor = await buildCharacterAtLevel(env, 'commander', 5, { subclass: 'Champion of the Arena' });
 		const [glory] = itemsNamed(actor, 'Glory Seeker');
 		await actor.deleteEmbeddedDocuments('Item', [glory.id]);
 		acceptEverything(env);
 		expect(await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' })).toBe('applied');
-		const t = titles();
-		expect(t[0]).toMatch(MIGRATE);
-		expect(t.at(-1)).toBe('Nim+ | Subclass update available');
-		expect(itemNames(actor)).toContain('Glory Seeker');
+		expect(titles().some((t) => /Subclass update/.test(t))).toBe(false);
+		const order = env.ChatMessage.created.map((c) => (CLASS_CARD.test(c.content) ? 'class' : SYNC_CARD.test(c.content) ? 'sync' : '?'));
+		expect(order).toEqual(['class', 'sync']);
+		expect(cards(SYNC_CARD)[0].content).toMatch(/Feature added: <strong>Glory Seeker<\/strong>/);
+		expect(env.notifications.messages('info').join('\n')).toMatch(/Nim\+ synced subclasses on 1 character/);
+		expect(itemsNamed(actor, 'Glory Seeker')).toHaveLength(1);
+	});
+
+	it('pending-choice records of another direction or of a class the character lacks are ignored', async () => {
+		const actor = await buildCharacterAtLevel(env, 'hunter', 3, { version: '0.2' });
+		actor._source.flags[MODULE_ID] = {
+			...(actor._source.flags[MODULE_ID] ?? {}),
+			classMigrationChoices: { direction: 'to02', steps: { shepherd: { 'sacred-graces-pick': { title: 'Sacred Graces' } } } },
+		};
+		actor.prepareData();
+		expect(await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' })).toEqual([]);
+		expect(await migration.planCoreClassMigration({ actors: [actor], direction: 'to203' })).not.toContainEqual(
+			expect.objectContaining({ pendingStored: expect.arrayContaining([expect.anything()]) }),
+		);
+		expect(migration.pendingChoices(actor, 'to203')).toEqual({});
 	});
 
 	it('syncCoreClasses is an alias of migrateCoreClasses', () => {
@@ -167,7 +223,9 @@ describe('migrateCoreClasses — players', () => {
 		expect(await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' })).toBe('applied');
 		expect(itemNames(actor)).toContain('My Buddy!');
 		expect(env.notifications.messages('warn').join()).not.toMatch(/Only a GM/);
-		expect(titles().some((t) => /Subclass update/.test(t))).toBe(false);
+		expect(cards(SYNC_CARD)).toEqual([]);
+		// The report goes to the GMs and to the player who ran it.
+		expect(cards(CLASS_CARD)[0].whisper).toEqual([GM_ID(), env.users.player.id]);
 	});
 
 	it('a player\'s list is cut down to the characters they own', async () => {
@@ -178,7 +236,8 @@ describe('migrateCoreClasses — players', () => {
 		expect(await migration.migrateCoreClasses({ actors: [mine, theirs, null], direction: 'to02' })).toBe('applied');
 		expect(itemNames(mine)).toContain('My Buddy!');
 		expect(theirs.calls).toEqual([]);
-		expect(env.dialogs.log[0].content).not.toContain(theirs.name === mine.name ? '\u0000' : theirs.name);
+		const [card] = cards(CLASS_CARD);
+		expect(card.content.match(/<h4/g)).toHaveLength(1);
 	});
 
 	it('a player with only non-owned characters is warned and nothing happens', async () => {
@@ -216,15 +275,42 @@ describe('startup (ready) gate — classMigrationVersion', () => {
 	}
 	const version = () => env.game.modules.get(MODULE_ID).version;
 
-	it('GM, confirmed: migrates the world and stamps "<version>|to02"', async () => {
+	it('GM: migrates the world without a dialog, toasts, whispers the card, and stamps "<version>|to02"', async () => {
 		const [actor] = await boot({
 			prepare: async (e) => {
-				acceptEverything(e);
+				e.dialogs.fallback = 'throw';
 				return [await buildCharacterAtLevel(e, 'shepherd', 3)];
 			},
 		});
-		expect(titles()[0]).toBe('Nim+ | Migrate classes to Nimble 0.2 playtest');
+		expect(env.dialogs.log).toEqual([]);
 		expect(itemNames(actor)).toContain('My Buddy!');
+		expect(env.notifications.messages('info').join()).toMatch(/Nim\+ migrated 1 character to the 0\.2 rules/);
+		expect(cards(CLASS_CARD)).toHaveLength(1);
+		expect(cards(CLASS_CARD)[0].whisper).toEqual([GM_ID()]);
+		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
+	});
+
+	it('a mixed world: every character migrated, the ones with choices listed and left for their sheet, stamp written', async () => {
+		const [shep, cmd, sm] = await boot({
+			prepare: async (e) => {
+				e.dialogs.fallback = 'throw';
+				return [
+					await buildCharacterAtLevel(e, 'shepherd', 3, { name: 'Shep' }),
+					await buildCharacterAtLevel(e, 'commander', 5, { name: 'Cmd' }),
+					await buildCharacterAtLevel(e, 'shadowmancer', 4, { name: 'Sm', picks: ['Beguiling Influence', 'Vengeful Blast', 'Hungering Shadows'] }),
+				];
+			},
+		});
+		expect(env.dialogs.log).toEqual([]);
+		expect(env.notifications.messages('info').join()).toMatch(/Nim\+ migrated 3 characters to the 0\.2 rules/);
+		expect(env.notifications.messages('warn')).toEqual([
+			'Nim+ | 2 characters need a choice (Cmd, Sm): open their sheet → Migrate class to 0.2 rules.',
+		]);
+		expect(migration.pendingChoices(shep, 'to02')).toEqual({});
+		expect(Object.keys(migration.pendingChoices(cmd, 'to02'))).toEqual(['commander']);
+		expect(Object.keys(migration.pendingChoices(sm, 'to02'))).toEqual(['shadowmancer']);
+		expect(itemNames(sm)).not.toContain('Vengeful Blast');
+		expect(cards(CLASS_CARD)[0].content).toMatch(/2 characters need a choice<\/strong> \(Cmd, Sm\)/);
 		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
 	});
 
@@ -238,69 +324,85 @@ describe('startup (ready) gate — classMigrationVersion', () => {
 		expect(actor.calls).toEqual([]);
 	});
 
-	it('stamped for the other direction → preview again (a setting flip re-offers it)', async () => {
-		await boot({
-			stamp: `${MODULE_JSON_VERSION()}|to203`,
-			prepare: async (e) => {
-				e.dialogs.answerWhen(MIGRATE, 'later');
-				return [await buildCharacterAtLevel(e, 'shepherd', 3)];
-			},
-		});
-		expect(titles()[0]).toMatch(MIGRATE);
-	});
-
-	it('stamped for an older version → preview again', async () => {
-		await boot({
-			stamp: '0.0.1|to02',
-			prepare: async (e) => {
-				e.dialogs.answerWhen(MIGRATE, 'later');
-				return [await buildCharacterAtLevel(e, 'shepherd', 3)];
-			},
-		});
-		expect(titles()[0]).toMatch(MIGRATE);
-	});
-
-	it('postponed → not stamped, nothing written', async () => {
+	it('stamped for the other direction → runs again (a setting flip re-runs it)', async () => {
 		const [actor] = await boot({
-			prepare: async (e) => {
-				e.dialogs.answerWhen(MIGRATE, 'later');
-				return [await buildCharacterAtLevel(e, 'shepherd', 3)];
-			},
+			stamp: `${MODULE_JSON_VERSION()}|to203`,
+			prepare: async (e) => [await buildCharacterAtLevel(e, 'shepherd', 3)],
 		});
-		expect(actor.calls).toEqual([]);
-		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe('');
+		expect(itemNames(actor)).toContain('My Buddy!');
+		expect(cards(CLASS_CARD)).toHaveLength(1);
 	});
 
-	it('nothing to migrate → stamped silently (no dialog, no info)', async () => {
-		await boot({ prepare: async (e) => [await buildCharacterAtLevel(e, 'hunter', 3, { version: '0.2' })] });
-		expect(titles().some((t) => MIGRATE.test(t))).toBe(false);
-		expect(env.notifications.messages('info').join()).not.toMatch(/Already on/);
+	it('stamped for an older version → runs again', async () => {
+		const [actor] = await boot({
+			stamp: '0.0.1|to02',
+			prepare: async (e) => [await buildCharacterAtLevel(e, 'shepherd', 3)],
+		});
+		expect(itemNames(actor)).toContain('My Buddy!');
 		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
 	});
 
-	it('setting off → the to203 preview and a "|to203" stamp', async () => {
+	it('a pending choice does not hold back the stamp; the next startup does not run again, the sheet does', async () => {
+		const [actor] = await boot({
+			prepare: async (e) => [await buildCharacterAtLevel(e, 'commander', 5)],
+		});
+		expect(Object.keys(migration.pendingChoices(actor, 'to02'))).toEqual(['commander']);
+		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
+		// The sheet's control says so and runs it interactively.
+		const controls = [];
+		env.Hooks.callAll('getHeaderControlsActorSheetV2', { document: actor }, controls);
+		const [control] = controls.filter((c) => c.action === 'nimPlusMigrateClass');
+		expect(control).toMatchObject({ label: 'Migrate class to 0.2 rules (choice needed)', icon: 'fa-solid fa-list-check' });
+		acceptEverything(env);
+		control.onClick();
+		await env.flush(60);
+		expect(env.dialogs.log.filter((d) => /Combat Tactic/.test(d.title))).toHaveLength(1);
+		expect(actor.items.filter((i) => i.system?.group === 'combat-tactics')).toHaveLength(1);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
+	});
+
+	it('nothing to migrate → stamped silently (no dialog, no info, no card)', async () => {
+		await boot({ prepare: async (e) => [await buildCharacterAtLevel(e, 'hunter', 3, { version: '0.2' })] });
+		expect(titles().some((t) => MIGRATE.test(t))).toBe(false);
+		expect(cards(CLASS_CARD)).toEqual([]);
+		expect(env.notifications.messages('info').join()).not.toMatch(/Already on|migrated/);
+		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
+	});
+
+	it('setting off → the to203 migration and a "|to203" stamp', async () => {
 		await boot({
 			playtest: false,
-			prepare: async (e) => {
-				acceptEverything(e);
-				return [await buildCharacterAtLevel(e, 'shepherd', 3, { version: '0.2' })];
-			},
+			prepare: async (e) => [await buildCharacterAtLevel(e, 'shepherd', 3, { version: '0.2' })],
 		});
-		expect(titles()[0]).toBe('Nim+ | Migrate classes to Heroes 2.0.3');
+		expect(cards(CLASS_CARD)[0].content).toContain('Class migration → Heroes 2.0.3');
+		expect(env.notifications.messages('info').join()).toMatch(/to the 2\.0\.3 rules/);
 		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to203`);
 	});
 
-	it('a player gets no startup preview and nothing is stamped', async () => {
+	it('a player gets no startup pass and nothing is stamped', async () => {
 		const [actor] = await boot({
 			isGM: false,
 			prepare: async (e) => [await buildCharacterAtLevel(e, 'shepherd', 3, { ownedByPlayer: true })],
 		});
 		expect(env.dialogs.log).toEqual([]);
 		expect(actor.calls).toEqual([]);
+		expect(env.ChatMessage.created).toEqual([]);
 		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe('');
 	});
 
-	it('the subclass-sync startup preview runs after the migration preview has closed', async () => {
+	it('a GM that is not the active GM runs nothing', async () => {
+		const [actor] = await boot({
+			prepare: async (e) => {
+				e.game.users.activeGM = { id: 'otherGM000000000' };
+				return [await buildCharacterAtLevel(e, 'shepherd', 3)];
+			},
+		});
+		expect(actor.calls).toEqual([]);
+		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe('');
+		expect(env.settings.get(MODULE_ID, 'subclassSyncVersion')).toBe('');
+	});
+
+	it('the subclass-sync startup pass runs after the migration pass', async () => {
 		await boot({
 			prepare: async (e) => {
 				const a = await buildCharacterAtLevel(e, 'commander', 5, { version: '0.2', subclass: 'Champion of the Arena' });
@@ -311,31 +413,31 @@ describe('startup (ready) gate — classMigrationVersion', () => {
 				return [a, b];
 			},
 		});
-		const t = titles();
-		const iMig = t.findIndex((x) => MIGRATE.test(x));
-		const iSync = t.findIndex((x) => /Subclass update/.test(x));
-		expect(iMig).toBeGreaterThanOrEqual(0);
-		expect(iSync).toBeGreaterThan(iMig);
+		expect(titles()).toEqual([]);
+		const order = env.ChatMessage.created.map((c) => (CLASS_CARD.test(c.content) ? 'class' : SYNC_CARD.test(c.content) ? 'sync' : '?'));
+		expect(order.indexOf('class')).toBeGreaterThanOrEqual(0);
+		expect(order.lastIndexOf('sync')).toBeGreaterThan(order.indexOf('class'));
 		// The migration's stamp is written before the sync's.
 		const keys = env.log.filter((e) => e.method === 'settings.set').map((e) => e.key);
 		expect(keys).toEqual([VERSION_KEY, SYNC_KEY]);
 	});
 
-	it('a postponed migration keeps its character out of the startup subclass sync', async () => {
-		const [pending] = await boot({
+	it('a character migrated at startup gets its subclass features once (migration pass + sync pass), with a pending choice kept', async () => {
+		const [actor] = await boot({
 			prepare: async (e) => {
 				const a = await buildCharacterAtLevel(e, 'commander', 5, { subclass: 'Champion of the Arena' });
 				const [glory] = itemsNamed(a, 'Glory Seeker');
 				a.items.delete(glory.id);
-				e.dialogs.answerWhen(MIGRATE, 'later').answerWhen(/Subclass update/, 'apply');
 				return [a];
 			},
 		});
-		expect(pending.calls).toEqual([]);
-		expect(itemNames(pending)).not.toContain('Glory Seeker');
-		expect(titles().some((t) => /Subclass update/.test(t))).toBe(false);
-		// Postponed: the migration is not stamped; the sync (nothing else to do) is.
-		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe('');
+		expect(itemsNamed(actor, 'Glory Seeker')).toHaveLength(1);
+		const names = itemNames(actor);
+		expect(names.filter((n, i) => names.indexOf(n) !== i)).toEqual([]);
+		expect(await w.sync.planSubclassSync([actor])).toEqual([]);
+		expect(Object.keys(migration.pendingChoices(actor, 'to02'))).toEqual(['commander']);
+		expect(env.settings.get(MODULE_ID, 'classMigrationVersion')).toBe(`${version()}|to02`);
+		expect(env.settings.get(MODULE_ID, 'subclassSyncVersion')).toBe(version());
 	});
 });
 
@@ -393,15 +495,32 @@ describe('sheet header control (getHeaderControlsActorSheetV2)', () => {
 		expect(env.notifications.messages('info').join()).toMatch(/Already on the Nimble 0.2 playtest/);
 	});
 
-	it('onClick previews that character only, in the setting\'s direction', async () => {
+	it('onClick migrates that character only, in the setting\'s direction, without a confirmation popup', async () => {
 		const actor = await buildCharacterAtLevel(env, 'shepherd', 3, { name: 'Clicked' });
-		await buildCharacterAtLevel(env, 'commander', 5, { name: 'Other' });
-		env.dialogs.answerWhen(MIGRATE, 'later');
+		const other = await buildCharacterAtLevel(env, 'commander', 5, { name: 'Other' });
 		controlsFor(actor)[0].onClick();
-		await env.flush();
-		expect(titles()).toEqual(['Nim+ | Migrate classes to Nimble 0.2 playtest']);
-		expect(env.dialogs.log[0].content).toContain('Clicked');
-		expect(env.dialogs.log[0].content).not.toContain('Other');
+		await env.flush(60);
+		expect(titles()).toEqual([]);
+		expect(itemNames(actor)).toContain('My Buddy!');
+		expect(other.calls).toEqual([]);
+		const [card] = cards(CLASS_CARD);
+		expect(card.content).toContain('Class migration → Nimble 0.2 playtest');
+		expect(card.content).toContain('Clicked');
+		expect(card.content).not.toContain('Other');
+	});
+
+	it('onClick asks the player-choice prompts (interactive), and cancelling one skips only that step', async () => {
+		const actor = await buildCharacterAtLevel(env, 'commander', 5, { name: 'Clicked' });
+		env.dialogs.answerWhen(/Combat Tactic/, 'cancel');
+		controlsFor(actor)[0].onClick();
+		await env.flush(60);
+		expect(titles().filter((t) => /Combat Tactic/.test(t))).toHaveLength(1);
+		expect(itemNames(actor)).toContain('Fit for Any Battlefield');
+		expect(actor.items.filter((i) => i.system?.group === 'combat-tactics')).toEqual([]);
+		// Cancelled on the sheet: not remembered as pending.
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
+		expect(env.notifications.messages('warn').join()).not.toMatch(/needs a choice/);
+		expect(controlsFor(actor)[0].label).toBe('Migrate class to 0.2 rules');
 	});
 
 	it('a player clicking on their own character runs the migration', async () => {

@@ -55,8 +55,9 @@ describe('shepherd to02', () => {
 `setupWorld()` imports `CORE_SCRIPTS` = `playtest-settings`, `supersede`, `subclass-sync`, `class-migration/index` and
 returns their namespaces in that order as `mods`. For anything else, pass `scripts: [...]` (repo-relative paths, **all in
 one call** — every `importScripts` call starts a fresh module registry, so two calls give two separate copies of
-`supersede.mjs` with separate caches). By default it boots through `setup` only, so the `ready` startup prompts (migration
-preview, subclass sync) do not fire; pass `boot: 'ready'` to test them.
+`supersede.mjs` with separate caches). By default it boots through `setup` only, so the `ready` startup passes (class
+migration, subclass sync — applied without a dialog, reported in `env.ChatMessage.created` and the toasts) do not fire;
+pass `boot: 'ready'` to test them.
 
 Lower-level equivalent:
 

@@ -231,14 +231,16 @@ describe('orchestrator scoping and robustness (these classes)', () => {
 		expect(plan?.classes ?? []).toEqual([]);
 	});
 
-	it.each(['berserker', 'hunter', 'oathsworn', 'mage'])('%s: apply:true (no preview) gives the same end state as the preview path', async (classId) => {
+	it.each(['berserker', 'hunter', 'oathsworn', 'mage'])('%s: the startup pass (interactive: false) gives the same end state as the sheet run — no choice steps, nothing pending', async (classId) => {
 		const a = await world('to02');
 		const x = await build(a.env, classId, 12, '2.0.3');
 		await runMigration(a.env, a.migration, x, 'to02');
 		const b = await world('to02');
 		const y = await build(b.env, classId, 12, '2.0.3');
-		b.env.dialogs.answerWhen(/Subclass update/, 'apply');
-		await b.migration.migrateCoreClasses({ actors: [y], direction: 'to02', apply: true });
+		b.env.dialogs.fallback = 'throw';
+		await b.migration.migrateCoreClasses({ actors: [y], direction: 'to02', interactive: false });
+		expect(b.env.dialogs.log).toEqual([]);
+		expect(b.migration.pendingChoices(y, 'to02')).toEqual({});
 		const sig = (actor) => actor.items.map((i) => `${i.type}|${sourceOf(i)}`).sort();
 		expect(sig(y)).toEqual(sig(x));
 	});

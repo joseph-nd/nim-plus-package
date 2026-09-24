@@ -33,7 +33,7 @@ import './compendium/entry-levels.mjs';
 // ── Document-class patches (feats groups, feat AC, spell riders, weapons) ───
 import './core/document-patches.mjs';
 import './core/subclass-sync.mjs';
-import './core/class-migration/index.mjs'; // also starts subclass-sync's ready preview, after its own
+import './core/class-migration/index.mjs'; // also starts subclass-sync's ready pass, after its own
 import './equipment/weapon-stacking.mjs';
 
 // ── Psion ───────────────────────────────────────────────────────────────────

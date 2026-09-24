@@ -172,14 +172,59 @@ describe('invocations', () => {
 		expect(text).toMatch(/lesser invocations/);
 	});
 
-	it('cancelling the preview on a Vengeful Blast character changes nothing and shows no pick prompt', async () => {
+	it('a dry run (apply: false) on a Vengeful Blast character changes nothing and shows no pick prompt', async () => {
 		const { env, migration } = await world('to02');
 		const actor = await vengefulActor(env);
 		const before = snapshotItems(actor);
-		const { result, log } = await runMigration(env, migration, actor, 'to02', { preview: 'later' });
-		expect(result).toBe('postponed');
-		expect(log).toHaveLength(1);
+		const { result, log } = await runMigration(env, migration, actor, 'to02', { apply: false });
+		expect(result).toBe('previewed');
+		expect(log).toEqual([]);
 		expect(snapshotItems(actor)).toEqual(before);
+	});
+
+	it('startup (non-interactive): Vengeful Blast is removed, the pick is deferred without a prompt, and the sheet run asks for it', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await vengefulActor(env);
+		env.dialogs.fallback = 'throw';
+		const first = await runMigration(env, migration, actor, 'to02', { interactive: false });
+		expect(first.result).toBe('applied');
+		expect(first.log).toEqual([]);
+		expect(itemsNamed(actor, 'Vengeful Blast')).toEqual([]);
+		expect(actor.items.filter((i) => i.system?.group === 'greater-invocations').map((i) => i.name)).toEqual(['Hungering Shadows']);
+		// Remembered on the actor, reported in the card and the toast.
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({ shadowmancer: { 'vengeful-blast': { title: 'Replace Vengeful Blast', count: 1 } } });
+		const skipped = previewLines(first.card.content).map(decode).filter((t) => /skipped: needs a choice/.test(t));
+		expect(skipped).toEqual([expect.stringMatching(/Vengeful Blast is retired/)]);
+		expect(first.card.content).toMatch(/1 character needs a choice/);
+		const warn = env.notifications.messages('warn').join('\n');
+		expect(warn).toContain(actor.name);
+		expect(warn).toContain('open their sheet → Migrate class to 0.2 rules');
+		// The planner still reports it (the generic removal is gone), so the sheet control has it to do.
+		const [again] = await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' });
+		expect(again.pendingChoice).toBe(true);
+		expect(again.removals).toEqual([]);
+
+		env.dialogs.fallback = 'close';
+		const sheet = await runMigration(env, migration, actor, 'to02', {
+			answers: [[/Replace Vengeful Blast/, { action: 'ok', checked: [FIENDISH_BOON] }]],
+		});
+		expect(sheet.log.filter((d) => /Replace Vengeful Blast/.test(d.title))).toHaveLength(1);
+		expect(itemsNamed(actor, 'Fiendish Boon').map(sourceOf)).toEqual([FIENDISH_BOON]);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
+		expect(await migration.planCoreClassMigration({ actors: [actor], direction: 'to02' })).toEqual([]);
+	});
+
+	it('a deferred Vengeful Blast pick cancelled on the sheet is forgotten (no prompt on the next run)', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await vengefulActor(env);
+		await runMigration(env, migration, actor, 'to02', { interactive: false });
+		const sheet = await runMigration(env, migration, actor, 'to02', { answers: [[/Replace Vengeful Blast/, 'cancel']] });
+		expect(sheet.log.filter((d) => /Replace Vengeful Blast/.test(d.title))).toHaveLength(1);
+		expect(env.notifications.messages('info').join('\n')).toMatch(/no Greater Invocation picked/);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
+		const next = await runMigration(env, migration, actor, 'to02');
+		expect(next.result).toBe('nothing');
+		expect(next.log).toEqual([]);
 	});
 
 	it('an actor with no class but a Summon Shadow spell is not given Command Shadows', async () => {

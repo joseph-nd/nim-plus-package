@@ -51,7 +51,7 @@ describe('harness: class migration', () => {
 		expect(snapshotItems(actor)).toEqual(before);
 	});
 
-	it('apply: preview confirmed, class-module prompts answered, pools and ids kept', async () => {
+	it('apply: no preview popup, class-module prompts answered, pools and ids kept, toast + chat card', async () => {
 		const actor = await buildCharacterAtLevel(env, 'commander', 3, {
 			version: '2.0.3',
 			picks: ['Face Me!', 'Hold the Line!'],
@@ -60,11 +60,10 @@ describe('harness: class migration', () => {
 		const [strike] = itemsNamed(actor, 'Coordinated Strike!');
 		const heavy = findDoc({ pack: NIM, name: 'Heavy Strike' });
 
+		// No preview: the migration applies at once. Only the player-choice prompts ask.
 		env.dialogs
-			.answerWhen(/Migrate classes/, 'apply') // the preview (DialogV2.wait → "Apply" button)
-			.answerWhen(/Remove/, true) // commander.mjs confirmRemoval (DialogV2.confirm)
-			.answerWhen(/Combat Tactic/, { action: 'ok', checked: [heavy.uuid] }) // promptChoice
-			.answerWhen(/Subclass update/, 'apply'); // subclass sync preview, if it has anything
+			.answerWhen(/Remove/, true) // commander.mjs confirmRemoval (generic confirmChoice → DialogV2.confirm)
+			.answerWhen(/Combat Tactic/, { action: 'ok', checked: [heavy.uuid] }); // promptChoice
 
 		const result = await migration.migrateCoreClasses({ actors: [actor], direction: 'to02' });
 		expect(result).toBe('applied');
@@ -77,10 +76,13 @@ describe('harness: class migration', () => {
 		// Orders removed on confirmation, the scripted tactic added.
 		expect(itemNames(actor)).not.toContain('Face Me!');
 		expect(itemNames(actor)).toContain('Heavy Strike');
-		expect(env.notifications.messages('info').join('\n')).toMatch(/Classes migrated/);
+		expect(env.notifications.messages('info').join('\n')).toMatch(/Nim\+ migrated 1 character to the 0\.2 rules/);
+		// The full report is a GM-whispered chat card.
+		expect(env.ChatMessage.created.some((c) => /Class migration/.test(c.content))).toBe(true);
 
 		// Every dialog the run opened is in the log, with the answer it got.
 		expect(env.dialogs.log.map((d) => d.kind)).toEqual(expect.arrayContaining(['wait', 'confirm']));
+		expect(env.dialogs.log.some((d) => /Migrate classes/.test(d.title))).toBe(false);
 	});
 
 	it('non-GM players can only migrate characters they own', async () => {

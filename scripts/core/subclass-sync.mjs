@@ -21,12 +21,14 @@
  *   - pack features of the (renamed) subclass gained at or below the actor's
  *     class level that the actor lacks are added.
  *
- * Nothing runs unprompted: on `ready` the GM gets a preview dialog when the
- * module version changed since the last sync, and applies it or postpones it.
- * The same preview/apply is available from a macro:
+ * No confirmation popup: on `ready` the active GM applies it once per module
+ * version, and the macro applies it straight away. Either way a toast sums it
+ * up and a GM-whispered chat card lists every change per character (the audit
+ * trail; see `./migration-report.mjs`). Nothing in the sync needs a choice.
+ * Ids and flags (pool state) are kept, so the sheet's +/- still corrects them.
  *
- *   await nimPlus.syncSubclasses();                 // preview dialog
- *   await nimPlus.syncSubclasses({ apply: true });  // apply without asking
+ *   await nimPlus.syncSubclasses();                  // apply, toast + chat card
+ *   await nimPlus.syncSubclasses({ apply: false });  // dry run: chat card only
  *   await nimPlus.syncSubclasses({ actors: [actor] });
  *
  * Only world actors are covered — unlinked tokens keep their own copies.
@@ -37,7 +39,7 @@
  * for the characters it just migrated. It stays out of the migration's way:
  *
  *   - a character that still owns documents from the side the playtest setting
- *     turned away from (a pending or postponed migration) is skipped whole, so
+ *     turned away from (a migration not run yet) is skipped whole, so
  *     0.2 subclass features are never added next to the 2.0.3 copies they
  *     supersede;
  *   - Nim+ documents the supersede layer currently hides (0.2 docs while the
@@ -54,6 +56,7 @@
  */
 import { MODULE_ID } from './constants.mjs';
 import { escape } from './html.mjs';
+import { plural, whisperReport } from './migration-report.mjs';
 import {
 	hasPendingClassMigration,
 	canonicalUuid,
@@ -312,52 +315,64 @@ export async function applySubclassSync(report) {
 	return touched;
 }
 
-/* ───────────────────────────── UI ───────────────────────────── */
+/* ───────────────────────────── reporting ───────────────────────────── */
 
-function renderReport(report) {
-	const parts = [];
-	for (const { actor, plans } of report) {
-		for (const plan of plans) {
-			const lines = [];
-			if (plan.update) {
-				const renamed = plan.item.name !== plan.target.name;
-				lines.push(
-					renamed
-						? `Subclass renamed: ${escape(plan.item.name)} → <strong>${escape(plan.target.name)}</strong>`
-						: 'Subclass text updated',
-				);
-			}
-			for (const u of plan.featureUpdates) {
-				lines.push(
-					u._name !== u._to
-						? `Feature renamed: ${escape(u._name)} → <strong>${escape(u._to)}</strong>`
-						: `Feature updated: ${escape(u._name)}`,
-				);
-			}
-			for (const f of plan.featureRemovals) lines.push(`Feature removed: <s>${escape(f.name)}</s>`);
-			for (const f of plan.featureAdditions) lines.push(`Feature added: <strong>${escape(f.name)}</strong>`);
-			parts.push(
-				`<h4 style="margin:.5em 0 .2em">${escape(actor.name)} — ${escape(plan.target.name)} (level ${plan.level})</h4>` +
-					`<ul style="margin:0 0 .4em 1.2em">${lines.map((l) => `<li>${l}</li>`).join('')}</ul>`,
-			);
-		}
+/** The report lines of one subclass plan (HTML). */
+function planLines(plan) {
+	const lines = [];
+	if (plan.update) {
+		const renamed = plan.item.name !== plan.target.name;
+		lines.push(
+			renamed
+				? `Subclass renamed: ${escape(plan.item.name)} → <strong>${escape(plan.target.name)}</strong>`
+				: 'Subclass text updated',
+		);
 	}
-	return (
-		`<p>The Nim+ packs changed since these characters took their subclass. ` +
-		`Applying keeps each character's items and flags and only rewrites the subclass data:</p>` +
-		`<div style="max-height:60vh;overflow:auto">${parts.join('')}</div>`
+	for (const u of plan.featureUpdates) {
+		lines.push(
+			u._name !== u._to
+				? `Feature renamed: ${escape(u._name)} → <strong>${escape(u._to)}</strong>`
+				: `Feature updated: ${escape(u._name)}`,
+		);
+	}
+	for (const f of plan.featureRemovals) lines.push(`Feature removed: <s>${escape(f.name)}</s>`);
+	for (const f of plan.featureAdditions) lines.push(`Feature added: <strong>${escape(f.name)}</strong>`);
+	return lines;
+}
+
+/** One section per (character, subclass): `{heading, lines}`. */
+export function reportSections(report) {
+	return report.flatMap(({ actor, plans }) =>
+		plans.map((plan) => ({
+			heading: `${escape(actor.name)} — ${escape(plan.target.name)} (level ${plan.level})`,
+			lines: planLines(plan),
+		})),
 	);
 }
 
+function countChanges(report) {
+	let updated = 0;
+	let removed = 0;
+	let added = 0;
+	for (const { plans } of report) {
+		for (const plan of plans) {
+			updated += (plan.update ? 1 : 0) + plan.featureUpdates.length;
+			removed += plan.featureRemovals.length;
+			added += plan.featureAdditions.length;
+		}
+	}
+	return { updated, removed, added };
+}
+
 /**
- * Preview and (optionally) apply subclass sync.
+ * Plan and apply the subclass sync — no confirmation popup.
  * @param {object} [options]
  * @param {Actor[]} [options.actors]   restrict to these actors (default: all world characters)
- * @param {boolean} [options.apply]    apply without a preview dialog
+ * @param {boolean} [options.apply=true]  false: dry run — post the report card, write nothing
  * @param {boolean} [options.silent]   no "nothing to do" notification
- * @returns {Promise<'applied'|'postponed'|'nothing'>}
+ * @returns {Promise<'applied'|'previewed'|'nothing'>}
  */
-export async function syncSubclasses({ actors, apply = false, silent = false } = {}) {
+export async function syncSubclasses({ actors, apply = true, silent = false } = {}) {
 	if (!game.user?.isGM) {
 		ui.notifications?.warn('Nim+ | Only a GM can sync subclasses.');
 		return 'nothing';
@@ -368,23 +383,29 @@ export async function syncSubclasses({ actors, apply = false, silent = false } =
 		return 'nothing';
 	}
 
-	let go = apply;
-	if (!go) {
-		go = await foundry.applications.api.DialogV2.wait({
-			window: { title: 'Nim+ | Subclass update available', icon: 'fa-solid fa-arrows-rotate' },
-			position: { width: 560 },
-			content: renderReport(report),
-			buttons: [
-				{ action: 'apply', label: 'Apply', icon: 'fa-solid fa-check', default: true, callback: () => true },
-				{ action: 'later', label: 'Later', icon: 'fa-solid fa-clock', callback: () => false },
-			],
-			rejectClose: false,
+	const sections = reportSections(report);
+	if (apply === false) {
+		await whisperReport({
+			title: 'Nim+ | Subclass sync (dry run)',
+			intro: 'Dry run — nothing was written. The Nim+ packs changed since these characters took their subclass; syncing would make these changes:',
+			sections,
 		});
+		ui.notifications?.info(`Nim+ | Subclass sync dry run: ${plural(report.length, 'character')} would change — see the chat card.`);
+		return 'previewed';
 	}
-	if (!go) return 'postponed';
 
+	const { updated, removed, added } = countChanges(report);
 	const touched = await applySubclassSync(report);
-	ui.notifications?.info(`Nim+ | Subclasses synced on ${touched} character${touched === 1 ? '' : 's'}.`);
+	await whisperReport({
+		title: 'Nim+ | Subclass sync',
+		intro:
+			"The Nim+ packs changed since these characters took their subclass. Each character's items and flags were kept; " +
+			'only the subclass data was rewritten:',
+		sections,
+	});
+	ui.notifications?.info(
+		`Nim+ synced subclasses on ${plural(touched, 'character')} (${plural(updated, 'item')} updated, ${added} added, ${removed} removed).`,
+	);
 	return 'applied';
 }
 
@@ -400,28 +421,28 @@ Hooks.once('init', () => {
 });
 
 /**
- * The version-gated startup preview. Not a `ready` hook of its own: the class
- * migration's `ready` handler calls it once the migration preview has closed,
- * so the two never run out of order (see the header).
+ * The version-gated startup pass (applied without a dialog). Not a `ready` hook
+ * of its own: the class migration's `ready` handler queues it after the
+ * migration's pass, so the two never run out of order (see the header).
  */
 export async function runSubclassSyncStartup() {
 	if (!game.user?.isGM) return;
+	const active = game.users?.activeGM;
+	if (active && active.id !== game.user.id) return;
 	const version = game.modules.get(MODULE_ID)?.version ?? '';
 	if (game.settings.get(MODULE_ID, SYNC_SETTING) === version) return;
 	try {
-		const result = await syncSubclasses({ silent: true });
-		if (result !== 'postponed') await game.settings.set(MODULE_ID, SYNC_SETTING, version);
+		await syncSubclasses({ silent: true });
+		await game.settings.set(MODULE_ID, SYNC_SETTING, version);
 	} catch (error) {
 		console.error(`${MODULE_ID} | subclass sync failed`, error);
 	}
 }
 
 /**
- * Forget that this version's startup sync ran, so the next `ready` offers it
- * again. The startup sync skips characters whose class migration is pending and
- * still stamps the version; when such a character's migration is applied later
- * and its follow-up sync is postponed ("Later"), the class migration calls this
- * so the outstanding subclass features are not lost. GM only (world setting).
+ * Forget that this version's startup sync ran, so the next `ready` runs it
+ * again. Nothing in the module calls it any more (the sync can no longer be
+ * postponed); kept for macros. GM only (world setting).
  */
 export async function resetSubclassSyncStamp() {
 	if (!game.user?.isGM) return;

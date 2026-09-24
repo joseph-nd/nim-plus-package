@@ -175,11 +175,12 @@ describe('restore-203 edge cases', () => {
 		}
 	});
 
-	it('cancelling a to203 preview restores nothing', async () => {
+	it('a to203 dry run (apply: false) restores nothing', async () => {
 		const { env, migration } = await world('to203');
 		const actor = await buildChar(env, 'songweaver', 11, { version: '0.2', subclass: 'Herald of Courage' });
 		const before = snapshotItems(actor);
-		await runMigration(env, migration, actor, 'to203', { preview: 'later' });
+		const run = await runMigration(env, migration, actor, 'to203', { apply: false });
+		expect(run.result).toBe('previewed');
 		expect(snapshotItems(actor)).toEqual(before);
 	});
 

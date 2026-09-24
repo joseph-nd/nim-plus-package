@@ -3,9 +3,11 @@
  *
  * - `CLASSES`   per-class build recipes (picks per version/level, a subclass with a
  *               Nim+ 0.2 copy, the pick groups and their legal counts per version).
- * - `script()`  a persistent dialog auto-responder (preview, confirms, choice prompts,
- *               subclass-sync preview) that also snapshots the actor just before the
- *               subclass sync runs, so the class migration's own diff can be isolated.
+ * - `script()`  a persistent dialog auto-responder for the class-module prompts
+ *               (confirms, choice prompts) — the migration itself has no preview dialog.
+ * - `runMigration()` runs the orchestrator and snapshots the actor when the class
+ *               migration's chat card is posted (before the follow-up subclass sync), so
+ *               the class migration's own diff can be isolated.
  * - `diff()`    before/after item diff (removed / added / updated).
  * - `expectedFromPlan()` what the preview promised, parsed from the plan's lines.
  * - `nonPickSources()` the multiset of compendium sources an actor owns, choice picks
@@ -250,22 +252,15 @@ export function choiceOptions(config) {
 }
 
 /**
- * A persistent responder. Options:
- *   preview: 'apply' | 'later' | null (closed)
+ * A persistent responder for the class-module prompts (the migration and the
+ * subclass sync apply without a preview dialog now). Options:
  *   confirm: true | false | null
  *   pick:    'first' | 'last' | 'cancel' | 'wrong-count' | fn({values, labels, count, title}) → values|null
- *   sync:    'apply' | 'later'
- *   onSync:  callback run just before the subclass sync dialog answers (for snapshots)
  */
-export function script(env, { preview = 'apply', confirm = true, pick = 'first', sync = 'apply', onSync } = {}) {
+export function script(env, { confirm = true, pick = 'first' } = {}) {
 	const d = env.dialogs;
 	const N = 40;
 	for (let i = 0; i < N; i += 1) {
-		d.answerWhen((c) => /Migrate classes/.test(titleOf(c)), preview);
-		d.answerWhen((c) => /Subclass update/.test(titleOf(c)), () => {
-			onSync?.();
-			return sync === 'apply';
-		});
 		d.answerWhen((c) => !!c?.yes && !!c?.no, confirm === null ? null : confirm);
 		d.answerWhen(
 			(c) => /nimPlusChoice/.test(String(c?.content ?? '')),
@@ -288,13 +283,64 @@ export function classPrompts(env) {
 	return env.dialogs.log.filter((l) => l.kind === 'confirm' || /nimPlusChoice/.test(String(l.content)));
 }
 
-/** Run the full orchestrator for one actor, returning the class-migration diff (pre-sync) and the final diff. */
-export async function runMigration(env, migration, actor, direction, answers = {}) {
+/** Chat cards posted since `from` (the class migration's and the subclass sync's reports). */
+export function reportCards(env, from = 0) {
+	return env.ChatMessage.created.slice(from);
+}
+
+/**
+ * Call `fn` with every chat card as it is posted, before it is recorded. The
+ * class migration posts its card after its own changes and before the
+ * follow-up subclass sync, so a snapshot taken there isolates its diff.
+ * Returns a restore function.
+ */
+export function onCard(env, fn) {
+	const original = env.ChatMessage.create;
+	env.ChatMessage.create = async (data) => {
+		fn(data);
+		return original.call(env.ChatMessage, data);
+	};
+	return () => {
+		env.ChatMessage.create = original;
+	};
+}
+
+/** The `<li>` lines of a report card (raw HTML). */
+export function cardLines(card) {
+	return [...String(card?.content ?? '').matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+}
+
+/**
+ * Run the full orchestrator for one actor, returning the class-migration diff
+ * (before the follow-up subclass sync) and the final diff, plus the class
+ * migration's chat card. `interactive: false` is the startup pass.
+ */
+export async function runMigration(env, migration, actor, direction, { interactive, ...answers } = {}) {
 	const before = snapshot(actor);
 	let preSync = null;
-	script(env, { ...answers, onSync: () => (preSync = snapshot(actor)) });
-	const result = await migration.migrateCoreClasses({ actors: [actor], direction });
-	await env.flush?.();
-	const after = snapshot(actor);
-	return { result, before, after, migrationDiff: diff(before, preSync ?? after), finalDiff: diff(before, after) };
+	let card = null;
+	const from = env.ChatMessage.created.length;
+	const restore = onCard(env, (data) => {
+		if (/Class migration/.test(String(data?.content)) && !card) {
+			card = data;
+			preSync = snapshot(actor);
+		}
+	});
+	script(env, answers);
+	try {
+		const result = await migration.migrateCoreClasses({ actors: [actor], direction, ...(interactive === undefined ? {} : { interactive }) });
+		await env.flush?.();
+		const after = snapshot(actor);
+		return {
+			result,
+			card,
+			cards: reportCards(env, from),
+			before,
+			after,
+			migrationDiff: diff(before, preSync ?? after),
+			finalDiff: diff(before, after),
+		};
+	} finally {
+		restore();
+	}
 }

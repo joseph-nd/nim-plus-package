@@ -1,5 +1,5 @@
 /**
- * scripts/core/subclass-sync.mjs — preview/apply, the supersede interplay
+ * scripts/core/subclass-sync.mjs — apply/report (no popup), the supersede interplay
  * (pending migrations, hidden docs), LEGACY_IDENTIFIERS, and the startup chain
  * with the class migration.
  */
@@ -74,7 +74,9 @@ async function pactOfTheId(env, level = 7, version = '0.2') {
 	return buildCharacterAtLevel(env, 'shadowmancer', level, { version, subclass: 'Pact of the Id' });
 }
 
-describe('subclass sync — preview / apply', () => {
+const cards = (env, re = /Subclass sync/) => env.ChatMessage.created.filter((c) => re.test(String(c.content)));
+
+describe('subclass sync — apply / report', () => {
 	it('an up-to-date character needs nothing', async () => {
 		const { env, sync } = await world({ playtest: true });
 		const actor = await pactOfTheId(env);
@@ -103,8 +105,14 @@ describe('subclass sync — preview / apply', () => {
 		expect(plan.featureRemovals).toEqual([]);
 		expect(actor.calls).toEqual([]); // planning never writes
 
-		env.dialogs.answerWhen(/Subclass update/, 'apply');
 		expect(await sync.syncSubclasses({ actors: [actor] })).toBe('applied');
+		expect(env.dialogs.log).toEqual([]);
+		// Reported: a toast with the counts and a GM-whispered card with the lines.
+		expect(env.notifications.messages('info')).toEqual(['Nim+ synced subclasses on 1 character (1 item updated, 1 added, 0 removed).']);
+		const [card] = cards(env);
+		expect(card.whisper).toEqual([env.users.gm.id]);
+		expect(card.content).toContain('<li>Feature updated: Fractured Psyche</li>');
+		expect(card.content).toContain('<li>Feature added: <strong>Hyperfixation</strong></li>');
 		const [after] = itemsNamed(actor, 'Fractured Psyche');
 		expect(after.id).toBe(fp.id);
 		expect(after.system.description).not.toBe('<p>old text</p>');
@@ -145,16 +153,16 @@ describe('subclass sync — preview / apply', () => {
 		expect(itemNames(actor)).not.toContain('Ghost');
 	});
 
-	it.each([
-		['later', 'postponed'],
-		[null, 'postponed'],
-	])('dialog answer %s → %s, nothing written', async (answer, result) => {
+	it('apply: false is a dry run — the card lists the change, nothing is written, no dialog', async () => {
 		const { env, sync } = await world({ playtest: true });
 		const actor = await pactOfTheId(env, 7);
 		actor.items.delete(itemsNamed(actor, 'Hyperfixation')[0].id);
-		env.dialogs.answerWhen(/Subclass update/, answer);
-		expect(await sync.syncSubclasses({ actors: [actor] })).toBe(result);
+		expect(await sync.syncSubclasses({ actors: [actor], apply: false })).toBe('previewed');
 		expect(actor.calls).toEqual([]);
+		expect(env.dialogs.log).toEqual([]);
+		const [card] = cards(env);
+		expect(card.content).toMatch(/dry run/i);
+		expect(card.content).toContain('Feature added: <strong>Hyperfixation</strong>');
 	});
 
 	it('a player cannot sync', async () => {
@@ -166,15 +174,16 @@ describe('subclass sync — preview / apply', () => {
 		expect(actor.calls).toEqual([]);
 	});
 
-	it('the preview escapes names', async () => {
+	it('the chat card escapes names', async () => {
 		const { env, sync } = await world({ playtest: true });
 		const actor = await pactOfTheId(env, 7);
 		actor.name = '<b>Evil</b>';
 		actor._source.name = '<b>Evil</b>';
 		actor.items.delete(itemsNamed(actor, 'Hyperfixation')[0].id);
-		env.dialogs.answerWhen(/Subclass update/, 'later');
 		await sync.syncSubclasses({ actors: [actor] });
-		expect(env.dialogs.log[0].content).not.toContain('<b>Evil</b>');
+		const [card] = cards(env);
+		expect(card.content).not.toContain('<b>Evil</b>');
+		expect(card.content).toContain('&lt;b&gt;Evil&lt;/b&gt;');
 	});
 });
 
@@ -349,20 +358,22 @@ describe('subclass sync — supersede interplay', () => {
 });
 
 describe('subclass sync — startup (runSubclassSyncStartup + queue)', () => {
-	it('version gate: runs once per module version; postponed does not stamp', async () => {
+	it('version gate: applies without a dialog once per module version, then stamps', async () => {
 		const { env, sync } = await world({ playtest: true });
 		const actor = await pactOfTheId(env, 7);
 		actor.items.delete(itemsNamed(actor, 'Hyperfixation')[0].id);
-		env.dialogs.answerWhen(/Subclass update/, 'later');
+		env.dialogs.fallback = 'throw';
 		await sync.runSubclassSyncStartup();
-		expect(env.settings.get(MODULE_ID, SYNC_SETTING)).toBe('');
-		env.dialogs.answerWhen(/Subclass update/, 'apply');
-		await sync.runSubclassSyncStartup();
+		expect(env.dialogs.log).toEqual([]);
+		expect(itemsNamed(actor, 'Hyperfixation')).toHaveLength(1);
 		const version = env.game.modules.get(MODULE_ID).version;
 		expect(env.settings.get(MODULE_ID, SYNC_SETTING)).toBe(version);
-		const n = env.dialogs.log.length;
+		expect(cards(env)).toHaveLength(1);
+		// Stamped: a second startup does nothing, even with something to sync.
+		actor.items.delete(itemsNamed(actor, 'Hyperfixation')[0].id);
 		await sync.runSubclassSyncStartup();
-		expect(env.dialogs.log.length).toBe(n);
+		expect(itemsNamed(actor, 'Hyperfixation')).toHaveLength(0);
+		expect(cards(env)).toHaveLength(1);
 	});
 
 	it('player: never prompts', async () => {
@@ -371,45 +382,43 @@ describe('subclass sync — startup (runSubclassSyncStartup + queue)', () => {
 		expect(env.dialogs.log).toEqual([]);
 	});
 
-	it('ready: the migration preview comes first, then the subclass sync, one at a time', async () => {
+	it('ready: the migration pass comes first, then the subclass sync — no dialog, one card each', async () => {
 		const { env } = await setupWorld({ playtest: true, boot: 'setup' });
 		await env.flush();
 		const stale = await pactOfTheId(env, 7);
 		stale.items.delete(itemsNamed(stale, 'Hyperfixation')[0].id);
-		const pending = await buildCharacterAtLevel(env, 'commander', 3, { version: '2.0.3' });
-		const order = [];
-		env.dialogs.answerWhen(/Migrate classes/, () => {
-			order.push('migration');
-			// the sync prompt must not be open yet
-			expect(env.dialogs.log.filter((d) => /Subclass update/.test(d.title ?? d.config?.window?.title ?? '')).length).toBe(0);
-			return false;
-		});
-		env.dialogs.answerWhen(/Subclass update/, () => {
-			order.push('sync');
-			return true;
-		});
-		await env.boot({ until: 'ready' });
-		await settle(env, () => order.length >= 2);
-		expect(order).toEqual(['migration', 'sync']);
-		// The pending (postponed) character was not touched by the sync.
-		expect(pending.calls).toEqual([]);
-		expect(itemsNamed(stale, 'Hyperfixation')).toHaveLength(1);
-	});
-
-	it('migration postponed at startup, applied later: no duplicate items anywhere', async () => {
-		const { env, migration } = await setupWorld({ playtest: true, boot: 'setup' }).then(({ env, mods }) => ({ env, migration: mods[3] }));
-		await env.flush();
-		const actor = await buildCharacterAtLevel(env, 'shepherd', 7, { version: '2.0.3', subclass: 'Luminary of Mercy' });
-		env.dialogs.answerWhen(/Migrate classes/, 'later');
+		const migrated = await buildCharacterAtLevel(env, 'commander', 3, { version: '2.0.3' });
+		env.dialogs.fallback = 'throw';
 		await env.boot({ until: 'ready' });
 		await settle(env, () => env.settings.get(MODULE_ID, SYNC_SETTING) !== '');
-		expect(env.dialogs.pending()).toBe(0);
-		expect(actor.calls).toEqual([]);
-		// The startup sync skipped the pending character: no sync prompt at all.
-		expect(env.dialogs.log.map((d) => d.title)).toEqual(['Nim+ | Migrate classes to Nimble 0.2 playtest']);
-		// Later, the GM applies the migration; its follow-up subclass sync is accepted.
-		env.dialogs.answerWhen(/Subclass update/, 'apply');
-		expect(await migration.migrateCoreClasses({ actors: [actor], apply: true })).toBe('applied');
+		expect(env.dialogs.log).toEqual([]);
+		const order = env.ChatMessage.created.map((c) => (/Class migration/.test(c.content) ? 'migration' : /Subclass sync/.test(c.content) ? 'sync' : '?'));
+		expect(order).toEqual(['migration', 'sync']);
+		// Each card names only its own character.
+		expect(env.ChatMessage.created[0].content).toContain(migrated.name);
+		expect(env.ChatMessage.created[1].content).toContain(stale.name);
+		expect(itemsNamed(stale, 'Hyperfixation')).toHaveLength(1);
+		expect(migrated.items.find((i) => i.type === 'class').name).toBe('Commander');
+	});
+
+	it('migrated at startup (choice left pending), then finished from the sheet: no duplicate items anywhere', async () => {
+		const { env, migration } = await setupWorld({ playtest: true, boot: 'setup' }).then(({ env, mods }) => ({ env, migration: mods[3] }));
+		await env.flush();
+		const actor = await buildCharacterAtLevel(env, 'shepherd', 7, { version: '2.0.3', subclass: 'Luminary of Mercy', picks: ['Light Bearer', 'Hasty Companion'] });
+		env.dialogs.fallback = 'throw';
+		await env.boot({ until: 'ready' });
+		await settle(env, () => env.settings.get(MODULE_ID, SYNC_SETTING) !== '');
+		expect(env.dialogs.log).toEqual([]);
+		expect(dupNames(actor)).toEqual([]);
+		// 2 graces, 0.2 grants 1 at level 7: the keep-which choice waits for the sheet.
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({ shepherd: { 'sacred-graces-keep': { title: 'Sacred Graces', count: 1 } } });
+		// Later, from the sheet: the prompt appears and the rest is already done.
+		env.dialogs.fallback = 'close';
+		env.dialogs.answerWhen(/Sacred Graces/, (config) => [...String(config.content).matchAll(/value="([^"]+)"/g)].map((m) => m[1]).slice(0, 1));
+		expect(await migration.migrateCoreClasses({ actors: [actor] })).toBe('applied');
+		expect(env.dialogs.log.map((d) => d.title)).toEqual(['Nim+ | Sacred Graces']);
+		expect(actor.items.filter((i) => i.system?.group === 'sacred-grace')).toHaveLength(1);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
 		expect(dupNames(actor)).toEqual([]);
 		// And the subclass is now the 0.2 copy, with its 0.2 features present once.
 		const sub = actor.items.find((i) => i.type === 'subclass');
@@ -475,22 +484,25 @@ describe('subclass sync — startup (runSubclassSyncStartup + queue)', () => {
 		expect(subNames(actor)).toEqual(subNames(fresh));
 	});
 
-	it('fixed BUG-supersede-5: subclass features postponed after a later migration are offered again on the next startup', async () => {
-		const { env, mods } = await setupWorld({ playtest: true, boot: 'setup' });
+	it('fixed BUG-supersede-5: a migration run after the startup sync gets its subclass features at once (nothing left for the next startup)', async () => {
+		const { env, mods } = await setupWorld({
+			playtest: true,
+			boot: 'setup',
+			// This version's migration already ran, so the character stays un-migrated at startup.
+			settings: { [`${MODULE_ID}.${MIGRATION_SETTING_PREFIX}`]: `${(await import('../../module.json', { with: { type: 'json' } })).default.version}|to02` },
+		});
 		await env.flush();
 		const [, , sync, migration] = mods;
 		const actor = await buildCharacterAtLevel(env, 'songweaver', 7, { version: '2.0.3', subclass: 'Herald of Courage' });
-		env.dialogs.answerWhen(/Migrate classes/, 'later');
 		await env.boot({ until: 'ready' });
 		await settle(env, () => env.settings.get(MODULE_ID, SYNC_SETTING) !== '');
-		// Startup: migration postponed; the sync skipped the pending character but stamped the version.
+		// Startup: the sync skipped the pending character but stamped the version.
+		expect(actor.calls).toEqual([]);
 		expect(env.settings.get(MODULE_ID, SYNC_SETTING)).toBe(env.game.modules.get(MODULE_ID).version);
-		// The GM migrates from the sheet and clicks "Later" on the subclass preview that follows.
-		env.dialogs.answerWhen(/Subclass update/, 'later');
-		await migration.migrateCoreClasses({ actors: [actor], apply: true });
-		const n = env.dialogs.log.length;
-		// Next reload: the startup sync should offer the outstanding subclass features again.
-		await sync.runSubclassSyncStartup();
-		expect(env.dialogs.log.length).toBe(n + 1);
+		// The GM migrates from the sheet: the follow-up sync applies straight away.
+		await migration.migrateCoreClasses({ actors: [actor] });
+		const fresh = await buildCharacterAtLevel(env, 'songweaver', 7, { version: '0.2', subclass: 'Herald of Courage', world: false });
+		expect(subNames(actor)).toEqual(subNames(fresh));
+		expect(await sync.planSubclassSync([actor])).toEqual([]);
 	});
 });

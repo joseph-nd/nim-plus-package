@@ -1,12 +1,12 @@
 /**
- * One GM prompt at a time on `ready`.
+ * One GM startup task at a time on `ready`.
  *
- * The subclass sync and the class migration each offer the GM a preview dialog
- * after an update. Both are async `ready` handlers, and Foundry does not await
- * hooks, so without this they would open on top of each other — and the class
- * migration can change what the subclass sync has to do. Queued prompts run in
- * the order they were queued, each after the previous one has closed, whatever
- * it threw.
+ * The class migration and the subclass sync each run a pass for the GM after an
+ * update (applied without a dialog, reported with a toast and a chat card).
+ * Both are async `ready` handlers, and Foundry does not await hooks, so without
+ * this they would run interleaved — and the class migration changes what the
+ * subclass sync has to do. Queued tasks run in the order they were queued, each
+ * after the previous one has finished, whatever it threw.
  *
  * Nothing here registers a hook, so importing it cannot disturb load order.
  */

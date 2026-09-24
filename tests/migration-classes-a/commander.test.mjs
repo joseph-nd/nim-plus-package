@@ -135,7 +135,13 @@ describe('commander to02', () => {
 		const actor = await build(env, 'commander', 4, '2.0.3', { picks: ['Face Me!', 'Hold the Line!', 'Commanding Presence'] });
 		const [cp] = itemsNamed(actor, 'Commanding Presence');
 		const plan = await planOf(migration, actor, 'to02');
-		expect(lines(plan)).toEqual(['Fit for Any Battlefield (level 2) brings a Combat Tactic: you will be asked to choose one']);
+		// A choice step: marked so the startup pass defers it and the report says so.
+		expect(lines(plan)).toEqual([
+			expect.stringMatching(
+				/^<i [^>]*data-nim-plus-choice="combat-tactic"[^>]*><\/i> Fit for Any Battlefield \(level 2\) brings a Combat Tactic: you will be asked to choose one$/,
+			),
+		]);
+		expect(plan.pendingChoice).toBe(true);
 		await runMigration(env, migration, actor, 'to02');
 		const after = actor.items.get(cp.id);
 		expect(sourceOf(after)).toBe(nim('Commanding Presence'));

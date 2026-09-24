@@ -27,15 +27,15 @@
  *      below its class level, that it lacks: 0.2 documents (to02) or 2.0.3
  *      documents (to203).
  *   4. Report — picks in choice groups (Orders, Graces, Savage Arsenal, …) are
- *      never added or dropped by the generic pass; the preview lists them as
+ *      never added or dropped by the generic pass; the report lists them as
  *      "check by hand" unless a class module handles them.
  *
  * Subclass features the new side adds are left to the subclass sync
  * (`../subclass-sync.mjs`), which is run for the migrated characters right
- * after (with its own preview; "Later" there re-arms the sync's startup preview).
+ * after (applied straight away, with its own toast and chat card).
  * Where that sync cannot run — a player migrating their own character, or a
  * to02 run while the playtest setting is off — the migration adds the due 0.2
- * subclass features itself (step 5), listed in its own preview. The subclass sync's startup preview is also
+ * subclass features itself (step 5), listed in its own report. The subclass sync's startup pass is also
  * started from here, after the migration's, and it skips any character whose
  * migration is still pending. Class migration moves a subclass item's source
  * onto the Nim+ copy, which is what makes the subclass sync take it on; the two
@@ -55,13 +55,15 @@
  *
  *   export default {
  *     classId: 'shepherd',
- *     // Preview lines (HTML; escape names with ctx.helpers.escape). Return a
- *     // line for EVERY change `migrate` would make — the preview is the GM's
- *     // only chance to see it. May be async.
+ *     // Report lines (HTML; escape names with ctx.helpers.escape). Return a line
+ *     // for EVERY change `migrate` would make — they are the audit trail in the
+ *     // GM-whispered chat card. A step that needs the player's decision gets its
+ *     // line from ctx.helpers.choiceLine(html, key). May be async.
  *     describe(actor, ctx) { return []; },
- *     // Runs after the generic pass has been applied to this actor, only if the
- *     // GM/owner confirmed a preview that contained this actor. May prompt
- *     // (ctx.helpers.promptChoice) — e.g. which grace to drop.
+ *     // Runs after the generic pass has been applied to this actor. Asks only
+ *     // through ctx.helpers.promptChoice / confirmChoice (with the step's `key`),
+ *     // which return CHOICE_DEFERRED (ctx.helpers.isDeferred) instead of asking
+ *     // when ctx.interactive is false: skip exactly that step then.
  *     async migrate(actor, ctx) {},
  *   };
  *
@@ -78,33 +80,66 @@
  *               — read it to avoid doing the same thing twice; in `migrate` the
  *               generic steps have already been applied (replaced items keep
  *               their `_id`, so `actor.items.get(item.id)` is the new version)
+ *   interactive false while the startup pass runs (set just before `migrate`):
+ *               choice steps are deferred, not asked
+ *   pendingChoice(key)
+ *               the record ({title, count}) of a choice step of this class that
+ *               an earlier non-interactive run deferred, or null. A step whose
+ *               trigger is a generic-plan entry (Vengeful Blast retired, Sunder
+ *               Armor merged) must check it: once the generic step is applied the
+ *               plan no longer shows the trigger, and the choice is still owed.
  *   helpers     everything `./generic.mjs` exports (findOwnedBySource,
  *               findOwnedByName, loadDoc, replaceInPlace, addFeature,
- *               removeItems, promptChoice, classLevel, minLevel, escape, …)
+ *               removeItems, promptChoice, confirmChoice, choiceLine, isDeferred,
+ *               classLevel, minLevel, escape, …) — the writers and the prompts
+ *               wrapped for this run (counted for the summary; deferred when
+ *               non-interactive)
  *
  * Note that a replacement does not re-run `grantItem` rules (they fire on
  * creation), and a pool whose identifier changed starts from its initial value;
  * a class module that renames a pool can carry the value across.
  *
- * ── Entry points ───────────────────────────────────────────────────────────
- *   await nimPlus.migrateCoreClasses();                       // preview, all characters
+ * ── Entry points and what they ask ─────────────────────────────────────────
+ * No confirmation popup: every run applies straight away, then shows a toast
+ * ("Nim+ migrated 4 characters to the 0.2 rules (12 items updated, 2 added,
+ * 1 removed)"), whispers the full per-actor report to the GMs (and the player
+ * who ran it) as a chat card, and logs it with console.info. The deterministic
+ * steps — replace in place (id, flags and pools kept), remove retired items,
+ * add auto-grants, the class modules' fixed changes, the follow-up subclass sync
+ * — are the audit trail in that card, and stay correctable by hand: the sheet's
+ * +/- for pools, and "Migrate class" in the other direction.
+ *
+ *   await nimPlus.migrateCoreClasses();                       // all characters, asks for choices
  *   await nimPlus.migrateCoreClasses({ actors: [actor] });
  *   await nimPlus.migrateCoreClasses({ classes: ['shepherd'], direction: 'to203' });
- *   await nimPlus.migrateCoreClasses({ apply: true });        // no preview
+ *   await nimPlus.migrateCoreClasses({ interactive: false }); // choices left pending
+ *   await nimPlus.migrateCoreClasses({ apply: false });       // dry run: card only, nothing written
  *   nimPlus.syncCoreClasses                                   // alias
  *
- * On `ready` the GM gets the preview once per module version and direction; a
- * "Migrate class to 0.2 rules" (or "… to 2.0.3 rules") control in the character
- * sheet header runs it for that character, for the GM or the sheet's owner.
- * Nothing is written without that preview being confirmed (or `apply: true`).
- * Only world actors are covered — unlinked tokens keep their own copies.
+ * Options: `interactive` (default true) — when false, steps that need a
+ * player's choice (Shepherd graces, Commander Orders/Tactic, Shadowmancer and
+ * Cheat replacement picks, the Songweaver cantrip removal) are skipped, the
+ * items left as they are, and the character is reported as needing a choice;
+ * `apply` (default true) — false posts the report as a dry run and writes
+ * nothing; `silent` — no "nothing to do" toast.
+ *
+ * On `ready` the active GM runs it once per module version and direction,
+ * non-interactively (no dialog at startup). A deferred step is remembered on the
+ * actor (`flags.nim-plus-package.classMigrationChoices`), so the planner keeps
+ * reporting it ("pending choice") and the "Migrate class to 0.2 rules" (or
+ * "… to 2.0.3 rules") control in the character sheet header — for the GM or the
+ * sheet's owner — runs it interactively: the choice prompts appear there, and
+ * cancelling one skips only that step (and forgets it). Characters with pending
+ * choices do not hold back the version stamp. Only world actors are covered —
+ * unlinked tokens keep their own copies.
  */
 import { MODULE_ID } from '../constants.mjs';
 import { sysId } from '../system.mjs';
 import { playtestCoreClassesEnabled } from '../playtest-settings.mjs';
 import { supersedeData } from '../supersede.mjs';
 import { queueStartupPrompt } from '../startup-queue.mjs';
-import { resetSubclassSyncStamp, runSubclassSyncStartup, syncSubclasses } from '../subclass-sync.mjs';
+import { plural, whisperReport } from '../migration-report.mjs';
+import { runSubclassSyncStartup, syncSubclasses } from '../subclass-sync.mjs';
 import * as generic from './generic.mjs';
 
 const {
@@ -120,6 +155,9 @@ const {
 	readUnfilteredIndex,
 	replacementUpdate,
 	creationData,
+	choiceKeyOf,
+	choiceIsForced,
+	CHOICE_DEFERRED,
 } = generic;
 
 export const CORE_CLASS_IDS = [
@@ -141,6 +179,26 @@ const NIM_FEATURE_PACK = `${MODULE_ID}.nim-plus-class-features`;
 const SYSTEM_FEATURE_PACK = 'nimble-class-features';
 
 const DIRECTION_LABEL = { to02: 'Nimble 0.2 playtest', to203: 'Heroes 2.0.3' };
+const RULES_LABEL = { to02: '0.2', to203: '2.0.3' };
+/** Actor flag: choice steps a non-interactive run deferred — `{direction, steps: {classId: {key: {title, count}}}}`. */
+export const PENDING_FLAG = 'classMigrationChoices';
+
+/** The sheet header control's label for a direction. */
+export function migrateControlLabel(direction) {
+	return `Migrate class to ${RULES_LABEL[direction]} rules`;
+}
+
+/** The deferred choice steps stored on the actor for `direction`: `{classId: {key: {title, count}}}`. */
+export function pendingChoices(actor, direction = defaultDirection()) {
+	const stored = actor?.flags?.[MODULE_ID]?.[PENDING_FLAG];
+	if (!stored || typeof stored !== 'object' || stored.direction !== direction) return {};
+	const steps = stored.steps && typeof stored.steps === 'object' ? stored.steps : {};
+	const out = {};
+	for (const [classId, rec] of Object.entries(steps)) {
+		if (rec && typeof rec === 'object' && Object.keys(rec).length) out[classId] = rec;
+	}
+	return out;
+}
 
 export function defaultDirection() {
 	return playtestCoreClassesEnabled() ? 'to02' : 'to203';
@@ -372,6 +430,7 @@ async function planActor(actor, base, classFilter) {
 	const inScope = (cls) => !classFilter || !cls || classFilter.has(cls);
 	const claimed = new Set();
 	const manualGroups = new Map(); // class → Set<group>
+	const pending = pendingChoices(actor, direction);
 
 	// Steps 1 and 2 — every owned item whose source the other side replaces or drops.
 	for (const item of actor.items) {
@@ -485,6 +544,7 @@ async function planActor(actor, base, classFilter) {
 		if (!inScope(classId)) continue;
 		const subclass =
 			actor.items.find((i) => i.type === 'subclass' && i.system?.parentClass === classId) ?? null;
+		const stored = pending[classId] ?? {};
 		const ctx = {
 			direction,
 			classId,
@@ -493,21 +553,82 @@ async function planActor(actor, base, classFilter) {
 			subclass,
 			data,
 			plan,
-			helpers: generic,
+			interactive: true,
+			pendingChoice: (key) => stored[key] ?? null,
+			run: null,
 		};
+		ctx.helpers = scopedHelpers(ctx);
 		const modules = [await loadClassModule('classes', classId), await loadClassModule('subclasses', classId)].filter(Boolean);
 		const lines = [];
 		for (const mod of modules) lines.push(...(await describeWith(mod, actor, ctx)));
 		plan.classes.push({ ctx, modules, lines, name: classItem.name });
 	}
 
+	// "Pending choice": a step that asks the player — predicted by the class
+	// modules' choice lines, or deferred by an earlier non-interactive run.
+	plan.pendingStored = Object.entries(pending)
+		.filter(([classId]) => inScope(classId) && ownedClassIds.has(classId))
+		.flatMap(([classId, rec]) => Object.entries(rec).map(([key, r]) => ({ classId, key, title: r?.title ?? key })));
+	plan.choiceSteps = plan.classes.flatMap((c) =>
+		c.lines.map(choiceKeyOf).filter((k) => k !== null).map((key) => ({ classId: c.ctx.classId, key })),
+	);
+	plan.pendingChoice = plan.choiceSteps.length > 0 || plan.pendingStored.length > 0;
+
 	const changes =
 		plan.replacements.length ||
 		plan.removals.length ||
 		plan.additions.length ||
 		plan.subclassAdditions.length ||
-		plan.classes.some((c) => c.lines.length);
-	return changes ? plan : null;
+		plan.classes.some((c) => c.lines.length) ||
+		plan.pendingStored.length;
+	if (!changes) return null;
+	// The report reads item names, which the apply changes: capture it now.
+	plan.previewLines = previewLines(plan);
+	plan.previewHeading = planHeading(plan);
+	return plan;
+}
+
+/**
+ * `ctx.helpers`: `./generic.mjs` with the writers counted into `ctx.run` (for
+ * the summary) and the prompts deferred when the run is non-interactive. A
+ * forced choice (nothing to pick, or every option taken) resolves as usual.
+ */
+function scopedHelpers(ctx) {
+	const defer = (spec, fallbackKey) => {
+		const key = String(spec?.key ?? fallbackKey ?? spec?.title ?? 'choice');
+		ctx.run?.deferred.push({ classId: ctx.classId, key, title: spec?.title ?? key, count: spec?.count });
+		return CHOICE_DEFERRED;
+	};
+	const nonInteractive = () => ctx.run ? !ctx.run.interactive : ctx.interactive === false;
+	const tally = (field, n) => {
+		if (ctx.run) ctx.run[field] += n;
+	};
+	return {
+		...generic,
+		async promptChoice(actor, spec = {}) {
+			if (nonInteractive() && !choiceIsForced(spec.options ?? [], spec.count ?? 1)) return defer(spec);
+			return generic.promptChoice(actor, spec);
+		},
+		async confirmChoice(actor, spec = {}) {
+			if (nonInteractive()) return defer(spec);
+			return generic.confirmChoice(actor, spec);
+		},
+		async addFeature(actor, docs) {
+			const out = await generic.addFeature(actor, docs);
+			tally('added', out?.length ?? 0);
+			return out;
+		},
+		async removeItems(actor, items) {
+			const out = await generic.removeItems(actor, items);
+			tally('removed', out?.length ?? 0);
+			return out;
+		},
+		async replaceInPlace(actor, item, target) {
+			const out = await generic.replaceInPlace(actor, item, target);
+			if (out) tally('updated', 1);
+			return out;
+		},
+	};
 }
 
 /** @returns {Promise<ActorPlan[]>} */
@@ -530,10 +651,26 @@ export async function planCoreClassMigration({ actors, classes, direction = defa
 
 /* ───────────────────────────── applying ───────────────────────────── */
 
-export async function applyCoreClassMigration(report, direction) {
+/**
+ * Apply planned migrations. Deterministic steps are written straight away;
+ * class-module steps that need a choice ask the current user when `interactive`
+ * and are deferred (left as they are, remembered on the actor) when not.
+ *
+ * Each plan gets `plan.result = {updated, added, removed, deferred}` — the
+ * counts of what was written and the deferred choice steps.
+ *
+ * @param {ActorPlan[]} report
+ * @param {'to02'|'to203'} direction
+ * @param {object} [options]
+ * @param {boolean} [options.interactive=true]
+ * @returns {Promise<Actor[]>} the actors the pass ran on
+ */
+export async function applyCoreClassMigration(report, direction, { interactive = true } = {}) {
 	const touched = [];
 	for (const plan of report) {
 		const { actor } = plan;
+		const result = { updated: 0, added: 0, removed: 0, deferred: [] };
+		plan.result = result;
 		try {
 			const removals = plan.removals.map((r) => r.item.id).filter((id) => actor.items.has(id));
 			const updates = plan.replacements
@@ -543,8 +680,13 @@ export async function applyCoreClassMigration(report, direction) {
 			if (removals.length) await actor.deleteEmbeddedDocuments('Item', removals);
 			if (updates.length) await actor.updateEmbeddedDocuments('Item', updates);
 			if (creations.length) await actor.createEmbeddedDocuments('Item', creations);
+			result.updated += updates.length;
+			result.removed += removals.length;
+			result.added += creations.length;
 
 			for (const { ctx, modules } of plan.classes) {
+				ctx.interactive = interactive;
+				ctx.run = { interactive, updated: 0, added: 0, removed: 0, deferred: [] };
 				for (const mod of modules) {
 					if (typeof mod.migrate !== 'function') continue;
 					try {
@@ -556,10 +698,13 @@ export async function applyCoreClassMigration(report, direction) {
 						);
 					}
 				}
+				result.updated += ctx.run.updated;
+				result.added += ctx.run.added;
+				result.removed += ctx.run.removed;
+				result.deferred.push(...ctx.run.deferred);
 			}
-			// Step 5 — previewed 0.2 subclass features, re-checked against the actor as
+			// Step 5 — reported 0.2 subclass features, re-checked against the actor as
 			// it now is (a class module may have added one already).
-			let subclassAdded = 0;
 			if (plan.subclassAdditions?.length) {
 				const docs = plan.subclassAdditions
 					.filter(({ doc, cls, group }) => {
@@ -567,13 +712,16 @@ export async function applyCoreClassMigration(report, direction) {
 						return !sources.has(canonicalUuid(doc.uuid)) && !identifiers.has(doc.system?.identifier);
 					})
 					.map((a) => a.doc);
-				if (docs.length) subclassAdded = (await generic.addFeature(actor, docs)).length;
+				if (docs.length) result.added += (await generic.addFeature(actor, docs)).length;
 			}
+
+			await storePendingChoices(actor, direction, plan, result.deferred);
 
 			touched.push(actor);
 			console.log(
 				`${MODULE_ID} | ${actor.name}: class migration (${direction}) — ` +
-					`${updates.length} replaced, ${removals.length} removed, ${creations.length + subclassAdded} added`,
+					`${result.updated} replaced, ${result.removed} removed, ${result.added} added` +
+					(result.deferred.length ? `, ${result.deferred.length} choice(s) left for the sheet` : ''),
 			);
 		} catch (error) {
 			console.error(`${MODULE_ID} | class migration failed on ${actor.name}`, error);
@@ -583,62 +731,140 @@ export async function applyCoreClassMigration(report, direction) {
 	return touched;
 }
 
-/* ───────────────────────────── UI ───────────────────────────── */
+/**
+ * Remember the choice steps this run deferred (and forget the ones it asked or
+ * no longer needs): the classes that ran are rewritten from `deferred`, others
+ * keep their records. Written only when it changes.
+ */
+async function storePendingChoices(actor, direction, plan, deferred) {
+	const ran = new Set(plan.classes.map((c) => c.ctx.classId));
+	const owned = new Set(classItems(actor).map((c) => c.system?.identifier));
+	const steps = {};
+	// Records of classes this run did not reach (a `classes` filter) are kept; a
+	// class the character no longer has drops its records.
+	for (const [classId, rec] of Object.entries(pendingChoices(actor, direction))) {
+		if (!ran.has(classId) && owned.has(classId)) steps[classId] = rec;
+	}
+	for (const { classId, key, title, count } of deferred) {
+		(steps[classId] ??= {})[key] = { title, ...(Number.isFinite(count) ? { count } : {}) };
+	}
+	const next = Object.keys(steps).length ? { direction, steps } : null;
+	const current = actor.flags?.[MODULE_ID]?.[PENDING_FLAG] ?? null;
+	if (JSON.stringify(next) === JSON.stringify(current)) return;
+	try {
+		if (current !== null) await actor.unsetFlag(MODULE_ID, PENDING_FLAG);
+		if (next) await actor.setFlag(MODULE_ID, PENDING_FLAG, next);
+	} catch (error) {
+		console.error(`${MODULE_ID} | could not store the pending class-migration choices of ${actor.name}`, error);
+	}
+}
 
-function renderReport(report, direction) {
-	const parts = [];
-	for (const plan of report) {
-		const lines = [];
-		for (const { item, target } of plan.replacements) {
-			lines.push(
-				item.name !== target.name
-					? `Replaced: ${escape(item.name)} → <strong>${escape(target.name)}</strong>`
-					: `Updated: ${escape(item.name)}`,
-			);
-		}
-		for (const { item, reason } of plan.removals) {
-			lines.push(`Removed: <s>${escape(item.name)}</s> <em>(${escape(reason)})</em>`);
-		}
-		for (const { doc, reason } of plan.additions) {
-			lines.push(`Added: <strong>${escape(doc.name)}</strong> <em>(${escape(reason)})</em>`);
-		}
-		for (const { doc, subclass } of plan.subclassAdditions ?? []) {
-			lines.push(
-				`Added: <strong>${escape(doc.name)}</strong> <em>(${escape(subclass)} 0.2 feature, level ${minLevel(doc)})</em>`,
-			);
-		}
-		for (const { lines: extra } of plan.classes) lines.push(...extra);
-		for (const note of plan.manual) lines.push(`<i class="fa-solid fa-hand"></i> ${note}`);
+/* ───────────────────────────── reporting ───────────────────────────── */
 
-		const heading = plan.classes.map((c) => `${escape(c.name)} ${c.ctx.level}`).join(' / ');
-		parts.push(
-			`<h4 style="margin:.5em 0 .2em">${escape(plan.actor.name)}${heading ? ` — ${heading}` : ''}</h4>` +
-				`<ul style="margin:0 0 .4em 1.2em">${lines.map((l) => `<li>${l}</li>`).join('')}</ul>`,
+const SKIPPED = ' <em>— skipped: needs a choice</em>';
+
+/**
+ * The report lines of one plan (HTML). Captured when the plan is made (the
+ * items it names are renamed by the apply); once applied, choice lines whose
+ * step was deferred are marked as skipped, and a deferred step no line
+ * described gets a line of its own.
+ */
+export function planLines(plan) {
+	const base = plan.previewLines ?? previewLines(plan);
+	const out = [];
+	let i = base.length - plan.manual.length - plan.classes.reduce((n, c) => n + c.lines.length, 0);
+	out.push(...base.slice(0, i));
+	for (const { ctx, lines: extra } of plan.classes) {
+		const deferred = ctx.run?.deferred ?? [];
+		const keys = new Set(deferred.map((d) => d.key));
+		const described = new Set();
+		for (const line of base.slice(i, i + extra.length)) {
+			const key = choiceKeyOf(line);
+			if (key !== null && keys.has(key)) {
+				described.add(key);
+				out.push(line + SKIPPED);
+			} else out.push(line);
+		}
+		i += extra.length;
+		for (const d of deferred) {
+			if (!described.has(d.key)) out.push(`${generic.choiceLine(escape(d.title), d.key)}${SKIPPED}`);
+		}
+	}
+	out.push(...base.slice(i));
+	return out;
+}
+
+/** The plan's lines as they read before anything is applied. */
+function previewLines(plan) {
+	const lines = [];
+	for (const { item, target } of plan.replacements) {
+		lines.push(
+			item.name !== target.name
+				? `Replaced: ${escape(item.name)} → <strong>${escape(target.name)}</strong>`
+				: `Updated: ${escape(item.name)}`,
 		);
 	}
-	return (
-		`<p>Converts these characters to the <strong>${DIRECTION_LABEL[direction]}</strong> class rules. ` +
-		`Items are rewritten in place: their ids, flags and charge/dice pool values are kept, and the sheet's +/- ` +
-		`still corrects any pool afterwards. Lines marked <i class="fa-solid fa-hand"></i> are left for you to check.</p>` +
-		`<div style="max-height:60vh;overflow:auto">${parts.join('')}</div>`
-	);
+	for (const { item, reason } of plan.removals) {
+		lines.push(`Removed: <s>${escape(item.name)}</s> <em>(${escape(reason)})</em>`);
+	}
+	for (const { doc, reason } of plan.additions) {
+		lines.push(`Added: <strong>${escape(doc.name)}</strong> <em>(${escape(reason)})</em>`);
+	}
+	for (const { doc, subclass } of plan.subclassAdditions ?? []) {
+		lines.push(
+			`Added: <strong>${escape(doc.name)}</strong> <em>(${escape(subclass)} 0.2 feature, level ${minLevel(doc)})</em>`,
+		);
+	}
+	for (const { lines: extra } of plan.classes) lines.push(...extra);
+	for (const note of plan.manual) lines.push(`<i class="fa-solid fa-hand"></i> ${note}`);
+	return lines;
+}
+
+function planHeading(plan) {
+	if (plan.previewHeading) return plan.previewHeading;
+	const heading = plan.classes.map((c) => `${escape(c.name)} ${c.ctx.level}`).join(' / ');
+	return `${escape(plan.actor.name)}${heading ? ` — ${heading}` : ''}`;
+}
+
+/** Whisper the report card; `applied` false = a dry run. */
+async function postReport(report, direction, { applied, pendingActors = [] }) {
+	const intro = applied
+		? `Converted to the <strong>${DIRECTION_LABEL[direction]}</strong> class rules. Items were rewritten in place: ` +
+			`their ids, flags and charge/dice pool values are kept, and the sheet's +/- still corrects any pool. ` +
+			`"${migrateControlLabel(direction === 'to02' ? 'to203' : 'to02')}" on a sheet moves a character back. ` +
+			`Lines marked <i class="fa-solid fa-hand"></i> are left for you to check.`
+		: `Dry run — nothing was written. Migrating to the <strong>${DIRECTION_LABEL[direction]}</strong> class rules would make these changes. ` +
+			`Lines marked <i class="fa-solid fa-list-check"></i> ask the player; <i class="fa-solid fa-hand"></i> are left for you to check.`;
+	const footer = pendingActors.length
+		? `<strong>${plural(pendingActors.length, 'character')} need${pendingActors.length === 1 ? 's' : ''} a choice</strong> ` +
+			`(${pendingActors.map((a) => escape(a.name)).join(', ')}): open their sheet → <em>${migrateControlLabel(direction)}</em>.`
+		: '';
+	return whisperReport({
+		title: `Nim+ | Class migration → ${DIRECTION_LABEL[direction]}${applied ? '' : ' (dry run)'}`,
+		intro,
+		sections: report.map((plan) => ({ heading: planHeading(plan), lines: planLines(plan) })),
+		footer,
+	});
 }
 
 /**
- * Preview and (optionally) apply the core class migration.
+ * Plan and apply the core class migration — no confirmation popup; see the
+ * header for what is asked and what is reported.
  * @param {object} [options]
  * @param {Actor[]} [options.actors]     restrict to these actors (default: all world characters)
  * @param {string[]} [options.classes]   restrict to these class identifiers
  * @param {'to02'|'to203'} [options.direction]  default: from the playtest setting
- * @param {boolean} [options.apply]      apply without a preview dialog
+ * @param {boolean} [options.interactive=true]  false: defer the steps that need a choice (startup)
+ * @param {boolean} [options.apply=true]        false: dry run — post the report card, write nothing
  * @param {boolean} [options.silent]     no "nothing to do" notification
- * @returns {Promise<'applied'|'postponed'|'nothing'>}
+ * @returns {Promise<'applied'|'previewed'|'nothing'>}
  */
 export async function migrateCoreClasses({
 	actors,
 	classes,
 	direction = defaultDirection(),
-	apply = false,
+	interactive = true,
+	apply = true,
 	silent = false,
 } = {}) {
 	if (direction !== 'to02' && direction !== 'to203') {
@@ -660,36 +886,39 @@ export async function migrateCoreClasses({
 		return 'nothing';
 	}
 
-	let go = apply;
-	if (!go) {
-		go = await foundry.applications.api.DialogV2.wait({
-			window: {
-				title: `Nim+ | Migrate classes to ${DIRECTION_LABEL[direction]}`,
-				icon: 'fa-solid fa-arrows-rotate',
-			},
-			position: { width: 600 },
-			content: renderReport(report, direction),
-			buttons: [
-				{ action: 'apply', label: 'Apply', icon: 'fa-solid fa-check', default: true, callback: () => true },
-				{ action: 'later', label: 'Later', icon: 'fa-solid fa-clock', callback: () => false },
-			],
-			rejectClose: false,
-		});
+	if (apply === false) {
+		await postReport(report, direction, { applied: false });
+		ui.notifications?.info(
+			`Nim+ | Class migration dry run: ${plural(report.length, 'character')} would change — see the chat card.`,
+		);
+		return 'previewed';
 	}
-	if (!go) return 'postponed';
 
-	const touched = await applyCoreClassMigration(report, direction);
-	ui.notifications?.info(
-		`Nim+ | Classes migrated to ${DIRECTION_LABEL[direction]} on ${touched.length} character${touched.length === 1 ? '' : 's'}.`,
-	);
+	const touched = await applyCoreClassMigration(report, direction, { interactive });
+	const done = report.filter((p) => touched.includes(p.actor));
+	const migrated = done.filter((p) => p.result.updated + p.result.added + p.result.removed > 0);
+	const pendingActors = done.filter((p) => p.result.deferred.length).map((p) => p.actor);
+	const sum = (field) => done.reduce((n, p) => n + p.result[field], 0);
+
+	await postReport(done, direction, { applied: true, pendingActors });
+	if (migrated.length || !pendingActors.length) {
+		ui.notifications?.info(
+			`Nim+ migrated ${plural(migrated.length, 'character')} to the ${RULES_LABEL[direction]} rules ` +
+				`(${plural(sum('updated'), 'item')} updated, ${sum('added')} added, ${sum('removed')} removed).`,
+		);
+	}
+	if (pendingActors.length) {
+		ui.notifications?.warn(
+			`Nim+ | ${plural(pendingActors.length, 'character')} need${pendingActors.length === 1 ? 's' : ''} a choice ` +
+				`(${pendingActors.map((a) => a.name).join(', ')}): open their sheet → ${migrateControlLabel(direction)}.`,
+		);
+	}
 
 	// Subclass features the new side adds (see the header). A player's migration
 	// (and a to02 run against the setting) added them itself, in step 5.
 	if (touched.length && game.user?.isGM) {
 		try {
-			const synced = await syncSubclasses({ actors: touched, silent: true });
-			// Postponed: make the next startup sync offer it again.
-			if (synced === 'postponed') await resetSubclassSyncStamp();
+			await syncSubclasses({ actors: touched, silent: true });
 		} catch (error) {
 			console.error(`${MODULE_ID} | subclass sync after class migration failed`, error);
 		}
@@ -706,13 +935,15 @@ Hooks.on('getHeaderControlsActorSheetV2', (app, controls) => {
 		if (!(game.user?.isGM || actor.isOwner)) return;
 		if (!classItems(actor).some((c) => CORE_CLASS_IDS.includes(c.system?.identifier))) return;
 		const direction = defaultDirection();
+		// A choice the startup pass left for this sheet: say so on the control.
+		const pending = Object.keys(pendingChoices(actor, direction)).length > 0;
 		controls.push({
 			action: 'nimPlusMigrateClass',
-			icon: 'fa-solid fa-arrows-rotate',
-			label: direction === 'to02' ? 'Migrate class to 0.2 rules' : 'Migrate class to 2.0.3 rules',
+			icon: pending ? 'fa-solid fa-list-check' : 'fa-solid fa-arrows-rotate',
+			label: pending ? `${migrateControlLabel(direction)} (choice needed)` : migrateControlLabel(direction),
 			visible: true,
 			onClick: () =>
-				migrateCoreClasses({ actors: [actor], direction }).catch((error) =>
+				migrateCoreClasses({ actors: [actor], direction, interactive: true }).catch((error) =>
 					console.error(`${MODULE_ID} | class migration failed`, error),
 				),
 		});
@@ -732,22 +963,31 @@ Hooks.once('init', () => {
 	});
 });
 
-// The migration preview first, then the subclass sync's own startup preview —
-// in that order, so the sync never plans against un-migrated characters.
+// The migration first, then the subclass sync's own startup pass — in that
+// order, so the sync never plans against un-migrated characters. Both apply
+// without a dialog; steps that need a player's choice are left for the sheet.
 Hooks.once('ready', () => {
-	if (!game.user?.isGM) return;
+	if (!isActiveGM()) return;
 	const direction = defaultDirection();
 	const stamp = `${game.modules.get(MODULE_ID)?.version ?? ''}|${direction}`;
 	queueStartupPrompt(async () => {
 		if (game.settings.get(MODULE_ID, VERSION_SETTING) === stamp) return;
 		try {
-			const result = await migrateCoreClasses({ direction, silent: true });
-			if (result !== 'postponed') await game.settings.set(MODULE_ID, VERSION_SETTING, stamp);
+			await migrateCoreClasses({ direction, silent: true, interactive: false });
+			// Pending choices do not hold the stamp back: they live on the actors.
+			await game.settings.set(MODULE_ID, VERSION_SETTING, stamp);
 		} catch (error) {
 			console.error(`${MODULE_ID} | class migration failed`, error);
 		}
 	});
 	queueStartupPrompt(runSubclassSyncStartup);
 });
+
+/** The one GM that runs the startup pass (the active GM when Foundry names one). */
+export function isActiveGM() {
+	if (!game.user?.isGM) return false;
+	const active = game.users?.activeGM;
+	return !active || active.id === game.user.id;
+}
 
 export const syncCoreClasses = migrateCoreClasses;

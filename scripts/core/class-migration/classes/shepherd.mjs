@@ -12,6 +12,8 @@
  *      (2/3/4); 0.2 grants 1 at 4, 9 and 13 (1/2/3), and Assist Me stopped being
  *      a grace. The player keeps or picks graces until the count matches; nothing
  *      is dropped without that choice, and cancelling leaves them as they were.
+ *      The startup pass (non-interactive) defers both choices to the sheet's
+ *      "Migrate class" control; the counts are re-read from the sheet then.
  *   2. The Lifebinding Spirit spell. In 0.2 every Shepherd knows the cantrip from
  *      L1 (My Buddy!); a 2.0.3 character below L2 never had the tier-1 spell, so
  *      going to 0.2 it is added, and going back below L2 it is removed.
@@ -25,6 +27,9 @@ const NIM_FEATURE_PACK = 'nim-plus-package.nim-plus-class-features';
 const SYSTEM_FEATURE_PACK = 'nimble-class-features';
 const LIFEBINDING_CANTRIP = 'Compendium.nim-plus-package.nim-plus-spells.Item.SAEd6Nk8SfgJ2Ff7';
 const LIFEBINDING_NAME = 'lifebinding spirit';
+/** Choice-step keys (see `../generic.mjs` `choiceLine`). */
+const KEEP_KEY = 'sacred-graces-keep';
+const PICK_KEY = 'sacred-graces-pick';
 
 /** Graces the rules grant by this class level. */
 function allowedGraces(direction, level) {
@@ -86,20 +91,23 @@ export default {
 		const rules = rulesLabel(ctx.direction);
 		const have = gracesAfterPlan(actor, ctx, false).length;
 		const allowed = allowedGraces(ctx.direction, ctx.level);
+		const { choiceLine } = ctx.helpers;
 		if (have > allowed) {
 			const drop = have - allowed;
 			if (allowed === 0) {
 				lines.push(`Sacred Graces: ${rules} grants none before level ${ctx.direction === 'to02' ? 4 : 5} — all ${have} removed`);
-			} else lines.push(
+			} else lines.push(choiceLine(
 				`Sacred Graces: ${have} owned, ${rules} grants ${allowed} at level ${ctx.level} — ` +
 					`you choose which ${allowed} to keep; the other ${drop} ${drop === 1 ? 'is' : 'are'} removed`,
-			);
+				KEEP_KEY,
+			));
 		} else if (have < allowed) {
 			const add = allowed - have;
-			lines.push(
+			lines.push(choiceLine(
 				`Sacred Graces: ${have} owned, ${rules} grants ${allowed} at level ${ctx.level} — ` +
 					`you pick ${add} new grace${add === 1 ? '' : 's'}`,
-			);
+				PICK_KEY,
+			));
 		}
 
 		const hasSpell = hasLifebindingSpell(actor, ctx, false);
@@ -132,6 +140,7 @@ export default {
 		const allowed = allowedGraces(direction, level);
 		if (owned.length > allowed) {
 			const keep = await helpers.promptChoice(actor, {
+				key: KEEP_KEY,
 				title: 'Sacred Graces',
 				content:
 					`<p>${rules} grants ${allowed} Sacred Grace${allowed === 1 ? '' : 's'} at level ${level}. ` +
@@ -139,6 +148,7 @@ export default {
 				options: owned.map((i) => ({ value: i.id, label: i.name })),
 				count: allowed,
 			});
+			if (helpers.isDeferred(keep)) return;
 			if (keep === null) {
 				ui.notifications?.warn(`Nim+ | ${actor.name}: Sacred Graces left as they were — adjust them by hand.`);
 				return;
@@ -153,6 +163,7 @@ export default {
 			const need = Math.min(allowed - owned.length, pool.length);
 			if (need < 1) return;
 			const picked = await helpers.promptChoice(actor, {
+				key: PICK_KEY,
 				title: 'Sacred Graces',
 				content:
 					`<p>${rules} grants ${allowed} Sacred Grace${allowed === 1 ? '' : 's'} at level ${level}; ` +
@@ -160,6 +171,7 @@ export default {
 				options: pool.map((e) => ({ value: e.uuid, label: e.name })),
 				count: need,
 			});
+			if (helpers.isDeferred(picked)) return;
 			if (picked === null) {
 				ui.notifications?.warn(`Nim+ | ${actor.name}: no Sacred Grace added — pick it on the sheet by hand.`);
 				return;

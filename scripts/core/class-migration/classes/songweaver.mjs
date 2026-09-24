@@ -19,7 +19,9 @@ import { MODULE_ID } from '../../constants.mjs';
  *     so from level 3 up it is added here;
  *   - "Wind Spellcasting and…" (the additional school) moves from level 1 to 2.
  *     A level-1 character loses the feature in the generic pass, but still owns
- *     the extra school's cantrips; the player is asked whether to drop them.
+ *     the extra school's cantrips; the player is asked whether to drop them
+ *     (the startup pass, non-interactive, defers that question to the sheet's
+ *     "Migrate class"; `ctx.pendingChoice` keeps it owed while level 1).
  *     Going back (to203) a level-1 character gets the feature again with no
  *     school chosen — reported for the player to pick by hand.
  */
@@ -28,6 +30,8 @@ import { MODULE_ID } from '../../constants.mjs';
 const WINDBAG_L1 = `Compendium.${MODULE_ID}.nim-plus-class-features.Item.pNFFZrY8J15qC8gX`;
 /** 2.0.3 "Wind Spellcasting and…" (level 1, the additional school). */
 const WIND_SPELLCASTING_203 = 'Compendium.nimble.nimble-class-features.Item.4jKHYa0ZPYXjliJo';
+/** Choice-step key (see `../generic.mjs` `choiceLine`). */
+const REMOVE_KEY = 'extra-school-cantrips';
 
 /** True when the generic plan drops (to02) or adds (to203) the 2.0.3 level-1 school feature. */
 function schoolFeatureMoves(ctx) {
@@ -35,6 +39,13 @@ function schoolFeatureMoves(ctx) {
 	const uuid = helpers.canonicalUuid(WIND_SPELLCASTING_203);
 	if (ctx.direction === 'to02') return plan.removals.some(({ item }) => helpers.itemSourceUuid(item) === uuid);
 	return plan.additions.some(({ doc }) => helpers.canonicalUuid(doc?.uuid) === uuid);
+}
+
+/** to02: the extra-school cantrips question is due — the school feature moves now, or a deferred run left it open. */
+function cantripQuestionDue(ctx) {
+	if (ctx.direction !== 'to02') return false;
+	if (schoolFeatureMoves(ctx)) return true;
+	return ctx.level < 2 && Boolean(ctx.pendingChoice?.(REMOVE_KEY));
 }
 
 function needsWindbag(actor, ctx) {
@@ -73,13 +84,16 @@ export default {
 			if (needsWindbag(actor, ctx)) {
 				lines.push('Add the level-1 <em>Windbag</em> feature (Wind cantrips and Vicious Mockery)');
 			}
-			if (schoolFeatureMoves(ctx)) {
+			if (cantripQuestionDue(ctx)) {
 				const extra = extraSchoolCantrips(actor);
 				if (extra.length) {
 					lines.push(
-						`0.2 grants the additional spell school at level 2 — you will be asked whether to remove ${extra
-							.map((i) => `<em>${escape(i.name)}</em>`)
-							.join(', ')}`,
+						ctx.helpers.choiceLine(
+							`0.2 grants the additional spell school at level 2 — you will be asked whether to remove ${extra
+								.map((i) => `<em>${escape(i.name)}</em>`)
+								.join(', ')}`,
+							REMOVE_KEY,
+						),
 					);
 				}
 			}
@@ -101,19 +115,20 @@ export default {
 			else ui.notifications?.warn(`Nim+ | ${actor.name}: Windbag could not be loaded — add it by hand.`);
 		}
 
-		if (!schoolFeatureMoves(ctx)) return;
+		if (!cantripQuestionDue(ctx)) return;
 		const extra = extraSchoolCantrips(actor);
 		if (!extra.length) return;
 		const list = extra.map((i) => `<li>${helpers.escape(i.name)}</li>`).join('');
-		const remove = await foundry.applications.api.DialogV2.confirm({
-			window: { title: 'Nim+ | Songweaver: additional school', icon: 'fa-solid fa-music' },
+		const remove = await helpers.confirmChoice(actor, {
+			key: REMOVE_KEY,
+			title: 'Songweaver: additional school',
+			icon: 'fa-solid fa-music',
 			content:
-				`<p><strong>${helpers.escape(actor.name)}</strong></p>` +
 				'<p>In 0.2 a level-1 Songweaver knows only Wind cantrips and Vicious Mockery; the additional ' +
 				'school comes at level 2. Remove these cantrips? (The level-up window offers the school again.)</p>' +
 				`<ul>${list}</ul>`,
-			rejectClose: false,
 		});
+		if (helpers.isDeferred(remove)) return;
 		if (remove) await helpers.removeItems(actor, extra);
 	},
 };

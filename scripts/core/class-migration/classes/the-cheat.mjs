@@ -17,7 +17,9 @@ import { sysId } from '../../system.mjs';
  *     (the generic pass replaces the first and removes the other as "merged"),
  *     so one Underhanded Ability pick is freed and the player chooses a
  *     replacement. Going back (to203) the generic pass restores Medium and
- *     reports that Heavy has to be re-added by hand.
+ *     reports that Heavy has to be re-added by hand. The startup pass
+ *     (non-interactive) merges and defers the pick; the deferred step
+ *     (`ctx.pendingChoice`) keeps it owed on the sheet's "Migrate class".
  */
 
 const SUNDER_SOURCES = [
@@ -25,11 +27,21 @@ const SUNDER_SOURCES = [
 	'Compendium.nimble.nimble-class-features.Item.kQGzBvAflQsAVCnk', // Sunder Armor (Heavy)
 ];
 const UNDERHANDED_GROUP = 'underhanded-abilities';
+/** Choice-step key (see `../generic.mjs` `choiceLine`). */
+const REPLACE_KEY = 'sunder-armor';
 
 /** Sunder Armor copies the generic pass removes as merged — each one is a freed pick. */
 function mergedSunders(ctx) {
 	const sources = new Set(SUNDER_SOURCES.map((uuid) => ctx.helpers.canonicalUuid(uuid)));
 	return ctx.plan.removals.filter(({ item }) => sources.has(ctx.helpers.itemSourceUuid(item)));
+}
+
+/** Underhanded Abilities owed: freed in this run, or deferred by an earlier non-interactive one. */
+function picksOwed(ctx) {
+	const freed = mergedSunders(ctx).length;
+	if (freed) return freed;
+	const pending = ctx.pendingChoice?.(REPLACE_KEY);
+	return pending ? Math.max(1, Number(pending.count) || 1) : 0;
 }
 
 /**
@@ -72,27 +84,31 @@ export default {
 	/** @returns {string[]|Promise<string[]>} preview lines (HTML) */
 	describe(_actor, ctx) {
 		if (ctx.direction !== 'to02') return [];
-		const freed = mergedSunders(ctx).length;
-		if (!freed) return [];
+		if (!picksOwed(ctx)) return [];
 		return [
-			'<em>Sunder Armor (Medium)</em> and <em>(Heavy)</em> merge into one <em>Sunder Armor</em> — you will be asked to choose a replacement Underhanded Ability',
+			ctx.helpers.choiceLine(
+				'<em>Sunder Armor (Medium)</em> and <em>(Heavy)</em> merge into one <em>Sunder Armor</em> — you will be asked to choose a replacement Underhanded Ability',
+				REPLACE_KEY,
+			),
 		];
 	},
 
 	async migrate(actor, ctx) {
 		if (ctx.direction !== 'to02') return;
-		const freed = mergedSunders(ctx).length;
+		const freed = picksOwed(ctx);
 		if (!freed) return;
 		const { helpers } = ctx;
 		const options = await openOptions(actor, ctx, UNDERHANDED_GROUP);
 		if (!options.length) return;
 		const picked = await helpers.promptChoice(actor, {
+			key: REPLACE_KEY,
 			title: 'Replace Sunder Armor (Heavy)',
 			content:
 				'<p>In 0.2 Sunder Armor is a single Underhanded Ability, which frees one of your picks. Choose an Underhanded Ability to take its place.</p>',
 			options,
 			count: Math.min(freed, options.length),
 		});
+		if (helpers.isDeferred(picked)) return;
 		if (!picked) {
 			ui.notifications?.info(`Nim+ | ${actor.name}: no Underhanded Ability picked — choose one by hand.`);
 			return;

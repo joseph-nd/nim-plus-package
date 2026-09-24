@@ -48,7 +48,10 @@
  * `preparePackIndexes` fires its `getIndex` calls, l. 740):
  *
  *   - `getIndex` runs the original, awaits the hidden set, then deletes;
- *   - `indexDocument` runs the original, then deletes the entry if hidden.
+ *   - `indexDocument` runs the original, then deletes the entry if hidden — on a
+ *     microtask, so other wrappers of the same method (Babele) finish first.
+ *
+ * Both go through libWrapper when it is active, with a direct patch otherwise.
  *
  * Plus a one-off purge of every pack once the set is built (`setup`), which
  * catches the constructor-seeded entries of packs nobody has re-indexed yet, and
@@ -347,8 +350,8 @@ function install() {
 	originalGetIndex = proto.getIndex;
 	originalIndexDocument = proto.indexDocument;
 
-	proto.getIndex = async function nimPlusSupersedeGetIndex(...args) {
-		const index = await originalGetIndex.apply(this, args);
+	async function filteredGetIndex(wrapped, args) {
+		const index = await wrapped.apply(this, args);
 		if (!relevant(this)) return index;
 		try {
 			await supersedeData();
@@ -357,18 +360,58 @@ function install() {
 			console.error(`${MODULE_ID} | supersede: could not filter ${this?.collection}`, error);
 		}
 		return index;
-	};
+	}
 
-	proto.indexDocument = function nimPlusSupersedeIndexDocument(document, ...rest) {
-		const result = originalIndexDocument.call(this, document, ...rest);
-		try {
-			const ids = data?.hidden.get(this.collection);
-			if (ids?.has(document?.id)) this.index.delete(document.id);
-		} catch (error) {
-			console.error(`${MODULE_ID} | supersede: could not filter ${this?.collection}`, error);
+	// The hidden entry is dropped on a microtask, not inline: other modules wrap
+	// `indexDocument` too (Babele's `preserveIndexFlags` merges into the entry it
+	// expects the original to have just written), and removing it before their
+	// wrapper resumes makes them throw. The microtask still runs before any caller
+	// awaiting `getDocument(s)` / `fromUuid` sees the pack again.
+	function filteredIndexDocument(wrapped, document, rest) {
+		const result = wrapped.call(this, document, ...rest);
+		const ids = data?.hidden.get(this.collection);
+		const id = document?.id;
+		if (ids?.has(id)) {
+			queueMicrotask(() => {
+				try {
+					if (data?.hidden.get(this.collection)?.has(id)) this.index.delete(id);
+				} catch (error) {
+					console.error(`${MODULE_ID} | supersede: could not filter ${this?.collection}`, error);
+				}
+			});
 		}
 		return result;
-	};
+	}
+
+	// Through libWrapper when it is active, so modules patching the same methods
+	// (Babele does) share one chain instead of tripping its conflict warning.
+	const libWrapper = globalThis.libWrapper;
+	if (typeof libWrapper?.register === 'function') {
+		const target = 'foundry.documents.collections.CompendiumCollection.prototype';
+		libWrapper.register(
+			MODULE_ID,
+			`${target}.getIndex`,
+			function (wrapped, ...args) {
+				return filteredGetIndex.call(this, wrapped, args);
+			},
+			'WRAPPER',
+		);
+		libWrapper.register(
+			MODULE_ID,
+			`${target}.indexDocument`,
+			function (wrapped, document, ...rest) {
+				return filteredIndexDocument.call(this, wrapped, document, rest);
+			},
+			'WRAPPER',
+		);
+	} else {
+		proto.getIndex = function nimPlusSupersedeGetIndex(...args) {
+			return filteredGetIndex.call(this, originalGetIndex, args);
+		};
+		proto.indexDocument = function nimPlusSupersedeIndexDocument(document, ...rest) {
+			return filteredIndexDocument.call(this, originalIndexDocument, document, rest);
+		};
+	}
 
 	proto[PATCH_SENTINEL] = true;
 }

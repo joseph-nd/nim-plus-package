@@ -91,13 +91,33 @@ describe('Sunder Armor merge (to02)', () => {
 		expect(env.notifications.messages('info').join('\n')).toMatch(/no Underhanded Ability picked/);
 	});
 
-	it('Later on the preview changes nothing (no merge, no prompt)', async () => {
+	it('a dry run (apply: false) changes nothing (no merge, no prompt)', async () => {
 		const { env, migration } = await world('to02');
 		const actor = await cheat(env, ['Sunder Armor (Medium)', 'Sunder Armor (Heavy)']);
 		const before = snapshotItems(actor);
-		const { log } = await runMigration(env, migration, actor, 'to02', { preview: 'later' });
-		expect(log.filter((d) => PROMPT.test(d.title))).toEqual([]);
+		const { log, result } = await runMigration(env, migration, actor, 'to02', { apply: false });
+		expect(result).toBe('previewed');
+		expect(log).toEqual([]);
 		expect(snapshotItems(actor)).toEqual(before);
+	});
+
+	it('startup (non-interactive): the merge happens, the replacement pick is deferred, and the sheet run asks it', async () => {
+		const { env, migration } = await world('to02');
+		const actor = await cheat(env, ['Sunder Armor (Medium)', 'Sunder Armor (Heavy)']);
+		const count = actor.items.size;
+		env.dialogs.fallback = 'throw';
+		const first = await runMigration(env, migration, actor, 'to02', { interactive: false });
+		expect(first.log).toEqual([]);
+		expect(sunders(actor).map(sourceOf)).toEqual([SUNDER]);
+		expect(actor.items.size).toBe(count - 1);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({ 'the-cheat': { 'sunder-armor': { title: 'Replace Sunder Armor (Heavy)', count: 1 } } });
+		expect(env.notifications.messages('info').join('\n')).not.toMatch(/no Underhanded Ability picked/);
+
+		env.dialogs.fallback = 'close';
+		const sheet = await runMigration(env, migration, actor, 'to02', { answers: [[PROMPT, { action: 'ok', checked: [MISDIRECTION] }]] });
+		expect(sheet.log.filter((d) => PROMPT.test(d.title))).toHaveLength(1);
+		expect(itemsNamed(actor, 'Misdirection')).toHaveLength(1);
+		expect(migration.pendingChoices(actor, 'to02')).toEqual({});
 	});
 
 	it('legacy flags.core.sourceId copies merge and prompt the same way', async () => {

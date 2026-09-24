@@ -18,13 +18,17 @@ import { sysId } from '../../system.mjs';
  *     (to203) it is a 0.2-only document and the generic pass removes it.
  *   - Vengeful Blast is retired. The generic pass removes it, which leaves the
  *     character one Greater Invocation short, so the player picks a replacement
- *     from the 0.2 list. Going back, the old pick is not guessed.
+ *     from the 0.2 list. Going back, the old pick is not guessed. The startup
+ *     pass (non-interactive) removes it and defers the pick; the deferred step
+ *     (`ctx.pendingChoice`) keeps the pick owed on the sheet's "Migrate class".
  */
 
 /** Nim+ Command Shadows (the id is persisted in pack-sources/ids.json). */
 const COMMAND_SHADOWS = `Compendium.${MODULE_ID}.nim-plus-spells.Item.uHirzuVSdqt7jVPU`;
 const VENGEFUL_BLAST = 'Compendium.nimble.nimble-class-features.Item.smUoANfxnZS95YVz';
 const GREATER_GROUP = 'greater-invocations';
+/** Choice-step key (see `../generic.mjs` `choiceLine`). */
+const REPLACE_KEY = 'vengeful-blast';
 
 function ownsCommandShadows(actor, helpers) {
 	return (
@@ -37,6 +41,14 @@ function ownsCommandShadows(actor, helpers) {
 function vengefulRemovals(ctx) {
 	const target = ctx.helpers.canonicalUuid(VENGEFUL_BLAST);
 	return ctx.plan.removals.filter(({ item }) => ctx.helpers.itemSourceUuid(item) === target);
+}
+
+/** Greater Invocations owed: removed in this run, or deferred by an earlier non-interactive one. */
+function picksOwed(ctx) {
+	const lost = vengefulRemovals(ctx).length;
+	if (lost) return lost;
+	const pending = ctx.pendingChoice?.(REPLACE_KEY);
+	return pending ? Math.max(1, Number(pending.count) || 1) : 0;
 }
 
 /**
@@ -83,9 +95,12 @@ export default {
 		if (!ownsCommandShadows(actor, ctx.helpers)) {
 			lines.push('Add the <em>Command Shadows</em> cantrip (0.2 Conduit of Shadow)');
 		}
-		if (vengefulRemovals(ctx).length) {
+		if (picksOwed(ctx)) {
 			lines.push(
-				'<em>Vengeful Blast</em> is retired — you will be asked to choose a replacement Greater Invocation',
+				ctx.helpers.choiceLine(
+					'<em>Vengeful Blast</em> is retired — you will be asked to choose a replacement Greater Invocation',
+					REPLACE_KEY,
+				),
 			);
 		}
 		return lines;
@@ -101,16 +116,18 @@ export default {
 			else ui.notifications?.warn(`Nim+ | ${actor.name}: Command Shadows could not be loaded — add it by hand.`);
 		}
 
-		const lost = vengefulRemovals(ctx).length;
+		const lost = picksOwed(ctx);
 		if (!lost) return;
 		const options = await openOptions(actor, ctx, GREATER_GROUP);
 		if (!options.length) return;
 		const picked = await helpers.promptChoice(actor, {
+			key: REPLACE_KEY,
 			title: 'Replace Vengeful Blast',
 			content: '<p>Vengeful Blast is retired in 0.2. Choose a Greater Shadow Invocation to take its place.</p>',
 			options,
 			count: Math.min(lost, options.length),
 		});
+		if (helpers.isDeferred(picked)) return;
 		if (!picked) {
 			ui.notifications?.info(`Nim+ | ${actor.name}: no Greater Invocation picked — choose one by hand.`);
 			return;

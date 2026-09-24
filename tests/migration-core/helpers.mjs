@@ -35,7 +35,7 @@ export async function world(opts = {}) {
 	return { env, settings, supersede, sync, migration, generic, queue };
 }
 
-/** A dialog answer that accepts everything: previews → apply, confirms → yes, pickers → the first N options. */
+/** A dialog answer that accepts everything: confirms → yes, pickers → the first N options (an "apply" button, if any, is pressed). */
 export function acceptAll(config) {
 	const content = String(config?.content ?? '');
 	if (content.includes('nimPlusChoice')) {
