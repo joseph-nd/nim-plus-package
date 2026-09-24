@@ -1,5 +1,6 @@
 import { MODULE_ID } from '../core/constants.mjs';
 import { escape } from '../core/html.mjs';
+import { confirmItemUse, isReactionItem } from '../core/item-use.mjs';
 import { featsEnabled } from './settings.mjs';
 import { chooseFeat, ownedFeats, pendingFeatCount } from './core.mjs';
 import { ensureFeatStyles } from './styles.mjs';
@@ -84,12 +85,17 @@ function wireFeatsSection(section, actor) {
 	// Send-to-chat overlay on the feat icon: posts the feat's description to chat
 	// via the system's own item activation (mirrors the native feature card's
 	// comment button). stopPropagation keeps the header's open-sheet click from
-	// also firing.
+	// also firing. Activation charges the feat's cost, so a reaction feat
+	// (Sentinel, Warden…) asks first rather than spending the reaction on a
+	// stray click.
 	section.querySelectorAll('[data-nim-plus-feat-chat]').forEach((btn) => {
-		btn.addEventListener('click', (event) => {
+		btn.addEventListener('click', async (event) => {
 			event.preventDefault();
 			event.stopPropagation();
-			actor.activateItem?.(btn.dataset.nimPlusFeatChat);
+			const id = btn.dataset.nimPlusFeatChat;
+			const feat = actor.items?.get?.(id);
+			if (isReactionItem(feat) && !(await confirmItemUse(feat))) return;
+			actor.activateItem?.(id);
 		});
 	});
 	section.querySelector('[data-nim-plus-feat="choose"]')?.addEventListener('click', async (event) => {

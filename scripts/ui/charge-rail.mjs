@@ -4,6 +4,7 @@ import { sysId, sysHook } from '../core/system.mjs';
 import { hasActiveRule } from '../core/rules.mjs';
 import { classQoLEnabled } from '../classes/shared/settings.mjs';
 import { iterateChargePools, setChargePoolCurrent } from '../core/pools.mjs';
+import { activationLabel, confirmItemUse } from '../core/item-use.mjs';
 import { encounterActive, ENCOUNTER_EDGE_HOOKS } from './encounter.mjs';
 
 /* ── Sheet — feature use counters on the tracker rail ────────────────────────
@@ -14,14 +15,39 @@ import { encounterActive, ENCOUNTER_EDGE_HOOKS } from './encounter.mjs';
  * "pure counters ... already rendered by ChargeIndicator elsewhere on the
  * sheet". Elsewhere means the Features tab.
  *
- * For a resource you spend in the middle of someone else's turn — Coordinated
- * Strike! being the obvious case — a counter you have to change tabs to read is
- * a counter you forget. So those pools are mirrored onto the rail alongside the
- * system's own, restricted to pools that come from a **class feature or an
- * ancestry**: a bag full of charged magic items belongs on the inventory tab,
- * not here. Ancestry traits earn their place for the same reason features do —
- * "1/encounter" reactions like the Orc's *Stormstep* are spent on somebody
- * else's turn, and the Features tab is the wrong place to be hunting for them.
+ * For a resource you spend several times in the middle of someone else's turn —
+ * Coordinated Strike!'s INT uses being the obvious case — a counter you have to
+ * change tabs to read is a counter you forget. So those pools are mirrored onto
+ * the rail alongside the system's own dice pools (which we leave alone).
+ *
+ * What gets a counter:
+ *  - count-only pools (no die size) from a **class feature or an ancestry** — a
+ *    bag of charged magic items belongs on the inventory tab, not here;
+ *  - that are not hidden (a hidden pool is an internal gate, not a resource —
+ *    Coordinated Strike!'s "once per round" is one);
+ *  - and that are **multi-use**: max > 1. Single-use pools — the 1/encounter
+ *    reactions such as Hold the Line! or I Can Do This ALL DAY! — stay on the
+ *    Features tab with the system's ChargeIndicator only. A lone pip is a
+ *    yes/no you can read there, and a big target for a misclick here.
+ *    Exceptions: Coordinated Strike!'s encounter and INT pools are always
+ *    railed (`ALWAYS_RAILED_POOLS`), and a feature can force its pools on or
+ *    off in data with `flags.nim-plus-package.chargeRail: true | false`.
+ *  - "max" is the pool's evaluated max at render time (the system writes the
+ *    resolved number into the flag). A formula pool that is currently 1 — INT
+ *    uses at INT 1 — is therefore off the rail until the formula grows past 1,
+ *    and appears on the next redraw once it does.
+ *
+ * What a click does: nothing on its own. Every pip — spent or available — asks
+ * "Use <Feature> (<Reaction|1 Action|…>)?" and, on Yes, runs the sheet's own
+ * activation (`actor.activateItem`), so the action / reaction cost, the chat
+ * card, any `chargeConsumer` and any refusal at zero all come from the system.
+ * A feature with no `chargeConsumer` for its pool has one use moved off the
+ * counter after a successful use, so the counter still tracks it. Cancel, a
+ * closed dialog or a refused use cost nothing. The pips never set the count:
+ * corrections by hand go through the system's own charges dialog (the counter
+ * pill on the Features tab, with its +/-). The system does not expose that
+ * dialog to modules (GenericDialog / ConfigureChargesDialog are bundle-private),
+ * so the rail points at it in the badge tooltip rather than opening it.
  *
  * The rail exists for the moment of play these counters are spent in, so it is
  * there for the fight and gone the rest of the time — the Features tab still
@@ -38,7 +64,31 @@ const CHARGE_RAIL_STYLE_ID = 'nim-plus-charge-rail-styles';
 /** Item types whose count-only pools belong on the rail. */
 const RAILED_POOL_SOURCES = new Set(['feature', 'ancestry']);
 
-/** Count-only charge pools a feature or ancestry granted, in sheet order. */
+/**
+ * Pools that are railed even when single-use: resources spent on someone else's
+ * turn that a player has to keep an eye on mid-fight, not a lone reaction. Keyed
+ * by pool identifier so the system copy and the Nim+ 0.2 copy share the entry.
+ */
+const ALWAYS_RAILED_POOLS = new Set(['coordinated-strike-encounter', 'coordinated-strike-uses']);
+
+/**
+ * The rail decision for one pool. A source feature can settle it in data with
+ * `flags.nim-plus-package.chargeRail` (`true` always, `false` never); otherwise
+ * the pools listed above are always railed and the rest only when multi-use.
+ */
+function isRailed(identifier, max, source) {
+	const override = source?.flags?.[MODULE_ID]?.chargeRail;
+	if (override === true) return max >= 1;
+	if (override === false) return false;
+	if (ALWAYS_RAILED_POOLS.has(identifier)) return max >= 1;
+	return max > 1;
+}
+
+/**
+ * Visible, count-only charge pools a feature or ancestry granted that pass
+ * `isRailed` (multi-use, or an exception), sorted by label. `max` is the pool's
+ * evaluated max right now.
+ */
 export function featureChargePools(actor) {
 	const pools = [];
 	for (const entry of iterateChargePools(actor)) {
@@ -48,15 +98,19 @@ export function featureChargePools(actor) {
 		// Strike!'s "once per round" is one — and the system draws none of them.
 		if (pool.hidden) continue;
 		const max = Number(pool.max);
-		if (!Number.isFinite(max) || max < 1) continue;
+		if (!Number.isFinite(max)) continue;
 
 		const source = actor.items?.get?.(pool.sourceItemId) ?? null;
 		if (!RAILED_POOL_SOURCES.has(source?.type)) continue;
+		// Single-use pools stay on the Features tab only, bar the exceptions (see the header).
+		const identifier = String(pool.identifier ?? entry.key.replace(/^actor:/, ''));
+		if (!isRailed(identifier, max, source)) continue;
 
 		pools.push({
 			...entry,
 			max,
 			current: Math.max(0, Math.min(Number(pool.current) || 0, max)),
+			source,
 			label: String(pool.label ?? source.name ?? 'Uses'),
 			img: source.img ?? null,
 		});
@@ -154,30 +208,25 @@ function poolHasChargeConsumer(item, entry) {
 }
 
 /**
- * Spending a single use *is* the feature being used, so it goes through the
- * sheet's own activation path — the same chat card you get from the Features
- * tab, the same macro, the same refusal at zero — rather than quietly moving a
- * number. Anything else the pips can express (restoring a use, or dropping the
- * counter by several at once) is bookkeeping, and only sets the count.
+ * A pip click is a request to use the feature, never a direct edit: confirm,
+ * then go through the sheet's own activation path — the same chat card, action /
+ * reaction cost, macro and refusal at zero as the Features tab.
  *
  * The spend itself is left to whoever owns it: a feature that declares a
  * `chargeConsumer` has one deducted by the system as part of the use, and only a
- * feature without one needs us to move the counter afterwards. A use that never
- * produced a card was refused or cancelled, and costs nothing either way.
+ * feature without one needs us to move the counter afterwards. A cancelled
+ * confirm, or a use that never produced a card, costs nothing either way.
  */
-async function useOrSetChargePool(entry, next) {
-	const item = entry.document;
+async function useFromRail(entry) {
+	const item = entry.source ?? entry.document;
 	const actor = item?.parent;
-	const spendsOne = next === entry.current - 1;
+	if (!(actor instanceof Actor) || typeof actor.activateItem !== 'function') return;
 
-	if (!spendsOne || !(actor instanceof Actor) || typeof actor.activateItem !== 'function') {
-		await setChargePoolCurrent(entry, next);
-		return;
-	}
+	if (!(await confirmItemUse(item))) return;
 
 	const card = await actor.activateItem(item.id);
 	if (!card) return;
-	if (!poolHasChargeConsumer(item, entry)) await setChargePoolCurrent(entry, next);
+	if (!poolHasChargeConsumer(item, entry)) await setChargePoolCurrent(entry, entry.current - 1);
 }
 
 function injectChargeRail(app, root) {
@@ -209,32 +258,30 @@ function injectChargeRail(app, root) {
 
 		const badge = document.createElement('div');
 		badge.className = `${CHARGE_RAIL_CLASS}__badge`;
-		badge.dataset.tooltip = `${pool.label} — ${pool.current}/${pool.max} uses`;
+		badge.dataset.tooltip =
+			`${pool.label} — ${pool.current}/${pool.max} uses. To correct the count, use its counter on the Features tab.`;
 		badge.dataset.tooltipDirection = 'RIGHT';
 		badge.innerHTML = pool.img
 			? `<img src="${escape(pool.img)}" alt="">`
 			: '<i class="fa-solid fa-circle-dot"></i>';
 		group.append(badge);
 
+		const cost = activationLabel(pool.source);
+		const useTip = cost ? `Use ${pool.label} (${cost})…` : `Use ${pool.label}…`;
 		for (let index = 0; index < pool.max; index += 1) {
 			const available = index < pool.current;
 			const pip = document.createElement('button');
 			pip.type = 'button';
 			pip.className =
 				`${CHARGE_RAIL_CLASS}__pip ${CHARGE_RAIL_CLASS}__pip--${available ? 'available' : 'spent'}`;
-			const usesOne = available && index === pool.current - 1;
-			pip.dataset.tooltip = usesOne
-				? `Use ${pool.label}`
-				: available
-					? `Set ${pool.label} to ${index} uses`
-					: `Set ${pool.label} to ${index + 1} uses`;
+			pip.dataset.tooltip = useTip;
 			pip.dataset.tooltipDirection = 'RIGHT';
 			pip.innerHTML = '<i class="fa-solid fa-circle"></i>';
-			// Clicking an available pip spends down to it; clicking a spent one
-			// restores up to it. Both read as "set the counter to here".
-			pip.addEventListener('click', () => {
-				useOrSetChargePool(pool, available ? index : index + 1).catch((error) =>
-					console.error(`[${MODULE_ID}] Failed to adjust ${pool.label}`, error),
+			// Every pip asks before using the feature; none of them sets the count.
+			pip.addEventListener('click', (event) => {
+				event?.preventDefault?.();
+				useFromRail(pool).catch((error) =>
+					console.error(`[${MODULE_ID}] Failed to use ${pool.label}`, error),
 				);
 			});
 			group.append(pip);

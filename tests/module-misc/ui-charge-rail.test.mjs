@@ -72,43 +72,106 @@ describe('ui/encounter', () => {
 });
 
 describe('ui/charge-rail featureChargePools', () => {
-	it('keeps count-only, visible, max≥1 pools from features/ancestries; clamps; sorts by label', async () => {
+	it('keeps count-only, visible, multi-use (max>1) pools from features/ancestries; clamps; sorts by label', async () => {
 		const actor = linkSources(
 			await actorWithPools({
 				'Coordinated Strike!': {
 					chargePools: {
 						uses: { label: 'Uses', current: 9, max: 3 },
-						gate: { label: 'Gate', current: 1, max: 1, hidden: true },
+						gate: { label: 'Gate', current: 1, max: 2, hidden: true },
 						dice: { label: 'Dice', current: 1, max: 2, dieSize: 6 },
 						zero: { label: 'Zero', current: 0, max: 0 },
+						once: { label: 'Hold the Line!', current: 1, max: 1 },
 					},
 				},
-				Orc: { chargePools: { relentless: { label: 'Relentless', current: -2, max: 1 } } },
+				Orc: { chargePools: { relentless: { label: 'Relentless', current: -2, max: 2 }, stormstep: { label: 'Stormstep', current: 1, max: 1 } } },
 				Wand: { chargePools: { charges: { label: 'Charges', current: 1, max: 3 } } },
 			}),
 		);
 		const out = rail.featureChargePools(actor);
 		expect(out.map((p) => [p.label, p.current, p.max])).toEqual([
-			['Relentless', 0, 1],
+			['Relentless', 0, 2],
 			['Uses', 3, 3],
 		]);
 	});
 
+	it('single-use pools (max ≤ 1) never reach the rail', async () => {
+		const actor = linkSources(
+			await actorWithPools({
+				'Coordinated Strike!': { chargePools: { hold: { label: 'Hold the Line!', current: 1, max: 1 }, allday: { label: 'I Can Do This ALL DAY!', current: 0, max: 1 } } },
+			}),
+		);
+		expect(rail.featureChargePools(actor)).toEqual([]);
+	});
+
+	it('a formula pool is judged on its evaluated max now: off at 1, on once it grows past 1', async () => {
+		const actor = linkSources(
+			await actorWithPools({ 'Coordinated Strike!': { chargePools: { int: { label: 'INT uses', current: 1, max: 1, maxFormula: '@abilities.intelligence.mod' } } } }),
+		);
+		expect(rail.featureChargePools(actor)).toEqual([]);
+		const feature = actor.items.find((i) => i.name === 'Coordinated Strike!');
+		await feature.update({ 'flags.nimble.chargePools.int.max': 2 });
+		expect(rail.featureChargePools(actor).map((p) => [p.label, p.max])).toEqual([['INT uses', 2]]);
+	});
+
+	it("Coordinated Strike!'s encounter and INT pools are railed even at max 1", async () => {
+		const actor = linkSources(
+			await actorWithPools({
+				'Coordinated Strike!': {
+					chargePools: {
+						'coordinated-strike-encounter': { label: '1/encounter', current: 1, max: 1 },
+						'coordinated-strike-uses': { label: 'INT uses', current: 1, max: 1 },
+						'coordinated-strike-round': { label: 'Round gate', current: 1, max: 1, hidden: true },
+					},
+				},
+			}),
+		);
+		expect(rail.featureChargePools(actor).map((p) => [p.label, p.max])).toEqual([
+			['1/encounter', 1],
+			['INT uses', 1],
+		]);
+	});
+
+	it('an always-railed pool at max 0 (INT 0, below L5) stays off', async () => {
+		const actor = linkSources(
+			await actorWithPools({ 'Coordinated Strike!': { chargePools: { 'coordinated-strike-uses': { label: 'INT uses', current: 0, max: 0 } } } }),
+		);
+		expect(rail.featureChargePools(actor)).toEqual([]);
+	});
+
+	it('a feature flag forces its pools on (single-use) or off (multi-use)', async () => {
+		const actor = linkSources(
+			await actorWithPools(
+				{
+					'Hold the Line!': { chargePools: { hold: { label: 'Hold the Line!', current: 1, max: 1 } } },
+					'Big Pool': { chargePools: { big: { label: 'Big', current: 3, max: 3 } } },
+				},
+				[
+					{ name: 'Hold the Line!', type: 'feature', flags: { 'nim-plus-package': { chargeRail: true } } },
+					{ name: 'Big Pool', type: 'feature', flags: { 'nim-plus-package': { chargeRail: false } } },
+				],
+			),
+		);
+		expect(rail.featureChargePools(actor).map((p) => p.label)).toEqual(['Hold the Line!']);
+	});
+
 	it('skips a pool whose source item is gone', async () => {
-		const actor = await actorWithPools({ 'Coordinated Strike!': { chargePools: { uses: { current: 1, max: 1, sourceItemId: 'missing' } } } });
+		const actor = await actorWithPools({ 'Coordinated Strike!': { chargePools: { uses: { current: 1, max: 2, sourceItemId: 'missing' } } } });
 		expect(rail.featureChargePools(actor)).toEqual([]);
 	});
 });
 
 describe('ui/charge-rail injection', () => {
-	async function setup(poolOverrides = {}) {
+	async function setup(poolOverrides = {}, activation = { cost: { type: 'action', quantity: 1, isReaction: false } }) {
 		const actor = linkSources(
 			await actorWithPools({
 				'Coordinated Strike!': { chargePools: { 'coordinated-strike': { identifier: 'coordinated-strike', label: 'Coordinated Strike!', current: 2, max: 3, ...poolOverrides } } },
 			}),
 		);
+		const feature = actor.items.find((i) => i.name === 'Coordinated Strike!');
+		feature.system.activation = activation;
 		const view = sheet(actor);
-		return { actor, view, feature: actor.items.find((i) => i.name === 'Coordinated Strike!') };
+		return { actor, view, feature };
 	}
 
 	it('draws nothing outside an encounter, and one pip per max inside one', async () => {
@@ -119,6 +182,13 @@ describe('ui/charge-rail injection', () => {
 		render(view);
 		expect(pips(view.root)).toHaveLength(3);
 		expect(pips(view.root).filter((p) => p.classList.contains('nim-plus-charge-rail__pip--available'))).toHaveLength(2);
+	});
+
+	it('a single-use feature gets no rail entry at all', async () => {
+		startEncounter();
+		const { view } = await setup({ current: 1, max: 1 });
+		render(view);
+		expect(groups(view.root)).toHaveLength(0);
 	});
 
 	it('re-rendering replaces the rail instead of stacking a second one', async () => {
@@ -137,22 +207,67 @@ describe('ui/charge-rail injection', () => {
 		expect(groups(view.root)).toHaveLength(0);
 	});
 
-	it('clicking the top available pip USES the feature, then spends one (no consumer)', async () => {
+	it.each([
+		[{ cost: { type: 'action', quantity: 1, isReaction: true } }, 'Reaction'],
+		[{ cost: { type: 'reaction', quantity: 1 } }, 'Reaction'],
+		[{ cost: { type: 'action', quantity: 0, isReaction: true } }, 'Free Reaction'],
+		[{ cost: { type: 'action', quantity: 1, isReaction: false } }, '1 Action'],
+		[{ cost: { type: 'action', quantity: 2, isReaction: false } }, '2 Actions'],
+		[{ cost: { type: 'action', quantity: 0, isReaction: false } }, 'Free'],
+	])('the confirm names the activation cost (%j → %s)', async (activation, label) => {
+		startEncounter();
+		const { actor, view } = await setup({}, activation);
+		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
+		render(view);
+		pips(view.root)[0].click();
+		await env.flush();
+		expect(env.dialogs.log.at(-1)).toMatchObject({ kind: 'confirm', title: 'Use Coordinated Strike!' });
+		expect(env.dialogs.log.at(-1).content).toContain(`(${label})?`);
+	});
+
+	it('no activation cost → the confirm has no cost in brackets', async () => {
+		startEncounter();
+		const { actor, view } = await setup({}, { cost: { type: 'none', quantity: 1 } });
+		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
+		render(view);
+		pips(view.root)[0].click();
+		await env.flush();
+		expect(env.dialogs.log.at(-1).content).toBe('<p>Use <strong>Coordinated Strike!</strong>?</p>');
+	});
+
+	it('confirming USES the feature through the system activation, then spends one (no consumer)', async () => {
 		startEncounter();
 		const { actor, view, feature } = await setup();
 		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
 		render(view);
+		env.dialogs.answer(true);
 		pips(view.root)[1].click();
 		await env.flush();
 		expect(actor.activateItem).toHaveBeenCalledWith(feature.id);
 		expect(current(feature, 'coordinated-strike')).toBe(1);
 	});
 
-	it('a refused / cancelled use (no card) costs nothing', async () => {
+	it.each([
+		['No', false],
+		['closing the dialog', null],
+	])('%s does nothing: no activation, count unchanged', async (_label, answer) => {
+		startEncounter();
+		const { actor, view, feature } = await setup();
+		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
+		render(view);
+		env.dialogs.answer(answer);
+		pips(view.root)[1].click();
+		await env.flush();
+		expect(actor.activateItem).not.toHaveBeenCalled();
+		expect(current(feature, 'coordinated-strike')).toBe(2);
+	});
+
+	it('a refused use (no card) costs nothing', async () => {
 		startEncounter();
 		const { actor, view, feature } = await setup();
 		actor.activateItem = vi.fn(async () => null);
 		render(view);
+		env.dialogs.answer(true);
 		pips(view.root)[1].click();
 		await env.flush();
 		expect(current(feature, 'coordinated-strike')).toBe(2);
@@ -164,36 +279,45 @@ describe('ui/charge-rail injection', () => {
 		feature.rules = new Map([['c', { type: 'chargeConsumer', poolIdentifier: 'coordinated-strike' }]]);
 		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
 		render(view);
+		env.dialogs.answer(true);
 		pips(view.root)[1].click();
 		await env.flush();
 		expect(actor.activateItem).toHaveBeenCalledTimes(1);
 		expect(current(feature, 'coordinated-strike')).toBe(2);
 	});
 
-	it.each([
-		// [pip index clicked, expected current] with current=2, max=3
-		[0, 0], // available, below the top → set down to 0 (bookkeeping, no activation)
-		[2, 3], // spent → restore up to 3
-	])('clicking pip %i sets the counter to %i without using the feature', async (index, expected) => {
+	it.each([0, 2])('pip %i (lower available / spent) no longer sets the count: it asks to use the feature', async (index) => {
 		startEncounter();
 		const { actor, view, feature } = await setup();
 		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
 		render(view);
+		env.dialogs.answer(false);
 		pips(view.root)[index].click();
 		await env.flush();
+		expect(env.dialogs.log).toHaveLength(1);
 		expect(actor.activateItem).not.toHaveBeenCalled();
-		expect(current(feature, 'coordinated-strike')).toBe(expected);
+		expect(current(feature, 'coordinated-strike')).toBe(2);
 	});
 
-	it('a pool whose stored current exceeds max is drawn and adjusted against the clamped value', async () => {
+	it('a pool whose stored current exceeds max is drawn and spent against the clamped value', async () => {
 		startEncounter();
 		const { actor, view, feature } = await setup({ current: 7 });
 		actor.activateItem = vi.fn(async () => ({ id: 'card' }));
 		render(view);
 		expect(pips(view.root).filter((p) => p.classList.contains('nim-plus-charge-rail__pip--available'))).toHaveLength(3);
-		pips(view.root)[2].click(); // top available → use
+		env.dialogs.answer(true);
+		pips(view.root)[2].click();
 		await env.flush();
 		expect(current(feature, 'coordinated-strike')).toBe(2);
+	});
+
+	it('the badge tooltip points hand corrections at the Features tab counter', async () => {
+		startEncounter();
+		const { view } = await setup();
+		render(view);
+		const badge = view.root.querySelector('.nim-plus-charge-rail__badge');
+		expect(badge.dataset.tooltip).toContain('2/3 uses');
+		expect(badge.dataset.tooltip).toContain('Features tab');
 	});
 
 	it('escapes the pool source image in the badge', async () => {

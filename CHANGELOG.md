@@ -2,6 +2,12 @@
 
 All notable changes to this module will be documented in this file. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.12.1] - 2026-09-24
+
+### Changed
+- **Charge rail: multi-use counters only, and clicks ask first.** The use counters on the sheet's tracker rail now show only feature and ancestry pools with more than one use (judged on the current max, so a formula pool at 1 appears once it grows). Single-use 1/encounter reactions such as Hold the Line! and I Can Do This ALL DAY! stay on the Features tab. Clicking a pip no longer spends or sets the count: it asks "Use <Feature> (Reaction / 1 Action / …)?" and, on Yes, uses the feature through the system's normal activation, so action/reaction costs and charge consumers apply as from the sheet. To correct a count by hand, use the feature's counter on the Features tab. Coordinated Strike!'s encounter use and INT uses are always shown, even when they are single-use, and a feature can force its counter on or off with `flags.nim-plus-package.chargeRail`.
+- **Feats: reaction feats ask before the chat button uses them.** The send-to-chat button on a reaction feat's icon (Sentinel, Warden, Vindictive, Skirmisher) now confirms first, because using the feat spends your reaction.
+
 ## [0.12.0] - 2026-09-24
 
 **Nimble 0.2 playtest core classes.** The September 2026 playtest sheets now apply to the classes themselves, not just to Nim+'s subclasses. Covered: Berserker, Commander, Hunter, Mage, Oathsworn, Shadowmancer, Shepherd, Songweaver, Stormshifter and The Cheat, plus the system's official subclasses and the class spells. Zephyr only has a 0.1 sheet, which matches 2.0.3, so it is unchanged. A new world setting, **Use Nimble 0.2 playtest core classes** (on by default, needs a reload), switches between the 0.2 rules and the plain 2.0.3 system. Where 0.2 says "Defense", the module keeps the system's term "Armor".

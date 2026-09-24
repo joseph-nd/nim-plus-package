@@ -131,6 +131,24 @@ describe('Feats section on the Features tab', () => {
 		expect(render).toHaveBeenCalledWith(true);
 		sectionOf(root).querySelector(`[data-nim-plus-feat-chat="${alert._id}"]`).click();
 		expect(actor.activateItem).toHaveBeenCalledWith(alert._id);
+		expect(env.dialogs.log).toHaveLength(0); // not a reaction → no confirm
+	});
+
+	it.each([
+		[true, 1],
+		[false, 0],
+		[null, 0],
+	])('a reaction feat asks before the chat overlay uses it (answer %s → %i uses)', async (answer, uses) => {
+		const sentinel = featItem('Sentinel');
+		const { root, app, actor } = await sheet({ level: 1, items: [sentinel] });
+		actor.activateItem = vi.fn();
+		m.sheetSection.syncFeatsTabSection(app);
+		env.dialogs.answer(answer);
+		sectionOf(root).querySelector(`[data-nim-plus-feat-chat="${sentinel._id}"]`).click();
+		await env.flush();
+		expect(env.dialogs.log.at(-1)).toMatchObject({ kind: 'confirm', title: 'Use Sentinel' });
+		expect(env.dialogs.log.at(-1).content).toContain('(Reaction)');
+		expect(actor.activateItem).toHaveBeenCalledTimes(uses);
 	});
 
 	it('escapes feat names and prerequisites (world-authored feats)', async () => {

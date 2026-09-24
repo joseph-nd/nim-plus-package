@@ -139,3 +139,25 @@ export function readChecked(form, name) {
 	if (el) return !!el.checked;
 	return !!form.querySelector?.(`[name="${name}"]:checked`);
 }
+
+/**
+ * `DialogV2.confirm` with the module's defaults (modal, `rejectClose: false`)
+ * and Foundry's own tri-state result: `true` for Yes, `false` for No, `null`
+ * when the window is closed / Escaped. Errors are logged and resolve `null`, so
+ * `if (!(await confirmDialog(...))) return;` is the whole guard.
+ *
+ * @param {object} config   DialogV2.confirm configuration
+ * @returns {Promise<boolean|null>}
+ */
+export async function confirmDialog(config = {}) {
+	let result;
+	try {
+		result = await foundry.applications.api.DialogV2.confirm({ modal: true, rejectClose: false, ...config });
+	} catch (error) {
+		console.error(`[${MODULE_ID}] confirm dialog failed`, error);
+		return null;
+	}
+	if (result === true) return true;
+	if (result === false) return false;
+	return null;
+}
